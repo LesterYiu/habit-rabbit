@@ -29,6 +29,7 @@ Habit Rabbit is a productivity application created for the sole purpose of stick
 
 - [Wireframe](https://www.figma.com/file/cbfrwelKaoncfMkMSXqm5L/Productivity-App?node-id=0%3A1)
 - [Project Breakdown](https://docs.google.com/document/d/1nDkiBIMwrB4UZc3AlbGazboqGq_I3uKY5P3Y8u3uVaE/edit?usp=sharing)
+- [App Architecture](https://www.figma.com/file/nanDFZaWZYeTuLiIs9zS4j/Habit-Rabbit?node-id=0%3A1)
 
 ## Setup
 
