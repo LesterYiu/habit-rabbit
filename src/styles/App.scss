@@ -1,10 +1,13 @@
+// Imported Fonts
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&display=swap');
+
 // Foundational Partials
-@import './partials/base';
-@import './partials/typography';
 @import './partials/variables';
+@import './partials/typography';
+@import './partials/base';
 
 // Front Page Component Partials
-@import './partials/navigation';
+@import './partials/frontPage';
 
 // Login Component Partials
 @import './partials/login';

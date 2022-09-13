@@ -1,3 +1,32 @@
+// Overall Typography
+
 html {
     font-size: 125%;
+}
+
+body {
+    font-family: $base-font;
+}
+
+.topNavigation,
+h1,
+h2,
+h3,
+h4 {
+    font-family: $secondary-font;
+}
+
+// Front Page Typography
+
+.companyName {
+    font-size: 0.7rem;
+}
+
+.topNavigation li {
+    font-size: 1.1rem;
+}
+
+.heroBtn {
+    font-family: $secondary-font;
+    color: $quaternary;
 }

@@ -10,7 +10,7 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 .wrapper {
     max-width: 1200px;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -36,4 +36,13 @@ li,
 p {
     margin: 0;
     padding: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button {
+    cursor: pointer;
 }
