@@ -2,18 +2,26 @@ import { auth, provider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({setIsAuth}) => {
+const Login = ({setIsAuth, setUsername, setUserUID}) => {
 
     const navigate = useNavigate();
 
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider).then( (result) => {
+
+            // Sets the values locally to allow users to stay logged in 
             localStorage.setItem("isAuth", true);
             setIsAuth(true);
-            navigate('/');
+
+            localStorage.setItem("displayName", result.user.displayName)
+            setUsername(result.user.displayName);
+
+            localStorage.setItem("userUID", auth.currentUser.uid);
+            setUserUID(auth.currentUser.uid);
+
+            navigate('/home');
         })
     }
-
     return(
         <div className="wrapper">
             <div className="loginPage">
