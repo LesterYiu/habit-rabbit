@@ -9,9 +9,9 @@ import FrontPage from './FrontPage';
 function App() {
 
   // Converts the string "true" to the boolean of true
-  const [isAuth, setIsAuth] = useState(localStorage.isAuth == "true");
+  const [isAuth, setIsAuth] = useState(localStorage.isAuth === "true");
   const [username, setUsername] = useState(localStorage.displayName);
-  const [userUID, setUserUID] = useState(localStorage.userUID);
+  const [userUID, setUserUID] = useState("notSignedIn");
 
   return (
     <Routes>
