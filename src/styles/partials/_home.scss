@@ -1,3 +1,30 @@
+// Home Navigation
+
+.homePage {
+    display: flex;
+    width: 100%;
+}
+
+.homeNavigation {
+    width: 30%;
+    height: 100vh;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.homeDashboard {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.homeSection {
+    padding: 100px 50px;
+}
+
+
+// Calendar
+
 .react-calendar__month-view__days__day--neighboringMonth {
     color: gray;
 }
