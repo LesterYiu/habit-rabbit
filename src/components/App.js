@@ -1,4 +1,4 @@
-import '../styles/App.scss';
+import '../styles/App.css';
 import { Routes, Route} from "react-router-dom";
 import { useState } from 'react';
 import { Calendar } from 'react-calendar';
