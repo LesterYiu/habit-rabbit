@@ -11,11 +11,10 @@ import Settings from './Settings';
 
 function App() {
 
-  // Converts the string "true" to the boolean of true
-  const [isAuth, setIsAuth] = useState(localStorage.isAuth === "true");
-  const [username, setUsername] = useState(localStorage.displayName);
+  const [isAuth, setIsAuth] = useState(localStorage.isAuth);
+  const [username, setUsername] = useState("");
   const [userUID, setUserUID] = useState("notSignedIn");
-  const [userPic, setUserPic] = useState(localStorage.profilePic);
+  const [userPic, setUserPic] = useState("");
 
   return (
     <Routes>

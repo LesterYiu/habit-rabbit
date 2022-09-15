@@ -9,7 +9,9 @@ const Login = ({setIsAuth, setUsername, setUserUID, setUserPic}) => {
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider).then( (result) => {
 
-            setIsAuth(!auth.currentUser.isAnonymous)
+            setIsAuth(!auth.currentUser.isAnonymous);
+            localStorage.setItem("isAuth", !auth.currentUser.isAnonymous)
+
             setUsername(result.user.displayName);
             setUserUID(auth.currentUser.uid);
             setUserPic(auth.currentUser.photoURL);

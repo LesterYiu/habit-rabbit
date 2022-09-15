@@ -10,6 +10,13 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
 
     const [taskList, setTaskList] = useState([]);
 
+    /*
+    TO DO LIST:
+
+    Filter Arrays,
+    Order Tasks in descending urgency (time wise)
+    */
+
     useEffect( () => {
         onAuthStateChanged( auth, (user) => {
             if (user) {
@@ -38,7 +45,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     if (isAuth) {
         return(
             <div className="homePage">
-                <HomeNavigation handleInputText={handleInputText} userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
+                <HomeNavigation handleInputText={handleInputText} userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList}/>
                 <div className="homeDashboard homeSection">
                     <p>Good morning, {username}</p>
                     {taskList.map((i) => {

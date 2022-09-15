@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { db, auth } from "./firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
-const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsername, setUserUID, setIsAuth}) => {
+const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsername, setUserUID, setIsAuth, setTaskList}) => {
     const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [description, setDescription] = useState("");
@@ -22,6 +22,8 @@ const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsernam
         await addDoc(collectionRef, 
             {user: {username: username, id: auth.currentUser.uid}, 
             task: {name: taskName, description, time, deadline}});
+        const data = await getDocs(collectionRef);
+        setTaskList(data.docs.map((doc) => ({...doc.data()})));
     }
 
     const signUserOut = () => {
@@ -29,6 +31,7 @@ const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsernam
             setIsAuth(false);
             setUsername('');
             setUserUID('notSignedIn');
+            localStorage.clear();
         })
     }
 
