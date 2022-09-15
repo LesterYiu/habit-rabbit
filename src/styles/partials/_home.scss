@@ -3,23 +3,40 @@
 .homePage {
     display: flex;
     width: 100%;
-}
 
-.homeNavigation {
-    width: 30%;
-    height: 100vh;
-    border: 1px solid black;
-    border-radius: 10px;
-}
+    .homeNavigation {
+        width: 25%;
+        height: 100vh;
+        border: 1px solid $border;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.homeDashboard {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-}
+    .homeDashboard {
+        width: 75%;
+        display: flex;
+        flex-direction: column;
+    }
 
-.homeSection {
-    padding: 100px 50px;
+    .homeSection {
+        padding: 50px 25px;
+    }
+
+    .profilePicCont {
+        margin-bottom: 10px;
+
+        img {
+            border-radius: 50%;
+        }
+    }
+
+    .navDisplayName {
+        border-bottom: 1px solid $primary;
+        padding: 0 40px 10px 40px;
+    }
+
 }
 
 
