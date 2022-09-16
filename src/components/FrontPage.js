@@ -1,15 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import heroBanner from "../assets/heroBanner.png";
+import { Link } from "react-router-dom";
 
-const FrontPage = () => {
-
-    const navigate = useNavigate();
-
-    const handleButtonClick = () => {
-        navigate('/login');
-    }
-
+const FrontPage = ({isAuth}) => {
     return(
         <div className="wrapper frontPage">
             <nav>
@@ -28,10 +21,20 @@ const FrontPage = () => {
                             <a href="https://github.com/LesterYiu">Source Code</a>
                         </li>
                     </div>
+                    {isAuth ?
                     <div className="rightNavigation">
-                        <li onClick={handleButtonClick} className="loginButton">Login</li>
-                        <li>Create Account</li>
-                    </div>
+                        <li>
+                            <Link to="/home">Dashboard</Link>
+                        </li>
+                    </div>: 
+                    <div className="rightNavigation">
+                        <li>
+                            <Link to="/login" className="loginButton">Login</Link>
+                        </li>
+                        <li>
+                            <Link to="/create-account">Create Account</Link>
+                        </li>
+                    </div>}
                 </ul>
             </nav>
             <header>

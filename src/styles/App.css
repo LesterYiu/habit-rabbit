@@ -12,6 +12,9 @@ h3,
 h4 {
   font-family: "DM Serif Display", serif; }
 
+button {
+  font-family: "DM Serif Display", serif !important; }
+
 .companyName {
   font-size: 0.7rem; }
 
@@ -243,7 +246,10 @@ img {
   max-width: 100%; }
 
 button {
-  cursor: pointer; }
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid black;
+  padding: 0; }
 
 .frontPage nav {
   padding-top: 20px; }

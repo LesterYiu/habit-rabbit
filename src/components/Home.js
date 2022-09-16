@@ -13,6 +13,9 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     /*
     TO DO LIST:
 
+    Sign in with email & password
+    Upload profile pictures
+    Profile customization section
     Filter Arrays,
     Order Tasks in descending urgency (time wise)
     */
