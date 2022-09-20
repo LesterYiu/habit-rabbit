@@ -11,6 +11,9 @@ body {
 button {
   font-family: "DM Serif Display", serif !important; }
 
+i {
+  font-size: 2rem; }
+
 .companyName {
   font-size: 0.7rem; }
 
@@ -47,6 +50,22 @@ button {
 
 .filterContainer {
   font-size: 1.3rem; }
+
+.createTaskForm legend {
+  font-size: 1.6rem;
+  font-weight: bold; }
+
+.createTaskForm button {
+  font-family: "Inter", sans-serif !important; }
+
+.createTaskForm label {
+  font-size: 1.2rem;
+  margin-top: 15px; }
+
+.submitBtn {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem; }
 
 html {
   line-height: 1.15;
@@ -371,7 +390,7 @@ button {
   width: 100%; }
   .homePage .homeNavigation {
     position: relative;
-    width: 25%;
+    width: 20%;
     min-height: 100vh;
     max-height: 100%;
     border: 1px solid #808080;
@@ -386,8 +405,11 @@ button {
       align-items: center; }
     .homePage .homeNavigation button {
       border: 0; }
+    .homePage .homeNavigation i {
+      margin-right: 10px; }
   .homePage .homeDashboard {
-    width: 75%;
+    width: 77%;
+    padding-right: 3%;
     display: flex;
     flex-direction: column; }
   .homePage .homeSection {
@@ -405,11 +427,11 @@ button {
 
 .homeDashboard .taskContainer {
   border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
   height: 150px;
   border-radius: 5px;
   padding: 25px 25px;
   margin-bottom: 25px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
   display: flex;
   flex-direction: column;
   justify-content: center; }
@@ -435,9 +457,56 @@ button {
 .homeDashboard .filterContainer {
   border: 0;
   display: flex;
+  align-items: center;
   margin-bottom: 15px; }
   .homeDashboard .filterContainer p {
     margin-left: 10px; }
+
+.overlayBackground {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10; }
+
+.createTaskForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 50%;
+  min-height: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #d4d4d4;
+  border-radius: 15px;
+  padding: 50px 100px;
+  background-color: #FFFFFF;
+  z-index: 20; }
+  .createTaskForm fieldset {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    margin: 0; }
+  .createTaskForm input {
+    background-color: #F7F7F7;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 0; }
+  .createTaskForm button {
+    border: 0; }
+  .createTaskForm .exitButton {
+    position: absolute;
+    top: 30px;
+    right: 50px; }
+  .createTaskForm .submitBtn {
+    background-color: #111111;
+    width: 50%;
+    padding: 15px 0;
+    border-radius: 10px;
+    margin-top: 15px; }
 
 .react-calendar__month-view__days__day--neighboringMonth {
   color: gray; }

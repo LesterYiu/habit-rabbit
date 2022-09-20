@@ -1,31 +1,11 @@
-import { useState } from "react";
-import { db, auth } from "./firebase";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { auth } from "./firebase";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import NewTask from "./NewTask";
 
-const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsername, setUserUID, setIsAuth, setTaskList}) => {
+const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth, setIsNewTaskClicked, isNewTaskClicked}) => {
     
-    const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
-    const [taskName, setTaskName] = useState("");
-    const [description, setDescription] = useState("");
-    const [deadline, setDeadline] = useState("");
-    const [time, setTime] = useState("");
-
     const handleNewTask = () => {
-        setIsNewTaskClicked(!isNewTaskClicked);
-    }
-
-    const collectionRef = collection(db, `/users/user-list/${userUID}`);
-
-    const createTask = async (e) => {
-        e.preventDefault();
-        await addDoc(collectionRef, 
-            {user: {username: username, id: auth.currentUser.uid}, 
-            task: {name: taskName, description, time, deadline}});
-        const data = await getDocs(collectionRef);
-        setTaskList(data.docs.map((doc) => ({...doc.data()})));
+        setIsNewTaskClicked(true);
     }
 
     const signUserOut = () => {
@@ -63,7 +43,6 @@ const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsernam
                     <button onClick={signUserOut}><i className="fa-solid fa-right-from-bracket"></i>Login out</button>
                 </li>
             </ul>
-            {isNewTaskClicked ? <NewTask handleInputText={handleInputText} setTaskName={setTaskName} setDeadline={setDeadline} setTime={setTime} setDescription={setDescription} createTask={createTask}/>: null}
         </nav>
     )
 }

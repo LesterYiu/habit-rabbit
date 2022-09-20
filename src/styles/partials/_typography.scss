@@ -16,6 +16,10 @@ button {
     font-family: $secondary-font !important;
 }
 
+i {
+    font-size: 2rem;
+}
+
 // Front Page Typography
 
 .companyName {
@@ -65,4 +69,26 @@ button {
 
 .filterContainer {
     font-size: 1.3rem;
+}
+
+// New Task Component
+
+.createTaskForm legend {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.createTaskForm button {
+    font-family: $tertiary-font !important;
+}
+
+.createTaskForm label {
+    font-size: 1.2rem;
+    margin-top: 15px;
+}
+
+.submitBtn {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
 }

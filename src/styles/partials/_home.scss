@@ -6,7 +6,7 @@
 
     .homeNavigation {
         position: relative;
-        width: 25%;
+        width: 20%;
         min-height: 100vh;
         max-height: 100%;
         border: 1px solid $border;
@@ -25,10 +25,15 @@
         button {
             border: 0;
         }
+
+        i {
+            margin-right: 10px;
+        }
     }
 
     .homeDashboard {
-        width: 75%;
+        width: 77%;
+        padding-right: 3%;
         display: flex;
         flex-direction: column;
     }
@@ -61,11 +66,11 @@
 
     .taskContainer {
         border: 1px solid rgb(212, 212, 212);
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         height: 150px;
         border-radius: 5px;
         padding: 25px 25px;
         margin-bottom: 25px;
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -97,10 +102,21 @@
     .filterContainer {
         border: 0;
         display: flex;
+        align-items: center;
         margin-bottom: 15px;
 
         p {
             margin-left: 10px;
         }
     }
+}
+
+.overlayBackground {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
