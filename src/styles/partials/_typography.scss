@@ -8,11 +8,7 @@ body {
     font-family: $base-font;
 }
 
-.topNavigation,
-h1,
-h2,
-h3,
-h4 {
+.topNavigation {
     font-family: $secondary-font;
 }
 
@@ -27,7 +23,7 @@ button {
 }
 
 .topNavigation li {
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .heroBtn {
@@ -36,9 +32,37 @@ button {
 }
 
 // Home Page Typography
+.homeNavigation {
+    font-size: 1.5rem;
+}
+
+.homeNavigation i {
+    font-size: 1.3rem;
+}
 
 .navDisplayName {
     font-weight: bold;
-    font-size: 1.2rem;
     word-break: break-all;
+}
+
+.homePage {
+    font-family: $tertiary-font;
+}
+
+.taskName {
+    font-weight: bold;
+}
+
+.homeSection button {
+    font-family: $tertiary-font !important;
+    font-weight: bold;
+}
+
+.toDoTask,
+.doneTask {
+    font-size: 1.3rem;
+}
+
+.filterContainer {
+    font-size: 1.3rem;
 }

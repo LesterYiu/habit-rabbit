@@ -11,9 +11,9 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     const [taskList, setTaskList] = useState([]);
 
     /*
-    TO DO LIST:
+    TO DO LIST
 
-    Sign in with email & password
+    Check if email exists already exists in database earlier
     Upload profile pictures
     Profile customization section
     Filter Arrays,
@@ -50,9 +50,25 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
             <div className="homePage">
                 <HomeNavigation handleInputText={handleInputText} userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList}/>
                 <div className="homeDashboard homeSection">
-                    <p>Good morning, {username}</p>
+                    <h1>Good morning, {username}</h1>
+                    <p>We have {taskList.length} things on the list today.</p>
+                    <div className="taskFilters">
+                        <button className="toDoTask taskButtonActive">To Do</button>
+                        <button className="doneTask">Done</button>
+                    </div>
+                    <div>
+                        <button className="filterContainer">
+                            <i className="fa-solid fa-sort"></i>
+                            <p>Filter</p>
+                        </button>
+                    </div>
                     {taskList.map((i) => {
-                        return <p key={uuid()}>{i.task.name}</p>
+                        return (
+                            <div className="taskContainer" key={uuid()}>
+                                <p className="taskName">{i.task.name}</p>
+                                <p>{i.task.description}</p>
+                            </div>
+                        )
                     })}
                 </div>
             </div>

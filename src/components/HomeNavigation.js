@@ -3,8 +3,10 @@ import { db, auth } from "./firebase";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import NewTask from "./NewTask";
 
 const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsername, setUserUID, setIsAuth, setTaskList}) => {
+    
     const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [description, setDescription] = useState("");
@@ -43,38 +45,25 @@ const HomeNavigation = ({handleInputText, userUID, username, userPic, setUsernam
             <p className="navDisplayName">{username}</p>
             <ul>
                 <li>
-                    <Link to="/calendar">Calendar</Link>
+                    <Link to="/"><i className="fa-solid fa-house" aria-hidden="true"></i>Home</Link>
                 </li>
                 <li>
-                    <Link to="/statistics">Statistics</Link>
+                    <Link to="/calendar"><i className="fa-solid fa-calendar" aria-hidden="true"></i>Calendar</Link>
                 </li>
                 <li>
-                    <Link to="/settings">Settings</Link>
+                    <Link to="/statistics"><i className="fa-solid fa-chart-simple" aria-hidden="true"></i>Statistics</Link>
                 </li>
                 <li>
-                    <button onClick={handleNewTask}>New Task</button>
+                    <Link to="/settings"><i className="fa-solid fa-gear" aria-hidden="true"></i>Settings</Link>
+                </li>
+                <li>
+                    <button onClick={handleNewTask}><i className="fa-solid fa-plus" aria-hidden="true"></i>New Task</button>
                 </li>
                 <li>                    
-                    <button onClick={signUserOut}>Login out</button>
+                    <button onClick={signUserOut}><i className="fa-solid fa-right-from-bracket"></i>Login out</button>
                 </li>
             </ul>
-            {isNewTaskClicked ? 
-            <form aria-label="form" name="taskForm">
-                <label htmlFor="task">Task</label>
-                <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}}/>
-
-                <label htmlFor="date">Date</label>
-                <input type="date" id="date" onChange={(e) => {handleInputText(e, setDeadline)}}/>
-
-                <label htmlFor="time">Time</label>
-                <input type="time" id="time" onChange={(e) => {handleInputText(e, setTime)}}/>
-
-                <label htmlFor="description">Description</label>
-                <input type="text" id="description" onChange={(e) => {handleInputText(e, setDescription)}}/>
-
-                <button onClick={(e) => {createTask(e)}}>Submit</button>
-            </form>
-            : null}
+            {isNewTaskClicked ? <NewTask handleInputText={handleInputText} setTaskName={setTaskName} setDeadline={setDeadline} setTime={setTime} setDescription={setDescription} createTask={createTask}/>: null}
         </nav>
     )
 }

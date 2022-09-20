@@ -8,6 +8,7 @@ import CreateAccount from './CreateAccount';
 import Login from './Login';
 import FrontPage from './FrontPage';
 import Settings from './Settings';
+import NewTask from './NewTask';
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
       <Route path='/statistics' element={<Statistics/>} />
 
       <Route path='/settings' element={<Settings/>} />
+
+      <Route path='/new-task' element={<NewTask />} />
     </Routes>
   )
 }

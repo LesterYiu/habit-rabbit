@@ -3,7 +3,7 @@
     // Navigation Styles
 
     nav {
-        padding-top: 20px;
+        padding-top: 15px;
 
         ul {
             display: flex;
@@ -11,14 +11,14 @@
         }
     
         li {
-            margin-right: 30px;
+            margin-right: 20px;
         }
 
-        .aboutUsButton,
         .loginButton{
             border-right: 1px solid black;
-            padding-right: 25px;
+            padding-right: 10px;
         }
+
     }
 
     .leftNavigation,
@@ -28,8 +28,8 @@
     }
 
     .logoImageCont {
-        max-width: 75px;
-        max-height: 75px;
+        max-width: 50px;
+        max-height: 50px;
         margin-right: 0;
 
         img {
@@ -44,7 +44,7 @@
         flex-direction: column;
         align-items: center;
         border-radius: 50%;
-        margin-right: 40px;
+        margin-right: 25px;
         justify-content: center;
     }
 
@@ -56,7 +56,7 @@
 
     header {
         display: flex;
-        margin: 75px 0;
+        margin: 100px 0;
     }
 
     .heroContainer {

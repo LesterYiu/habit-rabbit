@@ -1,5 +1,5 @@
 // Imported Fonts
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&family=Inter:wght@400;600&display=swap');
 
 // Foundational Partials
 @import './partials/variables';
@@ -12,5 +12,14 @@
 // Login Component Partials
 @import './partials/login';
 
+// Create Account Component Partials
+@import './partials/createAccount';
+
 // Home Component Partials
 @import './partials/home';
+
+// New Task Component Partials
+@import './partials/newTask';
+
+// Calendar Component Partials
+@import './partials/calendar';

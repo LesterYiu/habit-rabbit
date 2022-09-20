@@ -1,0 +1,16 @@
+.react-calendar__month-view__days__day--neighboringMonth {
+    color: gray;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: red;
+}
+
+.react-calendar__tile {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.react-calendar__tile--now {
+    background-color: rgb(207, 197, 197);
+}

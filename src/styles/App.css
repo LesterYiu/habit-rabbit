@@ -1,15 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&family=Inter:wght@400;600&display=swap");
 html {
   font-size: 125%; }
 
 body {
   font-family: "DM Sans", sans-serif; }
 
-.topNavigation,
-h1,
-h2,
-h3,
-h4 {
+.topNavigation {
   font-family: "DM Serif Display", serif; }
 
 button {
@@ -19,16 +15,38 @@ button {
   font-size: 0.7rem; }
 
 .topNavigation li {
-  font-size: 1.1rem; }
+  font-size: 1rem; }
 
 .heroBtn {
   font-family: "DM Serif Display", serif;
   color: #FFFFFF; }
 
+.homeNavigation {
+  font-size: 1.5rem; }
+
+.homeNavigation i {
+  font-size: 1.3rem; }
+
 .navDisplayName {
   font-weight: bold;
-  font-size: 1.2rem;
   word-break: break-all; }
+
+.homePage {
+  font-family: "Inter", sans-serif; }
+
+.taskName {
+  font-weight: bold; }
+
+.homeSection button {
+  font-family: "Inter", sans-serif !important;
+  font-weight: bold; }
+
+.toDoTask,
+.doneTask {
+  font-size: 1.3rem; }
+
+.filterContainer {
+  font-size: 1.3rem; }
 
 html {
   line-height: 1.15;
@@ -217,7 +235,7 @@ html {
 
 .wrapper {
   max-width: 1200px;
-  width: 80%;
+  width: 75%;
   margin: 0 auto; }
 
 ul {
@@ -252,16 +270,15 @@ button {
   padding: 0; }
 
 .frontPage nav {
-  padding-top: 20px; }
+  padding-top: 15px; }
   .frontPage nav ul {
     display: flex;
     justify-content: space-between; }
   .frontPage nav li {
-    margin-right: 30px; }
-  .frontPage nav .aboutUsButton,
+    margin-right: 20px; }
   .frontPage nav .loginButton {
     border-right: 1px solid black;
-    padding-right: 25px; }
+    padding-right: 10px; }
 
 .frontPage .leftNavigation,
 .frontPage .rightNavigation {
@@ -269,8 +286,8 @@ button {
   align-items: center; }
 
 .frontPage .logoImageCont {
-  max-width: 75px;
-  max-height: 75px;
+  max-width: 50px;
+  max-height: 50px;
   margin-right: 0; }
   .frontPage .logoImageCont img {
     height: 100%;
@@ -282,7 +299,7 @@ button {
   flex-direction: column;
   align-items: center;
   border-radius: 50%;
-  margin-right: 40px;
+  margin-right: 25px;
   justify-content: center; }
 
 .frontPage .rightNavigation {
@@ -290,7 +307,7 @@ button {
 
 .frontPage header {
   display: flex;
-  margin: 75px 0; }
+  margin: 100px 0; }
 
 .frontPage .heroContainer {
   max-width: 50%; }
@@ -342,17 +359,33 @@ button {
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
   cursor: not-allowed; }
 
+.errorInput {
+  border: 1px solid red; }
+
+.errorEmailMessage {
+  border: 1px solid red;
+  color: red; }
+
 .homePage {
   display: flex;
   width: 100%; }
   .homePage .homeNavigation {
+    position: relative;
     width: 25%;
-    height: 100vh;
+    min-height: 100vh;
+    max-height: 100%;
     border: 1px solid #808080;
-    border-radius: 10px;
+    border-radius: 0px 10px 10px 0px;
     display: flex;
     flex-direction: column;
     align-items: center; }
+    .homePage .homeNavigation a,
+    .homePage .homeNavigation button {
+      margin: 20px 0;
+      display: flex;
+      align-items: center; }
+    .homePage .homeNavigation button {
+      border: 0; }
   .homePage .homeDashboard {
     width: 75%;
     display: flex;
@@ -366,6 +399,45 @@ button {
   .homePage .navDisplayName {
     border-bottom: 1px solid #111111;
     padding: 0 40px 10px 40px; }
+
+.homeDashboard h1 {
+  margin-bottom: 10px; }
+
+.homeDashboard .taskContainer {
+  border: 1px solid #d4d4d4;
+  height: 150px;
+  border-radius: 5px;
+  padding: 25px 25px;
+  margin-bottom: 25px;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+
+.homeDashboard .toDoTask,
+.homeDashboard .doneTask {
+  width: 50%;
+  padding: 15px 0px; }
+
+.homeDashboard .toDoTask {
+  border-radius: 15px 0px 0px 15px; }
+
+.homeDashboard .doneTask {
+  border-radius: 0px 15px 15px 0px; }
+
+.homeDashboard .taskButtonActive {
+  color: white;
+  background-color: black; }
+
+.homeDashboard .taskFilters {
+  margin: 30px 0 30px 0; }
+
+.homeDashboard .filterContainer {
+  border: 0;
+  display: flex;
+  margin-bottom: 15px; }
+  .homeDashboard .filterContainer p {
+    margin-left: 10px; }
 
 .react-calendar__month-view__days__day--neighboringMonth {
   color: gray; }

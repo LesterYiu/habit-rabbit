@@ -13,6 +13,7 @@ const CreateAccount = ({setIsAuth, setUsername, setUserUID, setUserPic, userUID}
     const [displayName, setDisplayName] = useState("");
     const [imageUpload, setImageUpload] = useState(null);
     const [isCreatedAcc, setIsCreatedAcc] = useState(false);
+    const [isEmailExist, setIsEmailExist] = useState(false);
 
     const navigate = useNavigate();
     const currentAuth = getAuth();
@@ -51,6 +52,8 @@ const CreateAccount = ({setIsAuth, setUsername, setUserUID, setUserPic, userUID}
 
         } catch (error) {
             console.log(error.message);
+            setIsCreatedAcc(!isCreatedAcc);
+            setIsEmailExist(true);
         }        
     }
 
@@ -80,7 +83,9 @@ const CreateAccount = ({setIsAuth, setUsername, setUserUID, setUserPic, userUID}
             {isCreatedAcc === false ?
             <form aria-label="form" name="createAccount">
                 <label htmlFor="email">Email</label>
-                <input type="text" required onChange={(e) => {setRegisterEmail(e.target.value)}}/>
+                <input type="text" required onChange={(e) => {setRegisterEmail(e.target.value)}} className={isEmailExist ? "errorInput" : null}/>
+                
+                {isEmailExist ? <p className="errorEmailMessage">A user with this email address already exists. Please login.</p> : null}
 
                 <label htmlFor="password">Password</label>
                 <input type="password" required onChange={(e) => {setRegisterPassword(e.target.value)}}/>
