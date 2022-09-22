@@ -6,7 +6,7 @@ import { getAuth } from "firebase/auth";
 import { storage } from "./firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
-const CreateAccount = ({setIsAuth, setUsername, setUserUID, setUserPic, userUID}) => {
+const CreateAccount = ({setIsAuth, setUsername, setUserUID, userUID}) => {
 
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");

@@ -393,7 +393,7 @@ button {
     width: 20%;
     min-height: 100vh;
     max-height: 100%;
-    border: 1px solid #808080;
+    border: 1px solid rgba(212, 212, 212, 0.8);
     border-radius: 0px 10px 10px 0px;
     display: flex;
     flex-direction: column;
@@ -434,7 +434,15 @@ button {
   margin-bottom: 25px;
   display: flex;
   flex-direction: column;
-  justify-content: center; }
+  justify-content: center;
+  position: relative; }
+  .homeDashboard .taskContainer button {
+    border: 0;
+    position: absolute;
+    top: 25px;
+    right: 25px; }
+  .homeDashboard .taskContainer i {
+    font-size: 1.5rem; }
 
 .homeDashboard .toDoTask,
 .homeDashboard .doneTask {

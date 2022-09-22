@@ -3,7 +3,7 @@ import NewTask from "./NewTask";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useState , useEffect} from "react";
 import uuid from "react-uuid";
 
@@ -40,7 +40,9 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
 
         const getPost = async () => {
             const data = await getDocs(collectionRef);
-            setTaskList(data.docs.map((doc) => ({...doc.data()})));
+
+            // This will layout the docs data in an array with the document id which can be used later to remove each individual doc
+            setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
         }
         getPost();
     }, [userUID, setUserUID])
@@ -57,6 +59,16 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     const handleDoneBtn = () => {
         setIsDoneBtnClicked(true);
         setIsToDoBtnClicked(false);
+    }
+
+    // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array.
+    const deleteTask = async (id, i) => {
+        const newTaskList = taskList.filter((task) => {
+            return task !== taskList[taskList.indexOf(i)]
+        });
+        setTaskList(newTaskList);
+        const postDoc = doc(db, `/users/user-list/${userUID}/`, id);
+        await deleteDoc(postDoc);
     }
 
     if (isAuth) {
@@ -82,6 +94,11 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                                 <div className="taskContainer" key={uuid()}>
                                     <p className="taskName">{i.task.name}</p>
                                     <p>{i.task.description}</p>
+                                    <button onClick={() => {deleteTask(i.id, i)}}>
+                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true">
+                                            <span className="sr-only">Remove Task</span>
+                                        </i>
+                                    </button>
                                 </div>
                             )
                         })}

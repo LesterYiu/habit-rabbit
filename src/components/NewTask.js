@@ -13,6 +13,8 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
 
     const createTask = async (e) => {
         e.preventDefault();
+
+        setIsNewTaskClicked(false);
         await addDoc(collectionRef, 
             {user: {username: username, id: auth.currentUser.uid}, 
             task: {name: taskName, description, time, deadline}});
@@ -24,27 +26,27 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
         e.preventDefault();
         setIsNewTaskClicked(false);
     }
-
+    
     return(
-        <form aria-label="form" name="taskForm" className="createTaskForm">
+        <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
                 <legend>Add a new task</legend>
                 <label htmlFor="task">Task</label>
-                <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}}/>
+                <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required/>
 
                 <label htmlFor="date">Date</label>
-                <input type="date" id="date" onChange={(e) => {handleInputText(e, setDeadline)}}/>
+                <input type="date" id="date" required onChange={(e) => {handleInputText(e, setDeadline)}}/>
 
                 <label htmlFor="time">Time</label>
-                <input type="time" id="time" onChange={(e) => {handleInputText(e, setTime)}}/>
+                <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}}/>
 
                 <label htmlFor="description">Description</label>
-                <input type="text" id="description" onChange={(e) => {handleInputText(e, setDescription)}}/>
+                <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}}/>
 
                 <label htmlFor="labels">Labels</label>
-                <input type="text" id="labels" />
+                <input type="text" id="labels" required />
 
-                <button onClick={(e) => {createTask(e)}} className="submitBtn">Create new task</button>
+                <button type="submit" className="submitBtn">Create new task</button>
                 <button className="exitButton" onClick={(e) => {exitModal(e)}}><i className="fa-solid fa-circle-xmark" aria-hidden="true"></i><p className="sr-only">Exit Modal</p></button>
             </fieldset>
         </form>
