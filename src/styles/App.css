@@ -430,19 +430,25 @@ button {
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
   height: 150px;
   border-radius: 5px;
-  padding: 25px 25px;
+  padding: 50px 25px;
   margin-bottom: 25px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   position: relative; }
   .homeDashboard .taskContainer button {
+    border: 0; }
+  .homeDashboard .taskContainer .exitBtn {
     border: 0;
     position: absolute;
     top: 25px;
     right: 25px; }
-  .homeDashboard .taskContainer i {
-    font-size: 1.5rem; }
+    .homeDashboard .taskContainer .exitBtn i {
+      font-size: 1.8rem; }
+  .homeDashboard .taskContainer .finishBtn {
+    margin-left: 15px;
+    margin-right: 50px; }
+    .homeDashboard .taskContainer .finishBtn i {
+      font-size: 2.5rem;
+      font-weight: 300; }
 
 .homeDashboard .toDoTask,
 .homeDashboard .doneTask {

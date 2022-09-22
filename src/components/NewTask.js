@@ -14,19 +14,19 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     const createTask = async (e) => {
         e.preventDefault();
 
-        setIsNewTaskClicked(false);
+        await setIsNewTaskClicked(false);
         await addDoc(collectionRef, 
             {user: {username: username, id: auth.currentUser.uid}, 
             task: {name: taskName, description, time, deadline}});
         const data = await getDocs(collectionRef);
-        setTaskList(data.docs.map((doc) => ({...doc.data()})));
+        await setTaskList(data.docs.map((doc) => ({...doc.data()})));
     }
     
     const exitModal = (e) => {
         e.preventDefault();
         setIsNewTaskClicked(false);
     }
-    
+
     return(
         <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
