@@ -13,13 +13,12 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
 
     const createTask = async (e) => {
         e.preventDefault();
-
         await setIsNewTaskClicked(false);
         await addDoc(collectionRef, 
             {user: {username: username, id: auth.currentUser.uid}, 
             task: {name: taskName, description, time, deadline}});
         const data = await getDocs(collectionRef);
-        await setTaskList(data.docs.map((doc) => ({...doc.data()})));
+        setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     }
     
     const exitModal = (e) => {

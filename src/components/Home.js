@@ -42,7 +42,6 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
 
         const getPost = async () => {
             const data = await getDocs(collectionRef);
-
             // This will layout the docs data in an array with the document id which can be used later to remove each individual doc
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
         }
@@ -65,14 +64,14 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
 
     // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array.
     const deleteTask = async (id, i) => {
-        const postDoc = doc(db, `/users/user-list/${userUID}/`, id);
-        await deleteDoc(postDoc);
         const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
         setTaskList(newTaskList);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${id}`);
+        await deleteDoc(postDoc);
     }
 
     const checkTaskStatus = async (id) => {
-        const postDoc = doc(db, `/users/user-list/${userUID}/`, id);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${id}`);
         const checked = {
             isDone: true
         };
