@@ -70,12 +70,24 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
         await deleteDoc(postDoc);
     }
 
-    const checkTaskStatus = async (id) => {
+    const changeTaskStatus = async (id, e) => {
         const postDoc = doc(db, `/users/user-list/${userUID}/${id}`);
-        const checked = {
-            isDone: true
-        };
-        await updateDoc(postDoc, checked);
+        
+        if (e.target.checked) {
+
+            const isChecked = {
+                isDone: true
+            };
+            await updateDoc(postDoc, isChecked);
+            
+        } else {
+            
+            const isChecked = {
+                isDone: false
+            };
+            await updateDoc(postDoc, isChecked);
+
+        }
     }
 
     if (isAuth) {
@@ -99,10 +111,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                         {taskList.map((i) => {
                             return (
                                 <div className="taskContainer" key={uuid()}>
-                                    <button className="finishBtn" onClick={() => {checkTaskStatus(i.id)}}>
-                                        <span className="sr-only">Finished Task</span>
-                                        <i className="fa-regular fa-circle" aria-hidden="true"></i>
-                                    </button>
+                                    <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e)}}/>
                                     <div className="taskText">
                                         <p className="taskName">{i.task.name}</p>
                                         <p>{i.task.description}</p>

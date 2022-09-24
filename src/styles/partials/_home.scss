@@ -72,6 +72,7 @@
         padding: 50px 25px;
         margin-bottom: 25px;
         display: flex;
+        align-items: center;
         position: relative;
 
         button {
@@ -89,14 +90,38 @@
             }
         }
 
-        .finishBtn {
-            margin-left: 15px;
-            margin-right: 50px;
+        // .finishBtn {
+        //     margin-left: 15px;
+        //     margin-right: 50px;
 
-            i {
-                font-size: 2.5rem;
-                font-weight: 300;
-            }
+        //     i {
+        //         font-size: 2.5rem;
+        //         font-weight: 300;
+        //     }
+        // }
+
+        input[type="checkbox"]{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 1px solid $primary;
+            border-radius: 50%;
+            height: 35px;
+            width: 35px;
+            display: block;
+            margin: 0 25px 0 0;
+            cursor: pointer;
+            background-color: #ffffff;
+        }
+
+        input[type=checkbox]:checked::before {
+            content: '✔';
+            margin-top: 12px;
+            margin-left: 3px;
+            color: $primary;
+            display: block;
+            font-size: 30px;
+            line-height: 12px;
         }
 
     }
@@ -104,7 +129,7 @@
     .toDoTask,
     .doneTask {
         width: 50%;
-        padding: 15px 0px;
+        padding: 10px 0px;
     }
 
     .toDoTask {
@@ -113,6 +138,13 @@
 
     .doneTask {
         border-radius: 0px 15px 15px 0px;
+    }
+
+    .taskText {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .taskButtonActive {

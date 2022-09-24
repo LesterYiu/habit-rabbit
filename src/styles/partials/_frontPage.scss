@@ -1,9 +1,9 @@
 .frontPage{
-
     // Navigation Styles
 
     nav {
-        padding-top: 15px;
+        border-bottom: 1px solid rgba(212, 212, 212, 0.8);
+        padding: 15px 0;
 
         ul {
             display: flex;
@@ -41,7 +41,6 @@
 
     .logoContainer {
         display: flex;
-        flex-direction: column;
         align-items: center;
         border-radius: 50%;
         margin-right: 25px;
@@ -54,31 +53,33 @@
 
     // Header Styles
 
-    header {
+    .flexHeader{
         display: flex;
-        margin: 100px 0;
-    }
-
-    .heroContainer {
-        max-width: 50%;
+        justify-content: space-between;
+        margin: 150px 0 100px 0;
     }
 
     .heroInfo {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        max-width: 42%;
 
         p {
-            margin: 25px 0 20px 0;
+            margin: 30px 0;
         }
+    }
+
+    .heroImageContainer {
+        max-width: 50%;
     }
 
     .heroBtn {
         background-color: $tertiary;
         border: 0;
-        width: 150px;
-        padding: 7px 10px;
+        max-width: 40%;
+        padding: 8px 10px;
         border-radius: 8px;
-        border: 1px solid $primary;
+        border: 1px solid rgba(212, 212, 212, 0.8);
     }
 }

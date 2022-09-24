@@ -14,34 +14,55 @@ body {
 
 button {
     font-family: $secondary-font !important;
+    font-weight: 700;
 }
 
 i {
     font-size: 2rem;
 }
 
-// Front Page Typography
-
-.companyName {
-    font-size: 0.7rem;
+h1 {
+    font-size: 1.5rem !important;
 }
 
+p {
+    font-size: 1.1rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 700;
+}
+
+// Front Page Typography
+
 .topNavigation li {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
 .heroBtn {
     font-family: $secondary-font;
     color: $quaternary;
+    box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.0471111), 0px 1.54074px 2.86667px rgba(0, 0, 0, 0.0728889), 0px 0.325926px 0.733333px rgba(0, 0, 0, 0.12);
+}
+
+.heroContainer h1 {
+    font-size: 2.5rem !important;
+    font-weight: 900;
+    text-transform: capitalize;
+    line-height: 65px;
 }
 
 // Home Page Typography
 .homeNavigation {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .homeNavigation i {
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
 
 .navDisplayName {
@@ -64,11 +85,11 @@ i {
 
 .toDoTask,
 .doneTask {
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
 
 .filterContainer {
-    font-size: 1.3rem;
+    font-size: 0.9rem;
 }
 
 // New Task Component

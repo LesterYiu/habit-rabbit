@@ -1,34 +1,53 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&family=Inter:wght@400;600&display=swap");
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito+Sans:wght@400;700;900&display=swap");
 html {
   font-size: 125%; }
 
 body {
-  font-family: "DM Sans", sans-serif; }
+  font-family: "Nunito Sans", sans-serif; }
 
 .topNavigation {
-  font-family: "DM Serif Display", serif; }
+  font-family: "Nunito Sans", sans-serif; }
 
 button {
-  font-family: "DM Serif Display", serif !important; }
+  font-family: "Nunito Sans", sans-serif !important;
+  font-weight: 700; }
 
 i {
   font-size: 2rem; }
 
-.companyName {
-  font-size: 0.7rem; }
+h1 {
+  font-size: 1.5rem !important; }
+
+p {
+  font-size: 1.1rem; }
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700; }
 
 .topNavigation li {
-  font-size: 1rem; }
+  font-size: 0.9rem;
+  font-weight: 700; }
 
 .heroBtn {
-  font-family: "DM Serif Display", serif;
-  color: #FFFFFF; }
+  font-family: "Nunito Sans", sans-serif;
+  color: #FFFFFF;
+  box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.0471111), 0px 1.54074px 2.86667px rgba(0, 0, 0, 0.0728889), 0px 0.32593px 0.73333px rgba(0, 0, 0, 0.12); }
+
+.heroContainer h1 {
+  font-size: 2.5rem !important;
+  font-weight: 900;
+  text-transform: capitalize;
+  line-height: 65px; }
 
 .homeNavigation {
-  font-size: 1.5rem; }
+  font-size: 1.1rem; }
 
 .homeNavigation i {
-  font-size: 1.3rem; }
+  font-size: 1rem; }
 
 .navDisplayName {
   font-weight: bold;
@@ -46,10 +65,10 @@ i {
 
 .toDoTask,
 .doneTask {
-  font-size: 1.3rem; }
+  font-size: 1rem; }
 
 .filterContainer {
-  font-size: 1.3rem; }
+  font-size: 0.9rem; }
 
 .createTaskForm legend {
   font-size: 1.6rem;
@@ -254,8 +273,11 @@ html {
 
 .wrapper {
   max-width: 1200px;
-  width: 75%;
+  width: 85%;
   margin: 0 auto; }
+
+body {
+  background-color: #FFFEFC; }
 
 ul {
   list-style: none; }
@@ -289,7 +311,8 @@ button {
   padding: 0; }
 
 .frontPage nav {
-  padding-top: 15px; }
+  border-bottom: 1px solid rgba(212, 212, 212, 0.8);
+  padding: 15px 0; }
   .frontPage nav ul {
     display: flex;
     justify-content: space-between; }
@@ -315,7 +338,6 @@ button {
 
 .frontPage .logoContainer {
   display: flex;
-  flex-direction: column;
   align-items: center;
   border-radius: 50%;
   margin-right: 25px;
@@ -324,27 +346,29 @@ button {
 .frontPage .rightNavigation {
   display: flex; }
 
-.frontPage header {
+.frontPage .flexHeader {
   display: flex;
-  margin: 100px 0; }
-
-.frontPage .heroContainer {
-  max-width: 50%; }
+  justify-content: space-between;
+  margin: 150px 0 100px 0; }
 
 .frontPage .heroInfo {
   display: flex;
   flex-direction: column;
-  justify-content: center; }
+  justify-content: center;
+  max-width: 42%; }
   .frontPage .heroInfo p {
-    margin: 25px 0 20px 0; }
+    margin: 30px 0; }
+
+.frontPage .heroImageContainer {
+  max-width: 50%; }
 
 .frontPage .heroBtn {
-  background-color: #FF5678;
+  background-color: #F0BBB7;
   border: 0;
-  width: 150px;
-  padding: 7px 10px;
+  max-width: 40%;
+  padding: 8px 10px;
   border-radius: 8px;
-  border: 1px solid #111111; }
+  border: 1px solid rgba(212, 212, 212, 0.8); }
 
 .login-with-google-btn {
   cursor: pointer;
@@ -433,6 +457,7 @@ button {
   padding: 50px 25px;
   margin-bottom: 25px;
   display: flex;
+  align-items: center;
   position: relative; }
   .homeDashboard .taskContainer button {
     border: 0; }
@@ -443,23 +468,43 @@ button {
     right: 25px; }
     .homeDashboard .taskContainer .exitBtn i {
       font-size: 1.8rem; }
-  .homeDashboard .taskContainer .finishBtn {
-    margin-left: 15px;
-    margin-right: 50px; }
-    .homeDashboard .taskContainer .finishBtn i {
-      font-size: 2.5rem;
-      font-weight: 300; }
+  .homeDashboard .taskContainer input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #111111;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    display: block;
+    margin: 0 25px 0 0;
+    cursor: pointer;
+    background-color: #ffffff; }
+  .homeDashboard .taskContainer input[type=checkbox]:checked::before {
+    content: '✔';
+    margin-top: 12px;
+    margin-left: 3px;
+    color: #111111;
+    display: block;
+    font-size: 30px;
+    line-height: 12px; }
 
 .homeDashboard .toDoTask,
 .homeDashboard .doneTask {
   width: 50%;
-  padding: 15px 0px; }
+  padding: 10px 0px; }
 
 .homeDashboard .toDoTask {
   border-radius: 15px 0px 0px 15px; }
 
 .homeDashboard .doneTask {
   border-radius: 0px 15px 15px 0px; }
+
+.homeDashboard .taskText {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
 
 .homeDashboard .taskButtonActive {
   color: white;

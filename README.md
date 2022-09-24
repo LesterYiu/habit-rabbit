@@ -16,7 +16,8 @@ Habit Rabbit is a productivity application created for the sole purpose of stick
 - SASS
 - JavaScript
 - React
-- Firebase (Realtime Database & Authentication)
+- Firestore Database
+- Firebase Authentication
 
 ## API Used & NPM Packages Used
 - [React Router DOM](https://www.npmjs.com/package/react-router-dom)
