@@ -9,7 +9,7 @@
         width: 20%;
         min-height: 100vh;
         max-height: 100%;
-        border: 1px solid rgba(212, 212, 212, 0.8);
+        border: 1px solid rgba(212, 212, 212, 0.9);
         border-radius: 0px 10px 10px 0px;
         display: flex;
         flex-direction: column;
@@ -19,16 +19,22 @@
         button {
             margin: 20px 0;
             display: flex;
-            align-items: center;
+            border: 1px solid rgba(212, 212, 212, 0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.8rem;
         }
 
         button {
-            border: 0;
+            align-items: center;
         }
 
         i {
-            margin-right: 10px;
+            margin-right: 15px;
+            width: 20px;
         }
+
     }
 
     .homeDashboard {
@@ -53,6 +59,7 @@
     .navDisplayName {
         border-bottom: 1px solid $primary;
         padding: 0 40px 10px 40px;
+        margin-bottom: 10px;
     }
 }
 
@@ -67,9 +74,9 @@
     .taskContainer {
         border: 1px solid rgb(212, 212, 212);
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        height: 150px;
+        height: 120px;
         border-radius: 5px;
-        padding: 50px 25px;
+        padding: 25px 25px;
         margin-bottom: 25px;
         display: flex;
         align-items: center;
@@ -82,23 +89,13 @@
         .exitBtn {
             border: 0;
             position: absolute;
-            top: 25px;
-            right: 25px;
+            top: 20px;
+            right: 20px;
 
             i {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
             }
         }
-
-        // .finishBtn {
-        //     margin-left: 15px;
-        //     margin-right: 50px;
-
-        //     i {
-        //         font-size: 2.5rem;
-        //         font-weight: 300;
-        //     }
-        // }
 
         input[type="checkbox"]{
             -webkit-appearance: none;
@@ -106,8 +103,8 @@
             appearance: none;
             border: 1px solid $primary;
             border-radius: 50%;
-            height: 35px;
-            width: 35px;
+            height: 30px;
+            width: 30px;
             display: block;
             margin: 0 25px 0 0;
             cursor: pointer;
@@ -116,8 +113,8 @@
 
         input[type=checkbox]:checked::before {
             content: '✔';
-            margin-top: 12px;
-            margin-left: 3px;
+            margin-top: 10px;
+            margin-left: 1px;
             color: $primary;
             display: block;
             font-size: 30px;
@@ -126,10 +123,14 @@
 
     }
 
+    .fa-sort {
+        font-size: 1.3rem;
+    }
+
     .toDoTask,
     .doneTask {
         width: 50%;
-        padding: 10px 0px;
+        padding: 5px 0px;
     }
 
     .toDoTask {
