@@ -101,21 +101,27 @@ h4 {
 // New Task Component
 
 .createTaskForm legend {
-    font-size: 1.6rem;
-    font-weight: bold;
+    font-size: 1rem;
+    font-family: $base-font;
+    font-weight: 700;
 }
 
 .createTaskForm button {
     font-family: $tertiary-font !important;
 }
 
+.createTaskForm i {
+    font-size: 1.4rem;
+}
+
 .createTaskForm label {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     margin-top: 15px;
+    font-weight: bold;
 }
 
 .submitBtn {
     color: white;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
 }

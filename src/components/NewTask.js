@@ -29,21 +29,33 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     return(
         <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
-                <legend>Add a new task</legend>
-                <label htmlFor="task">Task</label>
-                <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required/>
+                <legend><span aria-hidden="true">📅</span> Add a new task</legend>
+                <div className="formField">
+                    <div className="formSection">
+                        <label htmlFor="task">Task</label>
+                        <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required/>
+                    </div>
 
-                <label htmlFor="date">Date</label>
-                <input type="date" id="date" required onChange={(e) => {handleInputText(e, setDeadline)}}/>
+                    <div className="formSection">
+                        <label htmlFor="date">Date</label>
+                        <input type="date" id="date" required onChange={(e) => {handleInputText(e, setDeadline)}}/>
+                    </div>
 
-                <label htmlFor="time">Time</label>
-                <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}}/>
+                    <div className="formSection">
+                        <label htmlFor="time">Time</label>
+                        <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}}/>
+                    </div>
 
-                <label htmlFor="description">Description</label>
-                <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}}/>
+                    <div className="formSection">
+                        <label htmlFor="description">Description</label>
+                        <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}}/>
+                    </div>
 
-                <label htmlFor="labels">Labels</label>
-                <input type="text" id="labels" required />
+                    <div className="formSection">
+                        <label htmlFor="label">Labels</label>
+                        <input type="text" id="label" required />
+                    </div>
+                </div>
 
                 <button type="submit" className="submitBtn">Create new task</button>
                 <button className="exitButton" onClick={(e) => {exitModal(e)}}><i className="fa-solid fa-circle-xmark" aria-hidden="true"></i><p className="sr-only">Exit Modal</p></button>
