@@ -446,6 +446,10 @@ button {
     .homePage .homeNavigation i {
       margin-right: 15px;
       width: 20px; }
+    .homePage .homeNavigation ul {
+      width: 100%; }
+      .homePage .homeNavigation ul button {
+        width: 100%; }
   .homePage .homeDashboard {
     width: 77%;
     padding-right: 3%;

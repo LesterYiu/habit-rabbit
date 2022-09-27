@@ -86,27 +86,35 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     }
 
     const changeTaskStatus = async (id, e, i) => {
+        
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
         const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
         const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
         if (e.target.checked) {    
             // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
+
+            // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
+            
+            setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));           
+    
             await addDoc(doneCollection, i);
             await deleteDoc(postDoc);
 
-            const data = await getDocs(collectionRef);
             const doneData = await getDocs(doneCollection);
-            setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
+
+
         } else {
+            // This will update state, immediating removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the finished task collection and add it to the ongoing task collection, then afterwards, update the state with the ongoing collection. This is triggered by the checkmark on the tasks on the "done" section.
+            setDoneTaskList(doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)])); 
+
             await addDoc(collectionRef, i);
             await deleteDoc(doneDoc);
 
             const data = await getDocs(collectionRef);
-            const doneData = await getDocs(doneCollection);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-            setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
+
         }
     }
 
