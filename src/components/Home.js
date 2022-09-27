@@ -3,7 +3,7 @@ import NewTask from "./NewTask";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
-import { collection, getDocs, deleteDoc, doc, updateDoc, addDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
 import { useState , useEffect} from "react";
 import uuid from "react-uuid";
 
@@ -39,11 +39,18 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
 
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
     useEffect( () => {
+
         const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+        const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+
         const getPost = async () => {
+            // data - ongoing tasks, doneData - finished tasks
             const data = await getDocs(collectionRef);
+            const doneData = await getDocs(doneCollection);
+
             // This will layout the docs data in an array with the document id which can be used later to remove each individual doc
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+            setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
         }
         getPost();
     }, [userUID, setUserUID]);
@@ -62,37 +69,44 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
         setIsToDoBtnClicked(false);
     }
 
-    // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array.
+    // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only
     const deleteTask = async (id, i) => {
-        // console.log(taskList[taskList.indexOf(i)]);
         const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
         setTaskList(newTaskList);
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
         await deleteDoc(postDoc);
     }
 
+    //  Delete tasks for finished task list only.
+    const deleteDoneTask = async (id ,i) => {
+        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+        setDoneTaskList(newDoneList);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        await deleteDoc(doneDoc);
+    }
+
     const changeTaskStatus = async (id, e, i) => {
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
+        const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
         const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
-        // console.log(i);
-        if (e.target.checked) {
-    
-            // will update in finished task collection then remove from ongoing task collection
+        if (e.target.checked) {    
+            // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
             await addDoc(doneCollection, i);
             await deleteDoc(postDoc);
-            
-            const isChecked = {
-                isDone: true
-            };
-            await updateDoc(postDoc, isChecked);
-            
+
+            const data = await getDocs(collectionRef);
+            const doneData = await getDocs(doneCollection);
+            setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+            setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
         } else {
+            await addDoc(collectionRef, i);
+            await deleteDoc(doneDoc);
 
-            const isChecked = {
-                isDone: false
-            };
-            await updateDoc(postDoc, isChecked);
-
+            const data = await getDocs(collectionRef);
+            const doneData = await getDocs(doneCollection);
+            setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+            setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
         }
     }
 
@@ -129,7 +143,22 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                                     </button>
                                 </div>
                             )
-                        }) : null}
+                        }) : 
+                        doneTaskList.map((i) => {
+                            return (
+                                <div className="taskContainer" key={uuid()}>
+                                    <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}} defaultChecked/>
+                                    <div className="taskText">
+                                        <p className="taskName">{i.task.name}</p>
+                                        <p>{i.task.description}</p>
+                                    </div>
+                                    <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
+                                        <span className="sr-only">Remove Task</span>
+                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 {isNewTaskClicked ? 

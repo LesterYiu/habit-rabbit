@@ -15,8 +15,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
         e.preventDefault();
         await setIsNewTaskClicked(false);
         await addDoc(collectionRef, 
-            {isDone: false,
-            user: {username: username, id: auth.currentUser.uid}, 
+            { user: {username: username, id: auth.currentUser.uid}, 
             task: {name: taskName, description, time, deadline}});
         const data = await getDocs(collectionRef);
         setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
