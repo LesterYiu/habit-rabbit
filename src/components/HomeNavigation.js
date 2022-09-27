@@ -25,22 +25,22 @@ const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth,
             <p className="navDisplayName">{username}</p>
             <ul>
                 <li>
-                    <Link to="/"><i className="fa-solid fa-house" aria-hidden="true"></i>Home</Link>
+                    <Link to="/" className="homeBtnOne homeBtn"><span aria-hidden="true">🏠</span> Home</Link>
                 </li>
                 <li>
-                    <Link to="/calendar"><i className="fa-solid fa-calendar" aria-hidden="true"></i>Calendar</Link>
+                    <Link to="/calendar" className="homeBtnTwo homeBtn"><span aria-hidden="true">🗓️</span> Calendar</Link>
                 </li>
                 <li>
-                    <Link to="/statistics"><i className="fa-solid fa-chart-simple" aria-hidden="true"></i>Statistics</Link>
+                    <Link to="/statistics" className="homeBtnThree homeBtn"><span aria-hidden="true">📊</span>Statistics</Link>
                 </li>
                 <li>
-                    <Link to="/settings"><i className="fa-solid fa-gear" aria-hidden="true"></i>Settings</Link>
+                    <Link to="/settings" className="homeBtnFour homeBtn"><span aria-hidden="true">⚙️</span>Settings</Link>
                 </li>
                 <li>
-                    <button onClick={handleNewTask}><i className="fa-solid fa-plus" aria-hidden="true"></i>New Task</button>
+                    <button onClick={handleNewTask} className="homeBtnFive homeBtn"><span aria-hidden="true">✨</span>New Task</button>
                 </li>
                 <li>                    
-                    <button onClick={signUserOut}><i className="fa-solid fa-right-from-bracket"></i>Login out</button>
+                    <button onClick={signUserOut} className="homeBtnSix homeBtn"><span aria-hidden="true">🚪</span>Login out</button>
                 </li>
             </ul>
         </nav>

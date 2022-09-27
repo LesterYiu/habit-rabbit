@@ -1,5 +1,7 @@
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
+import CustomizeTab from "./CustomizeTab";
+import dashboardWallpaper from "../assets/dashboardWallpaper.jpg";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
@@ -124,50 +126,63 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                 <div className="homePage">
                     <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
-                        <h1>Good morning, {username}</h1>
-                        <p>We have {taskList.length} things on the list today.</p>
-                        <div className="taskFilters">
-                            <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleToDoBtn}>To Do</button>
-                            <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleDoneBtn}>Done</button>
+                        <div className="dashboardWallpaper">
+                            <img src={dashboardWallpaper} alt="" />
                         </div>
-                        <div>
-                            <button className="filterContainer">
-                                <i className="fa-solid fa-sort"></i>
-                                <p>Filter</p>
-                            </button>
+                        <div className="dashboardContent">
+                            <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
+                            <p className="dashboardText">
+                                <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
+                            </p>
+                            <div className="taskFilters">
+                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleToDoBtn}>To Do</button>
+                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleDoneBtn}>Done</button>
+                            </div>
+                            <div className="taskFinderContainer">
+                                <button className="filterContainer">
+                                    <i className="fa-solid fa-sort"></i>
+                                    <p>Filter</p>
+                                </button>
+                                <div className="searchContainer">
+                                    <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                    <span className="sr-only">Search</span>
+                                    <input type="text" className="searchBarInput" />
+                                </div>
+                            </div>
+                            {isToDoBtnClicked ?
+                            taskList.map((i) => {
+                                return (
+                                    <div className="taskContainer" key={uuid()}>
+                                        <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}}/>
+                                        <div className="taskText">
+                                            <p className="taskName">{i.task.name}</p>
+                                            <p className="taskDescription">{i.task.description}</p>
+                                        </div>
+                                        <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                            <span className="sr-only">Remove Task</span>
+                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                )
+                            }) : 
+                            doneTaskList.map((i) => {
+                                return (
+                                    <div className="taskContainer" key={uuid()}>
+                                        <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}} defaultChecked/>
+                                        <div className="taskText">
+                                            <p className="taskName">{i.task.name}</p>
+                                            <p>{i.task.description}</p>
+                                        </div>
+                                        <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
+                                            <span className="sr-only">Remove Task</span>
+                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                )
+                            })}
                         </div>
-                        {isToDoBtnClicked ?
-                        taskList.map((i) => {
-                            return (
-                                <div className="taskContainer" key={uuid()}>
-                                    <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}}/>
-                                    <div className="taskText">
-                                        <p className="taskName">{i.task.name}</p>
-                                        <p>{i.task.description}</p>
-                                    </div>
-                                    <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                        <span className="sr-only">Remove Task</span>
-                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            )
-                        }) : 
-                        doneTaskList.map((i) => {
-                            return (
-                                <div className="taskContainer" key={uuid()}>
-                                    <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}} defaultChecked/>
-                                    <div className="taskText">
-                                        <p className="taskName">{i.task.name}</p>
-                                        <p>{i.task.description}</p>
-                                    </div>
-                                    <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
-                                        <span className="sr-only">Remove Task</span>
-                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            )
-                        })}
                     </div>
+                    <CustomizeTab />
                 </div>
                 {isNewTaskClicked ? 
                 <>

@@ -5,6 +5,7 @@
     width: 100%;
 
     .homeNavigation {
+        padding: 50px 25px;
         position: relative;
         width: 20%;
         min-height: 100vh;
@@ -30,9 +31,8 @@
             align-items: center;
         }
 
-        i {
+        span {
             margin-right: 15px;
-            width: 20px;
         }
 
         ul {
@@ -46,18 +46,42 @@
     }
 
     .homeDashboard {
-        width: 77%;
-        padding-right: 3%;
+        width: 60%;
         display: flex;
         flex-direction: column;
     }
 
-    .homeSection {
-        padding: 50px 25px;
+    .dashboardWallpaper {
+        height: 175px;
+        width: 100%;
+
+        img {
+            display: block;
+            max-height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: 0 70%;
+        }
+    }
+
+    .dashboardContent {
+        padding: 25px 50px;
+    }
+
+    .dashboardText {
+        border-bottom: 4px solid #78A27A;
+    }
+
+    .dashboardStatus {
+        margin-bottom: 15px;
     }
 
     .profilePicCont {
         margin-bottom: 10px;
+        padding: 5px;
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        border: 1px solid rgba(212, 212, 212, 0.8);
+        border-radius: 50%;
 
         img {
             border-radius: 50%;
@@ -65,10 +89,38 @@
     }
 
     .navDisplayName {
-        border-bottom: 1px solid $primary;
+        border-bottom: 2px solid #78A27A;
         padding: 0 40px 10px 40px;
         margin-bottom: 10px;
     }
+}
+
+.homeBtn {
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+}
+
+.homeBtnOne {
+    background-color: #F6F4F9;
+}
+
+.homeBtnTwo {
+    background-color: #F6F4F9;
+}
+
+.homeBtnThree {
+    background-color: #EDF2EC;
+}
+
+.homeBtnFour {
+    background-color: #E6F3FB;
+}
+
+.homeBtnFive {
+    background-color: #FBF1F4;
+}
+
+.homeBtnSix {
+    background-color: #FAF1F4;
 }
 
 // Home Dashboard
@@ -76,7 +128,12 @@
 .homeDashboard {
 
     h1 {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .dashboardGreeting {
+        margin-left: 15px;
+        margin-bottom: 5px;
     }
 
     .taskContainer {
@@ -131,8 +188,30 @@
 
     }
 
-    .fa-sort {
+    .fa-sort,
+    .fa-magnifying-glass {
         font-size: 1.3rem;
+    }
+
+    .taskFinderContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .searchContainer {
+        display: flex;
+        align-items: center;
+    }
+
+    .searchBarInput {
+        height: 40px;
+        border: 0;
+        padding: 7px 25px;
+        border-radius: 10px;
+        border: 1px solid rgba(212, 212, 212, 0.8);
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     }
 
     .toDoTask,
@@ -166,10 +245,12 @@
     }
 
     .filterContainer {
-        border: 0;
+        border: 1px solid rgba(212, 212, 212, 0.9);
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        padding: 7px 25px;
+        border-radius: 15px;
         display: flex;
         align-items: center;
-        margin-bottom: 15px;
 
         p {
             margin-left: 10px;
@@ -185,4 +266,15 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 10;
+}
+
+// Customizable tab styles
+
+.customizableTabSection {
+    display: block;
+    width: 20%;
+    min-height: 100vh;
+    max-height: 100%;
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    border-radius: 10px 0 0 10px;
 }
