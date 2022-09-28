@@ -1,7 +1,11 @@
-const CustomizeTab = () => {
+import Calendar from "react-calendar";
+import ToDoList from "./ToDoList.js";
+
+const CustomizeTab = ({userUID}) => {
     return(
         <div className="customizableTabSection">
-            {/* Daily reminders, to do list, calendar, time */}
+            <Calendar />
+            <ToDoList userUID={userUID}/>   
         </div>
     );
 }

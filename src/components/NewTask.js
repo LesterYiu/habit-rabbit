@@ -29,30 +29,30 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     return(
         <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
-                <legend><span aria-hidden="true">📅</span> Add a new task</legend>
+                <legend><h2>Create a new task</h2> <span aria-hidden="true">🪄</span></legend>
                 <div className="formField">
                     <div className="formSection">
-                        <label htmlFor="task">Task</label>
+                        <label htmlFor="task"><span aria-hidden="true">📝</span>Task Name</label>
                         <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required/>
                     </div>
 
                     <div className="formSection">
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date"><span aria-hidden="true">📅</span>Date</label>
                         <input type="date" id="date" required onChange={(e) => {handleInputText(e, setDeadline)}}/>
                     </div>
 
                     <div className="formSection">
-                        <label htmlFor="time">Time</label>
+                        <label htmlFor="time"><span aria-hidden="true">⏱️</span>Time</label>
                         <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}}/>
                     </div>
 
                     <div className="formSection">
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="description"><span aria-hidden="true">🖥️</span>Description</label>
                         <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}}/>
                     </div>
 
                     <div className="formSection">
-                        <label htmlFor="label">Labels</label>
+                        <label htmlFor="label"><span aria-hidden="true">🏷️</span>Labels</label>
                         <input type="text" id="label" required />
                     </div>
                 </div>

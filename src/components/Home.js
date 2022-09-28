@@ -135,8 +135,8 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                                 <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
                             </p>
                             <div className="taskFilters">
-                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleToDoBtn}>To Do</button>
-                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleDoneBtn}>Done</button>
+                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleToDoBtn}>Ongoing</button>
+                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleDoneBtn}>Finished</button>
                             </div>
                             <div className="taskFinderContainer">
                                 <button className="filterContainer">
@@ -182,7 +182,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                             })}
                         </div>
                     </div>
-                    <CustomizeTab />
+                    <CustomizeTab userUID={userUID}/>
                 </div>
                 {isNewTaskClicked ? 
                 <>

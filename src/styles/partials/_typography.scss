@@ -88,12 +88,12 @@ h4 {
 
 .taskName {
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1rem !important;
     margin-bottom: 10px;
 }
 
 .taskDescription {
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
 }
 
 .homeSection button {
@@ -104,6 +104,8 @@ h4 {
 .toDoTask,
 .doneTask {
     font-size: 1rem;
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
 }
 
 .filterContainer {
@@ -136,4 +138,13 @@ h4 {
     color: white;
     font-weight: bold;
     font-size: 0.8rem;
+}
+
+// To Do List typography (customizable tab component)
+
+.toDoListSection h2 {
+    color: white;
+    font-size: 1.1rem;
+    text-align: center;
+    text-transform: capitalize;
 }

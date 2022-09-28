@@ -1,0 +1,61 @@
+// To Do List Section
+
+.toDoListSection {
+    margin-top: 25px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    border: 1px solid #d4d4d4;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .toDoListTitleContainer {
+        background-color: #B3E5FC;
+        border-radius: 10px 10px 0px 0px;
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        padding: 10px 0px;
+        width: 100%;
+    }
+
+    .toDoListTasks {
+        height: 100%;
+        padding: 10px 10px;
+
+        li {
+            list-style-type: disc;
+            list-style-position: inside;
+            font-family: inherit;
+            text-transform: capitalize;
+            margin: 5px 0;
+            font-weight: 700;
+        }
+    }
+
+    .toDoInputContainer {
+        border-radius: 5px;
+        display: flex;
+        margin: 0px 10px 10px 10px;
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+
+        input {
+            width: 100%;
+            border-radius: 5px 0px 0px 5px;
+            border: 0;
+            padding: 0;
+            height: 30px;
+            padding-left: 10px;
+            border: 1px solid #d4d4d4;
+        }
+
+        button {
+            border: 0;
+            border-radius: 0px 5px 5px 0px;
+            background-color: #B3E5FC;
+            color: white;
+            padding: 0px 5px;
+            height: 100%;
+        }
+    }
+}
