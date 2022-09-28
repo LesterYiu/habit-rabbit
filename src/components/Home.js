@@ -131,9 +131,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                         </div>
                         <div className="dashboardContent">
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
-                            <p className="dashboardText">
-                                <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
-                            </p>
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
                             <div className="taskFilters">
                                 <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleToDoBtn}>Ongoing</button>
                                 <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleDoneBtn}>Finished</button>
@@ -190,7 +188,6 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                     <div className="overlayBackground"></div>
                 </>
                 : null}
-                
             </>
         )
     }
