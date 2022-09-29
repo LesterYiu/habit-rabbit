@@ -66,27 +66,29 @@ const ToDoList = ({userUID}) => {
 
     return(
     <div className="toDoListSection">
-        <div className="toDoListTitleContainer">
-            <h2>to-do list</h2>
-            <button onClick={() => {setIsSettingBtnClicked(!isSettingBtnClicked)}}>
-                <i className="fa-solid fa-ellipsis"></i>
-            </button>
-        </div>
-        <div className="toDoListTasks">
-            <ul>
-                {toDoList.map( (list) => {
-                    return (
-                        <div className="toDoTask" key={uuid()}>
-                            <li>{list.task}</li>
-                            {isSettingBtnClicked ? 
-                            <button onClick={() => {handleDeleteDoc(list)}}>
-                                <span className="sr-only">Delete to-do task</span>
-                                <i className="fa-solid fa-xmark"></i>
-                            </button> : null}
-                        </div>
-                    )
-                })}
-            </ul>
+        <div>
+            <div className="toDoListTitleContainer">
+                <h2>to-do list</h2>
+                <button onClick={() => {setIsSettingBtnClicked(!isSettingBtnClicked)}}>
+                    <i className="fa-solid fa-ellipsis"></i>
+                </button>
+            </div>
+            <div className="toDoListTasks">
+                <ul>
+                    {toDoList.map( (list) => {
+                        return (
+                            <div className="toDoTask" key={uuid()}>
+                                <li>{list.task}</li>
+                                {isSettingBtnClicked ? 
+                                <button onClick={() => {handleDeleteDoc(list)}}>
+                                    <span className="sr-only">Delete to-do task</span>
+                                    <i className="fa-solid fa-xmark"></i>
+                                </button> : null}
+                            </div>
+                        )
+                    })}
+                </ul>
+            </div>
         </div>
         <form className="toDoInputContainer">
             <input type="text" onChange={(e) => {onTextInputChange(e)}}/>

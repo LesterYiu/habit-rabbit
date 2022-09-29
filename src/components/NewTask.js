@@ -9,6 +9,10 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     const [deadline, setDeadline] = useState("");
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
+    const [taskColour, setTaskColour] = useState("");
+    const [existingLabels, setExistingLabels] = useState("");
+    const [isCustomRequired, setIsCustomRequired] = useState(false);
+    const [isExistingRequired, setIsExistingRequired] = useState(false);
 
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask`);
 
@@ -17,17 +21,34 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
         await setIsNewTaskClicked(false);
         await addDoc(collectionRef, 
             { user: {username: username, id: auth.currentUser.uid}, 
-            task: {name: taskName, description, time, deadline}});
+            task: {name: taskName, description, time, deadline, priority, taskColour, label: existingLabels}});
         const data = await getDocs(collectionRef);
         setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+    }
+
+    const handleRequiredLabelField = (e) => {
+        // // const customLabelEl = e.target.parentElement.parentElement.firstElementChild.children[1].children[0];
+        // console.log(e.target.parentElement.parentElement.parentElement.children[2].children[1]);
+        if (e.target.localName === "select" && e.target.value) {
+            const customLabelEl = e.target.parentElement.parentElement.firstElementChild.children[1].children[0];
+
+            setIsCustomRequired(false);
+            setIsExistingRequired(true);
+            customLabelEl.value = "";
+        } else if (e.target.localName === "input" && e.target.value) {
+            const existingLabelEl = e.target.parentElement.parentElement.parentElement.children[2].children[1];
+
+            setIsCustomRequired(true);
+            setIsExistingRequired(false);
+            existingLabelEl.value = "";
+        }
     }
     
     const exitModal = (e) => {
         e.preventDefault();
         setIsNewTaskClicked(false);
     }
-    
-    console.log(priority);
+
     return(
         <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
@@ -58,7 +79,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                             <p className="paragraphLabel">Priority:</p>
                             <div className="lowPriorityContainer priorityContainer">
                                 <label htmlFor="lowPriority">Low</label>
-                                <input type="radio" id="lowPriority" name="priority" value="low" onClick={(e) => {setPriority(e.target.value)}}/>
+                                <input type="radio" id="lowPriority" name="priority" value="low" onClick={(e) => {setPriority(e.target.value)}} required/>
                             </div>
 
                             <div className="mediumPriorityContainer priorityContainer">
@@ -78,7 +99,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                         <div className="labelSection">
                             <label htmlFor="createLabel">Create a Task Label: </label>
                             <div className="createLabelTextContainer">
-                                <input type="text" />
+                                <input type="text" onChange={(e) => {handleRequiredLabelField(e)}} required={isCustomRequired}/>
                                 <button>+</button>
                             </div>
                         </div>
@@ -88,8 +109,10 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                             <div className="orSectionBorder"></div>
                         </div>
                         <div className="labelSection existingLabelSection">
-                            <label htmlFor="existingLabels">Existing Task Labels:</label>
-                            <select name="" id="existingLabels">
+                            <label htmlFor="existingLabels" required={isExistingRequired}>Existing Task Labels:</label>
+                            <select name="" id="existingLabels" required onChange={(e) => {
+                                setExistingLabels(e.target.value)
+                                handleRequiredLabelField(e)}}>
                                 <option value="" selected disabled hidden>Choose Here</option>
                                 <option value="personal">Personal</option>
                                 <option value="school">School</option>
@@ -102,7 +125,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                         </div>
                         <div className="labelSection">
                             <label htmlFor="colorChoice">Task Colour:</label>
-                            <input type="color" id="colorChoice" value="#F6F4F9"/>
+                            <input type="color" id="colorChoice" defaultValue="#F6F4F9" onChange={(e) => {setTaskColour(e.target.value)}}/>
                             <div className="colorChoiceHelp">
                                 <span aria-hidden="true">ℹ️</span>
                                 <p>To choose a colour, simply click the colour block above.</p>

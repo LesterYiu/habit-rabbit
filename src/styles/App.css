@@ -35,7 +35,9 @@ h4 {
 .heroBtn {
   font-family: "Nunito Sans", sans-serif;
   color: #FFFFFF;
-  box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.0471111), 0px 1.54074px 2.86667px rgba(0, 0, 0, 0.0728889), 0px 0.32593px 0.73333px rgba(0, 0, 0, 0.12); }
+  box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.0471111), 0px 1.54074px 2.86667px rgba(0, 0, 0, 0.0728889), 0px 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+  font-weight: 700;
+  text-align: center; }
 
 .heroContainer h1 {
   font-size: 2.5rem !important;
@@ -82,6 +84,12 @@ h4 {
   font-size: 1rem;
   border: 1px solid rgba(212, 212, 212, 0.9);
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+
+.labelContainer p {
+  font-family: "Inter", sans-serif;
+  text-transform: capitalize;
+  font-size: 0.8rem;
+  font-weight: 400; }
 
 .filterContainer {
   font-size: 0.9rem; }
@@ -563,7 +571,7 @@ button {
 .homeDashboard .taskContainer {
   border: 1px solid #d4d4d4;
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-  height: 120px;
+  height: 150px;
   border-radius: 5px;
   padding: 25px 25px;
   margin-bottom: 25px;
@@ -649,6 +657,36 @@ button {
 .homeDashboard .taskFilters {
   margin: 30px 0 30px 0; }
 
+.homeDashboard .labelContainer {
+  display: flex; }
+  .homeDashboard .labelContainer p {
+    border: 1px solid rgba(212, 212, 212, 0.8);
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 5px; }
+  .homeDashboard .labelContainer .personal {
+    background-color: #FBF1F4; }
+  .homeDashboard .labelContainer .school {
+    background-color: #F6F4F9; }
+  .homeDashboard .labelContainer .work {
+    background-color: #EDF2EC; }
+  .homeDashboard .labelContainer .importantDate {
+    background-color: #E6F3FB; }
+  .homeDashboard .labelContainer .appointment {
+    background-color: #F6F4F9; }
+  .homeDashboard .labelContainer .exercise {
+    background-color: #FAF1F4; }
+  .homeDashboard .labelContainer .chores {
+    background-color: #f8f1fb; }
+  .homeDashboard .labelContainer .low {
+    background-color: #A5D6A7; }
+  .homeDashboard .labelContainer .medium {
+    background-color: #FEEFD0; }
+  .homeDashboard .labelContainer .high {
+    background-color: #FFCED6; }
+
 .homeDashboard .filterContainer {
   border: 1px solid rgba(212, 212, 212, 0.9);
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
@@ -683,7 +721,7 @@ button {
   top: 50%;
   left: 50%;
   min-width: 70%;
-  height: 70%;
+  height: 75%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
   background-color: #F1F5F9;
@@ -957,7 +995,7 @@ abbr {
       padding: 1px;
       background-color: #8dc4de; }
   .toDoListSection .toDoListTasks {
-    height: 100%;
+    min-height: 100%;
     padding: 10px 10px; }
     .toDoListSection .toDoListTasks li {
       font-family: inherit;

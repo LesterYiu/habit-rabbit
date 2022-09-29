@@ -150,11 +150,15 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                             {isToDoBtnClicked ?
                             taskList.map((i) => {
                                 return (
-                                    <div className="taskContainer" key={uuid()}>
+                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
                                         <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}}/>
                                         <div className="taskText">
                                             <p className="taskName">{i.task.name}</p>
                                             <p className="taskDescription">{i.task.description}</p>
+                                            <div className="labelContainer">
+                                                <p className={i.task.priority}>{i.task.priority}</p>
+                                                <p className={i.task.label}>{i.task.label}</p>
+                                            </div>
                                         </div>
                                         <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
                                             <span className="sr-only">Remove Task</span>
