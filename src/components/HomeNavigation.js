@@ -28,6 +28,9 @@ const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth,
                     <Link to="/" className="homeBtnOne homeBtn"><span aria-hidden="true">🏠</span> Home</Link>
                 </li>
                 <li>
+                    <button onClick={handleNewTask} className="homeBtnFive homeBtn"><span aria-hidden="true">✨</span>New Task</button>
+                </li>
+                <li>
                     <Link to="/calendar" className="homeBtnTwo homeBtn"><span aria-hidden="true">🗓️</span> Calendar</Link>
                 </li>
                 <li>
@@ -35,9 +38,6 @@ const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth,
                 </li>
                 <li>
                     <Link to="/settings" className="homeBtnFour homeBtn"><span aria-hidden="true">⚙️</span>Settings</Link>
-                </li>
-                <li>
-                    <button onClick={handleNewTask} className="homeBtnFive homeBtn"><span aria-hidden="true">✨</span>New Task</button>
                 </li>
                 <li>                    
                     <button onClick={signUserOut} className="homeBtnSix homeBtn"><span aria-hidden="true">🚪</span>Login out</button>

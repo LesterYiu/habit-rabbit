@@ -29,35 +29,73 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     return(
         <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
-                <legend><h2>Create a new task</h2> <span aria-hidden="true">🪄</span></legend>
-                <div className="formField">
-                    <div className="formSection">
-                        <label htmlFor="task"><span aria-hidden="true">📝</span>Task Name</label>
-                        <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required/>
-                    </div>
+                <div className="formPrimarySection">
+                    <legend><h2>Create a new task</h2></legend>
+                    <div className="formField">
+                        <div className="formSection">
+                            <label htmlFor="task">Task Name:</label>
+                            <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required/>
+                        </div>
 
-                    <div className="formSection">
-                        <label htmlFor="date"><span aria-hidden="true">📅</span>Date</label>
-                        <input type="date" id="date" required onChange={(e) => {handleInputText(e, setDeadline)}}/>
-                    </div>
+                        <div className="formSection">
+                            <label htmlFor="description">Task Description:</label>
+                            <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}}/>
+                        </div>
 
-                    <div className="formSection">
-                        <label htmlFor="time"><span aria-hidden="true">⏱️</span>Time</label>
-                        <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}}/>
-                    </div>
+                        <div className="formSection">
+                            <label htmlFor="date">Due Date:</label>
+                            <input type="date" id="date" required onChange={(e) => {handleInputText(e, setDeadline)}}/>
+                        </div>
 
-                    <div className="formSection">
-                        <label htmlFor="description"><span aria-hidden="true">🖥️</span>Description</label>
-                        <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}}/>
-                    </div>
+                        <div className="formSection">
+                            <label htmlFor="time">Due Time:</label>
+                            <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}}/>
+                        </div>
 
-                    <div className="formSection">
-                        <label htmlFor="label"><span aria-hidden="true">🏷️</span>Labels</label>
-                        <input type="text" id="label" required />
+                        <div className="formSection prioritySection">
+                            <p className="paragraphLabel">Priority:</p>
+                            <div className="lowPriorityContainer priorityContainer">
+                                <label htmlFor="lowPriority">Low</label>
+                                <input type="radio" id="lowPriority" name="priority"/>
+                            </div>
+
+                            <div className="mediumPriorityContainer priorityContainer">
+                                <label htmlFor="mediumPriority">Medium</label>
+                                <input type="radio" id="mediumPriority" name="priority" />
+                            </div>
+
+                            <div className="highPriorityContainer priorityContainer">
+                                <label htmlFor="highPiority">High</label>
+                                <input type="radio" id="highPiority" name="priority" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <button type="submit" className="submitBtn">Create new task</button>
+                <div className="formSecondarySection">
+                    <div>
+                        <div className="labelSection">
+                            <label htmlFor="createLabel">Create a Task Label:</label>
+                            <input type="text" />
+                        </div>
+                        <div className="labelSection">
+                            <label htmlFor="existingLabels">Existing Task Labels:</label>
+                            <select name="" id="existingLabels">
+                                <option value="" selected disabled hidden>Choose Here</option>
+                                <option value="personal">Personal</option>
+                                <option value="school">School</option>
+                                <option value="work">Work</option>
+                                <option value="importantDate">Important Date</option>
+                                <option value="appointment">Appointment</option>
+                                <option value="exercise">Exercise</option>
+                                <option value="chores">Chores</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="buttonSection">
+                        <button className="cancelBtn">Cancel</button>
+                        <button type="submit" className="submitBtn">Create</button>
+                    </div>
+                </div>
                 <button className="exitButton" onClick={(e) => {exitModal(e)}}><i className="fa-solid fa-circle-xmark" aria-hidden="true"></i><p className="sr-only">Exit Modal</p></button>
             </fieldset>
         </form>
