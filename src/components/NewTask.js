@@ -8,6 +8,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     const [description, setDescription] = useState("");
     const [deadline, setDeadline] = useState("");
     const [time, setTime] = useState("");
+    const [priority, setPriority] = useState("");
 
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask`);
 
@@ -25,7 +26,8 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
         e.preventDefault();
         setIsNewTaskClicked(false);
     }
-
+    
+    console.log(priority);
     return(
         <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
@@ -56,17 +58,17 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                             <p className="paragraphLabel">Priority:</p>
                             <div className="lowPriorityContainer priorityContainer">
                                 <label htmlFor="lowPriority">Low</label>
-                                <input type="radio" id="lowPriority" name="priority"/>
+                                <input type="radio" id="lowPriority" name="priority" value="low" onClick={(e) => {setPriority(e.target.value)}}/>
                             </div>
 
                             <div className="mediumPriorityContainer priorityContainer">
                                 <label htmlFor="mediumPriority">Medium</label>
-                                <input type="radio" id="mediumPriority" name="priority" />
+                                <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={(e) => {setPriority(e.target.value)}}/>
                             </div>
 
                             <div className="highPriorityContainer priorityContainer">
                                 <label htmlFor="highPiority">High</label>
-                                <input type="radio" id="highPiority" name="priority" />
+                                <input type="radio" id="highPiority" name="priority" value="high" onClick={(e) => {setPriority(e.target.value)}}/>
                             </div>
                         </div>
                     </div>
@@ -74,10 +76,18 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                 <div className="formSecondarySection">
                     <div>
                         <div className="labelSection">
-                            <label htmlFor="createLabel">Create a Task Label:</label>
-                            <input type="text" />
+                            <label htmlFor="createLabel">Create a Task Label: </label>
+                            <div className="createLabelTextContainer">
+                                <input type="text" />
+                                <button>+</button>
+                            </div>
                         </div>
-                        <div className="labelSection">
+                        <div className="orSection">
+                            <div className="orSectionBorder"></div>
+                            <p className="orSectionText">or</p>
+                            <div className="orSectionBorder"></div>
+                        </div>
+                        <div className="labelSection existingLabelSection">
                             <label htmlFor="existingLabels">Existing Task Labels:</label>
                             <select name="" id="existingLabels">
                                 <option value="" selected disabled hidden>Choose Here</option>
@@ -90,9 +100,17 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                                 <option value="chores">Chores</option>
                             </select>
                         </div>
+                        <div className="labelSection">
+                            <label htmlFor="colorChoice">Task Colour:</label>
+                            <input type="color" id="colorChoice" value="#F6F4F9"/>
+                            <div className="colorChoiceHelp">
+                                <span aria-hidden="true">ℹ️</span>
+                                <p>To choose a colour, simply click the colour block above.</p>
+                            </div>
+                        </div>
                     </div>
                     <div className="buttonSection">
-                        <button className="cancelBtn">Cancel</button>
+                        <button className="cancelBtn" onClick={(e) => {exitModal(e)}}>Cancel</button>
                         <button type="submit" className="submitBtn">Create</button>
                     </div>
                 </div>

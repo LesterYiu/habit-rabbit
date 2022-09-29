@@ -3,12 +3,12 @@
     top: 50%;
     left: 50%;
     min-width: 70%;
-    height: 60%;
+    height: 70%;
     transform: translate(-50%, -50%);
     border-radius: 5px;
     background-color: #F1F5F9;
     z-index: 20;
-    
+    box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
 
     .formPrimarySection {
         padding: 20px 80px 20px 80px;
@@ -29,7 +29,7 @@
     }
 
     .formField {
-        margin-top: 30px;
+        margin-top: 40px;
     }
     
     legend {
@@ -39,9 +39,13 @@
         margin-top: 25px;
 
         h2 {
-            font-size: 1.9rem;
+            font-size: 1.5rem;
             text-transform: capitalize;
             color: black;
+            border-bottom: 3px solid #d4d4d4;
+            padding-bottom: 10px;
+            width: 100%;
+            font-family: $tertiary-font;
         }
     }
 
@@ -49,11 +53,12 @@
         background-color: transparent;
         border-radius: 5px;
         border: 1px solid rgba(212, 212, 212, 0.9);
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     }
 
     .formSection {
         width: 100%;
-        margin-bottom: 25px;
+        margin-bottom: 35px;
         display: flex;
 
         label,
@@ -115,10 +120,11 @@
 
     .prioritySection {
         border: 1px solid rgba(212, 212, 212, 0.9);
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         background-color: #FFFFFF;
-        padding: 20px 30px;
+        padding: 35px 30px;
         border-radius: 5px;
-        margin-top: 40px;
+        margin-top: 60px;
         
         label {
             margin: 0;
@@ -153,6 +159,36 @@
         display: flex;
         flex-direction: column;
     }
+    
+    .createLabelTextContainer {
+        position: relative;
+
+        button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 5px;
+            color: #AFAFAF;
+            font-size: 1.3rem;
+        }
+    }
+
+    .orSection {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+
+        p {
+            color:#6D767E;
+            transform:translateY(35%);
+        }
+    }
+
+    .orSectionBorder {
+        width: 30%;
+        border-bottom: 2px solid rgb(212, 212, 212);
+        display: block;
+    }
 
     input {
         width: 100%;
@@ -165,15 +201,22 @@
     label {
         color: #6D767E;
         margin-bottom: 15px;
+        margin-top: 25px;
     }
 
     select {
         background-color: transparent;
         border: 1px solid rgba(212, 212, 212, 0.9);
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         border-radius: 5px;
         padding: 0px 0px 0px 8px;
         height: 40px;
     }
+}
+
+.existingLabelSection {
+    border-bottom: 3px solid #d4d4d4;
+    padding-bottom: 35px;
 }
 
 .priorityContainer {
@@ -181,6 +224,7 @@
     margin-right: 25px;
     padding: 10px;
     border-radius: 5px;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
 
     label {
         width: 100px !important;
@@ -199,4 +243,22 @@
 
 .highPriorityContainer {
     background-color: #FFCED6;
+}
+
+input[type="color"] {
+    width: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.colorChoiceHelp {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+
+    p {
+        font-size: 0.8rem;
+        color: #5fadd2;
+        margin-left: 10px;
+    }
 }
