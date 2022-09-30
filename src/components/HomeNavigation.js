@@ -2,7 +2,7 @@ import { auth } from "./firebase";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
-const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth, setIsNewTaskClicked, isNewTaskClicked}) => {
+const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth, setIsNewTaskClicked}) => {
     
     const handleNewTask = () => {
         setIsNewTaskClicked(true);

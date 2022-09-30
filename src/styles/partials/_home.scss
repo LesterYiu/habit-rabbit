@@ -258,10 +258,14 @@
     .searchBarInput {
         height: 40px;
         border: 0;
-        padding: 7px 25px;
+        padding: 5px 15px;
         border-radius: 10px;
         border: 1px solid rgba(212, 212, 212, 0.8);
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    }
+
+    .searchBarInput::placeholder {
+        font-family: $base-font;
     }
 
     .toDoTask,

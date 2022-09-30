@@ -58,6 +58,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     }, [userUID, setUserUID]);
 
     const handleInputText = (e, setState) => {
+        e.preventDefault();
         setState(e.target.value);
     }
 
@@ -144,7 +145,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                                 <div className="searchContainer">
                                     <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                                     <span className="sr-only">Search</span>
-                                    <input type="text" className="searchBarInput" />
+                                    <input type="text" className="searchBarInput" placeholder="Search for task..."/>
                                 </div>
                             </div>
                             {isToDoBtnClicked ?

@@ -3,7 +3,7 @@
     top: 50%;
     left: 50%;
     min-width: 70%;
-    height: 75%;
+    height: 80%;
     transform: translate(-50%, -50%);
     border-radius: 5px;
     background-color: #F1F5F9;
@@ -29,7 +29,7 @@
     }
 
     .formField {
-        margin-top: 40px;
+        margin-top: 60px;
     }
     
     legend {
@@ -113,9 +113,23 @@
     }
 
     .cancelBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        padding: 5px 0;
+        border-radius: 10px;
+        height: 50px;
+        min-width: 125px;
+        font-size: 1rem;
         color: black;
         border: 1px solid rgba(212, 212, 212, 0.9);
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .prioritySection {
@@ -150,7 +164,7 @@
     min-height: 100%;
     width: 30%;
     background-color: #FFFFFF;
-    padding: 70px 40px 20px 40px;
+    padding: 45px 40px 20px 40px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -163,13 +177,39 @@
     .createLabelTextContainer {
         position: relative;
 
-        button {
+        .createNewLabelBtn {
+            display: block;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             right: 5px;
-            color: #AFAFAF;
+            color: #6F6F6F;
             font-size: 1.3rem;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    }
+
+    .saveLabelsContainer {
+        display: flex;
+        align-items: center;
+        margin-top: 25px;
+
+        label {
+            width: calc(100% - 30px);
+            margin: 0 5px 0 0;
+            padding-left: 5px;
+            line-height: 20px;
+        }
+
+        input {
+            padding: 0;
+            cursor: pointer;
+            height: 20px;
+            width: 20px;
         }
     }
 
@@ -251,6 +291,11 @@ input[type="color"] {
     cursor: pointer;
 }
 
+.colorSection {
+    border-bottom: 3px solid #d4d4d4;
+    padding-bottom: 25px;
+}
+
 .colorChoiceHelp {
     margin-top: 25px;
     display: flex;
@@ -261,4 +306,18 @@ input[type="color"] {
         color: #5fadd2;
         margin-left: 10px;
     }
+}
+
+.chosenLabelsSection {
+    margin-top: 20px;
+}
+
+.appliedTaskLabel {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    margin-right: 5px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
 }
