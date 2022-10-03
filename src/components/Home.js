@@ -57,11 +57,6 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
         getPost();
     }, [userUID, setUserUID]);
 
-    const handleInputText = (e, setState) => {
-        e.preventDefault();
-        setState(e.target.value);
-    }
-
     const handleToDoBtn = () => {
         setIsDoneBtnClicked(false);
         setIsToDoBtnClicked(true);
@@ -158,7 +153,8 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                                             <p className="taskDescription">{i.task.description}</p>
                                             <div className="labelContainer">
                                                 <p className={i.task.priority}>{i.task.priority}</p>
-                                                <p className={i.task.label}>{i.task.label}</p>
+                                                {/* <p className={i.task.label}>{i.task.label}</p> */}
+                                                {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
                                             </div>
                                         </div>
                                         <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
@@ -189,7 +185,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                 </div>
                 {isNewTaskClicked ? 
                 <>
-                    <NewTask handleInputText={handleInputText} userUID={userUID} username={username} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <NewTask userUID={userUID} username={username} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
                     <div className="overlayBackground"></div>
                 </>
                 : null}

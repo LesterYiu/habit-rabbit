@@ -3,7 +3,7 @@ import { db, auth } from "./firebase";
 import { addDoc, getDocs, collection } from "firebase/firestore";
 import uuid from "react-uuid";
 
-const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskClicked}) => {
+const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     
     const [taskName, setTaskName] = useState("");
     const [description, setDescription] = useState("");
@@ -11,28 +11,34 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
     const [taskColour, setTaskColour] = useState("");
-    const [existingLabels, setExistingLabels] = useState("");
+    const [existingLabels, setExistingLabels] = useState([]);
     const [labelList, setLabelList] = useState([]);
 
+    const saveLabelInputEl = useRef(null);
     const taskNameInputEl = useRef(null);
     const taskDescriptionInputEl = useRef(null);
     const taskDueDateInputEl = useRef(null);
     const taskDueTimeInputEl = useRef(null);
     const customTaskInputEl = useRef(null); 
     const existingTaskInputEl = useRef(null);
-    const saveLabelInputEl = useRef(null);
+
 
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask`);
     const customLabelsCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/customLabels`);
 
+    const handleInputText = (e, setState) => {
+        e.preventDefault();
+        setState(e.target.value);
+    }
+
     const createTask = async (e) => {
         e.preventDefault();
 
-        if (taskNameInputEl.current.value && taskDescriptionInputEl.current.value && taskDueDateInputEl.current.value && taskDueTimeInputEl.current.value && (customTaskInputEl.current.value || existingTaskInputEl.current.value)) {
+        if (taskNameInputEl.current.value && taskDescriptionInputEl.current.value && taskDueDateInputEl.current.value && taskDueTimeInputEl.current.value && (labelList || existingTaskInputEl.current.value)) {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, priority, taskColour, label: existingLabels}});
+                task: {name: taskName, description, time, deadline, priority, taskColour, label: [...existingLabels, ...labelList]}});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel();
@@ -48,9 +54,8 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
             customTaskInputEl.current.value = "";
 
             return false;
-        } else if (e.target.localName === "input" && e.target.value) {
+        } else if (e.target.localName === "input" && labelList) {
             existingTaskInputEl.current.required = false;
-            e.target.required = true;
             existingTaskInputEl.current.value = "";
 
             return false;
@@ -58,7 +63,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     }
 
     /*
-    PSEUDO CODE FOR CREATETASKLABEL
+    PSEUDO CODE FOR handleNewTaskLabels
 
         -on user click on the plus icon, add task label
         - do not let users add more than 3 labels
@@ -74,23 +79,44 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
     */
 
             // flag: still need to finish
-    const createTaskLabel = () => {
-        if(customTaskInputEl.current.value.length > 0 || customTaskInputEl.current.value.length < 4) {
+            // cannot be more than 16 characters
+            // no more than 3 labels
+            // cannot be empty
+
+    const handleNewTaskLabels = async () => {
+        const labelsData = await getDocs(customLabelsCollectionRef);
+        const existingLabelsArray = (labelsData.docs.map((doc) => ({...doc.data(), id: doc.id})));
+        const restructuredArray = existingLabelsArray.map( (labelObject) => {
+            return labelObject.taskLabel;
+        });
+
+        // RestructuredArray will contain list of all saved arrays in the database.
+
+        /* Labels will not be set in state & uploading to the database if the following criteria apply 
+            1. More than 3 labels exist
+            2. If an empty string is inputted
+            3. If the label exists alreay
+            4. If it is duplicated from before
+
+        */
+
+        if(labelList.length < 4 && customTaskInputEl.current.value !== "" && !restructuredArray.includes(customTaskInputEl.current.value) && !labelList.includes(customTaskInputEl.current.value)) {
             setLabelList([customTaskInputEl.current.value, ...labelList])
             customTaskInputEl.current.value = "";
+        } else {
+            console.log('??')
         }
-        // console.log(e.target);
-        // const taskLabelName = e.target.value;
-        // await addDoc(customLabelsCollectionRef, {taskLabel: taskLabelName});
-        // e.target.value = "";
     }
 
-    // FLAG STILL NEED TO FINISH
-    console.log(labelList);
+    const createReusableTaskLabel = async () => {
+        if (saveLabelInputEl.current === null) {
+            return;
+        }
 
-    const createReusableTaskLabel = () => {
         if (saveLabelInputEl.current.checked === true) {
-            console.log('checked');
+            labelList.forEach( async (label) => {
+                await addDoc(customLabelsCollectionRef, {taskLabel: label});
+            })
         }
     }
 
@@ -149,7 +175,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                             <label htmlFor="createLabel">Create a Task Label: </label>
                             <div className="createLabelTextContainer">
                                 <input type="text" onChange={(e) => {handleRequiredLabelField(e)}} ref={customTaskInputEl} />
-                                <div className="createNewLabelBtn" aria-label="create label button" onClick={(e) => {createTaskLabel(e)}}>+</div>
+                                <div className="createNewLabelBtn" aria-label="create label button" onClick={(e) => {handleNewTaskLabels(e)}}>+</div>
                             </div>
                             <div className="saveLabelsContainer">
                                 <label htmlFor="saveLabel">Would you like to save your task label for future use?</label>
@@ -164,7 +190,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                         <div className="labelSection existingLabelSection">
                             <label htmlFor="existingLabels">Existing Task Labels:</label>
                             <select name="" id="existingLabels" required ref={existingTaskInputEl} onChange={(e) => {
-                                setExistingLabels(e.target.value)
+                                setExistingLabels([e.target.value]);
                                 handleRequiredLabelField(e)}}>
                                 <option value="" selected disabled hidden>Choose Here</option>
                                 <option value="personal">Personal</option>
@@ -178,7 +204,7 @@ const NewTask = ({userUID, username, setTaskList, handleInputText, setIsNewTaskC
                         </div>
                         <div className="labelSection colorSection">
                             <label htmlFor="colorChoice">Task Colour:</label>
-                            <input type="color" id="colorChoice" defaultValue="#F6F4F9" onChange={(e) => {setTaskColour(e.target.value)}}/>
+                            <input type="color" id="colorChoice" onChange={(e) => {setTaskColour(e.target.value)}}/>
                             <div className="colorChoiceHelp">
                                 <span aria-hidden="true">ℹ️</span>
                                 <p>To choose a colour, simply click the colour block above.</p>
