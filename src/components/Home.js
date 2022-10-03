@@ -153,7 +153,6 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                                             <p className="taskDescription">{i.task.description}</p>
                                             <div className="labelContainer">
                                                 <p className={i.task.priority}>{i.task.priority}</p>
-                                                {/* <p className={i.task.label}>{i.task.label}</p> */}
                                                 {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
                                             </div>
                                         </div>
@@ -166,11 +165,15 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                             }) : 
                             doneTaskList.map((i) => {
                                 return (
-                                    <div className="taskContainer" key={uuid()}>
-                                        <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}} defaultChecked/>
+                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
+                                        <input type="checkbox" className="taskCheckbox" onChange={(e) => {changeTaskStatus(i.id, e, i)}}/>
                                         <div className="taskText">
                                             <p className="taskName">{i.task.name}</p>
-                                            <p>{i.task.description}</p>
+                                            <p className="taskDescription">{i.task.description}</p>
+                                            <div className="labelContainer">
+                                                <p className={i.task.priority}>{i.task.priority}</p>
+                                                {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
+                                            </div>
                                         </div>
                                         <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
                                             <span className="sr-only">Remove Task</span>

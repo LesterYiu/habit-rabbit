@@ -34,7 +34,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const createTask = async (e) => {
         e.preventDefault();
 
-        if (taskNameInputEl.current.value && taskDescriptionInputEl.current.value && taskDueDateInputEl.current.value && taskDueTimeInputEl.current.value && (labelList || existingTaskInputEl.current.value)) {
+        if (taskNameInputEl.current.value && taskDescriptionInputEl.current.value && taskDueDateInputEl.current.value && taskDueTimeInputEl.current.value && (labelList.length !== 0 || existingTaskInputEl.current.value)) {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
@@ -78,11 +78,6 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
 
     */
 
-            // flag: still need to finish
-            // cannot be more than 16 characters
-            // no more than 3 labels
-            // cannot be empty
-
     const handleNewTaskLabels = async () => {
         const labelsData = await getDocs(customLabelsCollectionRef);
         const existingLabelsArray = (labelsData.docs.map((doc) => ({...doc.data(), id: doc.id})));
@@ -109,7 +104,10 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     }
 
     const createReusableTaskLabel = async () => {
+
+        // Flag: .current is null because ref is not set untila fter the function returns and the content is rendered. Switched to e.target
         if (saveLabelInputEl.current === null) {
+            console.log('not working!');
             return;
         }
 
