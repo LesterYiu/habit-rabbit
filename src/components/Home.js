@@ -17,16 +17,6 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
 
-    /*
-    TO DO LIST
-
-    Check if email exists already exists in database earlier
-    Upload profile pictures
-    Profile customization section
-    Filter Arrays,
-    Order Tasks in descending urgency (time wise)
-    */
-
     // On initial mount, if the user is signed in, this will set their user information in state.
     useEffect( () => {
         onAuthStateChanged( auth, (user) => {

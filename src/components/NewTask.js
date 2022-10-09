@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { db, auth } from "./firebase";
 import { addDoc, getDocs, collection } from "firebase/firestore";
 import uuid from "react-uuid";
+import { useEffect } from "react";
 
 const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     
@@ -11,8 +12,12 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
     const [taskColour, setTaskColour] = useState("");
+    // For using existing labels from the select dropdown
     const [existingLabels, setExistingLabels] = useState([]);
+    // For all the custom created labels
     const [labelList, setLabelList] = useState([]);
+    // To hold all user-created labels
+    const [customExistingLabels, setCustomExistingLabels] = useState([]);
 
     const saveLabelInputEl = useRef(null);
     const taskNameInputEl = useRef(null);
@@ -22,9 +27,17 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const customTaskInputEl = useRef(null); 
     const existingTaskInputEl = useRef(null);
 
-
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask`);
     const customLabelsCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/customLabels`);
+
+    useEffect(  () => {
+        const retrieveCustomCreatedLabels = async () => {
+            const existingLabelsData = await getDocs(customLabelsCollectionRef);
+            setCustomExistingLabels(existingLabelsData.docs.map((doc) => ({...doc.data(), id: doc.id})));
+        }
+
+        retrieveCustomCreatedLabels();
+    }, [customLabelsCollectionRef]);
 
     const handleInputText = (e, setState) => {
         e.preventDefault();
@@ -41,7 +54,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                 task: {name: taskName, description, time, deadline, priority, taskColour, label: [...existingLabels, ...labelList]}});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-            createReusableTaskLabel();
+            createReusableTaskLabel(e);
         }
         return;
     }
@@ -103,18 +116,17 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         }
     }
 
-    const createReusableTaskLabel = async () => {
+    // add function to alert users that existing labels are already created.
+    // populate the existing labels dropdown.
+    const createReusableTaskLabel = async (e) => {
+        const checkboxEl = e.target[9]
 
-        // Flag: .current is null because ref is not set untila fter the function returns and the content is rendered. Switched to e.target
-        if (saveLabelInputEl.current === null) {
-            console.log('not working!');
-            return;
-        }
-
-        if (saveLabelInputEl.current.checked === true) {
+        if (checkboxEl.checked === true) {
             labelList.forEach( async (label) => {
                 await addDoc(customLabelsCollectionRef, {taskLabel: label});
             })
+        } else {
+            return;
         }
     }
 
@@ -198,6 +210,9 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                                 <option value="appointment">Appointment</option>
                                 <option value="exercise">Exercise</option>
                                 <option value="chores">Chores</option>
+                                {customExistingLabels ? customExistingLabels.map((label) => {
+                                    return <option key={label.id} value={label.taskLabel}>{label.taskLabel}</option>
+                                }) : null}
                             </select>
                         </div>
                         <div className="labelSection colorSection">

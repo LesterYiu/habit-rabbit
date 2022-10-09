@@ -21,7 +21,7 @@ const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth,
         <nav className="homeNavigation homeSection">
             <div className="profileInfoContainer">
                 <div className="profilePicCont">
-                    <img src={userPic} alt="" />
+                    <img src={userPic ? userPic : null} alt="" />
                 </div>
                 <div className="profileInfoText">
                     <p className="profileWelcome">Good Day👋</p>
