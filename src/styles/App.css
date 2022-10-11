@@ -123,6 +123,14 @@ h4 {
   font-weight: bold;
   font-size: 0.8rem; }
 
+.customTaskErrorMsg {
+  font-size: 0.8rem;
+  color: red;
+  padding: 5px; }
+
+.appliedTaskLabel {
+  text-transform: capitalize; }
+
 .toDoListSection h2 {
   color: white;
   font-size: 1.1rem;
@@ -732,7 +740,8 @@ button {
   top: 50%;
   left: 50%;
   min-width: 70%;
-  height: 80%;
+  min-height: 85%;
+  height: 85%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
   background-color: #F1F5F9;
@@ -914,10 +923,33 @@ button {
     border-radius: 5px;
     padding: 0px 0px 0px 8px;
     height: 40px; }
+  .formSecondarySection .customTaskError {
+    border: 1px solid red;
+    border-radius: 5px; }
+  .formSecondarySection .selectedTaskError {
+    border: 1px solid red; }
 
 .existingLabelSection {
   border-bottom: 3px solid #d4d4d4;
   padding-bottom: 35px; }
+
+.existingLabelButtons {
+  display: flex;
+  justify-content: space-between; }
+  .existingLabelButtons .createNewLabelBtn {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    color: #6F6F6F;
+    font-size: 1.3rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+
+.existingTaskSelect {
+  width: 90%; }
 
 .priorityContainer {
   display: flex;
@@ -963,8 +995,9 @@ input[type="color"] {
   display: inline-block;
   padding: 5px 10px;
   border: 1px solid rgba(212, 212, 212, 0.9);
-  margin-right: 5px;
-  margin-top: 20px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
   border-radius: 5px;
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
 

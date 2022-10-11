@@ -159,6 +159,16 @@ h4 {
     font-size: 0.8rem;
 }
 
+.customTaskErrorMsg {
+    font-size: 0.8rem;
+    color: red;
+    padding: 5px;
+}
+
+.appliedTaskLabel {
+    text-transform: capitalize;
+}
+
 // To Do List typography (customizable tab component)
 
 .toDoListSection h2 {

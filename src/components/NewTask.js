@@ -12,6 +12,9 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
     const [taskColour, setTaskColour] = useState("");
+    const [isTaskExist, setIsTaskExist] = useState(false);
+    const [isDuplicateFound, setIsDuplicateFound] = useState(false);
+
     // For using existing labels from the select dropdown
     const [existingLabels, setExistingLabels] = useState([]);
     // For all the custom created labels
@@ -19,6 +22,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     // To hold all user-created labels
     const [customExistingLabels, setCustomExistingLabels] = useState([]);
 
+    // useRef variables
     const saveLabelInputEl = useRef(null);
     const taskNameInputEl = useRef(null);
     const taskDescriptionInputEl = useRef(null);
@@ -37,7 +41,8 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         }
 
         retrieveCustomCreatedLabels();
-    }, [customLabelsCollectionRef]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleInputText = (e, setState) => {
         e.preventDefault();
@@ -75,49 +80,40 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         }
     }
 
-    /*
-    PSEUDO CODE FOR handleNewTaskLabels
-
-        -on user click on the plus icon, add task label
-        - do not let users add more than 3 labels
-
-        if the user selected on save task labels
-            - update to task label collection
-            - update the labels in the task document
-
-        if the user hasnt selected save task labels
-            - do not update the task label collection
-            - update the labels in thet ask document
-
-    */
-
     const handleNewTaskLabels = async () => {
+
+        // RestructuredArray will contain list of all saved arrays in the database.
+
+        /* Labels will not be set in state & uploading to the database if all the following criteria apply 
+            1. More than 3 labels exist
+            2. If an empty string is inputted
+            3. If the label exists alreay
+            4. If it is duplicated from before
+        */
+    
         const labelsData = await getDocs(customLabelsCollectionRef);
         const existingLabelsArray = (labelsData.docs.map((doc) => ({...doc.data(), id: doc.id})));
         const restructuredArray = existingLabelsArray.map( (labelObject) => {
             return labelObject.taskLabel;
         });
 
-        // RestructuredArray will contain list of all saved arrays in the database.
-
-        /* Labels will not be set in state & uploading to the database if the following criteria apply 
-            1. More than 3 labels exist
-            2. If an empty string is inputted
-            3. If the label exists alreay
-            4. If it is duplicated from before
-
-        */
+        // If the input value exists in the custom task input collection, return.
+        for (let i in restructuredArray) {
+            if(restructuredArray[i] === customTaskInputEl.current.value) {
+                customTaskInputEl.current.className = 'customTaskError'
+                setIsTaskExist(true);
+                return;
+            }
+        }
 
         if(labelList.length < 4 && customTaskInputEl.current.value !== "" && !restructuredArray.includes(customTaskInputEl.current.value) && !labelList.includes(customTaskInputEl.current.value)) {
+            customTaskInputEl.current.className = '';
+            setIsTaskExist(false);
             setLabelList([customTaskInputEl.current.value, ...labelList])
             customTaskInputEl.current.value = "";
-        } else {
-            console.log('??')
         }
     }
-
-    // add function to alert users that existing labels are already created.
-    // populate the existing labels dropdown.
+    
     const createReusableTaskLabel = async (e) => {
         const checkboxEl = e.target[9]
 
@@ -129,6 +125,28 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
             return;
         }
     }
+
+    const handleExistingTaskLabels = () => {
+        if (existingTaskInputEl.current.value === "") {
+            return;
+        } else if (labelList.length > 0) {
+            for (let i in labelList) {
+                if (existingTaskInputEl.current.value === labelList[i]) {
+                    setIsDuplicateFound(true);
+                    existingTaskInputEl.current.className = 'existingTaskSelect selectedTaskError';
+                    return;
+                }
+            }     
+        }
+
+        if (labelList.length < 4 && existingTaskInputEl.current.value !== "") {
+            setLabelList([existingTaskInputEl.current.value, ...labelList]);
+            setIsDuplicateFound(false);
+            existingTaskInputEl.current.className = 'existingTaskSelect';
+        }
+
+    }
+console.log(labelList);
 
     const exitModal = () => {
         setIsNewTaskClicked(false);
@@ -187,6 +205,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                                 <input type="text" onChange={(e) => {handleRequiredLabelField(e)}} ref={customTaskInputEl} />
                                 <div className="createNewLabelBtn" aria-label="create label button" onClick={(e) => {handleNewTaskLabels(e)}}>+</div>
                             </div>
+                            {isTaskExist ? <p className="customTaskErrorMsg">This task already exists. Check the existing tasks labels section.</p> : null}
                             <div className="saveLabelsContainer">
                                 <label htmlFor="saveLabel">Would you like to save your task label for future use?</label>
                                 <input type="checkbox" id="saveLabel" ref={saveLabelInputEl}/>
@@ -199,21 +218,24 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                         </div>
                         <div className="labelSection existingLabelSection">
                             <label htmlFor="existingLabels">Existing Task Labels:</label>
-                            <select name="" id="existingLabels" required ref={existingTaskInputEl} onChange={(e) => {
-                                setExistingLabels([e.target.value]);
-                                handleRequiredLabelField(e)}}>
-                                <option value="" selected disabled hidden>Choose Here</option>
-                                <option value="personal">Personal</option>
-                                <option value="school">School</option>
-                                <option value="work">Work</option>
-                                <option value="importantDate">Important Date</option>
-                                <option value="appointment">Appointment</option>
-                                <option value="exercise">Exercise</option>
-                                <option value="chores">Chores</option>
-                                {customExistingLabels ? customExistingLabels.map((label) => {
-                                    return <option key={label.id} value={label.taskLabel}>{label.taskLabel}</option>
-                                }) : null}
-                            </select>
+                            <div className="existingLabelButtons">
+                                <select name="" id="existingLabels" className="existingTaskSelect" required ref={existingTaskInputEl} onChange={(e) => {
+                                    setExistingLabels([e.target.value]);
+                                    handleRequiredLabelField(e)}}>
+                                    <option value="" selected disabled hidden>Choose Here</option>
+                                    <option value="personal">Personal</option>
+                                    <option value="school">School</option>
+                                    <option value="work">Work</option>
+                                    <option value="appointment">Appointment</option>
+                                    <option value="exercise">Exercise</option>
+                                    <option value="chores">Chores</option>
+                                    {customExistingLabels ? customExistingLabels.map((label) => {
+                                        return <option key={label.id} value={label.taskLabel}>{label.taskLabel}</option>
+                                    }) : null}
+                                </select>
+                                <div className="createNewLabelBtn" aria-label="create label button" onClick={handleExistingTaskLabels}>+</div>
+                            </div>
+                            {isDuplicateFound ? <p className="customTaskErrorMsg">This task is already selected.</p> : null}
                         </div>
                         <div className="labelSection colorSection">
                             <label htmlFor="colorChoice">Task Colour:</label>
