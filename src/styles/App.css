@@ -52,13 +52,13 @@ h4 {
   font-size: 1rem; }
 
 .homeDashboard h1 {
-  font-size: 1.7rem !important; }
+  font-size: 1.3rem !important; }
 
 .dashboardGreeting {
   font-size: 0.9rem; }
 
 .dashboardDayGreeting {
-  font-size: 1.1rem; }
+  font-size: 0.9rem; }
 
 .navDisplayName {
   font-weight: bold;
@@ -69,7 +69,7 @@ h4 {
 
 .taskName {
   font-weight: bold;
-  font-size: 1rem !important;
+  font-size: 0.9rem !important;
   margin-bottom: 10px; }
 
 .taskDescription {
@@ -81,9 +81,12 @@ h4 {
 
 .toDoTask,
 .doneTask {
-  font-size: 1rem;
+  font-size: 0.8rem;
   border: 1px solid rgba(212, 212, 212, 0.9);
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+
+.filterContainer p {
+  font-size: 0.8rem; }
 
 .labelContainer p {
   font-family: "Inter", sans-serif;
@@ -93,6 +96,9 @@ h4 {
 
 .filterContainer {
   font-size: 0.9rem; }
+
+.searchBarInput {
+  font-size: 0.8rem; }
 
 .createTaskForm legend {
   font-size: 1rem;
@@ -133,7 +139,7 @@ h4 {
 
 .toDoListSection h2 {
   color: white;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   text-align: center;
   text-transform: capitalize; }
 
@@ -483,7 +489,7 @@ button {
       padding: 10px 15px;
       border-radius: 10px;
       font-weight: 600;
-      font-size: 0.8rem; }
+      font-size: 0.7rem; }
     .homePage .homeNavigation button {
       align-items: center; }
     .homePage .homeNavigation span {
@@ -529,8 +535,8 @@ button {
     padding-bottom: 15px; }
   .homePage .profilePicCont {
     display: inline-block;
-    height: 75px;
-    width: 75px; }
+    height: 60px;
+    width: 60px; }
     .homePage .profilePicCont img {
       border-radius: 50%;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
@@ -540,7 +546,7 @@ button {
       height: 100%;
       width: 100%; }
   .homePage .profileInfoText {
-    margin-left: 30px; }
+    margin-left: 15px; }
     .homePage .profileInfoText .profileWelcome {
       font-size: 0.9rem;
       color: #8c959e; }
@@ -548,11 +554,11 @@ button {
       text-align: center;
       display: flex;
       align-items: center;
-      font-size: 1.5rem; }
+      font-size: 1.2rem; }
   .homePage .homeNavSubsection {
     width: 100%;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     text-align: start;
     margin-top: 25px; }
 
@@ -587,7 +593,7 @@ button {
 .homeDashboard .taskContainer {
   border: 1px solid #d4d4d4;
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-  height: 150px;
+  height: 130px;
   border-radius: 5px;
   padding: 25px 25px;
   margin-bottom: 25px;
@@ -626,7 +632,7 @@ button {
 
 .homeDashboard .fa-sort,
 .homeDashboard .fa-magnifying-glass {
-  font-size: 1.3rem; }
+  font-size: 1rem; }
 
 .homeDashboard .fa-magnifying-glass {
   margin-right: 10px; }
@@ -781,7 +787,7 @@ button {
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
   .createTaskForm .formSection {
     width: 100%;
-    margin-bottom: 35px;
+    margin-bottom: 50px;
     display: flex; }
     .createTaskForm .formSection label,
     .createTaskForm .formSection input {
@@ -841,7 +847,7 @@ button {
     background-color: #FFFFFF;
     padding: 35px 30px;
     border-radius: 5px;
-    margin-top: 60px; }
+    margin-top: 75px; }
     .createTaskForm .prioritySection label {
       margin: 0; }
     .createTaskForm .prioritySection input {
@@ -1097,7 +1103,7 @@ abbr {
       margin: 5px 0;
       font-weight: 700;
       color: gray;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
       border: 1px solid #d4d4d4;
       border-radius: 5px;

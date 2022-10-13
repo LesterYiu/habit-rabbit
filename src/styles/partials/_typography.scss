@@ -68,7 +68,7 @@ h4 {
 }
 
 .homeDashboard h1 {
-    font-size: 1.7rem !important;
+    font-size: 1.3rem !important;
 }
 
 .dashboardGreeting {
@@ -76,7 +76,7 @@ h4 {
 }
 
 .dashboardDayGreeting {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
 }
 
 .navDisplayName {
@@ -90,7 +90,7 @@ h4 {
 
 .taskName {
     font-weight: bold;
-    font-size: 1rem !important;
+    font-size: 0.9rem !important;
     margin-bottom: 10px;
 }
 
@@ -105,9 +105,13 @@ h4 {
 
 .toDoTask,
 .doneTask {
-    font-size: 1rem;
+    font-size: 0.8rem;
     border: 1px solid rgba(212, 212, 212, 0.9);
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+}
+
+.filterContainer p {
+    font-size: 0.8rem;
 }
 
 .labelContainer p {
@@ -119,6 +123,10 @@ h4 {
 
 .filterContainer {
     font-size: 0.9rem;
+}
+
+.searchBarInput {
+    font-size: 0.8rem;
 }
 
 // New Task Component
@@ -173,7 +181,7 @@ h4 {
 
 .toDoListSection h2 {
     color: white;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     text-align: center;
     text-transform: capitalize;
 }
