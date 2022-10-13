@@ -15,8 +15,6 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const [isTaskExist, setIsTaskExist] = useState(false);
     const [isDuplicateFound, setIsDuplicateFound] = useState(false);
 
-    // For using existing labels from the select dropdown
-    const [existingLabels, setExistingLabels] = useState([]);
     // For all the custom created labels
     const [labelList, setLabelList] = useState([]);
     // To hold all user-created labels
@@ -56,7 +54,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, priority, taskColour, label: [...existingLabels, ...labelList]}});
+                task: {name: taskName, description, time, deadline, priority, taskColour, label: [...labelList]}});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel(e);
@@ -146,7 +144,6 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         }
 
     }
-console.log(labelList);
 
     const exitModal = () => {
         setIsNewTaskClicked(false);
@@ -219,9 +216,7 @@ console.log(labelList);
                         <div className="labelSection existingLabelSection">
                             <label htmlFor="existingLabels">Existing Task Labels:</label>
                             <div className="existingLabelButtons">
-                                <select name="" id="existingLabels" className="existingTaskSelect" required ref={existingTaskInputEl} onChange={(e) => {
-                                    setExistingLabels([e.target.value]);
-                                    handleRequiredLabelField(e)}}>
+                                <select name="" id="existingLabels" className="existingTaskSelect" required ref={existingTaskInputEl} onChange={(e) => {handleRequiredLabelField(e)}}>
                                     <option value="" selected disabled hidden>Choose Here</option>
                                     <option value="personal">Personal</option>
                                     <option value="school">School</option>
