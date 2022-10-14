@@ -747,7 +747,7 @@ button {
   left: 50%;
   min-width: 70%;
   min-height: 85%;
-  height: 85%;
+  height: 90%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
   background-color: #F1F5F9;
@@ -766,7 +766,7 @@ button {
     border: 0;
     margin: 0; }
   .createTaskForm .formField {
-    margin-top: 60px; }
+    margin-top: 10px; }
   .createTaskForm legend {
     display: flex;
     align-items: center;
@@ -787,8 +787,9 @@ button {
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
   .createTaskForm .formSection {
     width: 100%;
-    margin-bottom: 50px;
-    display: flex; }
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center; }
     .createTaskForm .formSection label,
     .createTaskForm .formSection input {
       display: inline-block; }
@@ -800,7 +801,8 @@ button {
       width: 100%;
       padding: 0px 0px 0px 8px;
       background-color: #FFFFFF;
-      margin-left: 30px; }
+      margin-left: 30px;
+      height: 35px; }
     .createTaskForm .formSection span {
       margin-right: 5px; }
   .createTaskForm .exitButton {
@@ -814,9 +816,11 @@ button {
     .createTaskForm .buttonSection button {
       padding: 5px 0;
       border-radius: 10px;
-      height: 50px;
       min-width: 125px;
       font-size: 1rem; }
+    .createTaskForm .buttonSection button,
+    .createTaskForm .buttonSection .cancelBtn {
+      height: 35px; }
   .createTaskForm .submitBtn {
     margin-left: 15px;
     background-color: #36CB82;
@@ -847,7 +851,7 @@ button {
     background-color: #FFFFFF;
     padding: 35px 30px;
     border-radius: 5px;
-    margin-top: 75px; }
+    margin-top: 50px; }
     .createTaskForm .prioritySection label {
       margin: 0; }
     .createTaskForm .prioritySection input {
@@ -860,12 +864,23 @@ button {
     font-size: 1rem;
     display: flex;
     align-items: center; }
+  .createTaskForm .priorityContainer {
+    display: flex;
+    margin-right: 25px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    .createTaskForm .priorityContainer label {
+      width: 100px !important;
+      margin-right: 20px !important; }
+    .createTaskForm .priorityContainer input {
+      height: 20px; }
 
 .formSecondarySection {
   min-height: 100%;
   width: 30%;
   background-color: #FFFFFF;
-  padding: 45px 40px 20px 40px;
+  padding: 30px 40px 20px 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between; }
@@ -917,18 +932,18 @@ button {
     padding: 0px 0px 0px 8px;
     background-color: #FFFFFF;
     border-radius: 5px;
-    height: 40px; }
+    height: 35px; }
   .formSecondarySection label {
     color: #6D767E;
-    margin-bottom: 15px;
-    margin-top: 25px; }
+    margin-bottom: 10px;
+    margin-top: 20px; }
   .formSecondarySection select {
     background-color: transparent;
     border: 1px solid rgba(212, 212, 212, 0.9);
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     border-radius: 5px;
     padding: 0px 0px 0px 8px;
-    height: 40px; }
+    height: 35px; }
   .formSecondarySection .customTaskError {
     border: 1px solid red;
     border-radius: 5px; }
@@ -957,16 +972,6 @@ button {
 .existingTaskSelect {
   width: 90%; }
 
-.priorityContainer {
-  display: flex;
-  margin-right: 25px;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .priorityContainer label {
-    width: 100px !important;
-    margin-right: 20px !important; }
-
 .lowPriorityContainer {
   background-color: #A5D6A7; }
 
@@ -986,7 +991,7 @@ input[type="color"] {
   padding-bottom: 25px; }
 
 .colorChoiceHelp {
-  margin-top: 25px;
+  margin-top: 10px;
   display: flex;
   align-items: center; }
   .colorChoiceHelp p {
