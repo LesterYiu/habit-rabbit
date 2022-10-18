@@ -16,6 +16,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
     const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
+    const [reformattedTask, setReformattedTask] = useState({});
 
     // On initial mount, if the user is signed in, this will set their user information in state.
     useEffect( () => {
@@ -46,6 +47,26 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
         }
         getPost();
     }, [userUID, setUserUID]);
+
+    useEffect( () => {
+
+    const reformatTaskList = () => {
+        let reformattedTaskList = {};
+
+        taskList.forEach( (specificTask) => {
+            if(reformattedTaskList[specificTask.task.reformattedDeadline]) {
+                reformattedTaskList[specificTask.task.reformattedDeadline].push(specificTask.task);
+            } else {
+                reformattedTaskList[specificTask.task.reformattedDeadline] = [specificTask.task];
+            }
+        })
+        
+        setReformattedTask(reformattedTaskList);
+    }
+
+        reformatTaskList();
+
+    }, [taskList]);
 
     const handleToDoBtn = () => {
         setIsDoneBtnClicked(false);
@@ -104,7 +125,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
         const data = await getDocs(collectionRef);
         setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     }
-
+    console.log(reformattedTask);
     if (isAuth) {
         return(
             <>

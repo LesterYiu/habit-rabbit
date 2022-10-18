@@ -16,7 +16,7 @@ const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth,
             localStorage.clear();
         })
     }
-
+    
     return(
         <nav className="homeNavigation homeSection">
             <div className="profileInfoContainer">
