@@ -6,10 +6,11 @@ import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
 import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
-import { useState , useEffect} from "react";
+import { useState , useEffect, useContext} from "react";
+import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
 
-const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic}) => {
+const Home = () => {
 
     const [taskList, setTaskList] = useState([]);
     const [doneTaskList, setDoneTaskList] = useState([]);
@@ -18,6 +19,8 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
     const [reformattedTask, setReformattedTask] = useState({});
     const [reformattedDoneTask, setReformattedDoneTask] = useState({}); 
+
+    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext)
 
     // On initial mount, if the user is signed in, this will set their user information in state.
     useEffect( () => {

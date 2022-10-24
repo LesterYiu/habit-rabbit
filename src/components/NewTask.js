@@ -86,8 +86,8 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         const year = +dateString.substring(0, 4);
         const month = +dateString.substring(4, 6);
         const day = +dateString.substring(6, 8);
-        const date = new Date(year, month - 1, day - 1);
-        const reformattedDate = format(date, 'eeee, i MMMM, yyyy');
+        const date = new Date(year, month - 1, day);
+        const reformattedDate = format(date, 'eeee, dd MMMM, yyyy');
         setReformattedDeadline(reformattedDate);
         setDeadline(e.target.value);
     }

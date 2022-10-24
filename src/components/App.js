@@ -2,6 +2,7 @@ import '../styles/App.css';
 import { Routes, Route} from "react-router-dom";
 import { useState } from 'react';
 import { Calendar } from 'react-calendar';
+import { AppContext } from '../Contexts/AppContext';
 import Statistics from './Statistics';
 import Home from './Home';
 import CreateAccount from './CreateAccount';
@@ -18,23 +19,25 @@ function App() {
   const [userPic, setUserPic] = useState("");
 
   return (
-    <Routes>
-      <Route path='/' element={<FrontPage isAuth={isAuth}/>}/>
+    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic}}>
+      <Routes>
+        <Route path='/' element={<FrontPage />}/>
 
-      <Route path='/home' element={<Home setIsAuth={setIsAuth} isAuth={isAuth} username={username} setUsername={setUsername} setUserUID={setUserUID} userUID={userUID} userPic={userPic} setUserPic={setUserPic}/>}/>
+        <Route path='/home' element={<Home />}/>
 
-      <Route path='/login' element={<Login setIsAuth={setIsAuth} isAuth={isAuth} setUsername={setUsername} setUserUID={setUserUID} setUserPic={setUserPic} />}/>
+        <Route path='/login' element={<Login />}/>
 
-      <Route path='/create-account' element={<CreateAccount setIsAuth={setIsAuth} setUsername={setUsername} setUserUID={setUserUID} userUID={userUID} setUserPic={setUserPic}/>}/>
+        <Route path='/create-account' element={<CreateAccount />}/>
 
-      <Route path='/calendar' element={<Calendar/>} />
+        <Route path='/calendar' element={<Calendar/>} />
 
-      <Route path='/statistics' element={<Statistics/>} />
+        <Route path='/statistics' element={<Statistics/>} />
 
-      <Route path='/settings' element={<Settings/>} />
+        <Route path='/settings' element={<Settings/>} />
 
-      <Route path='/new-task' element={<NewTask />} />
-    </Routes>
+        <Route path='/new-task' element={<NewTask />} />
+      </Routes>
+    </AppContext.Provider>
   )
 }
 

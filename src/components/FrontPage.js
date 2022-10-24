@@ -1,8 +1,13 @@
 import heroBanner from "../assets/heroBanner.png";
 import NavigationBar from "./NavigationBar";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../Contexts/AppContext";
 
-const FrontPage = ({isAuth}) => {
+const FrontPage = () => {
+
+    const {isAuth} = useContext(AppContext);
+
     return(
         <div className="frontPage">
             <NavigationBar isAuth={isAuth}/>

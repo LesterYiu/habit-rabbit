@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { storage } from "./firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { useContext } from "react";
+import { AppContext } from "../Contexts/AppContext";
 
-const CreateAccount = ({setIsAuth, setUsername, setUserUID, userUID}) => {
+const CreateAccount = () => {
 
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
@@ -15,6 +17,7 @@ const CreateAccount = ({setIsAuth, setUsername, setUserUID, userUID}) => {
     const [isCreatedAcc, setIsCreatedAcc] = useState(false);
     const [isEmailExist, setIsEmailExist] = useState(false);
 
+    const {setIsAuth, setUsername, setUserUID, userUID} = useContext(AppContext)
     const navigate = useNavigate();
     const currentAuth = getAuth();
     const emailRegex =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;

@@ -3,10 +3,13 @@ import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../Contexts/AppContext";
 
-const Login = ({setIsAuth, setUsername, setUserUID, setUserPic, isAuth}) => {
+const Login = () => {
 
     const navigate = useNavigate();
+    const {setIsAuth, setUsername, setUserUID, setUserPic, isAuth} = useContext(AppContext)
 
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider).then( (result) => {
