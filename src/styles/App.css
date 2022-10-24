@@ -66,6 +66,9 @@ h4 {
 
 .homePage {
   font-family: "Inter", sans-serif; }
+  .homePage .taskDeadlineDate {
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 600; }
 
 .taskName {
   font-weight: bold;
@@ -722,6 +725,12 @@ button {
   .homeDashboard .filterContainer p {
     margin-left: 10px; }
 
+.homeDashboard .taskDeadlineDate {
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(159, 159, 159, 0.9);
+  width: 75%; }
+
 .overlayBackground {
   position: fixed;
   top: 0;
@@ -952,7 +961,7 @@ button {
 
 .existingLabelSection {
   border-bottom: 3px solid #d4d4d4;
-  padding-bottom: 35px; }
+  padding-bottom: 15px; }
 
 .existingLabelButtons {
   display: flex;

@@ -16,6 +16,10 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const [taskColour, setTaskColour] = useState("");
     const [isTaskExist, setIsTaskExist] = useState(false);
     const [isDuplicateFound, setIsDuplicateFound] = useState(false);
+    const [isCustomTaskSelected, setIsCustomTaskSelected] = useState(false);
+    const [isExistingTaskSelected, setIsExistingTaskSelected] = useState(false);
+    const [isMaxLabelsReachedCustom, setIsMaxLabelsReachedCustom] = useState(false);
+    const [isMaxLabelsReachedExisting, setIsMaxLabelsReachedExisting] = useState(false);
 
     // For all the custom created labels
     const [labelList, setLabelList] = useState([]);
@@ -52,7 +56,19 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const createTask = async (e) => {
         e.preventDefault();
 
-        if (taskNameInputEl.current.value && taskDescriptionInputEl.current.value && taskDueDateInputEl.current.value && taskDueTimeInputEl.current.value && (labelList.length !== 0 || existingTaskInputEl.current.value)) {
+        // Check to see if user has added the label to labelList.
+        if (labelList.length === 0 && customTaskInputEl.current.value) {
+            setIsCustomTaskSelected(true);
+        } else if (existingTaskInputEl.current.value && labelList.length > 0) {
+            setIsCustomTaskSelected(false);
+        } else if (labelList.length === 0 && existingTaskInputEl.current.value) {
+            setIsExistingTaskSelected(true);
+        } else if (customTaskInputEl.current.value && labelList.length > 0) {
+            setIsExistingTaskSelected(false);
+        }
+
+        // Creates the task and submits to database
+        if (taskNameInputEl.current.value && taskDescriptionInputEl.current.value && taskDueDateInputEl.current.value && taskDueTimeInputEl.current.value && labelList.length !== 0) {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
@@ -70,7 +86,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         const year = +dateString.substring(0, 4);
         const month = +dateString.substring(4, 6);
         const day = +dateString.substring(6, 8);
-        const date = new Date(year, month - 1, day);
+        const date = new Date(year, month - 1, day - 1);
         const reformattedDate = format(date, 'eeee, i MMMM, yyyy');
         setReformattedDeadline(reformattedDate);
         setDeadline(e.target.value);
@@ -102,7 +118,10 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
             3. If the label exists alreay
             4. If it is duplicated from before
         */
-    
+        if (labelList.length === 4) {
+            setIsMaxLabelsReachedCustom(true);
+            return;
+        }
         const labelsData = await getDocs(customLabelsCollectionRef);
         const existingLabelsArray = (labelsData.docs.map((doc) => ({...doc.data(), id: doc.id})));
         const restructuredArray = existingLabelsArray.map( (labelObject) => {
@@ -112,7 +131,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         // If the input value exists in the custom task input collection, return.
         for (let i in restructuredArray) {
             if(restructuredArray[i] === customTaskInputEl.current.value) {
-                customTaskInputEl.current.className = 'customTaskError'
+                customTaskInputEl.current.className = 'customTaskError';
                 setIsTaskExist(true);
                 return;
             }
@@ -139,6 +158,11 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     }
 
     const handleExistingTaskLabels = () => {
+        setIsExistingTaskSelected(false);
+        if (labelList.length === 4) {
+            setIsMaxLabelsReachedExisting(true);
+            return;
+        } 
         if (existingTaskInputEl.current.value === "") {
             return;
         } else if (labelList.length > 0) {
@@ -217,6 +241,8 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                                 <div className="createNewLabelBtn" aria-label="create label button" onClick={(e) => {handleNewTaskLabels(e)}}>+</div>
                             </div>
                             {isTaskExist ? <p className="customTaskErrorMsg">This task already exists. Check the existing tasks labels section.</p> : null}
+                            {isCustomTaskSelected ? <p className="customTaskErrorMsg">A task label must be selected before proceeding. Please click the + button.</p> : null}
+                            {isMaxLabelsReachedCustom ? <p className="customTaskErrorMsg">You can only select 4 task labels per task.</p> : null}
                             <div className="saveLabelsContainer">
                                 <label htmlFor="saveLabel">Would you like to save your task label for future use?</label>
                                 <input type="checkbox" id="saveLabel" ref={saveLabelInputEl}/>
@@ -245,6 +271,8 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                                 <div className="createNewLabelBtn" aria-label="create label button" onClick={handleExistingTaskLabels}>+</div>
                             </div>
                             {isDuplicateFound ? <p className="customTaskErrorMsg">This task is already selected.</p> : null}
+                            {isExistingTaskSelected ? <p className="customTaskErrorMsg">A task label must be selected before proceeding. Please click the + button.</p> : null}
+                            {isMaxLabelsReachedExisting ? <p className="customTaskErrorMsg">You can only select 4 task labels per task.</p> : null}
                         </div>
                         <div className="labelSection colorSection">
                             <label htmlFor="colorChoice">Task Colour:</label>

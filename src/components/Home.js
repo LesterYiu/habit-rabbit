@@ -17,6 +17,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
     const [reformattedTask, setReformattedTask] = useState({});
+    const [reformattedDoneTask, setReformattedDoneTask] = useState({}); 
 
     // On initial mount, if the user is signed in, this will set their user information in state.
     useEffect( () => {
@@ -49,24 +50,23 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
     }, [userUID, setUserUID]);
 
     useEffect( () => {
-
-    const reformatTaskList = () => {
-        let reformattedTaskList = {};
-
-        taskList.forEach( (specificTask) => {
-            if(reformattedTaskList[specificTask.task.reformattedDeadline]) {
-                reformattedTaskList[specificTask.task.reformattedDeadline].push(specificTask.task);
-            } else {
-                reformattedTaskList[specificTask.task.reformattedDeadline] = [specificTask.task];
+        const reformatTaskList = () => {
+            const reformatTaskByDate = (taskListState, setTaskState) => {
+                let taskCounter = {};
+                taskListState.forEach( (specificTask) => {
+                    if(taskCounter[specificTask.task.reformattedDeadline]) {
+                        taskCounter[specificTask.task.reformattedDeadline].push(specificTask);
+                    } else {
+                        taskCounter[specificTask.task.reformattedDeadline] = [specificTask];
+                    }
+                })
+                setTaskState(taskCounter);            
             }
-        })
-        
-        setReformattedTask(reformattedTaskList);
-    }
-
+            reformatTaskByDate(taskList, setReformattedTask);
+            reformatTaskByDate(doneTaskList, setReformattedDoneTask);
+        }
         reformatTaskList();
-
-    }, [taskList]);
+    }, [taskList, doneTaskList]);
 
     const handleToDoBtn = () => {
         setIsDoneBtnClicked(false);
@@ -125,7 +125,7 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
         const data = await getDocs(collectionRef);
         setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     }
-    console.log(reformattedTask);
+
     if (isAuth) {
         return(
             <>
@@ -153,45 +153,61 @@ const Home = ({setIsAuth, isAuth, username, setUsername, setUserUID, userUID, us
                                     <input type="text" className="searchBarInput" placeholder="Search for task..."/>
                                 </div>
                             </div>
+                            
                             {isToDoBtnClicked ?
-                            taskList.map((i) => {
+                            Object.keys(reformattedTask).map( (date) => {
                                 return (
-                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                        <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
-                                        <div className="taskText">
-                                            <p className="taskName">{i.task.name}</p>
-                                            <p className="taskDescription">{i.task.description}</p>
-                                            <div className="labelContainer">
-                                                <p className={i.task.priority}>{i.task.priority}</p>
-                                                {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
-                                            </div>
-                                        </div>
-                                        <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                            <span className="sr-only">Remove Task</span>
-                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                        </button>
+                                    <div key={uuid()}>
+                                        <p className="taskDeadlineDate">{date}</p>
+                                        {reformattedTask[date].map( (i) => {
+                                            return (
+                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
+                                                    <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
+                                                    <div className="taskText">
+                                                        <p className="taskName">{i.task.name}</p>
+                                                        <p className="taskDescription">{i.task.description}</p>
+                                                        <div className="labelContainer">
+                                                            <p className={i.task.priority}>{i.task.priority}</p>
+                                                            {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
+                                                        </div>
+                                                    </div>
+                                                    <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                                        <span className="sr-only">Remove Task</span>
+                                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            )                     
+                                        })}
                                     </div>
                                 )
                             }) : 
-                            doneTaskList.map((i) => {
-                                return (
-                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                        <input type="checkbox" className="taskCheckbox" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
-                                        <div className="taskText">
-                                            <p className="taskName">{i.task.name}</p>
-                                            <p className="taskDescription">{i.task.description}</p>
-                                            <div className="labelContainer">
-                                                <p className={i.task.priority}>{i.task.priority}</p>
-                                                {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
-                                            </div>
-                                        </div>
-                                        <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
-                                            <span className="sr-only">Remove Task</span>
-                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                        </button>
+                            Object.keys(reformattedDoneTask).map( (date) => {
+                                return(
+                                    <div>
+                                        <p>{date}</p>
+                                        {reformattedDoneTask[date].map( (i) => {
+                                            return (
+                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
+                                                    <input type="checkbox" className="taskCheckbox" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
+                                                    <div className="taskText">
+                                                        <p className="taskName">{i.task.name}</p>
+                                                        <p className="taskDescription">{i.task.description}</p>
+                                                        <div className="labelContainer">
+                                                            <p className={i.task.priority}>{i.task.priority}</p>
+                                                            {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
+                                                        </div>
+                                                    </div>
+                                                    <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
+                                                        <span className="sr-only">Remove Task</span>
+                                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                 )
-                            })}
+                            })
+                        }
                         </div>
                     </div>
                     <CustomizeTab userUID={userUID}/>
