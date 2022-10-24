@@ -956,6 +956,8 @@ button {
   .formSecondarySection .customTaskError {
     border: 1px solid red;
     border-radius: 5px; }
+  .formSecondarySection .customTaskErrorMsg {
+    padding-top: 10px; }
   .formSecondarySection .selectedTaskError {
     border: 1px solid red; }
 

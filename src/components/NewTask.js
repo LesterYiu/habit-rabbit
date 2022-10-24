@@ -119,8 +119,9 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
             4. If it is duplicated from before
         */
         if (labelList.length === 4) {
+            setIsMaxLabelsReachedExisting(false);
             setIsMaxLabelsReachedCustom(true);
-            return;
+            return false;
         }
         const labelsData = await getDocs(customLabelsCollectionRef);
         const existingLabelsArray = (labelsData.docs.map((doc) => ({...doc.data(), id: doc.id})));
@@ -133,7 +134,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
             if(restructuredArray[i] === customTaskInputEl.current.value) {
                 customTaskInputEl.current.className = 'customTaskError';
                 setIsTaskExist(true);
-                return;
+                return false;
             }
         }
 
@@ -153,24 +154,25 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                 await addDoc(customLabelsCollectionRef, {taskLabel: label});
             })
         } else {
-            return;
+            return false;
         }
     }
 
     const handleExistingTaskLabels = () => {
         setIsExistingTaskSelected(false);
         if (labelList.length === 4) {
+            setIsMaxLabelsReachedCustom(false);
             setIsMaxLabelsReachedExisting(true);
-            return;
+            return false;
         } 
         if (existingTaskInputEl.current.value === "") {
-            return;
+            return false;
         } else if (labelList.length > 0) {
             for (let i in labelList) {
                 if (existingTaskInputEl.current.value === labelList[i]) {
                     setIsDuplicateFound(true);
                     existingTaskInputEl.current.className = 'existingTaskSelect selectedTaskError';
-                    return;
+                    return false;
                 }
             }     
         }
