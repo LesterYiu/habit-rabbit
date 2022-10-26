@@ -87,9 +87,16 @@ h4 {
 .homePage {
     font-family: $tertiary-font;
 
-    .taskDeadlineDate {
-        font-family: $base-font;
-        font-weight: 600;
+    .taskDeadlineDateContainer {
+
+        p {
+            font-family: $base-font;
+            font-weight: 600;
+        }
+
+        i {
+            font-size: 1.5rem;
+        }
     }
 }
 
@@ -101,6 +108,11 @@ h4 {
 
 .taskDescription {
     font-size: 0.8rem !important;
+}
+
+.dueDateContainer p {
+    font-size: 0.6rem;
+    text-align: right;
 }
 
 .homeSection button {

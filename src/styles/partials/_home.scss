@@ -197,6 +197,12 @@
             border: 0;
         }
 
+        .dueDateContainer {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+        }
+
         .exitBtn {
             border: 0;
             position: absolute;
@@ -364,11 +370,22 @@
         }
     }
 
-    .taskDeadlineDate {
-        padding-bottom: 5px;
-        margin-bottom: 15px;
-        border-bottom: 1px solid rgba(159, 159, 159, 0.9);
-        width: 75%;
+    .taskDeadlineDateContainer {
+        display: flex;
+        position: relative;
+
+        p {
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(159, 159, 159, 0.9);
+            width: 100%;
+        }
+
+        i {
+            position: absolute;
+            bottom: 20px;
+            right: 25px;
+        }
     }
 }
 

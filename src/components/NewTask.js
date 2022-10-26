@@ -3,7 +3,7 @@ import { db, auth } from "./firebase";
 import { addDoc, getDocs, collection } from "firebase/firestore";
 import uuid from "react-uuid";
 import { useEffect } from "react";
-import {format} from "date-fns";
+import {format, startOfWeek} from "date-fns";
 
 const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     
@@ -11,6 +11,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const [description, setDescription] = useState("");
     const [deadline, setDeadline] = useState("");
     const [reformattedDeadline, setReformattedDeadline] = useState("");
+    const [startDayOfWeek, setStartDayOfWeek] = useState("");
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
     const [taskColour, setTaskColour] = useState("");
@@ -72,7 +73,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, reformattedDeadline, priority, taskColour, label: [...labelList]}});
+                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, priority, taskColour, label: [...labelList]}});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel(e);
@@ -87,9 +88,12 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
         const month = +dateString.substring(4, 6);
         const day = +dateString.substring(6, 8);
         const date = new Date(year, month - 1, day);
-        const reformattedDate = format(date, 'eeee, dd MMMM, yyyy');
+        const reformattedDate = format(date, 'MMM dd, yyyy');
+        const firstDayOfWeek = startOfWeek(date);
+        const reformattedStartOfWeek = format(firstDayOfWeek, 'MMM dd, yyyy');
         setReformattedDeadline(reformattedDate);
         setDeadline(e.target.value);
+        setStartDayOfWeek(reformattedStartOfWeek);
     }
 
     // If the existing labels section is being filled by the user, the existing label input will be required before submitting, and makes the customize label input optional (not required before submission), and vice versa if the user was filling the custom labels section.

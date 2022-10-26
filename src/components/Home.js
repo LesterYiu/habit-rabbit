@@ -57,10 +57,10 @@ const Home = () => {
             const reformatTaskByDate = (taskListState, setTaskState) => {
                 let taskCounter = {};
                 taskListState.forEach( (specificTask) => {
-                    if(taskCounter[specificTask.task.reformattedDeadline]) {
-                        taskCounter[specificTask.task.reformattedDeadline].push(specificTask);
+                    if(taskCounter[specificTask.task.startDayOfWeek]) {
+                        taskCounter[specificTask.task.startDayOfWeek].push(specificTask);
                     } else {
-                        taskCounter[specificTask.task.reformattedDeadline] = [specificTask];
+                        taskCounter[specificTask.task.startDayOfWeek] = [specificTask];
                     }
                 })
                 setTaskState(taskCounter);            
@@ -161,7 +161,13 @@ const Home = () => {
                             Object.keys(reformattedTask).map( (date) => {
                                 return (
                                     <div key={uuid()}>
-                                        <p className="taskDeadlineDate">{date}</p>
+                                        <div className="taskDeadlineDateContainer">
+                                            <p>{`Week of ${date} (${reformattedTask[date].length})`}</p>
+                                            <button>
+                                                <span className="sr-only">dropdown button</span>
+                                                <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
                                         {reformattedTask[date].map( (i) => {
                                             return (
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
@@ -173,6 +179,10 @@ const Home = () => {
                                                             <p className={i.task.priority}>{i.task.priority}</p>
                                                             {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
                                                         </div>
+                                                    </div>
+                                                    <div className="dueDateContainer">
+                                                        <p>Planned Completion:</p>
+                                                        <p>{i.task.reformattedDeadline}</p>
                                                     </div>
                                                     <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
                                                         <span className="sr-only">Remove Task</span>
@@ -186,8 +196,14 @@ const Home = () => {
                             }) : 
                             Object.keys(reformattedDoneTask).map( (date) => {
                                 return(
-                                    <div>
-                                        <p className="taskDeadlineDate">{date}</p>
+                                    <div key={uuid()}>
+                                        <div className="taskDeadlineDateContainer">
+                                            <p>{`Week of ${date} (${reformattedDoneTask[date].length})`}</p>
+                                            <button onClick={(e) => {e.target.className = "fa-solid fa-caret-up"}}>
+                                                <span className="sr-only">dropdown button</span>
+                                                <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
                                         {reformattedDoneTask[date].map( (i) => {
                                             return (
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
@@ -199,6 +215,10 @@ const Home = () => {
                                                             <p className={i.task.priority}>{i.task.priority}</p>
                                                             {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
                                                         </div>
+                                                    </div>
+                                                    <div className="dueDateContainer">
+                                                        <p>Planned Completion:</p>
+                                                        <p>{i.task.reformattedDeadline}</p>
                                                     </div>
                                                     <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
                                                         <span className="sr-only">Remove Task</span>

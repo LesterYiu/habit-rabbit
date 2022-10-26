@@ -66,9 +66,11 @@ h4 {
 
 .homePage {
   font-family: "Inter", sans-serif; }
-  .homePage .taskDeadlineDate {
+  .homePage .taskDeadlineDateContainer p {
     font-family: "Nunito Sans", sans-serif;
     font-weight: 600; }
+  .homePage .taskDeadlineDateContainer i {
+    font-size: 1.5rem; }
 
 .taskName {
   font-weight: bold;
@@ -77,6 +79,10 @@ h4 {
 
 .taskDescription {
   font-size: 0.8rem !important; }
+
+.dueDateContainer p {
+  font-size: 0.6rem;
+  text-align: right; }
 
 .homeSection button {
   font-family: "Inter", sans-serif !important;
@@ -605,6 +611,10 @@ button {
   position: relative; }
   .homeDashboard .taskContainer button {
     border: 0; }
+  .homeDashboard .taskContainer .dueDateContainer {
+    position: absolute;
+    bottom: 10px;
+    right: 20px; }
   .homeDashboard .taskContainer .exitBtn {
     border: 0;
     position: absolute;
@@ -725,11 +735,18 @@ button {
   .homeDashboard .filterContainer p {
     margin-left: 10px; }
 
-.homeDashboard .taskDeadlineDate {
-  padding-bottom: 5px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(159, 159, 159, 0.9);
-  width: 75%; }
+.homeDashboard .taskDeadlineDateContainer {
+  display: flex;
+  position: relative; }
+  .homeDashboard .taskDeadlineDateContainer p {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(159, 159, 159, 0.9);
+    width: 100%; }
+  .homeDashboard .taskDeadlineDateContainer i {
+    position: absolute;
+    bottom: 20px;
+    right: 25px; }
 
 .overlayBackground {
   position: fixed;
