@@ -878,12 +878,15 @@ button {
     margin-right: 25px;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    cursor: pointer; }
     .createTaskForm .priorityContainer label {
       width: 100px !important;
-      margin-right: 20px !important; }
+      margin-right: 20px !important;
+      cursor: pointer; }
     .createTaskForm .priorityContainer input {
-      height: 20px; }
+      height: 20px;
+      cursor: pointer; }
 
 .formSecondarySection {
   min-height: 100%;
@@ -1014,14 +1017,20 @@ input[type="color"] {
   margin-top: 20px; }
 
 .appliedTaskLabel {
-  display: inline-block;
   padding: 5px 10px;
   border: 1px solid rgba(212, 212, 212, 0.9);
   margin-right: 10px;
   margin-top: 5px;
   margin-bottom: 15px;
   border-radius: 5px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+  display: inline-flex;
+  align-items: center; }
+  .appliedTaskLabel i {
+    font-size: 1rem;
+    padding-left: 10px;
+    color: #ff6781;
+    cursor: pointer; }
 
 .react-calendar {
   border-radius: 10px; }

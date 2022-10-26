@@ -185,6 +185,11 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
 
     }
 
+    const removeTaskLabel = (e) => {
+        const taskContent = e.target.parentElement.previousSibling.textContent;
+        setLabelList(labelList.filter( (i) => i !== taskContent));
+    }
+
     const exitModal = () => {
         setIsNewTaskClicked(false);
     }
@@ -288,7 +293,15 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
                             <p>Applied Task Labels:</p>
                             {labelList.length > 0 ?
                             labelList.map( (label) => {
-                                return <p className="appliedTaskLabel" key={uuid()}>{label}</p>
+                                return (
+                                    <div className="appliedTaskLabel" key={uuid()}>
+                                        <p>{label}</p>
+                                        <div role="button" onClick={removeTaskLabel}>
+                                            <span className="sr-only">remove task label</span>
+                                            <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                )
                             })
                             : null}
                         </div>

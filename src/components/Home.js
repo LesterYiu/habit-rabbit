@@ -187,7 +187,7 @@ const Home = () => {
                             Object.keys(reformattedDoneTask).map( (date) => {
                                 return(
                                     <div>
-                                        <p>{date}</p>
+                                        <p className="taskDeadlineDate">{date}</p>
                                         {reformattedDoneTask[date].map( (i) => {
                                             return (
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>

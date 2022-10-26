@@ -172,14 +172,17 @@
         padding: 10px;
         border-radius: 5px;
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        cursor: pointer;
 
         label {
             width: 100px !important;
             margin-right: 20px !important;
+            cursor: pointer;
         }
 
         input {
             height: 20px;
+            cursor: pointer;
         }
     }
 }
@@ -359,7 +362,6 @@ input[type="color"] {
 }
 
 .appliedTaskLabel {
-    display: inline-block;
     padding: 5px 10px;
     border: 1px solid rgba(212, 212, 212, 0.9);
     margin-right: 10px;
@@ -367,4 +369,13 @@ input[type="color"] {
     margin-bottom: 15px;
     border-radius: 5px;
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    display: inline-flex;
+    align-items: center;
+
+    i {
+        font-size: 1rem;
+        padding-left: 10px;
+        color: #ff6781;
+        cursor: pointer;
+    }
 }
