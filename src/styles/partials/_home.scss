@@ -188,10 +188,12 @@
         height: 130px;
         border-radius: 5px;
         padding: 25px 25px;
-        margin-bottom: 25px;
+        margin-top: 10px;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
         position: relative;
+        transition: all 0.8s ease-out 1s;
 
         button {
             border: 0;
@@ -228,16 +230,28 @@
             background-color: #ffffff;
         }
 
-        input[type=checkbox]:checked::before {
-            content: '✔';
-            margin-top: 10px;
-            margin-left: 1px;
-            color: $primary;
-            display: block;
-            font-size: 30px;
-            line-height: 12px;
+        .checkboxContainer {
+            position: relative;
         }
 
+        .fa-check {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+    }
+
+    .taskMainContainer.closedContainer {
+        height: 0;
+        overflow-y: hidden;
+    }
+
+    .taskMainContainer.openContainer {
+        height: initial;
+        overflow-y: auto;
     }
 
     .fa-sort,
@@ -375,16 +389,18 @@
         position: relative;
 
         p {
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(159, 159, 159, 0.9);
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgb(224, 225, 227);
+            background-color: rgb(244, 244, 244);
+            border-radius: 5px;
+            padding: 5px 5px 5px 15px;
             width: 100%;
         }
 
         i {
             position: absolute;
-            bottom: 20px;
-            right: 25px;
+            bottom: 13px;
+            right: 27px;
         }
     }
 }

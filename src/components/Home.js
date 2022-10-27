@@ -17,8 +17,8 @@ const Home = () => {
     const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
     const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
-    const [reformattedTask, setReformattedTask] = useState({});
-    const [reformattedDoneTask, setReformattedDoneTask] = useState({}); 
+    const [reformattedTask, setReformattedTask] = useState([]);
+    const [reformattedDoneTask, setReformattedDoneTask] = useState([]); 
 
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext)
 
@@ -63,13 +63,31 @@ const Home = () => {
                         taskCounter[specificTask.task.startDayOfWeek] = [specificTask];
                     }
                 })
-                setTaskState(taskCounter);            
+
+                const taskListArrangedByWeek = Object.values(taskCounter).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp);
+
+                setTaskState(taskListArrangedByWeek);            
             }
             reformatTaskByDate(taskList, setReformattedTask);
             reformatTaskByDate(doneTaskList, setReformattedDoneTask);
+
         }
         reformatTaskList();
+
     }, [taskList, doneTaskList]);
+
+    // // Sorts the tasks by deadline date
+    for (let i in reformattedTask) {
+        if(reformattedTask[i] !== undefined) {
+            reformattedTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline);
+        }
+    } 
+
+    for (let i in reformattedDoneTask) {
+        if(reformattedDoneTask[i] !== undefined) {
+            reformattedDoneTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline)
+        }
+    }
 
     const handleToDoBtn = () => {
         setIsDoneBtnClicked(false);
@@ -129,6 +147,20 @@ const Home = () => {
         setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     }
 
+    const handleDropdownTasks = (e) => {
+        const iconEl = e.target;
+        const taskMainContainerEl = e.target.offsetParent.nextSibling;
+        if (iconEl.className === "fa-solid fa-caret-up") {
+            // If the user wants the tasks to drop down
+            iconEl.className = "fa-solid fa-caret-down";
+            taskMainContainerEl.className = "taskMainContainer openContainer";
+        } else if (iconEl.className === "fa-solid fa-caret-down") {
+            //  If the user wants the tasks to minimize
+            iconEl.className = "fa-solid fa-caret-up";
+            taskMainContainerEl.className = "taskMainContainer closedContainer";
+        }
+    }
+
     if (isAuth) {
         return(
             <>
@@ -158,16 +190,18 @@ const Home = () => {
                             </div>
                             
                             {isToDoBtnClicked ?
+                            
                             Object.keys(reformattedTask).map( (date) => {
                                 return (
                                     <div key={uuid()}>
                                         <div className="taskDeadlineDateContainer">
-                                            <p>{`Week of ${date} (${reformattedTask[date].length})`}</p>
-                                            <button>
+                                            <p>{`Week of ${reformattedTask[date][0].task.startDayOfWeek} (${reformattedTask[date].length})`}</p>
+                                            <button onClick={(e) => {handleDropdownTasks(e)}}>
                                                 <span className="sr-only">dropdown button</span>
                                                 <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                             </button>
                                         </div>
+                                        <div className="taskMainContainer">
                                         {reformattedTask[date].map( (i) => {
                                             return (
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
@@ -191,6 +225,7 @@ const Home = () => {
                                                 </div>
                                             )                     
                                         })}
+                                        </div>
                                     </div>
                                 )
                             }) : 
@@ -198,8 +233,8 @@ const Home = () => {
                                 return(
                                     <div key={uuid()}>
                                         <div className="taskDeadlineDateContainer">
-                                            <p>{`Week of ${date} (${reformattedDoneTask[date].length})`}</p>
-                                            <button onClick={(e) => {e.target.className = "fa-solid fa-caret-up"}}>
+                                            <p>{`Week of ${reformattedDoneTask[date][0].task.startDayOfWeek} (${reformattedDoneTask[date].length})`}</p>
+                                            <button onClick={(e) => {handleDropdownTasks(e)}}>
                                                 <span className="sr-only">dropdown button</span>
                                                 <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                             </button>
@@ -207,7 +242,10 @@ const Home = () => {
                                         {reformattedDoneTask[date].map( (i) => {
                                             return (
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                                    <input type="checkbox" className="taskCheckbox" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
+                                                    <div className="checkboxContainer">
+                                                        <input type="checkbox" className="taskCheckbox" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
+                                                        <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
+                                                    </div>
                                                     <div className="taskText">
                                                         <p className="taskName">{i.task.name}</p>
                                                         <p className="taskDescription">{i.task.description}</p>

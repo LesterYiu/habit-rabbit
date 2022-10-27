@@ -12,6 +12,9 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const [deadline, setDeadline] = useState("");
     const [reformattedDeadline, setReformattedDeadline] = useState("");
     const [startDayOfWeek, setStartDayOfWeek] = useState("");
+    const [unformattedDeadline, setUnformattedDeadline] = useState("");
+    const [firstDayOfWeekUnformatted, setFirstDayOfWeekUnformatted] = useState("");
+    const [firstDayOfWeekTimestamp, setFirstDayOfWeekTimestamp] = useState("")
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
     const [taskColour, setTaskColour] = useState("");
@@ -73,7 +76,7 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, priority, taskColour, label: [...labelList]}});
+                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, taskColour, label: [...labelList]}});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel(e);
@@ -83,17 +86,23 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
 
     const handleDeadline = (e) => {
         e.preventDefault();
+        setUnformattedDeadline(new Date(e.target.value));
+
         const dateString = e.target.value.replace(/([-])/g, '');
         const year = +dateString.substring(0, 4);
         const month = +dateString.substring(4, 6);
         const day = +dateString.substring(6, 8);
         const date = new Date(year, month - 1, day);
-        const reformattedDate = format(date, 'MMM dd, yyyy');
+        setReformattedDeadline(format(date, 'MMM dd, yyyy'));
+
         const firstDayOfWeek = startOfWeek(date);
-        const reformattedStartOfWeek = format(firstDayOfWeek, 'MMM dd, yyyy');
-        setReformattedDeadline(reformattedDate);
+        setStartDayOfWeek(format(firstDayOfWeek, 'MMM dd, yyyy'));
+        
+        setFirstDayOfWeekUnformatted(format(firstDayOfWeek, 'yyyy-MM-dd'));
+        setFirstDayOfWeekTimestamp(new Date(format(firstDayOfWeek, 'yyyy-MM-dd')));
+
         setDeadline(e.target.value);
-        setStartDayOfWeek(reformattedStartOfWeek);
+
     }
 
     // If the existing labels section is being filled by the user, the existing label input will be required before submitting, and makes the customize label input optional (not required before submission), and vice versa if the user was filling the custom labels section.
