@@ -80,6 +80,7 @@
 
     .dashboardContent {
         padding: 25px 50px;
+        overflow-y: scroll;
     }
 
     .dashboardText {
@@ -227,11 +228,15 @@
             display: block;
             margin: 0 25px 0 0;
             cursor: pointer;
-            background-color: #ffffff;
+
         }
 
         .checkboxContainer {
             position: relative;
+        }
+
+        .taskCheckboxChecked {
+            background-color: rgba(0, 0, 0, 0.778);            
         }
 
         .fa-check {
@@ -240,6 +245,7 @@
             transform: translateY(-50%);
             font-size: 1.4rem;
             cursor: pointer;
+            color: white;
         }
 
     }
@@ -389,7 +395,6 @@
         position: relative;
 
         p {
-            margin-bottom: 10px;
             border-bottom: 1px solid rgb(224, 225, 227);
             background-color: rgb(244, 244, 244);
             border-radius: 5px;
@@ -399,7 +404,7 @@
 
         i {
             position: absolute;
-            bottom: 13px;
+            bottom: 4px;
             right: 27px;
         }
     }

@@ -19,6 +19,9 @@ const Home = () => {
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
     const [reformattedTask, setReformattedTask] = useState([]);
     const [reformattedDoneTask, setReformattedDoneTask] = useState([]); 
+    const [searchedTaskList, setSearchedTaskList] = useState([]);
+    const [doneSearchedTaskList, setDoneSearchedTaskList] = useState([]);
+    const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
 
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext)
 
@@ -54,20 +57,7 @@ const Home = () => {
 
     useEffect( () => {
         const reformatTaskList = () => {
-            const reformatTaskByDate = (taskListState, setTaskState) => {
-                let taskCounter = {};
-                taskListState.forEach( (specificTask) => {
-                    if(taskCounter[specificTask.task.startDayOfWeek]) {
-                        taskCounter[specificTask.task.startDayOfWeek].push(specificTask);
-                    } else {
-                        taskCounter[specificTask.task.startDayOfWeek] = [specificTask];
-                    }
-                })
 
-                const taskListArrangedByWeek = Object.values(taskCounter).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp);
-
-                setTaskState(taskListArrangedByWeek);            
-            }
             reformatTaskByDate(taskList, setReformattedTask);
             reformatTaskByDate(doneTaskList, setReformattedDoneTask);
 
@@ -98,6 +88,34 @@ const Home = () => {
         setIsDoneBtnClicked(true);
         setIsToDoBtnClicked(false);
     }
+
+    const debounce = (callbackFunction, delay) => {
+        let timeout;
+
+        return (...args) => {
+            clearTimeout(timeout);
+            timeout = setTimeout( () => {
+                callbackFunction(...args)
+            }, delay);
+        }
+    }
+
+    // Reformats the list of tasks via completion date and puts the tasks into the same start of week day group
+    const reformatTaskByDate = (taskListState, setTaskState) => {
+        let taskCounter = {};
+        taskListState.forEach( (specificTask) => {
+            if(taskCounter[specificTask.task.startDayOfWeek]) {
+                taskCounter[specificTask.task.startDayOfWeek].push(specificTask);
+            } else {
+                taskCounter[specificTask.task.startDayOfWeek] = [specificTask];
+            }
+        })
+
+        const taskListArrangedByWeek = Object.values(taskCounter).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp);
+
+        setTaskState(taskListArrangedByWeek);            
+    }
+
 
     // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only
     const deleteTask = async (id, i) => {
@@ -161,7 +179,37 @@ const Home = () => {
         }
     }
 
-    if (isAuth) {
+    const handleSearchForTask = (e) => {
+        const userInput = e.target.value;
+        const regex = new RegExp(`${userInput}`, "gi");
+
+        if (e.target.value === "") {
+            setIsSearchBarPopulated(false)
+            return false;
+        } else {
+            let allTaskResults = [];
+            let allDoneTaskResults = [];
+
+            setIsSearchBarPopulated(true);
+            
+            const matchTaskToUserText = (listOfTasksHolder, listOfTasks) => {
+                for (let i in listOfTasks) {
+                    for (let o in listOfTasks[i]) {
+                        if (listOfTasks[i][o].task.name.match(regex)) {
+                            listOfTasksHolder.push(listOfTasks[i][o])
+                        }
+                    }
+                }
+            }
+            matchTaskToUserText(allTaskResults, reformattedTask);
+            matchTaskToUserText(allDoneTaskResults, reformattedDoneTask);
+
+            reformatTaskByDate(allTaskResults, setSearchedTaskList);
+            reformatTaskByDate(allDoneTaskResults, setDoneSearchedTaskList);
+        }
+    }
+
+    if (isAuth && !isSearchBarPopulated) {
         return(
             <>
                 <div className="homePage">
@@ -183,9 +231,9 @@ const Home = () => {
                                     <p>Filter</p>
                                 </button>
                                 <div className="searchContainer">
-                                    <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                    <i className="fa-solid fa-magnifying-glass" aria-hidden="true" ></i>
                                     <span className="sr-only">Search</span>
-                                    <input type="text" className="searchBarInput" placeholder="Search for task..."/>
+                                    <input type="text" className="searchBarInput" placeholder="Search for task..." onChange={debounce((e) => handleSearchForTask(e), 300)}/>
                                 </div>
                             </div>
                             
@@ -243,7 +291,7 @@ const Home = () => {
                                             return (
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
                                                     <div className="checkboxContainer">
-                                                        <input type="checkbox" className="taskCheckbox" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
+                                                        <input type="checkbox" className="taskCheckbox taskCheckboxChecked" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
                                                         <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
                                                     </div>
                                                     <div className="taskText">
@@ -269,6 +317,124 @@ const Home = () => {
                                 )
                             })
                         }
+                        </div>
+                    </div>
+                    <CustomizeTab userUID={userUID}/>
+                </div>
+                {isNewTaskClicked ? 
+                <>
+                    <NewTask userUID={userUID} username={username} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <div className="overlayBackground"></div>
+                </>
+                : null}
+            </>
+        )
+    } else if (isAuth && isSearchBarPopulated){
+
+        return(
+            <>
+                <div className="homePage">
+                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
+                    <div className="homeDashboard homeSection">
+                        <div className="dashboardWallpaper">
+                            <img src={dashboardWallpaper} alt="" />
+                        </div>
+                        <div className="dashboardContent">
+                            <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
+                            <div className="taskFilters">
+                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleToDoBtn}>Ongoing</button>
+                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleDoneBtn}>Finished</button>
+                            </div>
+                            <div className="taskFinderContainer">
+                                <button className="filterContainer">
+                                    <i className="fa-solid fa-sort"></i>
+                                    <p>Filter</p>
+                                </button>
+                                <div className="searchContainer">
+                                    <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                    <span className="sr-only">Search</span>
+                                    <input type="text" className="searchBarInput" placeholder="Search for task..." onChange={debounce((e) => handleSearchForTask(e), 300)}/>
+                                </div>
+                            </div>
+                            {isToDoBtnClicked ?
+                            searchedTaskList.map( (date) => {
+                                return(
+                                    <div key={uuid()}>
+                                        <div className="taskDeadlineDateContainer">
+                                            <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
+                                            <button onClick={(e) => {handleDropdownTasks(e)}}>
+                                                <span className="sr-only">dropdown button</span>
+                                                <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div className="taskMainContainer">
+                                        {date.map( (i) => {
+                                            return (
+                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
+                                                    <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
+                                                    <div className="taskText">
+                                                        <p className="taskName">{i.task.name}</p>
+                                                        <p className="taskDescription">{i.task.description}</p>
+                                                        <div className="labelContainer">
+                                                            <p className={i.task.priority}>{i.task.priority}</p>
+                                                            {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
+                                                        </div>
+                                                    </div>
+                                                    <div className="dueDateContainer">
+                                                        <p>Planned Completion:</p>
+                                                        <p>{i.task.reformattedDeadline}</p>
+                                                    </div>
+                                                    <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                                        <span className="sr-only">Remove Task</span>
+                                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            )                     
+                                        })}
+                                        </div>
+                                    </div>
+                                )
+                            }) : 
+                            doneSearchedTaskList.map( (date) => {
+                                return(
+                                    <div key={uuid()}>
+                                        <div className="taskDeadlineDateContainer">
+                                            <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
+                                            <button onClick={(e) => {handleDropdownTasks(e)}}>
+                                                <span className="sr-only">dropdown button</span>
+                                                <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div className="taskMainContainer">
+                                        {date.map( (i) => {
+                                            return (
+                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
+                                                    <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
+                                                    <div className="taskText">
+                                                        <p className="taskName">{i.task.name}</p>
+                                                        <p className="taskDescription">{i.task.description}</p>
+                                                        <div className="labelContainer">
+                                                            <p className={i.task.priority}>{i.task.priority}</p>
+                                                            {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
+                                                        </div>
+                                                    </div>
+                                                    <div className="dueDateContainer">
+                                                        <p>Planned Completion:</p>
+                                                        <p>{i.task.reformattedDeadline}</p>
+                                                    </div>
+                                                    <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                                        <span className="sr-only">Remove Task</span>
+                                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            )                     
+                                        })}
+                                        </div>
+                                    </div>
+                                )
+                            }) 
+                            }
                         </div>
                     </div>
                     <CustomizeTab userUID={userUID}/>

@@ -21,10 +21,11 @@ Habit Rabbit is a productivity application created for the sole purpose of stick
 
 ## API Used & NPM Packages Used
 - [React Router DOM](https://www.npmjs.com/package/react-router-dom)
-- [Firebase](https://firebase.google.com/)
+- [Cloud Firestore](https://firebase.google.com/docs/firestore)
 - [React Calendar](https://www.npmjs.com/package/react-calendar)
 - [Axios](https://www.npmjs.com/package/axios)
 - [node-sass](https://www.npmjs.com/package/node-sass)
+- [date-fns](https://www.npmjs.com/package/date-fns)
 
 ## Additional Information
 

@@ -530,7 +530,8 @@ button {
       object-fit: cover;
       object-position: 0 70%; }
   .homePage .dashboardContent {
-    padding: 25px 50px; }
+    padding: 25px 50px;
+    overflow-y: scroll; }
   .homePage .dashboardText {
     border-bottom: 4px solid #78A27A; }
   .homePage .dashboardStatus {
@@ -634,16 +635,18 @@ button {
     width: 30px;
     display: block;
     margin: 0 25px 0 0;
-    cursor: pointer;
-    background-color: #ffffff; }
+    cursor: pointer; }
   .homeDashboard .taskContainer .checkboxContainer {
     position: relative; }
+  .homeDashboard .taskContainer .taskCheckboxChecked {
+    background-color: rgba(0, 0, 0, 0.778); }
   .homeDashboard .taskContainer .fa-check {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.4rem;
-    cursor: pointer; }
+    cursor: pointer;
+    color: white; }
 
 .homeDashboard .taskMainContainer.closedContainer {
   height: 0;
@@ -749,7 +752,6 @@ button {
   display: flex;
   position: relative; }
   .homeDashboard .taskDeadlineDateContainer p {
-    margin-bottom: 10px;
     border-bottom: 1px solid #e0e1e3;
     background-color: #f4f4f4;
     border-radius: 5px;
@@ -757,7 +759,7 @@ button {
     width: 100%; }
   .homeDashboard .taskDeadlineDateContainer i {
     position: absolute;
-    bottom: 13px;
+    bottom: 4px;
     right: 27px; }
 
 .overlayBackground {
