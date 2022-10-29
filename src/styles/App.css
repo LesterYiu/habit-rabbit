@@ -376,6 +376,39 @@ button {
   border: 0;
   padding: 0; }
 
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px; }
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #A5D6A7;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #A5D6A7 transparent transparent transparent; }
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s; }
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s; }
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s; }
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
 .frontPage nav {
   border-bottom: 1px solid rgba(212, 212, 212, 0.8);
   padding: 15px 0; }
@@ -600,6 +633,14 @@ button {
   margin-left: 15px;
   margin-bottom: 5px; }
 
+.homeDashboard .allTasksContainer {
+  position: relative; }
+  .homeDashboard .allTasksContainer .lds-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+
 .homeDashboard .taskContainer {
   border: 1px solid #d4d4d4;
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
@@ -636,17 +677,6 @@ button {
     display: block;
     margin: 0 25px 0 0;
     cursor: pointer; }
-  .homeDashboard .taskContainer .checkboxContainer {
-    position: relative; }
-  .homeDashboard .taskContainer .taskCheckboxChecked {
-    background-color: rgba(0, 0, 0, 0.778); }
-  .homeDashboard .taskContainer .fa-check {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: white; }
 
 .homeDashboard .taskMainContainer.closedContainer {
   height: 0;
@@ -770,6 +800,20 @@ button {
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 10; }
+
+.checkboxContainer {
+  position: relative; }
+
+.taskCheckboxChecked {
+  background-color: rgba(0, 0, 0, 0.778); }
+
+.fa-check {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: white; }
 
 .customizableTabSection {
   display: block;

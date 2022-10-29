@@ -183,6 +183,17 @@
         margin-bottom: 5px;
     }
 
+    .allTasksContainer {
+        position: relative;
+
+        .lds-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
     .taskContainer {
         border: 1px solid rgb(212, 212, 212);
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
@@ -230,24 +241,6 @@
             cursor: pointer;
 
         }
-
-        .checkboxContainer {
-            position: relative;
-        }
-
-        .taskCheckboxChecked {
-            background-color: rgba(0, 0, 0, 0.778);            
-        }
-
-        .fa-check {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.4rem;
-            cursor: pointer;
-            color: white;
-        }
-
     }
 
     .taskMainContainer.closedContainer {
@@ -418,6 +411,23 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 10;
+}
+
+.checkboxContainer {
+    position: relative;
+}
+
+.taskCheckboxChecked {
+    background-color: rgba(0, 0, 0, 0.778);
+}
+
+.fa-check {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: white;
 }
 
 // Customizable tab styles
