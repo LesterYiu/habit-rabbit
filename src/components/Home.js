@@ -22,6 +22,7 @@ const Home = () => {
     const [searchedTaskList, setSearchedTaskList] = useState([]);
     const [doneSearchedTaskList, setDoneSearchedTaskList] = useState([]);
     const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
+    const [textInput, setTextInput] = useState("");
 
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext)
 
@@ -53,7 +54,7 @@ const Home = () => {
             setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
         }
         getPost();
-    }, [userUID, setUserUID]);
+    }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList]);
 
     useEffect( () => {
         const reformatTaskList = () => {
@@ -84,28 +85,6 @@ const Home = () => {
         switchToFalse(false);
     }
 
-    /*
-    Debounce Explaination:
-
-    
-
-    The function being returned from debounce() is supposed to act exactly the same as the function being provided, except for the fact that we're limiting how often it gets called. 
-
-    This means that if the original function was supposed to take two parameters, the returned function should too. That's why spread is being used.
-
-    Normally, when you add an onClick, you add the function reference. Once triggered, the function reference is used to execute the function.
-
-    Since we are wrapping the function we want to execute after a set amount of time with the debounce function. We want to ensure that whatever is being returned by the debounce function is also a function reference. This is the reason why within our debounce function we need to return a function.
-
-    The setTimeout() method calls a function after a number of milliseconds.
-
-    setTimeout (once called) returns a number which represents the ID of the timeout you just set. If you want to clear the timeout, you just use clearTimeout on that timeout ID.
-
-    arguments (args) is an Array-like object accessible inside functions that contains the values of the arguments passed to that function.
-
-    It doesn't matter how many parameters we pass into the callback  function. They're all get passed along to the original function with the spread operator.
-    */
-
     const debounce = (callbackFunction, delay) => {
         let timeout;
         return (...args) => {
@@ -116,9 +95,6 @@ const Home = () => {
         }
     }
 
-    // Summary: You call debounce, pass the debounce function a callback function that you want to execute after a certain interval of time. Debounce functions always return the function reference of the function you want to execute however it will return a reference of a function that only executes after a certain amount of time. In order for this new function reference to be able to have access to the arguments in the original function, you must utilize the arguments object which holds the values of the arguments passed to that function (in this case, it would be the arguments from the top layer of the function). By spreading the arguments object, we now have access to all our arguments without needed to access it through iteration. Now, within the time out, the callbackFunction now has access to all the arguments passed down to the original function.
-
-    // Reformats the list of tasks via completion date and puts the tasks into the same start of week day group
     const reformatTaskByDate = (taskListState, setTaskState) => {
         let taskCounter = {};
         taskListState.forEach( (specificTask) => {
@@ -154,14 +130,12 @@ const Home = () => {
     const changeToFinishedTask = async (id, i) => {
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
         const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
-        // const formattedSearchedTaskList = searchedTaskList[0];
 
         // // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
 
         // // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
 
         setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
-        // setSearchedTaskList(formattedSearchedTaskList.filter( (task) => task !== formattedSearchedTaskList[formattedSearchedTaskList.indexOf(i)]));
 
         await addDoc(doneCollection, i);
         await deleteDoc(postDoc);
@@ -184,80 +158,44 @@ const Home = () => {
         setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     }
 
+    // Filters out the user's checked task from the searched task list of tasks
+    const filterFromReformattedTaskList = (reformattedTaskList, setState, i) => {
+        let taskArrayContainer = [];
+
+        reformattedTaskList.forEach( (weekArr) => {
+            if(!weekArr.includes(i) || weekArr.length > 1) {
+                taskArrayContainer.push(weekArr.filter( (task) => {
+                    return task !== i;
+                }))
+            }
+        }) 
+        
+        setState(taskArrayContainer)
+    }
+
     const changeSearchedToFinishedTask = async (id, i) => {
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
         const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
 
-        // Filters out the user's checked task from the searched task list of tasks
-        const filterFromReformattedTaskList = (reformattedTaskList, setState) => {
-            let taskArrayContainer = [];
-
-            reformattedTaskList.forEach( (weekArr) => {
-                if(!weekArr.includes(i) || weekArr.length > 1) {
-                    taskArrayContainer.push(weekArr.filter( (task) => {
-                        return task !== i;
-                    }))
-                }
-            }) 
-            
-            setState(taskArrayContainer)
-        }
         // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
                 
-        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList);
-        filterFromReformattedTaskList(reformattedTask, setReformattedTask);
+        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
+        filterFromReformattedTaskList(reformattedTask, setReformattedTask, i);
 
         await addDoc(doneCollection, i);
         await deleteDoc(postDoc);
 
-        // When user is searching, and checks off a task as done, update the done task lists and done task searched list
-
-        let taskArrayContainer = [...reformattedDoneTask];
-
-        for(let weekArr in taskArrayContainer) {
-            if(taskArrayContainer[weekArr][0].task.firstDayOfWeekUnformatted === i.task.firstDayOfWeekUnformatted) {
-                taskArrayContainer[weekArr].push(i);
-            } else {
-                taskArrayContainer.push([i]);
-                setReformattedDoneTask(Object.values(taskArrayContainer).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp));
-                return;
-            }
-        }
-
-        // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
-                
-        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList);
-        filterFromReformattedTaskList(reformattedTask, setReformattedTask);
-
-        await addDoc(doneCollection, i);
-        await deleteDoc(postDoc);
     }
 
     const changeSearchedToUnfinishedTask = async (id, i) => {
         const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
 
-        // const filterFromReformattedTaskList = (reformattedTaskList, setState) => {
-        //     let taskArrayContainer = [];
+        filterFromReformattedTaskList(reformattedDoneTask, setReformattedDoneTask, i);
+        filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
 
-        //     reformattedTaskList.forEach( (weekArr) => {
-        //         if(!weekArr.includes(i) || weekArr.length > 1) {
-        //             taskArrayContainer.push(weekArr.filter( (task) => {
-        //                 return task !== i;
-        //             }))
-        //         }
-        //     }) 
-            
-        //     setState(taskArrayContainer)
-        // }
-
-        // filterFromReformattedTaskList(doneSearchedTaskList, setSearchedTaskList);
-        // filterFromReformattedTaskList(reformattedDoneTask, setReformattedTask);
-
-        let taskArrayContainer = [];
-
-        // await addDoc(collectionRef, i);
-        // await deleteDoc(doneDoc);
+        await addDoc(collectionRef, i);
+        await deleteDoc(doneDoc);
     }
 
     const handleDropdownTasks = (e) => {
@@ -274,12 +212,8 @@ const Home = () => {
         }
     }
 
-    const handleSearchForTask = (e) => {
-
-        const userInput = e.target.value;
-        const regex = new RegExp(`${userInput}`, "gi");
-
-        if (e.target.value === "") {
+    const matchTaskWithSearch = (userInputValue, regex) => {
+        if (userInputValue === "") {
             setIsSearchBarPopulated(false)
             return false;
         } else {
@@ -303,7 +237,29 @@ const Home = () => {
             reformatTaskByDate(allTaskResults, setSearchedTaskList);
             reformatTaskByDate(allDoneTaskResults, setDoneSearchedTaskList);
         }
+    }
 
+    const handleSearchForTask = (e) => {
+
+        const userInput = e.target.value;
+        const regex = new RegExp(`${userInput}`, "gi");
+        setTextInput(userInput);
+
+        matchTaskWithSearch(userInput, regex);
+
+    }
+
+    const handleSearchedOngoingBtn = () => {
+        const regex = new RegExp(`${textInput}`, "gi");
+        handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked);
+        
+        matchTaskWithSearch(textInput, regex);
+    }
+
+    const handleSearchedFinishedBtn = () => {
+        const regex = new RegExp(`${textInput}`, "gi");
+        handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)
+        matchTaskWithSearch(textInput, regex);
     }
 
     if (isAuth && !isSearchBarPopulated) {
@@ -439,8 +395,8 @@ const Home = () => {
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
                             <div className="taskFilters">
-                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={() => {handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked)}}>Ongoing</button>
-                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={() => {handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)}}>Finished</button>
+                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleSearchedOngoingBtn}>Ongoing</button>
+                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleSearchedFinishedBtn}>Finished</button>
                             </div>
                             <div className="taskFinderContainer">
                                 <button className="filterContainer">
