@@ -72,6 +72,14 @@ h4 {
   .homePage .taskDeadlineDateContainer i {
     font-size: 1.2rem; }
 
+.userLocationBar p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif; }
+
+.userLocationBar i {
+  font-size: 1rem; }
+
 .taskName {
   font-weight: bold;
   font-size: 0.9rem !important;
@@ -108,6 +116,9 @@ h4 {
 
 .searchBarInput {
   font-size: 0.8rem; }
+
+.noTaskFoundContainer {
+  font-family: "Nunito Sans", sans-serif; }
 
 .createTaskForm legend {
   font-size: 1rem;
@@ -553,18 +564,21 @@ button {
     width: 60%;
     display: flex;
     flex-direction: column; }
-  .homePage .dashboardWallpaper {
-    height: 175px;
-    width: 100%; }
-    .homePage .dashboardWallpaper img {
-      display: block;
-      max-height: 100%;
-      width: 100%;
-      object-fit: cover;
-      object-position: 0 70%; }
   .homePage .dashboardContent {
-    padding: 25px 50px;
+    padding: 25px 0px;
     overflow-y: scroll; }
+  .homePage .userLocationBar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    margin-bottom: 25px; }
+    .homePage .userLocationBar p {
+      margin-left: 15px; }
+  .homePage .userLocationButtons {
+    display: flex; }
+    .homePage .userLocationButtons .fa-arrow-left {
+      margin-right: 10px; }
   .homePage .dashboardText {
     border-bottom: 4px solid #78A27A; }
   .homePage .dashboardStatus {
@@ -627,14 +641,17 @@ button {
   background-color: #FAF1F4; }
 
 .homeDashboard h1 {
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  padding: 0 25px; }
 
 .homeDashboard .dashboardGreeting {
   margin-left: 15px;
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+  padding: 0 25px; }
 
 .homeDashboard .allTasksContainer {
-  position: relative; }
+  position: relative;
+  margin: 0 25px; }
   .homeDashboard .allTasksContainer .lds-ring {
     position: absolute;
     top: 50%;
@@ -678,6 +695,28 @@ button {
     margin: 0 25px 0 0;
     cursor: pointer; }
 
+.homeDashboard .noTaskFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  margin-top: 50px;
+  white-space: nowrap; }
+
+.homeDashboard .errorImageContainer {
+  width: 80px;
+  height: auto; }
+  .homeDashboard .errorImageContainer img {
+    display: block;
+    height: 100%;
+    width: 100%; }
+
+.homeDashboard .errorImageContainerTwo {
+  margin-top: 20px; }
+
 .homeDashboard .taskMainContainer.closedContainer {
   height: 0;
   overflow-y: hidden; }
@@ -697,7 +736,11 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  border-bottom: 1px solid #e0e1e3;
+  padding: 0px 25px 15px 25px; }
 
 .homeDashboard .searchContainer {
   display: flex;
@@ -736,7 +779,8 @@ button {
   background-color: black; }
 
 .homeDashboard .taskFilters {
-  margin: 30px 0 30px 0; }
+  margin: 30px 0 20px 0;
+  padding: 0 25px; }
 
 .homeDashboard .labelContainer {
   display: flex; }

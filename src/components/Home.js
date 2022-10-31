@@ -1,12 +1,13 @@
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
 import CustomizeTab from "./CustomizeTab";
-import dashboardWallpaper from "../assets/dashboardWallpaper.jpg";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
 import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
 import { useState , useEffect, useContext} from "react";
+import errorMessageOne from "../assets/errorMessageOne.gif";
+import errorMessageTwo from "../assets/errorMessageTwo.gif";
 import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
 
@@ -14,16 +15,24 @@ const Home = () => {
 
     const [taskList, setTaskList] = useState([]);
     const [doneTaskList, setDoneTaskList] = useState([]);
-    const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
-    const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
-    const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
     const [reformattedTask, setReformattedTask] = useState([]);
     const [reformattedDoneTask, setReformattedDoneTask] = useState([]); 
     const [searchedTaskList, setSearchedTaskList] = useState([]);
     const [doneSearchedTaskList, setDoneSearchedTaskList] = useState([]);
+    
+    const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
+    const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
+    const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
+
     const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
     const [textInput, setTextInput] = useState("");
 
+    const [isOngoingTaskListZero, setIsOngoingTaskListZero] = useState(false);
+    const [isFinishedTaskListZero, setIsFinishedTaskListZero] = useState(false);
+    const [isOngoingSearchTaskFound, setIsOngoingSearchTaskFound] = useState(true);
+    const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
+
+    // useContext variables
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext)
 
     // On initial mount, if the user is signed in, this will set their user information in state.
@@ -67,7 +76,24 @@ const Home = () => {
 
     }, [taskList, doneTaskList]);
 
-    // // Sorts the tasks by deadline date
+    useEffect( () => {
+
+        const checkLength = (list, setState) => {
+            if(list.length === 0) {
+                setState(true);
+            } else {
+                setState(false);
+            }
+        }
+
+        checkLength(reformattedTask, setIsOngoingTaskListZero);
+        checkLength(reformattedDoneTask, setIsFinishedTaskListZero);
+        checkLength(searchedTaskList, setIsOngoingSearchTaskFound);
+        checkLength(doneSearchedTaskList, setIsFinishedSearchTaskFound);
+
+    }, [reformattedTask, reformattedDoneTask, searchedTaskList, doneSearchedTaskList])
+
+    // Sorts the tasks by deadline date
     for (let i in reformattedTask) {
         if(reformattedTask[i] !== undefined) {
             reformattedTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline);
@@ -252,7 +278,6 @@ const Home = () => {
     const handleSearchedOngoingBtn = () => {
         const regex = new RegExp(`${textInput}`, "gi");
         handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked);
-        
         matchTaskWithSearch(textInput, regex);
     }
 
@@ -268,10 +293,14 @@ const Home = () => {
                 <div className="homePage">
                     <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
-                        <div className="dashboardWallpaper">
-                            <img src={dashboardWallpaper} alt="" />
-                        </div>
                         <div className="dashboardContent">
+                            <div className="userLocationBar">
+                                <div className="userLocationButtons">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                                <p>🏠 Your workspace</p>
+                            </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
                             <div className="taskFilters">
@@ -290,6 +319,23 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="allTasksContainer">
+                                {isOngoingTaskListZero && isToDoBtnClicked ? 
+                                <div className="noTaskFoundContainer">
+                                    <p>There are currently no outstanding tasks.</p>
+                                    <p>Take a sip of tea and relax!</p>
+                                    <div className="errorImageContainer">
+                                        <img src={errorMessageOne} alt="" />
+                                    </div>
+                                </div> : null
+                                }
+                                {isFinishedTaskListZero && isDoneBtnClicked ?
+                                <div className="noTaskFoundContainer">
+                                    <p>There is currently nothing in this section!</p>
+                                    <p>Take a sip of tea and get back to work!</p>
+                                    <div className="errorImageContainer">
+                                        <img src={errorMessageOne} alt="" />
+                                    </div>
+                                </div> : null}
                                 {isToDoBtnClicked ?
                                 Object.keys(reformattedTask).map( (date) => {
                                     return (
@@ -302,29 +348,29 @@ const Home = () => {
                                                 </button>
                                             </div>
                                             <div className="taskMainContainer">
-                                            {reformattedTask[date].map( (i) => {
-                                                return (
-                                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                                        <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
-                                                        <div className="taskText">
-                                                            <p className="taskName">{i.task.name}</p>
-                                                            <p className="taskDescription">{i.task.description}</p>
-                                                            <div className="labelContainer">
-                                                                <p className={i.task.priority}>{i.task.priority}</p>
-                                                                {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
+                                                {reformattedTask[date].map( (i) => {
+                                                    return (
+                                                        <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
+                                                            <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
+                                                            <div className="taskText">
+                                                                <p className="taskName">{i.task.name}</p>
+                                                                <p className="taskDescription">{i.task.description}</p>
+                                                                <div className="labelContainer">
+                                                                    <p className={i.task.priority}>{i.task.priority}</p>
+                                                                    {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
+                                                                </div>
                                                             </div>
+                                                            <div className="dueDateContainer">
+                                                                <p>Planned Completion:</p>
+                                                                <p>{i.task.reformattedDeadline}</p>
+                                                            </div>
+                                                            <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                                                <span className="sr-only">Remove Task</span>
+                                                                <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                            </button>
                                                         </div>
-                                                        <div className="dueDateContainer">
-                                                            <p>Planned Completion:</p>
-                                                            <p>{i.task.reformattedDeadline}</p>
-                                                        </div>
-                                                        <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                                            <span className="sr-only">Remove Task</span>
-                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                        </button>
-                                                    </div>
-                                                )                     
-                                            })}
+                                                    )                     
+                                                })}
                                             </div>
                                         </div>
                                     )
@@ -375,7 +421,7 @@ const Home = () => {
                 </div>
                 {isNewTaskClicked ? 
                 <>
-                    <NewTask userUID={userUID} username={username} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
                     <div className="overlayBackground"></div>
                 </>
                 : null}
@@ -388,10 +434,14 @@ const Home = () => {
                 <div className="homePage">
                     <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
-                        <div className="dashboardWallpaper">
-                            <img src={dashboardWallpaper} alt="" />
-                        </div>
                         <div className="dashboardContent">
+                            <div className="userLocationBar">
+                                <div className="userLocationButtons">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                                <p>🏠 Your workspace</p>
+                            </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
                             <div className="taskFilters">
@@ -410,6 +460,24 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="allTasksContainer">
+                            {isOngoingSearchTaskFound && isToDoBtnClicked ? 
+                            <div className="noTaskFoundContainer">
+                                <p>No results found.</p>
+                                <p>We couldn't find what you're looking for</p>
+                                <div className="errorImageContainer errorImageContainerTwo">
+                                    <img src={errorMessageTwo} alt="" />
+                                </div>
+                            </div> : null
+                            }
+                            {isFinishedSearchTaskFound && isDoneBtnClicked ? 
+                            <div className="noTaskFoundContainer">
+                                <p>No results found.</p>
+                                <p>We couldn't find what you're looking for</p>
+                                <div className="errorImageContainer errorImageContainerTwo">
+                                    <img src={errorMessageTwo} alt="" />
+                                </div>
+                            </div> : null
+                            }
                             {isToDoBtnClicked ?
                             searchedTaskList.map( (date) => {
                                 return(

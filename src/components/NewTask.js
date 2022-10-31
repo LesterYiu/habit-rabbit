@@ -2,10 +2,11 @@ import { useState, useRef } from "react";
 import { db, auth } from "./firebase";
 import { addDoc, getDocs, collection } from "firebase/firestore";
 import uuid from "react-uuid";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import {format, startOfWeek} from "date-fns";
+import { AppContext } from "../Contexts/AppContext";
 
-const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
+const NewTask = ({setTaskList, setIsNewTaskClicked}) => {
     
     const [taskName, setTaskName] = useState("");
     const [description, setDescription] = useState("");
@@ -38,6 +39,9 @@ const NewTask = ({userUID, username, setTaskList, setIsNewTaskClicked}) => {
     const taskDueTimeInputEl = useRef(null);
     const customTaskInputEl = useRef(null); 
     const existingTaskInputEl = useRef(null);
+
+    // useContext variables
+    const {username, userUID} = useContext(AppContext)
 
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask`);
     const customLabelsCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/customLabels`);
