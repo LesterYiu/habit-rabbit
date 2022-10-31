@@ -214,9 +214,15 @@ h4 {
 
 // To Do List typography (customizable tab component)
 
+.toDoListSection {
+    font-family: $tertiary-font;
+    font-family: 300;
+}
+
 .toDoListSection h2 {
-    color: white;
-    font-size: 0.9rem;
+    color: black;
+    font-size: 0.8rem;
     text-align: center;
     text-transform: capitalize;
+    font-weight: 600;
 }

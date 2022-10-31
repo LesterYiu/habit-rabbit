@@ -1,9 +1,14 @@
 import { auth } from "./firebase";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import { useContext } from "react";
+import { AppContext } from "../Contexts/AppContext";
 
-const HomeNavigation = ({ username, userPic, setUsername, setUserUID, setIsAuth, setIsNewTaskClicked}) => {
-    
+const HomeNavigation = ({setIsNewTaskClicked}) => {
+
+    // useContext variables
+    const {setIsAuth, username, setUsername, setUserUID, userPic} = useContext(AppContext)
+
     const handleNewTask = () => {
         setIsNewTaskClicked(true);
     }

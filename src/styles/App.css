@@ -157,11 +157,16 @@ h4 {
 .appliedTaskLabel {
   text-transform: capitalize; }
 
+.toDoListSection {
+  font-family: "Inter", sans-serif;
+  font-family: 300; }
+
 .toDoListSection h2 {
-  color: white;
-  font-size: 0.9rem;
+  color: black;
+  font-size: 0.8rem;
   text-align: center;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  font-weight: 600; }
 
 html {
   line-height: 1.15;
@@ -737,8 +742,6 @@ button {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
-  margin-left: 25px;
-  margin-right: 25px;
   border-bottom: 1px solid #e0e1e3;
   padding: 0px 25px 15px 25px; }
 
@@ -1211,17 +1214,14 @@ abbr {
 .toDoListSection {
   margin-top: 25px;
   background-color: white;
-  border-radius: 15px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
   border: 1px solid #d4d4d4;
   min-height: 310px;
   display: flex;
   flex-direction: column;
   justify-content: space-between; }
   .toDoListSection .toDoListTitleContainer {
-    background-color: #B3E5FC;
-    border-radius: 10px 10px 0px 0px;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    background-color: #F6F4F9;
+    border-bottom: 1px solid #d4d4d4;
     padding: 10px 0px;
     width: 100%;
     position: relative; }
@@ -1229,33 +1229,34 @@ abbr {
       border: 0;
       position: absolute;
       top: 5px;
-      right: 10px; }
+      right: 15px; }
     .toDoListSection .toDoListTitleContainer i {
       font-size: 1rem;
-      color: white;
+      color: black;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
       border: 1px solid #d4d4d4;
       border-radius: 50%;
       padding: 1px;
-      background-color: #8dc4de; }
+      background-color: #F6F4F9; }
   .toDoListSection .toDoListTasks {
-    min-height: 100%;
-    padding: 10px 10px; }
+    min-height: 100%; }
     .toDoListSection .toDoListTasks li {
       font-family: inherit;
       text-transform: capitalize;
-      margin: 5px 0;
-      font-weight: 700;
       color: gray;
       font-size: 0.7rem;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
       border: 1px solid #d4d4d4;
-      border-radius: 5px;
       padding: 8px 5px; }
-    .toDoListSection .toDoListTasks .toDoTask {
+    .toDoListSection .toDoListTasks .toDoTaskWidget {
       position: relative;
       box-shadow: 0;
       border: 0; }
+      .toDoListSection .toDoListTasks .toDoTaskWidget li {
+        display: flex; }
+      .toDoListSection .toDoListTasks .toDoTaskWidget p {
+        font-size: 0.7rem;
+        margin-left: 5px;
+        color: black; }
     .toDoListSection .toDoListTasks button {
       position: absolute;
       top: 0px;
@@ -1264,21 +1265,34 @@ abbr {
       font-size: 0.9rem;
       color: #e61b1b; }
   .toDoListSection .toDoInputContainer {
-    border-radius: 5px;
     display: flex;
     margin: 0px 10px 10px 10px;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    position: relative; }
     .toDoListSection .toDoInputContainer input {
-      width: 100%;
-      border-radius: 5px 0px 0px 5px;
+      height: 0;
+      width: 0%;
       border: 0;
       padding: 0;
-      height: 30px;
       padding-left: 10px;
+      border: 0;
+      border-radius: 5px 15px 15px 5px;
+      transition: all 0.2s linear 0.2s; }
+    .toDoListSection .toDoInputContainer .buttonOff {
+      display: none; }
+    .toDoListSection .toDoInputContainer .inputOn {
+      height: 40px;
+      width: 100%;
       border: 1px solid #d4d4d4; }
     .toDoListSection .toDoInputContainer button {
       border: 0;
-      border-radius: 0px 5px 5px 0px;
-      background-color: #8dc4de;
-      color: white;
-      padding: 0px 5px; }
+      border-radius: 50%;
+      background-color: #F6F4F9;
+      color: black;
+      padding: 0px 5px;
+      height: 40px;
+      width: 40px;
+      position: absolute;
+      bottom: 0;
+      right: -5px;
+      border: 1px solid #d4d4d4;
+      text-align: center; }

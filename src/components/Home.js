@@ -10,6 +10,7 @@ import errorMessageOne from "../assets/errorMessageOne.gif";
 import errorMessageTwo from "../assets/errorMessageTwo.gif";
 import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
+import { getHours } from "date-fns";
 
 const Home = () => {
 
@@ -26,6 +27,7 @@ const Home = () => {
 
     const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
     const [textInput, setTextInput] = useState("");
+    const [currentUserTime, setCurrentUserTime] = useState("");
 
     const [isOngoingTaskListZero, setIsOngoingTaskListZero] = useState(false);
     const [isFinishedTaskListZero, setIsFinishedTaskListZero] = useState(false);
@@ -63,6 +65,8 @@ const Home = () => {
             setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
         }
         getPost();
+
+        setCurrentUserTime(getHours(new Date()));
     }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList]);
 
     useEffect( () => {
@@ -291,7 +295,7 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
+                    <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <div className="userLocationBar">
@@ -302,7 +306,12 @@ const Home = () => {
                                 <p>🏠 Your workspace</p>
                             </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
+                            {currentUserTime >= 5 && currentUserTime < 12 ? 
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
+                            {currentUserTime >= 12 && currentUserTime < 18 ?
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
+                            {currentUserTime >= 18 && currentUserTime < 5 ?
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
                             <div className="taskFilters">
                                 <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={() => {handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked)}}>Ongoing</button>
                                 <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={() => {handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)}}>Finished</button>
@@ -443,7 +452,12 @@ const Home = () => {
                                 <p>🏠 Your workspace</p>
                             </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?</p>
+                            {currentUserTime >= 5 && currentUserTime < 12 ? 
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
+                            {currentUserTime >= 12 && currentUserTime < 18 ?
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
+                            {currentUserTime >= 18 && currentUserTime < 5 ?
+                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
                             <div className="taskFilters">
                                 <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleSearchedOngoingBtn}>Ongoing</button>
                                 <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleSearchedFinishedBtn}>Finished</button>
@@ -562,11 +576,11 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <CustomizeTab userUID={userUID}/>
+                    <CustomizeTab/>
                 </div>
                 {isNewTaskClicked ? 
                 <>
-                    <NewTask userUID={userUID} username={username} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
                     <div className="overlayBackground"></div>
                 </>
                 : null}
