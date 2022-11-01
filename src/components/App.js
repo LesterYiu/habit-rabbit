@@ -10,6 +10,7 @@ import Login from './Login';
 import FrontPage from './FrontPage';
 import Settings from './Settings';
 import NewTask from './NewTask';
+import TaskDetails from './TaskDetails';
 
 function App() {
 
@@ -36,6 +37,8 @@ function App() {
         <Route path='/settings' element={<Settings/>} />
 
         <Route path='/new-task' element={<NewTask />} />
+
+        <Route path='/task/:taskID' element={<TaskDetails />} />
       </Routes>
     </AppContext.Provider>
   )

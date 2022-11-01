@@ -11,6 +11,7 @@ import errorMessageTwo from "../assets/errorMessageTwo.gif";
 import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
 import { getHours } from "date-fns";
+import { Link } from "react-router-dom";
 
 const Home = () => {
 
@@ -26,6 +27,7 @@ const Home = () => {
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
 
     const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(true);
     const [textInput, setTextInput] = useState("");
     const [currentUserTime, setCurrentUserTime] = useState("");
 
@@ -35,7 +37,11 @@ const Home = () => {
     const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
 
     // useContext variables
-    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext)
+    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext);
+
+    // Database Collection Reference for user's list of tasks
+    const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+    const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
 
     // On initial mount, if the user is signed in, this will set their user information in state.
     useEffect( () => {
@@ -50,10 +56,7 @@ const Home = () => {
     }, [setUsername, setUserUID, setUserPic, setIsAuth])
 
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
-    useEffect( () => {
-
-        const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
-        const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+    useEffect( () => {;
 
         const getPost = async () => {
             // data - ongoing tasks, doneData - finished tasks
@@ -63,10 +66,15 @@ const Home = () => {
             // This will layout the docs data in an array with the document id which can be used later to remove each individual doc
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
+
+            setIsPageLoading(false);
         }
+        
         getPost();
 
         setCurrentUserTime(getHours(new Date()));
+
+
     }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList]);
 
     useEffect( () => {
@@ -77,7 +85,6 @@ const Home = () => {
 
         }
         reformatTaskList();
-
     }, [taskList, doneTaskList]);
 
     useEffect( () => {
@@ -159,11 +166,10 @@ const Home = () => {
 
     const changeToFinishedTask = async (id, i) => {
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-        const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
 
-        // // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
+        // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
 
-        // // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
+        // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
 
         setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
 
@@ -176,7 +182,7 @@ const Home = () => {
     }
 
     const changeToUnfinishedTask = async (id, i) => {
-        const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
 
         setDoneTaskList(doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)])); 
@@ -203,9 +209,26 @@ const Home = () => {
         setState(taskArrayContainer)
     }
 
+    const deleteTaskSearchedList = async(id, i) => {
+        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
+
+        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
+        setTaskList(newTaskList);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        await deleteDoc(postDoc);
+    }
+
+    const deleteTaskSearchedDoneList = async(id, i) => {
+        filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
+
+        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+        setDoneTaskList(newDoneList);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        await deleteDoc(doneDoc);
+    }
+
     const changeSearchedToFinishedTask = async (id, i) => {
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-        const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
 
         // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
                 
@@ -218,7 +241,7 @@ const Home = () => {
     }
 
     const changeSearchedToUnfinishedTask = async (id, i) => {
-        const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
 
         filterFromReformattedTaskList(reformattedDoneTask, setReformattedDoneTask, i);
@@ -328,7 +351,13 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="allTasksContainer">
-                                {isOngoingTaskListZero && isToDoBtnClicked ? 
+                                {isPageLoading && isToDoBtnClicked ? 
+                                <div className="noTaskFoundContainer loadingContainer">
+                                    <p>Now loading...</p>
+                                    <div class="lds-ring"><div></div></div>
+                                </div> : null
+                                }
+                                {isOngoingTaskListZero && isToDoBtnClicked && isPageLoading === false? 
                                 <div className="noTaskFoundContainer">
                                     <p>There are currently no outstanding tasks.</p>
                                     <p>Take a sip of tea and relax!</p>
@@ -337,7 +366,7 @@ const Home = () => {
                                     </div>
                                 </div> : null
                                 }
-                                {isFinishedTaskListZero && isDoneBtnClicked ?
+                                {isFinishedTaskListZero && isDoneBtnClicked && isPageLoading === false?
                                 <div className="noTaskFoundContainer">
                                     <p>There is currently nothing in this section!</p>
                                     <p>Take a sip of tea and get back to work!</p>
@@ -362,7 +391,9 @@ const Home = () => {
                                                         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
                                                             <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
                                                             <div className="taskText">
-                                                                <p className="taskName">{i.task.name}</p>
+                                                                <Link to={`/task/${i.id}`}>
+                                                                    <p className="taskName">{i.task.name}</p>
+                                                                </Link>
                                                                 <p className="taskDescription">{i.task.description}</p>
                                                                 <div className="labelContainer">
                                                                     <p className={i.task.priority}>{i.task.priority}</p>
@@ -373,10 +404,15 @@ const Home = () => {
                                                                 <p>Planned Completion:</p>
                                                                 <p>{i.task.reformattedDeadline}</p>
                                                             </div>
-                                                            <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                                                <span className="sr-only">Remove Task</span>
-                                                                <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                            </button>
+                                                            <div className="buttonContainer">
+                                                                <Link to={`/task/${i.id}`}>
+                                                                    <i class="fa-solid fa-ellipsis"></i>
+                                                                </Link>
+                                                                <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                                                    <span className="sr-only">Remove Task</span>
+                                                                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     )                     
                                                 })}
@@ -402,7 +438,9 @@ const Home = () => {
                                                             <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
                                                         </div>
                                                         <div className="taskText">
-                                                            <p className="taskName">{i.task.name}</p>
+                                                            <Link to={`/task/${i.id}`}>
+                                                                <p className="taskName">{i.task.name}</p>
+                                                            </Link>
                                                             <p className="taskDescription">{i.task.description}</p>
                                                             <div className="labelContainer">
                                                                 <p className={i.task.priority}>{i.task.priority}</p>
@@ -413,10 +451,15 @@ const Home = () => {
                                                             <p>Planned Completion:</p>
                                                             <p>{i.task.reformattedDeadline}</p>
                                                         </div>
-                                                        <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
-                                                            <span className="sr-only">Remove Task</span>
-                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                        </button>
+                                                        <div className="buttonContainer">
+                                                            <Link to={`/task/${i.id}`}>
+                                                                <i class="fa-solid fa-ellipsis"></i>
+                                                            </Link>
+                                                            <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
+                                                                <span className="sr-only">Remove Task</span>
+                                                                <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 )
                                             })}
@@ -509,7 +552,9 @@ const Home = () => {
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
                                                     <input type="checkbox" className="taskCheckbox" onChange={() => {changeSearchedToFinishedTask(i.id, i)}}/>
                                                     <div className="taskText">
-                                                        <p className="taskName">{i.task.name}</p>
+                                                        <Link to={`/task/${i.id}`}>
+                                                            <p className="taskName">{i.task.name}</p>
+                                                        </Link>
                                                         <p className="taskDescription">{i.task.description}</p>
                                                         <div className="labelContainer">
                                                             <p className={i.task.priority}>{i.task.priority}</p>
@@ -520,10 +565,15 @@ const Home = () => {
                                                         <p>Planned Completion:</p>
                                                         <p>{i.task.reformattedDeadline}</p>
                                                     </div>
-                                                    <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                                        <span className="sr-only">Remove Task</span>
-                                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                    </button>
+                                                    <div className="buttonContainer">
+                                                        <Link to={`/task/${i.id}`}>
+                                                            <i class="fa-solid fa-ellipsis"></i>
+                                                        </Link>
+                                                        <button className="exitBtn" onClick={() => {deleteTaskSearchedList(i.id, i)}}>
+                                                            <span className="sr-only">Remove Task</span>
+                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             )                     
                                         })}
@@ -550,7 +600,9 @@ const Home = () => {
                                                         <i className="fa-solid fa-check" onClick={() => {changeSearchedToUnfinishedTask(i.id, i)}}></i>
                                                     </div>
                                                     <div className="taskText">
-                                                        <p className="taskName">{i.task.name}</p>
+                                                        <Link to={`/task/${i.id}`}>
+                                                            <p className="taskName">{i.task.name}</p>
+                                                        </Link>
                                                         <p className="taskDescription">{i.task.description}</p>
                                                         <div className="labelContainer">
                                                             <p className={i.task.priority}>{i.task.priority}</p>
@@ -561,10 +613,15 @@ const Home = () => {
                                                         <p>Planned Completion:</p>
                                                         <p>{i.task.reformattedDeadline}</p>
                                                     </div>
-                                                    <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                                        <span className="sr-only">Remove Task</span>
-                                                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                    </button>
+                                                    <div className="buttonContainer">
+                                                        <Link to={`/task/${i.id}`}>
+                                                            <i class="fa-solid fa-ellipsis"></i>
+                                                        </Link>
+                                                        <button className="exitBtn" onClick={() => {deleteTaskSearchedDoneList(i.id, i)}}>
+                                                            <span className="sr-only">Remove Task</span>
+                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             )                     
                                         })}
