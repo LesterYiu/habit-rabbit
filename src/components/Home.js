@@ -47,6 +47,7 @@ const Home = () => {
     useEffect( () => {
         onAuthStateChanged( auth, (user) => {
             if (user) {
+                console.log(user.auth.currentUser.uid);
                 setUsername(user.displayName);
                 setUserUID(user.auth.currentUser.uid);
                 setUserPic(user.photoURL);
@@ -323,8 +324,8 @@ const Home = () => {
                         <div className="dashboardContent">
                             <div className="userLocationBar">
                                 <div className="userLocationButtons">
-                                    <i class="fa-solid fa-arrow-left"></i>
-                                    <i class="fa-solid fa-arrow-right"></i>
+                                    <i className="fa-solid fa-arrow-left"></i>
+                                    <i className="fa-solid fa-arrow-right"></i>
                                 </div>
                                 <p>🏠 Your workspace</p>
                             </div>
@@ -354,7 +355,7 @@ const Home = () => {
                                 {isPageLoading && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer loadingContainer">
                                     <p>Now loading...</p>
-                                    <div class="lds-ring"><div></div></div>
+                                    <div className="lds-ring"><div></div></div>
                                 </div> : null
                                 }
                                 {isOngoingTaskListZero && isToDoBtnClicked && isPageLoading === false? 
@@ -406,7 +407,7 @@ const Home = () => {
                                                             </div>
                                                             <div className="buttonContainer">
                                                                 <Link to={`/task/${i.id}`}>
-                                                                    <i class="fa-solid fa-ellipsis"></i>
+                                                                    <i className="fa-solid fa-ellipsis"></i>
                                                                 </Link>
                                                                 <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
                                                                     <span className="sr-only">Remove Task</span>
@@ -453,7 +454,7 @@ const Home = () => {
                                                         </div>
                                                         <div className="buttonContainer">
                                                             <Link to={`/task/${i.id}`}>
-                                                                <i class="fa-solid fa-ellipsis"></i>
+                                                                <i className="fa-solid fa-ellipsis"></i>
                                                             </Link>
                                                             <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
                                                                 <span className="sr-only">Remove Task</span>
@@ -489,8 +490,8 @@ const Home = () => {
                         <div className="dashboardContent">
                             <div className="userLocationBar">
                                 <div className="userLocationButtons">
-                                    <i class="fa-solid fa-arrow-left"></i>
-                                    <i class="fa-solid fa-arrow-right"></i>
+                                    <i className="fa-solid fa-arrow-left"></i>
+                                    <i className="fa-solid fa-arrow-right"></i>
                                 </div>
                                 <p>🏠 Your workspace</p>
                             </div>
@@ -567,7 +568,7 @@ const Home = () => {
                                                     </div>
                                                     <div className="buttonContainer">
                                                         <Link to={`/task/${i.id}`}>
-                                                            <i class="fa-solid fa-ellipsis"></i>
+                                                            <i className="fa-solid fa-ellipsis"></i>
                                                         </Link>
                                                         <button className="exitBtn" onClick={() => {deleteTaskSearchedList(i.id, i)}}>
                                                             <span className="sr-only">Remove Task</span>
@@ -615,7 +616,7 @@ const Home = () => {
                                                     </div>
                                                     <div className="buttonContainer">
                                                         <Link to={`/task/${i.id}`}>
-                                                            <i class="fa-solid fa-ellipsis"></i>
+                                                            <i className="fa-solid fa-ellipsis"></i>
                                                         </Link>
                                                         <button className="exitBtn" onClick={() => {deleteTaskSearchedDoneList(i.id, i)}}>
                                                             <span className="sr-only">Remove Task</span>

@@ -59,7 +59,7 @@ const HomeNavigation = ({setIsNewTaskClicked}) => {
                     <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </li>
                 <li>                    
-                    <button onClick={signUserOut} className="homeBtnSix homeBtn"><span aria-hidden="true">🚪</span>Login out</button>
+                    <button onClick={signUserOut} className="homeBtnSix homeBtn"><span aria-hidden="true">🚪</span>Logout</button>
                     <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </li>
             </ul>
