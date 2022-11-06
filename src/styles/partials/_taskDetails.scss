@@ -1,0 +1,88 @@
+.taskDetails {
+    padding: 20px 0;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+
+    .taskHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px solid rgba(212, 212, 212, 0.9);
+        padding: 0 30px 20px 30px;
+    }
+
+    .taskInformation {
+        display: flex;
+        align-items: center;
+
+        i {
+            margin-right: 15px;
+            background-color: #EDF2EC;
+            padding: 10px 15px;
+            border-radius: 10px;
+        }
+    }
+
+    p.label {
+        margin-bottom: 10px;
+    }
+
+    .taskDescription,
+    .taskData,
+    .updateTaskBtns,
+    .updateTasksContainer,
+    .taskLabelContainer {
+        margin-top: 35px;
+        padding: 0 30px;
+    }
+
+    .taskData {
+        display: flex;
+    }
+
+    .taskDates {
+        margin-right: 60px;
+    }
+
+    .labelContainer {
+        display: flex;
+
+        p {
+            margin-right: 15px;
+            border: 1px solid rgba(212, 212, 212, 0.9);
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        }
+    }
+
+    .updateTaskBtns {
+
+        i {
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+
+        button {
+            border: 1px solid rgba(212, 212, 212, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right: 15px;
+            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        }
+
+        .updatesBtn {
+            background-color: #2374FF;
+        }
+    }
+
+    .updateTasksContainer {
+            border: 1px solid rgba(212, 212, 212, 0.9);
+            padding: 15px;
+            margin: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    }
+}

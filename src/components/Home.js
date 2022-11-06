@@ -11,7 +11,7 @@ import errorMessageTwo from "../assets/errorMessageTwo.gif";
 import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
 import { getHours } from "date-fns";
-import { Link } from "react-router-dom";
+import TaskDetails from "./TaskDetails";
 
 const Home = () => {
 
@@ -21,7 +21,8 @@ const Home = () => {
     const [reformattedDoneTask, setReformattedDoneTask] = useState([]); 
     const [searchedTaskList, setSearchedTaskList] = useState([]);
     const [doneSearchedTaskList, setDoneSearchedTaskList] = useState([]);
-    
+    const [specificTask, setSpecificTask] = useState([]);
+
     const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
     const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
@@ -35,6 +36,7 @@ const Home = () => {
     const [isFinishedTaskListZero, setIsFinishedTaskListZero] = useState(false);
     const [isOngoingSearchTaskFound, setIsOngoingSearchTaskFound] = useState(true);
     const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
+    const [isTaskExpanded, setIsTaskExpanded] = useState(false);
 
     // useContext variables
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext);
@@ -47,7 +49,6 @@ const Home = () => {
     useEffect( () => {
         onAuthStateChanged( auth, (user) => {
             if (user) {
-                console.log(user.auth.currentUser.uid);
                 setUsername(user.displayName);
                 setUserUID(user.auth.currentUser.uid);
                 setUserPic(user.photoURL);
@@ -76,7 +77,7 @@ const Home = () => {
         setCurrentUserTime(getHours(new Date()));
 
 
-    }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList]);
+    }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList, collectionRef, doneCollection]);
 
     useEffect( () => {
         const reformatTaskList = () => {
@@ -315,6 +316,26 @@ const Home = () => {
         matchTaskWithSearch(textInput, regex);
     }
 
+    const directToTaskDetails = (taskData) => {
+        setSpecificTask(taskData);
+        setIsTaskExpanded(true);
+    }
+
+    if(isAuth && isTaskExpanded) {
+        return(
+            <div className="homePage">
+                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
+                <TaskDetails specificTask={specificTask}/>
+                {isNewTaskClicked ? 
+                <>
+                    <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <div className="overlayBackground"></div>
+                </>
+                : null}
+            </div>
+        )
+    }
+
     if (isAuth && !isSearchBarPopulated) {
         return(
             <>
@@ -392,9 +413,9 @@ const Home = () => {
                                                         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
                                                             <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
                                                             <div className="taskText">
-                                                                <Link to={`/task/${i.id}`}>
+                                                                <button onClick={() => {directToTaskDetails(i)}}>
                                                                     <p className="taskName">{i.task.name}</p>
-                                                                </Link>
+                                                                </button>
                                                                 <p className="taskDescription">{i.task.description}</p>
                                                                 <div className="labelContainer">
                                                                     <p className={i.task.priority}>{i.task.priority}</p>
@@ -406,9 +427,9 @@ const Home = () => {
                                                                 <p>{i.task.reformattedDeadline}</p>
                                                             </div>
                                                             <div className="buttonContainer">
-                                                                <Link to={`/task/${i.id}`}>
+                                                                <button onClick={directToTaskDetails}>
                                                                     <i className="fa-solid fa-ellipsis"></i>
-                                                                </Link>
+                                                                </button>
                                                                 <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
                                                                     <span className="sr-only">Remove Task</span>
                                                                     <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
@@ -439,9 +460,9 @@ const Home = () => {
                                                             <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
                                                         </div>
                                                         <div className="taskText">
-                                                            <Link to={`/task/${i.id}`}>
+                                                            <button onClick={directToTaskDetails}>
                                                                 <p className="taskName">{i.task.name}</p>
-                                                            </Link>
+                                                            </button>
                                                             <p className="taskDescription">{i.task.description}</p>
                                                             <div className="labelContainer">
                                                                 <p className={i.task.priority}>{i.task.priority}</p>
@@ -453,9 +474,9 @@ const Home = () => {
                                                             <p>{i.task.reformattedDeadline}</p>
                                                         </div>
                                                         <div className="buttonContainer">
-                                                            <Link to={`/task/${i.id}`}>
+                                                            <button onClick={directToTaskDetails}>
                                                                 <i className="fa-solid fa-ellipsis"></i>
-                                                            </Link>
+                                                            </button>
                                                             <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
                                                                 <span className="sr-only">Remove Task</span>
                                                                 <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
@@ -470,7 +491,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <CustomizeTab userUID={userUID}/>
+                    {/* <CustomizeTab userUID={userUID}/> */}
                 </div>
                 {isNewTaskClicked ? 
                 <>
@@ -553,9 +574,9 @@ const Home = () => {
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
                                                     <input type="checkbox" className="taskCheckbox" onChange={() => {changeSearchedToFinishedTask(i.id, i)}}/>
                                                     <div className="taskText">
-                                                        <Link to={`/task/${i.id}`}>
+                                                        <button onClick={directToTaskDetails}>
                                                             <p className="taskName">{i.task.name}</p>
-                                                        </Link>
+                                                        </button>
                                                         <p className="taskDescription">{i.task.description}</p>
                                                         <div className="labelContainer">
                                                             <p className={i.task.priority}>{i.task.priority}</p>
@@ -567,9 +588,9 @@ const Home = () => {
                                                         <p>{i.task.reformattedDeadline}</p>
                                                     </div>
                                                     <div className="buttonContainer">
-                                                        <Link to={`/task/${i.id}`}>
+                                                        <button onClick={directToTaskDetails}>
                                                             <i className="fa-solid fa-ellipsis"></i>
-                                                        </Link>
+                                                        </button>
                                                         <button className="exitBtn" onClick={() => {deleteTaskSearchedList(i.id, i)}}>
                                                             <span className="sr-only">Remove Task</span>
                                                             <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
@@ -601,9 +622,9 @@ const Home = () => {
                                                         <i className="fa-solid fa-check" onClick={() => {changeSearchedToUnfinishedTask(i.id, i)}}></i>
                                                     </div>
                                                     <div className="taskText">
-                                                        <Link to={`/task/${i.id}`}>
+                                                        <button onClick={directToTaskDetails}>
                                                             <p className="taskName">{i.task.name}</p>
-                                                        </Link>
+                                                        </button>
                                                         <p className="taskDescription">{i.task.description}</p>
                                                         <div className="labelContainer">
                                                             <p className={i.task.priority}>{i.task.priority}</p>
@@ -615,9 +636,9 @@ const Home = () => {
                                                         <p>{i.task.reformattedDeadline}</p>
                                                     </div>
                                                     <div className="buttonContainer">
-                                                        <Link to={`/task/${i.id}`}>
+                                                        <button onClick={directToTaskDetails}>
                                                             <i className="fa-solid fa-ellipsis"></i>
-                                                        </Link>
+                                                        </button>
                                                         <button className="exitBtn" onClick={() => {deleteTaskSearchedDoneList(i.id, i)}}>
                                                             <span className="sr-only">Remove Task</span>
                                                             <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>

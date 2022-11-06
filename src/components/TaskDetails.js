@@ -1,68 +1,63 @@
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useContext } from "react";
-import { AppContext } from "../Contexts/AppContext";
-import { useNavigate, useParams, Navigate } from "react-router-dom";
-import { auth, db } from "./firebase";
-import { useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import {format} from "date-fns";
 
-const TaskDetails = () => {
+const TaskDetails = ({specificTask}) => {
 
-    // useContext variables
-    const {setIsAuth, isAuth, setUsername, setUserUID, userUID, setUserPic} = useContext(AppContext);
-
-    const {taskID} = useParams();
-
-    const [isCorrectUser, setIsCorrectUser] = useState(null);
-    const [taskDoc, setTaskDoc] = useState([]);
-
-    const navigate = useNavigate();
-    const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask`);
-    const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
-    useEffect( () => {
-
-        onAuthStateChanged( auth, (user) => {
-            if (user) {
-                setUsername(user.displayName);
-                setUserUID(user.auth.currentUser.uid);
-                setUserPic(user.photoURL);
-                setIsAuth(!user.isAnonymous);
-            }
-        })
-    }, [setUsername, setUserUID, setUserPic, setIsAuth])
-
-    useEffect( () => {
-        const getTaskData = async () => {
-            const data = await getDocs(collectionRef);
-            const taskList = data.docs.map((doc) => ({...doc.data(), id: doc.id}));
-            
-            // If users access task data of another user, redirect
-
-            for(let task in taskList) {
-
-                if(taskList[task].id === taskID) {
-                    setTaskDoc(taskList[task])
-                    setIsCorrectUser(true);
-                    return;
-                }
-
-                navigate("/home");
-            }
-        }
-        getTaskData();
-    }, [userUID]);
-
-    
-    if (isAuth && isCorrectUser) {
-        return(
+    console.log(specificTask.task.label);
+    return(
         <div className="taskDetails">
-
-        </div>)
-    } else if (isAuth && isCorrectUser === null) {
-        return(<div className="lds-ring"><div></div></div>)
-    }
-    
-    return <Navigate to="/login" replace/>
+            <div className="userLocationBar">
+                <div className="userLocationButtons">
+                    <i className="fa-solid fa-arrow-left"></i>
+                    <i className="fa-solid fa-arrow-right"></i>
+                </div>
+                <p>🏠 Your workspace</p>
+            </div>
+            <div className="taskHeader">
+                <div className="taskInformation">
+                    <i className="fa-regular fa-clipboard"></i>
+                    <div className="taskNameContainer">
+                        <p className="label">Task</p>
+                        <h1>{specificTask.task.name}</h1>
+                    </div>
+                </div>
+                <div>
+                    <p className="label">Percent Complete</p>
+                    <input type="range" />
+                </div>
+            </div>
+            <div className="taskDescription">
+                <p className="label">Description</p>
+                <p>{specificTask.task.description}</p>
+            </div>
+            <div className="taskData">
+                <div className="taskDates taskInfoContainer">
+                    <p className="label">Planned Competion Date</p>
+                    <p>{format(new Date(specificTask.task.deadline), 'MMM e')}</p>
+                </div>
+                <div className="priorityLevel taskInfoContainer">
+                    <p className="label">Priority</p>
+                    <p>{specificTask.task.priority}</p>
+                </div>
+            </div>
+            <div className="taskLabelContainer taskInfoContainer">
+                <p className="label">Labels</p>
+                <div className="labelContainer">
+                    {specificTask.task.label.map( (label) => {
+                        return(
+                            <p>{label}</p>
+                        )
+                    })}
+                </div>
+            </div>
+            <div className="updateTaskBtns">
+                <button className="updatesBtn"><i className="fa-solid fa-note-sticky" aria-hidden="true"></i>New Updates</button>
+                <button className="logTimeBtn"><i className="fa-regular fa-clock" aria-hidden="true"></i>Log Time</button>
+            </div>
+            <div className="updateTasksContainer">
+                <p>Start a new update</p>
+            </div>
+        </div>
+    )
 }
 
 export default TaskDetails;
