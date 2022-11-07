@@ -59,6 +59,10 @@ h4 {
 }
 
 // Home Page Typography
+
+.arrowDisabled {
+    color: #6d767ec1;
+}
 .homeNavigation {
     font-size: 1.1rem;
 }
@@ -105,7 +109,6 @@ h4 {
 
     p {
         font-size: 0.9rem;
-        font-weight: 600;
         font-family: $base-font;
     }
 
@@ -232,7 +235,7 @@ h4 {
 .taskDetails {
 
     h1 {
-        font-size: 1.2rem !important;
+        font-size: 1rem !important;
     }
 
     p {
@@ -266,5 +269,22 @@ h4 {
 
     .priorityLevel {
         text-transform: capitalize;
+    }
+
+    .updateTasksContainer {
+        text-align: left;
+    }
+
+    .updateTaskBtnContainer button{
+        font-size: 0.9rem;
+        font-family: $tertiary-font !important;
+    }
+
+    .updateHoursContainer h2 {
+        font-size: 1.2rem;
+    }
+
+    .specificDayContainer p {
+        font-size: 0.7rem;
     }
 }

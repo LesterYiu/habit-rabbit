@@ -1,6 +1,6 @@
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
-import CustomizeTab from "./CustomizeTab";
+// import CustomizeTab from "./CustomizeTab";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
@@ -12,6 +12,7 @@ import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
 import { getHours } from "date-fns";
 import TaskDetails from "./TaskDetails";
+import { debounce } from "../utils/globalFunctions";
 
 const Home = () => {
 
@@ -37,6 +38,7 @@ const Home = () => {
     const [isOngoingSearchTaskFound, setIsOngoingSearchTaskFound] = useState(true);
     const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
     const [isTaskExpanded, setIsTaskExpanded] = useState(false);
+    const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
 
     // useContext variables
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext);
@@ -58,7 +60,7 @@ const Home = () => {
     }, [setUsername, setUserUID, setUserPic, setIsAuth])
 
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
-    useEffect( () => {;
+    useEffect( () => {
 
         const getPost = async () => {
             // data - ongoing tasks, doneData - finished tasks
@@ -76,8 +78,8 @@ const Home = () => {
 
         setCurrentUserTime(getHours(new Date()));
 
-
-    }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList, collectionRef, doneCollection]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList]);
 
     useEffect( () => {
         const reformatTaskList = () => {
@@ -122,16 +124,6 @@ const Home = () => {
     const handleButtonSwitch = (switchToFalse, switchToTrue) => {
         switchToTrue(true);
         switchToFalse(false);
-    }
-
-    const debounce = (callbackFunction, delay) => {
-        let timeout;
-        return (...args) => {
-            clearTimeout(timeout);
-            timeout = setTimeout( () => {
-                callbackFunction(...args)
-            }, delay);
-        }
     }
 
     const reformatTaskByDate = (taskListState, setTaskState) => {
@@ -321,11 +313,19 @@ const Home = () => {
         setIsTaskExpanded(true);
     }
 
+    const handleFrontArrowBtn = () => {
+        if(specificTask.length === 0) {
+            return;
+        }
+        setIsTaskExpanded(true);
+        
+    }
+
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
                 <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
-                <TaskDetails specificTask={specificTask}/>
+                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
@@ -345,10 +345,14 @@ const Home = () => {
                         <div className="dashboardContent">
                             <div className="userLocationBar">
                                 <div className="userLocationButtons">
-                                    <i className="fa-solid fa-arrow-left"></i>
-                                    <i className="fa-solid fa-arrow-right"></i>
+                                    <button disabled>
+                                        <i className="fa-solid fa-arrow-left arrowDisabled"></i>
+                                    </button>
+                                    <button onClick={handleFrontArrowBtn} disabled={isSpecificTaskEmpty}>
+                                        <i className={isSpecificTaskEmpty ? "fa-solid fa-arrow-right arrowDisabled" : "fa-solid fa-arrow-right"}></i>
+                                    </button>
                                 </div>
-                                <p>🏠 Your workspace</p>
+                                <p>🏠 <span>Your workspace</span></p>
                             </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
                             {currentUserTime >= 5 && currentUserTime < 12 ? 
@@ -427,7 +431,7 @@ const Home = () => {
                                                                 <p>{i.task.reformattedDeadline}</p>
                                                             </div>
                                                             <div className="buttonContainer">
-                                                                <button onClick={directToTaskDetails}>
+                                                                <button onClick={() => {directToTaskDetails(i)}}>
                                                                     <i className="fa-solid fa-ellipsis"></i>
                                                                 </button>
                                                                 <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
@@ -460,7 +464,7 @@ const Home = () => {
                                                             <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
                                                         </div>
                                                         <div className="taskText">
-                                                            <button onClick={directToTaskDetails}>
+                                                            <button onClick={() => {directToTaskDetails(i)}}>
                                                                 <p className="taskName">{i.task.name}</p>
                                                             </button>
                                                             <p className="taskDescription">{i.task.description}</p>
@@ -474,7 +478,7 @@ const Home = () => {
                                                             <p>{i.task.reformattedDeadline}</p>
                                                         </div>
                                                         <div className="buttonContainer">
-                                                            <button onClick={directToTaskDetails}>
+                                                            <button onClick={() => {directToTaskDetails(i)}}>
                                                                 <i className="fa-solid fa-ellipsis"></i>
                                                             </button>
                                                             <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
@@ -511,10 +515,14 @@ const Home = () => {
                         <div className="dashboardContent">
                             <div className="userLocationBar">
                                 <div className="userLocationButtons">
-                                    <i className="fa-solid fa-arrow-left"></i>
-                                    <i className="fa-solid fa-arrow-right"></i>
+                                    <button disabled>
+                                        <i className="fa-solid fa-arrow-left arrowDisabled"></i>
+                                    </button>
+                                    <button onClick={handleFrontArrowBtn} disabled={isSpecificTaskEmpty}>
+                                        <i className={isSpecificTaskEmpty ? "fa-solid fa-arrow-right arrowDisabled" : "fa-solid fa-arrow-right"}></i>
+                                    </button>
                                 </div>
-                                <p>🏠 Your workspace</p>
+                                <p>🏠 <span>Your workspace</span></p>
                             </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
                             {currentUserTime >= 5 && currentUserTime < 12 ? 
@@ -574,7 +582,7 @@ const Home = () => {
                                                 <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
                                                     <input type="checkbox" className="taskCheckbox" onChange={() => {changeSearchedToFinishedTask(i.id, i)}}/>
                                                     <div className="taskText">
-                                                        <button onClick={directToTaskDetails}>
+                                                        <button onClick={() => {directToTaskDetails(i)}}>
                                                             <p className="taskName">{i.task.name}</p>
                                                         </button>
                                                         <p className="taskDescription">{i.task.description}</p>
@@ -588,7 +596,7 @@ const Home = () => {
                                                         <p>{i.task.reformattedDeadline}</p>
                                                     </div>
                                                     <div className="buttonContainer">
-                                                        <button onClick={directToTaskDetails}>
+                                                        <button onClick={() => {directToTaskDetails(i)}}>
                                                             <i className="fa-solid fa-ellipsis"></i>
                                                         </button>
                                                         <button className="exitBtn" onClick={() => {deleteTaskSearchedList(i.id, i)}}>
@@ -622,7 +630,7 @@ const Home = () => {
                                                         <i className="fa-solid fa-check" onClick={() => {changeSearchedToUnfinishedTask(i.id, i)}}></i>
                                                     </div>
                                                     <div className="taskText">
-                                                        <button onClick={directToTaskDetails}>
+                                                        <button onClick={() => {directToTaskDetails(i)}}>
                                                             <p className="taskName">{i.task.name}</p>
                                                         </button>
                                                         <p className="taskDescription">{i.task.description}</p>
@@ -636,7 +644,7 @@ const Home = () => {
                                                         <p>{i.task.reformattedDeadline}</p>
                                                     </div>
                                                     <div className="buttonContainer">
-                                                        <button onClick={directToTaskDetails}>
+                                                        <button onClick={() => {directToTaskDetails(i)}}>
                                                             <i className="fa-solid fa-ellipsis"></i>
                                                         </button>
                                                         <button className="exitBtn" onClick={() => {deleteTaskSearchedDoneList(i.id, i)}}>
@@ -655,7 +663,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <CustomizeTab/>
+                    {/* <CustomizeTab/> */}
                 </div>
                 {isNewTaskClicked ? 
                 <>
