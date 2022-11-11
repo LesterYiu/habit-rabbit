@@ -100,7 +100,6 @@ const Home = () => {
                 setState(false);
             }
         }
-
         checkLength(reformattedTask, setIsOngoingTaskListZero);
         checkLength(reformattedDoneTask, setIsFinishedTaskListZero);
         checkLength(searchedTaskList, setIsOngoingSearchTaskFound);
@@ -325,7 +324,7 @@ const Home = () => {
         return(
             <div className="homePage">
                 <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
-                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty}/>
+                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>

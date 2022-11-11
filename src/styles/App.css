@@ -208,6 +208,9 @@ h4 {
 .taskDetails .specificDayContainer p {
   font-size: 0.7rem; }
 
+.taskDetails .timePublished {
+  font-size: 0.7rem; }
+
 html {
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
@@ -1385,6 +1388,46 @@ abbr {
     .taskDetails .logTimeOptionBtns button[type=submit] {
       background-color: #2873D3;
       color: white; }
+  .taskDetails .taskCommentContainer {
+    margin: 10px 30px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    position: relative; }
+    .taskDetails .taskCommentContainer .buttonsContainer {
+      position: absolute;
+      top: 5px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; }
+      .taskDetails .taskCommentContainer .buttonsContainer i {
+        font-size: 1.2rem; }
+      .taskDetails .taskCommentContainer .buttonsContainer ul {
+        border: 1px solid rgba(212, 212, 212, 0.9); }
+        .taskDetails .taskCommentContainer .buttonsContainer ul li {
+          border-bottom: 1px solid rgba(212, 212, 212, 0.9);
+          padding: 0 5px; }
+  .taskDetails .profilePicContainer {
+    width: 50px;
+    height: 50px; }
+    .taskDetails .profilePicContainer img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%; }
+  .taskDetails .commentText {
+    margin-left: 25px; }
+    .taskDetails .commentText .username {
+      margin-bottom: 10px;
+      font-weight: bold; }
+  .taskDetails .timePublished {
+    margin-top: 15px; }
+  .taskDetails .alterUpdateOption {
+    display: none; }
+    .taskDetails .alterUpdateOption button {
+      font-size: 0.8rem; }
 
 .toDoListSection {
   margin-top: 25px;

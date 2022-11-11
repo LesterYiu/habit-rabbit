@@ -1,9 +1,12 @@
-import {format} from "date-fns";
-import { useEffect, useState, useRef} from "react";
+import {format, getHours} from "date-fns";
+import {  doc, updateDoc, getDoc } from "firebase/firestore";
+import { useEffect, useState, useRef, useContext} from "react";
 import uuid from "react-uuid";
 import { debounce } from "../utils/globalFunctions";
+import { AppContext } from "../Contexts/AppContext";
+import { db } from "./firebase";
 
-const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty}) => {
+const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked}) => {
 
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
     const [isLogTimeBtnClicked, setIsLogTimeBtnClicked] = useState(false);
@@ -14,6 +17,8 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty}) 
     const [day5, setDay5] = useState("");
     const [day6, setDay6] = useState("");
     const [day7, setDay7] = useState("");
+
+    const isMounted = useRef(false);
 
     const [taskCompletion, setTaskCompletion] = useState("");
     const [updates, setUpdates] = useState([]);
@@ -28,9 +33,67 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty}) 
     const day6El = useRef(null);
     const day7El = useRef(null);
 
-    useEffect(() => {
+    // useContext variables
+    const {userUID, username, userPic} = useContext(AppContext);
+
+    // To get the data from database on mount
+    useEffect( () => {
+        
+        const getUpdateComments = async () => {
+            // If this task is not complete then the data is updated within the ongoing tasks collection
+            if(isToDoBtnClicked) {
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+                
+                const docSnap = await getDoc(documentRef);
+                setUpdates(docSnap.data().task.updates);
+
+            } else if (isDoneBtnClicked) {
+
+                // If this task is complete (different collection) then the data is updated within the finished tasks collection
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+                
+                const docSnap = await getDoc(documentRef);
+                setUpdates(docSnap.data().task.updates);    
+            }
+
+        }
+
+        getUpdateComments()
+
+    }, []);
+
+    // To handle new updates, this will not run on initial mount
+
+    useEffect( () => {
+
+        if(!isMounted.current) {
+            isMounted.current = true;
+            return;
+        }
+
+        const handleUpdateDocument = async () => {
+
+            if(isToDoBtnClicked) {
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+                await updateDoc(documentRef, {
+                    "task.updates": updates
+                })
+            } else if (isDoneBtnClicked) {
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+                
+                await updateDoc(documentRef, {
+                    "task.updates": updates
+                })
+            }
+
+        }
+
+        handleUpdateDocument();
+    }, [updates])
+
+    // To get dates for log time
+    useEffect( () => {
         setIsSpecificTaskEmpty(false);
-        setUpdates(specificTask.task.updates)
 
         // Get dates for logging time
         const today = new Date();
@@ -63,20 +126,47 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty}) 
     const handleNewUpdates = (e, setStateFunction) => {
         setStateFunction(e.target.value);
     }
-    
-    const handleNewComments = (e) => {
+
+    const handleNewComments = async (e) => {
         e.preventDefault();
+
+        const textareaStr = textareaEl.current.value;
+        if(textareaStr.length === 0 || textareaStr === null || textareaStr === undefined || textareaStr.indexOf(' ') >= 0) {
+            return;
+        }
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
 
-        const allComments = [...updates];
-        allComments.push(textareaEl.current.value);
-        setUpdates(allComments);
+        const updateObj = {
+            taskUpdate: textareaEl.current.value,
+            date: format(new Date(), 'MMM dd, yyyy'),
+            timePublished: (new Date()).getHours(),
+            minutesPublished: (new Date()).getMinutes()
+        }
+
+        setUpdates([...updates, updateObj]);
+
     }
 
     const handleTimeInput = () => {
         setTimeSpent(parseInt(todayEl.current.value) + parseInt(day2El.current.value) + parseInt(day3El.current.value) + parseInt(day4El.current.value) + parseInt(day5El.current.value) + parseInt(day6El.current.value) + parseInt(day7El.current.value));
     }
-    
+
+    const handleOptionsBtn = (e) => {
+        const optionContainer = e.target.parentNode.nextSibling;
+
+        if (optionContainer.style.display === "none") {
+            optionContainer.style.display = "block";
+        } else {
+            optionContainer.style.display = "none";
+        }
+        
+    }
+
+    const handleDeleteUpdate = (update) => {
+        setUpdates(updates.filter((i) => i !== update));
+
+    }
+
     return(
         <div className="taskDetails">
             <div className="userLocationBar">
@@ -130,7 +220,9 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty}) 
                 <div className="labelContainer">
                     {specificTask.task.label.map( (label) => {
                         return(
-                            <p key={uuid()}>{label}</p>
+                            <div key={uuid()} >
+                                <p>{label}</p>
+                            </div>
                         )
                     })}
                 </div>
@@ -202,6 +294,45 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty}) 
                     <button type="submit">Submit</button>
                 </div>
             </form> : null}
+            {updates ? 
+            updates.map( (update) => {
+                let hours;
+                let time;
+                if(update.timePublished <= 11) {
+                    hours = update.timePublished;
+                    time = `${hours}:${update.minutesPublished}AM`
+                } else if (update.timePublished === 12) {
+                    hours = update.timePublished;
+                    time = `${hours}:${update.minutesPublished}PM`                    
+                } else if (update.timePublished > 12) {
+                    hours = update.timePublished - 12;
+                    time = `${hours}:${update.minutesPublished}PM`
+                }
+
+                return <div key={uuid()} className="taskCommentContainer">
+                            <div className="profilePicContainer">
+                                <img src={userPic} alt="" />
+                            </div>
+                            <div className="commentText">
+                                <p className="username">{username}</p>
+                                <p>{update.taskUpdate}</p>
+                                <p className="timePublished">{`Posted on ${update.date} at ${time}`}</p>
+                            </div>
+                            <div className="buttonsContainer">
+                                <button className="moreOptionsBtn" onClick={handleOptionsBtn}>
+                                    <i className="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <ul className="alterUpdateOption">
+                                    <li>
+                                        <button>Edit Update</button>
+                                    </li>
+                                    <li>
+                                        <button onClick={() => {handleDeleteUpdate(update)}}>Delete Update</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+            }): null}
         </div>
     )
 }
