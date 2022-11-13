@@ -182,7 +182,6 @@
     .logTimeOptionBtns {
         display: flex;
         font-size: 1rem;
-        margin-top: 20px;
 
         button {
             border-radius: 5px;
@@ -410,5 +409,14 @@
     .logTimeBtnTwo {
         background-color: #2873D3;
         color: white;
+    }
+
+    .totalHours {
+        font-size: 0.7rem;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        padding-top: 5px;
+        border-top: 1px solid rgba(212, 212, 212, 0.9);
     }
 }

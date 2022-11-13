@@ -1384,8 +1384,7 @@ abbr {
     margin: 0 10px; }
   .taskDetails .logTimeOptionBtns {
     display: flex;
-    font-size: 1rem;
-    margin-top: 20px; }
+    font-size: 1rem; }
     .taskDetails .logTimeOptionBtns button {
       border-radius: 5px;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
@@ -1543,6 +1542,13 @@ abbr {
   .taskDetails .logTimeBtnTwo {
     background-color: #2873D3;
     color: white; }
+  .taskDetails .totalHours {
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(212, 212, 212, 0.9); }
 
 .toDoListSection {
   margin-top: 25px;

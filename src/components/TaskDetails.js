@@ -49,25 +49,22 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         
         const getUpdateCommentsAndProgress = async () => {
             // If this task is not complete then the data is updated within the ongoing tasks collection
+
+            let documentRef;
+
             if(isToDoBtnClicked) {
-                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-                
-                const docSnap = await getDoc(documentRef);
-                setUpdates(docSnap.data().task.updates);
-                
-                setTaskCompletion(docSnap.data().task.completion);
+                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
 
             } else if (isDoneBtnClicked) {
 
                 // If this task is complete (different collection) then the data is updated within the finished tasks collection
-                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-                
-                const docSnap = await getDoc(documentRef);
-                setUpdates(docSnap.data().task.updates);    
-
-                setTaskCompletion(docSnap.data().task.completion);
-
+                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
             }
+
+            const docSnap = await getDoc(documentRef);
+            setUpdates(docSnap.data().task.updates);
+            
+            setTaskCompletion(docSnap.data().task.completion);
 
         }
 
@@ -86,21 +83,21 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         const handleUpdateDocument = async () => {
 
+            let documentRef;
+
             if(isToDoBtnClicked) {
-                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-                await updateDoc(documentRef, {
-                    "task.updates": updates
-                })
+                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
             } else if (isDoneBtnClicked) {
-                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-                
-                await updateDoc(documentRef, {
-                    "task.updates": updates
-                })
+                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
             }
+
+            await updateDoc(documentRef, {
+                "task.updates": updates
+            })
         }
 
         const handleUpdateProgress = () => {
+
             if(isToDoBtnClicked) {
                 const handleOngoingTask = async () => {
                     const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
@@ -177,6 +174,8 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     // Handles on mount loading of time inputs
 
     useEffect( () => {
+
+        setTimeSpent(day1Time + day2Time + day3Time + day4Time + day5Time + day6Time + day7Time)
     
         if(!isMountedTwo.current) {
             isMountedTwo.current = true;
@@ -184,8 +183,12 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         }
     
         async function getDocument() {
-            const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-            
+            let documentRef;
+            if(isToDoBtnClicked) {
+                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+            } else if (isDoneBtnClicked) {
+                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+            }
             const docSnap = await getDoc(documentRef);
             const timeSpentArr = docSnap.data().task.timeSpent;
             const datesArr = arguments[0];
@@ -200,7 +203,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         }
         getDocument([day1, day2, day3, day4, day5, day6, day7],[setDay1Time, setDay2Time, setDay3Time, setDay4Time, setDay5Time, setDay6Time, setDay7Time]);
     }, [isLogTimeBtnClicked])
-                    // console.log(day1Time, day2Time, day3Time, day4Time, day5Time, day6Time, day7Time);
+
     const handleNewUpdateBtn = () => {
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
     }
@@ -258,15 +261,18 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         if(isToDoBtnClicked) {
             const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
             await deleteDoc(documentRef);
-            setTaskList(taskList.filter((i) => i.id !== specificTask.id))
+            setTaskList(taskList.filter( (i) => i.id !== specificTask.id))
         } else if (isDoneBtnClicked) {
             const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
             await deleteDoc(documentRef);
             setDoneTaskList(doneTaskList.filter( (i) => i.id !== specificTask.id))
         }
-
         setIsDeleteModalOn();
         setIsTaskExpanded(false);
+    }
+
+    const handleTimeInput = (e, setTimeState) => {
+        setTimeState(parseInt(e.target.value));
     }
 
     /*
@@ -284,7 +290,13 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         const datesArr = arguments[0];
         const dateTimeArr = arguments[1];
 
-        const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);        
+        let documentRef;
+
+        if(isToDoBtnClicked) {
+            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+        } else if (isDoneBtnClicked) {
+            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+        }
         
         for(let i in datesArr) {
             const date = datesArr[i];
@@ -292,13 +304,13 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             timeArr.push({time, date})
         }
 
-        timeArr = timeArr.filter( (i) => i.time !== 0)
+        timeArr = timeArr.filter( (i) => i.time !== 0 && i.time !== NaN && i.time !== undefined && i.time !== null)
         
         await updateDoc(documentRef, {
             "task.timeSpent" : timeArr
         })
     }
-
+    
     const submitLoggedTime = () => {
         setIsLogTimeBtnClicked(!isLogTimeBtnClicked);
 
@@ -411,45 +423,46 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                         <div className="specificDayContainer">
                             <label htmlFor="howManyHours1" className="sr-only">How many hours on {day1}</label>
                             <p aria-hidden="true">{day1}</p>
-                            <input type="number" id="howManyHours1" onChange={(e) => {setDay1Time(e.target.value)}} value={day1Time}/>
+                            <input type="number" id="howManyHours1" onChange={(e) => {handleTimeInput(e, setDay1Time)}} value={day1Time}/>
                         </div>
 
                         <div className="specificDayContainer">
                             <label htmlFor="howManyHours2" className="sr-only">How many hours on {day2}</label>
                             <p aria-hidden="true">{day2}</p>
-                            <input type="number" id="howManyHours2" onChange={(e) => {setDay2Time(e.target.value)}} value={day2Time}/>
+                            <input type="number" id="howManyHours2" onChange={(e) => {handleTimeInput(e, setDay2Time)}} value={day2Time}/>
                         </div>
 
                         <div className="specificDayContainer">
                             <label htmlFor="howManyHours3" className="sr-only">How many hours on {day3}</label>
                             <p aria-hidden="true">{day3}</p>
-                            <input type="number" id="howManyHours3" onChange={(e) => {setDay3Time(e.target.value)}} value={day3Time}/>
+                            <input type="number" id="howManyHours3" onChange={(e) => {handleTimeInput(e, setDay3Time)}} value={day3Time}/>
                         </div>
 
                         <div className="specificDayContainer">
                             <label htmlFor="howManyHours4" className="sr-only">How many hours on {day4}</label>
                             <p aria-hidden="true">{day4}</p>
-                            <input type="number" id="howManyHours4" onChange={(e) => {setDay4Time(e.target.value)}} value={day4Time}/>
+                            <input type="number" id="howManyHours4" onChange={(e) => {handleTimeInput(e, setDay4Time)}} value={day4Time}/>
                         </div>
 
                         <div className="specificDayContainer">
                             <label htmlFor="howManyHours5" className="sr-only">How many hours on {day5}</label>
                             <p aria-hidden="true">{day5}</p>
-                            <input type="number" id="howManyHours5" onChange={(e) => {setDay5Time(e.target.value)}} value={day5Time}/>
+                            <input type="number" id="howManyHours5" onChange={(e) => {handleTimeInput(e, setDay5Time)}} value={day5Time}/>
                         </div>
 
                         <div className="specificDayContainer">
                             <label htmlFor="howManyHours6" className="sr-only">How many hours on {day6}</label>
                             <p aria-hidden="true">{day6}</p>
-                            <input type="number" id="howManyHours6" onChange={(e) => {setDay6Time(e.target.value)}} value={day6Time}/>
+                            <input type="number" id="howManyHours6" onChange={(e) => {handleTimeInput(e, setDay6Time)}} value={day6Time}/>
                         </div>
 
                         <div className="specificDayContainer">
                             <label htmlFor="howManyHours7" className="sr-only">How many hours on {day7}</label>
                             <p aria-hidden="true">{day7}</p>
-                            <input type="number" id="howManyHours7" onChange={(e) => {setDay7Time(e.target.value)}} value={day7Time}/>
+                            <input type="number" id="howManyHours7" onChange={(e) => {handleTimeInput(e, setDay7Time)}} value={day7Time}/>
                         </div>
                     </form>
+                    <p className="totalHours">Total Hours: {timeSpent}</p>
                     <div className="logTimeOptionBtns">
                         <button onClick={submitLoggedTime} className="logTimeBtnTwo">Log Time</button>
                         <button onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}>Cancel</button>

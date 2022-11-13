@@ -4,7 +4,7 @@ import NewTask from "./NewTask";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
-import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc, getDoc } from "firebase/firestore";
 import { useState , useEffect, useContext} from "react";
 import errorMessageOne from "../assets/errorMessageOne.gif";
 import errorMessageTwo from "../assets/errorMessageTwo.gif";
@@ -79,7 +79,7 @@ const Home = () => {
         setCurrentUserTime(getHours(new Date()));
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList]);
+    }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList, isTaskExpanded]);
 
     useEffect( () => {
         const reformatTaskList = () => {
@@ -159,7 +159,7 @@ const Home = () => {
 
     const changeToFinishedTask = async (id, i) => {
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-
+        
         // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
 
         // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
