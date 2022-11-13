@@ -1318,17 +1318,19 @@ abbr {
       padding: 5px 10px;
       border-radius: 5px;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .taskDetails .updateTaskBtns i {
-    font-size: 0.9rem;
-    margin-right: 10px; }
-  .taskDetails .updateTaskBtns button {
-    border: 1px solid rgba(212, 212, 212, 0.5);
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 15px;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .taskDetails .updateTaskBtns .updatesBtn {
-    background-color: #2873D3; }
+  .taskDetails .updateTaskBtns {
+    position: relative; }
+    .taskDetails .updateTaskBtns i {
+      font-size: 0.9rem;
+      margin-right: 10px; }
+    .taskDetails .updateTaskBtns button {
+      border: 1px solid rgba(212, 212, 212, 0.5);
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-right: 15px;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    .taskDetails .updateTaskBtns .updatesBtn {
+      background-color: #2873D3; }
   .taskDetails .updateTasksContainer {
     border: 1px solid rgba(212, 212, 212, 0.9);
     padding: 15px;
@@ -1355,9 +1357,12 @@ abbr {
       margin-right: 15px;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
   .taskDetails .updateHoursContainer {
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    position: absolute;
+    z-index: 10;
+    bottom: -200px;
+    background-color: white;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
     border: 1px solid rgba(212, 212, 212, 0.5);
-    margin: 0 30px;
     padding: 20px;
     border-radius: 5px; }
   .taskDetails .logTimeForm {
@@ -1375,7 +1380,8 @@ abbr {
   .taskDetails .specificDayContainer {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; }
+    align-items: center;
+    margin: 0 10px; }
   .taskDetails .logTimeOptionBtns {
     display: flex;
     font-size: 1rem;
@@ -1534,6 +1540,9 @@ abbr {
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.3); }
+  .taskDetails .logTimeBtnTwo {
+    background-color: #2873D3;
+    color: white; }
 
 .toDoListSection {
   margin-top: 25px;

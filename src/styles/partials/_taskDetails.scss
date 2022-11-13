@@ -87,6 +87,7 @@
     }
 
     .updateTaskBtns {
+        position: relative;
 
         i {
             font-size: 0.9rem;
@@ -142,11 +143,14 @@
     }
 
     .updateHoursContainer {
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            border: 1px solid rgba(212, 212, 212, 0.5);
-            margin: 0 30px;
-            padding: 20px;
-            border-radius: 5px;
+        position: absolute;
+        z-index: 10;
+        bottom: -200px;
+        background-color: white;
+        box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(212, 212, 212, 0.5);
+        padding: 20px;
+        border-radius: 5px;
     }
     
     .logTimeForm {
@@ -170,7 +174,9 @@
     .specificDayContainer {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        margin: 0 10px;
+        
     }
 
     .logTimeOptionBtns {
@@ -399,5 +405,10 @@
         left: 0;
         right: 0;
         background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .logTimeBtnTwo {
+        background-color: #2873D3;
+        color: white;
     }
 }

@@ -1,4 +1,4 @@
-import {format, getHours} from "date-fns";
+import {format} from "date-fns";
 import {  doc, updateDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { useEffect, useState, useRef, useContext} from "react";
 import uuid from "react-uuid";
@@ -13,31 +13,33 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const [isLogTimeBtnClicked, setIsLogTimeBtnClicked] = useState(false);
     const [isRangeClicked, setIsRangeClicked] = useState(false);
     const [isDeleteModalOn, setIsDeleteModalOn] = useToggle();
-    const [today, setToday] = useState("");
+    const [day1, setDay1] = useState("");
     const [day2, setDay2] = useState("");
     const [day3, setDay3] = useState("");
     const [day4, setDay4] = useState("");
     const [day5, setDay5] = useState("");
     const [day6, setDay6] = useState("");
     const [day7, setDay7] = useState("");
-
-    const [isEnableOn, setIsEnableOn] = useToggle();
-    const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
-
-    const isMounted = useRef(false);
+    const [day1Time, setDay1Time] = useState(0);
+    const [day2Time, setDay2Time] = useState(0);
+    const [day3Time, setDay3Time] = useState(0);
+    const [day4Time, setDay4Time] = useState(0);
+    const [day5Time, setDay5Time] = useState(0);
+    const [day6Time, setDay6Time] = useState(0);
+    const [day7Time, setDay7Time] = useState(0);
 
     const [taskCompletion, setTaskCompletion] = useState("");
     const [updates, setUpdates] = useState([]);
     const [timeSpent, setTimeSpent] = useState(0);
+    const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
+    const [timeObj, setTimeObj] = useState({});
+
+    const [isEnableOn, setIsEnableOn] = useToggle();
+
+    const isMounted = useRef(false);
+    const isMountedTwo = useRef(false);
 
     const textareaEl = useRef(null)
-    const todayEl = useRef(null);
-    const day2El = useRef(null);
-    const day3El = useRef(null);
-    const day4El = useRef(null);
-    const day5El = useRef(null);
-    const day6El = useRef(null);
-    const day7El = useRef(null);
 
     // useContext variables
     const {userUID, username, userPic} = useContext(AppContext);
@@ -133,25 +135,36 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     useEffect( () => {
         setIsSpecificTaskEmpty(false);
 
-        // Get dates for logging time
-        const today = new Date();
-        const day2 = new Date(today);
-        const day3 = new Date(today);
-        const day4 = new Date(today);
-        const day5 = new Date(today);
-        const day6 = new Date(today);
-        const day7 = new Date(today);
-        
-        setToday(format(today, 'iii MMM e'));
-        setDay2(format(day2.setDate(day2.getDate() + 1), 'iii MMM e'));
-        setDay3(format(day3.setDate(day3.getDate() + 2), 'iii MMM e'));
-        setDay4(format(day4.setDate(day4.getDate() + 3), 'iii MMM e'));
-        setDay5(format(day5.setDate(day5.getDate() + 4), 'iii MMM e'));
-        setDay6(format(day6.setDate(day6.getDate() + 5), 'iii MMM e'));
-        setDay7(format(day7.setDate(day7.getDate() + 6), 'iii MMM e'));
+        function setDays (setPresentDay, setDayStateMinus1, setDayStateMinus2, setDayStateMinus3, setDayState1, setDayState2, setDayState3) {
+            setPresentDay(format(new Date(), 'iii MMM dd'))
+
+            function minusDays () {
+                for(let i = 0; i < 3; i++) {
+                    const today = new Date();
+                    let argumentsArr = [...arguments];
+                    let counter = argumentsArr.indexOf(arguments[i]) + 1;
+                    arguments[i](format(today.setDate(today.getDate() - counter), 'iii MMM dd'))
+                }
+            }
+
+            function addDays () {
+                for(let i = 0; i < 3; i++) {
+                    const today = new Date();
+                    let argumentsArr = [...arguments];
+                    let counter = argumentsArr.indexOf(arguments[i]) + 1;
+                    arguments[i](format(today.setDate(today.getDate() + counter), 'iii MMM dd'))
+                }        
+            }
+
+            minusDays(setDayStateMinus1, setDayStateMinus2, setDayStateMinus3);
+            addDays(setDayState1, setDayState2, setDayState3);
+        }
+
+        setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7);
 
     }, [setIsSpecificTaskEmpty])
 
+    // Handle loading
     useEffect( () => {
         let timeout;
         clearTimeout(timeout);
@@ -161,6 +174,33 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         }, 400)
     }, [taskCompletion])
 
+    // Handles on mount loading of time inputs
+
+    useEffect( () => {
+    
+        if(!isMountedTwo.current) {
+            isMountedTwo.current = true;
+            return;
+        }
+    
+        async function getDocument() {
+            const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+            
+            const docSnap = await getDoc(documentRef);
+            const timeSpentArr = docSnap.data().task.timeSpent;
+            const datesArr = arguments[0];
+            const setTimeArr = arguments[1];
+            for(let i in datesArr) {
+                for(let o in timeSpentArr) {
+                    if(timeSpentArr[o].date === datesArr[i]) {
+                        setTimeArr[i](timeSpentArr[o].time)
+                    }
+                }
+            }
+        }
+        getDocument([day1, day2, day3, day4, day5, day6, day7],[setDay1Time, setDay2Time, setDay3Time, setDay4Time, setDay5Time, setDay6Time, setDay7Time]);
+    }, [isLogTimeBtnClicked])
+                    // console.log(day1Time, day2Time, day3Time, day4Time, day5Time, day6Time, day7Time);
     const handleNewUpdateBtn = () => {
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
     }
@@ -171,9 +211,9 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     const handleNewComments = async (e) => {
         e.preventDefault();
-
         const textareaStr = textareaEl.current.value;
-        if(textareaStr.length === 0 || textareaStr === null || textareaStr === undefined || textareaStr.indexOf(' ') >= 0) {
+        const beginningWhiteSpace = /^(?!\s).+(?<!\s)$/gm;
+        if(textareaStr.length === 0 || textareaStr === null || textareaStr === undefined || !beginningWhiteSpace.test(`${textareaEl.current.value}`)) {
             return;
         }
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
@@ -187,10 +227,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         setUpdates([...updates, updateObj]);
 
-    }
-
-    const handleTimeInput = () => {
-        setTimeSpent(parseInt(todayEl.current.value) + parseInt(day2El.current.value) + parseInt(day3El.current.value) + parseInt(day4El.current.value) + parseInt(day5El.current.value) + parseInt(day6El.current.value) + parseInt(day7El.current.value));
     }
 
     const handleOptionsBtn = (e) => {
@@ -231,6 +267,42 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         setIsDeleteModalOn();
         setIsTaskExpanded(false);
+    }
+
+    /*
+    Used to organize and update the time spent on each day
+
+    Put two arrays containing the following:
+
+    Array 1 - contains all the date state variables
+    Array 2 - contains all the hours spent state variables
+    */
+
+    async function updateTime () {
+        let timeArr = [];
+
+        const datesArr = arguments[0];
+        const dateTimeArr = arguments[1];
+
+        const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);        
+        
+        for(let i in datesArr) {
+            const date = datesArr[i];
+            const time = dateTimeArr[i];
+            timeArr.push({time, date})
+        }
+
+        timeArr = timeArr.filter( (i) => i.time !== 0)
+        
+        await updateDoc(documentRef, {
+            "task.timeSpent" : timeArr
+        })
+    }
+
+    const submitLoggedTime = () => {
+        setIsLogTimeBtnClicked(!isLogTimeBtnClicked);
+
+        updateTime([day1, day2, day3, day4, day5, day6, day7], [day1Time, day2Time, day3Time, day4Time, day5Time, day6Time, day7Time]);
     }
 
     return(
@@ -332,61 +404,61 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             <div className="updateTaskBtns">
                 <button className="updatesBtn" onClick={handleNewUpdateBtn}><i className="fa-solid fa-note-sticky" aria-hidden="true"></i>New Updates</button>
                 <button className="logTimeBtn" onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}><i className="fa-regular fa-clock" aria-hidden="true"></i>Log Time</button>
+                {isLogTimeBtnClicked ?
+                <div className="updateHoursContainer">
+                    <h2>Enter Hours</h2>
+                    <form name="logTime" className="logTimeForm">
+                        <div className="specificDayContainer">
+                            <label htmlFor="howManyHours1" className="sr-only">How many hours on {day1}</label>
+                            <p aria-hidden="true">{day1}</p>
+                            <input type="number" id="howManyHours1" onChange={(e) => {setDay1Time(e.target.value)}} value={day1Time}/>
+                        </div>
+
+                        <div className="specificDayContainer">
+                            <label htmlFor="howManyHours2" className="sr-only">How many hours on {day2}</label>
+                            <p aria-hidden="true">{day2}</p>
+                            <input type="number" id="howManyHours2" onChange={(e) => {setDay2Time(e.target.value)}} value={day2Time}/>
+                        </div>
+
+                        <div className="specificDayContainer">
+                            <label htmlFor="howManyHours3" className="sr-only">How many hours on {day3}</label>
+                            <p aria-hidden="true">{day3}</p>
+                            <input type="number" id="howManyHours3" onChange={(e) => {setDay3Time(e.target.value)}} value={day3Time}/>
+                        </div>
+
+                        <div className="specificDayContainer">
+                            <label htmlFor="howManyHours4" className="sr-only">How many hours on {day4}</label>
+                            <p aria-hidden="true">{day4}</p>
+                            <input type="number" id="howManyHours4" onChange={(e) => {setDay4Time(e.target.value)}} value={day4Time}/>
+                        </div>
+
+                        <div className="specificDayContainer">
+                            <label htmlFor="howManyHours5" className="sr-only">How many hours on {day5}</label>
+                            <p aria-hidden="true">{day5}</p>
+                            <input type="number" id="howManyHours5" onChange={(e) => {setDay5Time(e.target.value)}} value={day5Time}/>
+                        </div>
+
+                        <div className="specificDayContainer">
+                            <label htmlFor="howManyHours6" className="sr-only">How many hours on {day6}</label>
+                            <p aria-hidden="true">{day6}</p>
+                            <input type="number" id="howManyHours6" onChange={(e) => {setDay6Time(e.target.value)}} value={day6Time}/>
+                        </div>
+
+                        <div className="specificDayContainer">
+                            <label htmlFor="howManyHours7" className="sr-only">How many hours on {day7}</label>
+                            <p aria-hidden="true">{day7}</p>
+                            <input type="number" id="howManyHours7" onChange={(e) => {setDay7Time(e.target.value)}} value={day7Time}/>
+                        </div>
+                    </form>
+                    <div className="logTimeOptionBtns">
+                        <button onClick={submitLoggedTime} className="logTimeBtnTwo">Log Time</button>
+                        <button onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}>Cancel</button>
+                    </div>
+                </div> : null}
             </div>
             <button className="updateTasksContainer" onClick={handleNewUpdateBtn}>
                 <p>Start a new update</p>
             </button>
-            {isLogTimeBtnClicked ?
-            <div className="updateHoursContainer">
-                <h2>Enter Hours</h2>
-                <form name="logTime" className="logTimeForm">
-                    <div className="specificDayContainer">
-                        <label htmlFor="howManyHours1" className="sr-only">How many hours on {today}</label>
-                        <p aria-hidden="true">{today}</p>
-                        <input type="number" id="howManyHours1" ref={todayEl}/>
-                    </div>
-
-                    <div className="specificDayContainer">
-                        <label htmlFor="howManyHours2" className="sr-only">How many hours on {day2}</label>
-                        <p aria-hidden="true">{day2}</p>
-                        <input type="number" id="howManyHours2" ref={day2El}/>
-                    </div>
-
-                    <div className="specificDayContainer">
-                        <label htmlFor="howManyHours3" className="sr-only">How many hours on {day3}</label>
-                        <p aria-hidden="true">{day3}</p>
-                        <input type="number" id="howManyHours3" ref={day3El}/>
-                    </div>
-
-                    <div className="specificDayContainer">
-                        <label htmlFor="howManyHours4" className="sr-only">How many hours on {day4}</label>
-                        <p aria-hidden="true">{day4}</p>
-                        <input type="number" id="howManyHours4" ref={day4El}/>
-                    </div>
-
-                    <div className="specificDayContainer">
-                        <label htmlFor="howManyHours5" className="sr-only">How many hours on {day5}</label>
-                        <p aria-hidden="true">{day5}</p>
-                        <input type="number" id="howManyHours5" ref={day5El}/>
-                    </div>
-
-                    <div className="specificDayContainer">
-                        <label htmlFor="howManyHours6" className="sr-only">How many hours on {day6}</label>
-                        <p aria-hidden="true">{day6}</p>
-                        <input type="number" id="howManyHours6" ref={day6El}/>
-                    </div>
-
-                    <div className="specificDayContainer">
-                        <label htmlFor="howManyHours7" className="sr-only">How many hours on {day7}</label>
-                        <p aria-hidden="true">{day7}</p>
-                        <input type="number" id="howManyHours7" ref={day7El}/>
-                    </div>
-                </form>
-                <div className="logTimeOptionBtns">
-                    <button onClick={handleTimeInput}>Log Time</button>
-                    <button onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}>Cancel</button>
-                </div>
-            </div> : null}
             {isNewUpdateBtnClicked ?
             <form name="taskDetails" className="taskDetailsForm" onSubmit={(e) => {handleNewComments(e)}}>
                 <label htmlFor="taskUpdate" className="sr-only">Provide an update to your task</label>
