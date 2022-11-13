@@ -324,7 +324,7 @@ const Home = () => {
         return(
             <div className="homePage">
                 <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
-                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked}/>
+                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>

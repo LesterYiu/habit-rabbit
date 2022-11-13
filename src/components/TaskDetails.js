@@ -1,15 +1,18 @@
 import {format, getHours} from "date-fns";
-import {  doc, updateDoc, getDoc } from "firebase/firestore";
+import {  doc, updateDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { useEffect, useState, useRef, useContext} from "react";
 import uuid from "react-uuid";
 import { debounce } from "../utils/globalFunctions";
 import { AppContext } from "../Contexts/AppContext";
 import { db } from "./firebase";
+import {useToggle} from "../utils/customHooks";
 
-const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked}) => {
+const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList}) => {
 
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
     const [isLogTimeBtnClicked, setIsLogTimeBtnClicked] = useState(false);
+    const [isRangeClicked, setIsRangeClicked] = useState(false);
+    const [isDeleteModalOn, setIsDeleteModalOn] = useToggle();
     const [today, setToday] = useState("");
     const [day2, setDay2] = useState("");
     const [day3, setDay3] = useState("");
@@ -17,6 +20,9 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const [day5, setDay5] = useState("");
     const [day6, setDay6] = useState("");
     const [day7, setDay7] = useState("");
+
+    const [isEnableOn, setIsEnableOn] = useToggle();
+    const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
 
     const isMounted = useRef(false);
 
@@ -39,13 +45,15 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     // To get the data from database on mount
     useEffect( () => {
         
-        const getUpdateComments = async () => {
+        const getUpdateCommentsAndProgress = async () => {
             // If this task is not complete then the data is updated within the ongoing tasks collection
             if(isToDoBtnClicked) {
                 const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
                 
                 const docSnap = await getDoc(documentRef);
                 setUpdates(docSnap.data().task.updates);
+                
+                setTaskCompletion(docSnap.data().task.completion);
 
             } else if (isDoneBtnClicked) {
 
@@ -54,14 +62,17 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                 
                 const docSnap = await getDoc(documentRef);
                 setUpdates(docSnap.data().task.updates);    
+
+                setTaskCompletion(docSnap.data().task.completion);
+
             }
 
         }
 
-        getUpdateComments()
+        getUpdateCommentsAndProgress()
 
     }, []);
-
+    
     // To handle new updates, this will not run on initial mount
 
     useEffect( () => {
@@ -85,11 +96,38 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                     "task.updates": updates
                 })
             }
+        }
 
+        const handleUpdateProgress = () => {
+            if(isToDoBtnClicked) {
+                const handleOngoingTask = async () => {
+                    const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+
+                    await updateDoc(documentRef, {
+                        "task.completion": taskCompletion
+                    })
+                }
+                handleOngoingTask();
+            } else if (isDoneBtnClicked) {
+
+                const handleFinishedTask = async () => {
+                    const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+                    
+                    await updateDoc(documentRef, {
+                        "task.completion": taskCompletion
+                    })
+                }
+                
+                handleFinishedTask();
+            }
         }
 
         handleUpdateDocument();
-    }, [updates])
+
+        if(taskCompletion !== "") {
+            handleUpdateProgress();
+        }
+    }, [updates, taskCompletion])
 
     // To get dates for log time
     useEffect( () => {
@@ -114,17 +152,21 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     }, [setIsSpecificTaskEmpty])
 
+    useEffect( () => {
+        let timeout;
+        clearTimeout(timeout);
+
+        timeout = setTimeout( () => {
+            setIsTaskProgressNotUpdated(false);
+        }, 400)
+    }, [taskCompletion])
+
     const handleNewUpdateBtn = () => {
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
     }
 
     const handleBackArrowBtn = () => {
         setIsTaskExpanded(false);
-    }
-    
-
-    const handleNewUpdates = (e, setStateFunction) => {
-        setStateFunction(e.target.value);
     }
 
     const handleNewComments = async (e) => {
@@ -167,8 +209,53 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     }
 
+    const handleProgressBar = (e) => {
+        setTaskCompletion(e.target.value);
+    }
+
+    const enableEditBtn = () => {
+        setIsEnableOn();
+        setIsRangeClicked(false);
+    }
+    
+    const deleteTask = async () => {
+        if(isToDoBtnClicked) {
+            const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+            await deleteDoc(documentRef);
+            setTaskList(taskList.filter((i) => i.id !== specificTask.id))
+        } else if (isDoneBtnClicked) {
+            const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+            await deleteDoc(documentRef);
+            setDoneTaskList(doneTaskList.filter( (i) => i.id !== specificTask.id))
+        }
+
+        setIsDeleteModalOn();
+        setIsTaskExpanded(false);
+    }
+
     return(
         <div className="taskDetails">
+            {isTaskProgressNotUpdated ? 
+            <div className="pageOverlay">
+                <div className="lds-ring"><div></div></div>
+            </div>
+            : null}
+            {isDeleteModalOn ?
+                <>
+                <div className="deleteModal">
+                    <div className="errorIcon">
+                        <i className="fa-solid fa-circle-exclamation"></i>
+                        <div className="errorBackground"></div>
+                    </div>
+                    <h2>Delete task</h2>
+                    <p>Are you sure you want to delete this task? Once deleted, this process cannot be undone.</p>
+                    <div className="deleteOptionBtns">
+                        <button className="noBtn" onClick={setIsDeleteModalOn}>No, Keep It.</button>
+                        <button className="yesBtn" onClick={deleteTask}>Yes, Delete!</button>
+                    </div>
+                </div>
+                <div className="overlayModal"></div>
+            </> : null}
             <div className="userLocationBar">
                 <div className="userLocationButtons">
                     <button onClick={handleBackArrowBtn}>
@@ -187,20 +274,35 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                         <p className="label">Task</p>
                         <h1>{specificTask.task.name}</h1>
                     </div>
+                    {isEnableOn ? <p className="enableIndicator">Currently Editting</p> : null}
+                </div>
+                <div className="editContainer">
                     <div className="taskToolBar">
-                        <button>
-                            <i className="fa-solid fa-pen-to-square toolBarBtn"></i>
+                        <button onClick={enableEditBtn} className="taskBtnContainer">
+                            <div className="toolBarCombo">
+                                <i className="fa-solid fa-pencil toolBarBtn" aria-hidden="true"></i>
+                                {isEnableOn ? 
+                                <i className="fa-solid fa-minus toolBarExtension"></i> : null}                                
+                            </div>
+                            {isEnableOn ? <p>Finish Edit</p> : <p>Edit Task</p>}
                         </button>
-                        <button>
-                            <i className="fa-solid fa-trash toolBarBtn"></i>
+                        <button className="taskBtnContainer" onClick={setIsDeleteModalOn}>
+                            <i className="fa-solid fa-trash toolBarBtn" aria-hidden="true"></i>
+                            <p>Delete task</p>
                         </button>
                     </div>
-                </div>
-                <div>
-                    <p className="label">Percent Complete</p>
-                    <input type="range" defaultValue={specificTask.task.completion} onChange={debounce((e) => handleNewUpdates(e, setTaskCompletion), 400)}/>
+                    <div className="percentContainer">
+                        <p className="label">Percent Complete</p>
+                        {isEnableOn ? 
+                        <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 400)}/> : 
+                        <input type="range" value={taskCompletion} onClick={() => {setIsRangeClicked(true)}}/> }
+                    </div>
                 </div>
             </div>
+            {isRangeClicked && !isEnableOn? 
+            <div className="errorContainer">
+                <p className="percentError">Please click the edit button in order to make changes.</p>
+            </div> : null}
             <div className="taskDescription">
                 <p className="label">Description</p>
                 <p>{specificTask.task.description}</p>
