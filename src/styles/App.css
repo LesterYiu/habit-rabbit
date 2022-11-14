@@ -1381,7 +1381,8 @@ abbr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 10px; }
+    margin: 0 10px;
+    text-align: center; }
   .taskDetails .logTimeOptionBtns {
     display: flex;
     font-size: 1rem; }
@@ -1549,6 +1550,14 @@ abbr {
     margin-top: 20px;
     padding-top: 5px;
     border-top: 1px solid rgba(212, 212, 212, 0.9); }
+  .taskDetails .logTimeFlexContainer {
+    display: flex;
+    align-items: center; }
+  .taskDetails .moreDaysBtn {
+    height: 50%;
+    margin-top: 10px; }
+    .taskDetails .moreDaysBtn i {
+      margin: 0; }
 
 .toDoListSection {
   margin-top: 25px;

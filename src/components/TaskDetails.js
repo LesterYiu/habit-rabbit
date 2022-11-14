@@ -27,12 +27,14 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const [day5Time, setDay5Time] = useState(0);
     const [day6Time, setDay6Time] = useState(0);
     const [day7Time, setDay7Time] = useState(0);
+    const [backBtnCounter, setBackBtnCounter] = useState(0);
+    const [frontBtnCounter, setFrontBtnCounter] = useState(0);
 
     const [taskCompletion, setTaskCompletion] = useState("");
     const [updates, setUpdates] = useState([]);
     const [timeSpent, setTimeSpent] = useState(0);
     const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
-    const [timeObj, setTimeObj] = useState({});
+    const [isMoreThan24, setIsMoreThan24] = useState(false);
 
     const [isEnableOn, setIsEnableOn] = useToggle();
 
@@ -70,7 +72,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         getUpdateCommentsAndProgress()
 
-    }, []);
+    }, [isDoneBtnClicked, isToDoBtnClicked, specificTask.id, userUID]);
     
     // To handle new updates, this will not run on initial mount
 
@@ -126,36 +128,11 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         if(taskCompletion !== "") {
             handleUpdateProgress();
         }
-    }, [updates, taskCompletion])
+    }, [updates, taskCompletion, specificTask.id, userUID, isDoneBtnClicked, isToDoBtnClicked])
 
     // To get dates for log time
     useEffect( () => {
         setIsSpecificTaskEmpty(false);
-
-        function setDays (setPresentDay, setDayStateMinus1, setDayStateMinus2, setDayStateMinus3, setDayState1, setDayState2, setDayState3) {
-            setPresentDay(format(new Date(), 'iii MMM dd'))
-
-            function minusDays () {
-                for(let i = 0; i < 3; i++) {
-                    const today = new Date();
-                    let argumentsArr = [...arguments];
-                    let counter = argumentsArr.indexOf(arguments[i]) + 1;
-                    arguments[i](format(today.setDate(today.getDate() - counter), 'iii MMM dd'))
-                }
-            }
-
-            function addDays () {
-                for(let i = 0; i < 3; i++) {
-                    const today = new Date();
-                    let argumentsArr = [...arguments];
-                    let counter = argumentsArr.indexOf(arguments[i]) + 1;
-                    arguments[i](format(today.setDate(today.getDate() + counter), 'iii MMM dd'))
-                }        
-            }
-
-            minusDays(setDayStateMinus1, setDayStateMinus2, setDayStateMinus3);
-            addDays(setDayState1, setDayState2, setDayState3);
-        }
 
         setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7);
 
@@ -175,34 +152,114 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     useEffect( () => {
 
-        setTimeSpent(day1Time + day2Time + day3Time + day4Time + day5Time + day6Time + day7Time)
-    
         if(!isMountedTwo.current) {
             isMountedTwo.current = true;
             return;
         }
     
-        async function getDocument() {
-            let documentRef;
-            if(isToDoBtnClicked) {
-                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-            } else if (isDoneBtnClicked) {
-                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-            }
-            const docSnap = await getDoc(documentRef);
-            const timeSpentArr = docSnap.data().task.timeSpent;
-            const datesArr = arguments[0];
-            const setTimeArr = arguments[1];
-            for(let i in datesArr) {
-                for(let o in timeSpentArr) {
-                    if(timeSpentArr[o].date === datesArr[i]) {
-                        setTimeArr[i](timeSpentArr[o].time)
-                    }
-                }
+        getDocument([day1, day2, day3, day4, day5, day6, day7],[setDay1Time, setDay2Time, setDay3Time, setDay4Time, setDay5Time, setDay6Time, setDay7Time]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLogTimeBtnClicked, day1, day2, day3, day4, day5, day6, day7])
+
+    // Called with an array containing all 7 day's dates + an array containing the state function to set a new day time.
+    async function getDocument() {
+        let documentRef;
+        if(isToDoBtnClicked) {
+            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+        } else if (isDoneBtnClicked) {
+            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+        }
+
+        // If the dates on the log time modal match the dates of the hours logged in the database, it will populate the hours.
+        const docSnap = await getDoc(documentRef);
+
+        // Array containing all the dates/times logged in from the database
+        const timeSpentArr = docSnap.data().task.timeSpent;
+
+        // Array containing all the dates
+        const datesArr = arguments[0];
+
+        // Array containing all the log in time state functions
+        const setTimeArr = arguments[1];
+        
+
+        // Object containing all states, time logged, and dates
+
+        const infoObj = {};
+
+        // If matches of dates from the list of logged times is equal to the a time found on the log time modal, it will be populated, otherwise it will be default to 0
+        for(let i in datesArr) {
+            infoObj[datesArr[i]] = {setState : setTimeArr[i], time: 0, date: datesArr[i]}
+        }
+
+        for(let o in timeSpentArr) {
+
+            if (infoObj[timeSpentArr[o].date] !== undefined) {
+                infoObj[timeSpentArr[o].date].time = timeSpentArr[o].time;
             }
         }
-        getDocument([day1, day2, day3, day4, day5, day6, day7],[setDay1Time, setDay2Time, setDay3Time, setDay4Time, setDay5Time, setDay6Time, setDay7Time]);
-    }, [isLogTimeBtnClicked])
+        
+        for(let i in infoObj) {
+            infoObj[i].setState(infoObj[i].time);
+        }
+
+        // Handles with the total hours
+        let totalTime = 0;
+        
+        for(let i in timeSpentArr) {
+            totalTime = parseInt(totalTime) + parseInt(timeSpentArr[i].time);
+        }
+
+        setTimeSpent(totalTime);
+    }
+
+    function setDays (setPresentDay, setDayStateMinus1, setDayStateMinus2, setDayStateMinus3, setDayState1, setDayState2, setDayState3, optionalBackDays, optionalFrontDays) {
+        
+        const selectedDate = optionalFrontDays - optionalBackDays;
+
+        if ((optionalBackDays || optionalFrontDays) && (optionalBackDays - optionalFrontDays !== 0)) {
+            const today = new Date();
+            setPresentDay(format(today.setDate(today.getDate() + selectedDate), 'iii MMM dd'));
+        } else {
+            setPresentDay(format(new Date(), 'iii MMM dd'))
+        }
+        
+        function minusDays () {
+            for(let i = 0; i < 3; i++) {
+                const today = new Date();
+                let argumentsArr = [...arguments];
+                let counter;
+
+                if (selectedDate !== 0 && !isNaN(selectedDate)) {
+                    counter = argumentsArr.indexOf(arguments[i]) + 1 - selectedDate;
+                } else {
+                    counter = argumentsArr.indexOf(arguments[i]) + 1;
+                }
+
+                arguments[i](format(today.setDate(today.getDate() - counter), 'iii MMM dd'));
+            }
+        }
+
+        function addDays () {
+            for(let i = 0; i < 3; i++) {
+                const today = new Date();
+                let argumentsArr = [...arguments];
+                let counter;
+
+                if (selectedDate !== 0 && !isNaN(selectedDate)) {
+                    counter = argumentsArr.indexOf(arguments[i]) + 1 + selectedDate;
+                } else {
+                    counter = argumentsArr.indexOf(arguments[i]) + 1;
+                }
+    
+                arguments[i](format(today.setDate(today.getDate() + counter), 'iii MMM dd'))
+            }        
+        }
+
+        minusDays(setDayStateMinus1, setDayStateMinus2, setDayStateMinus3);
+        addDays(setDayState1, setDayState2, setDayState3);
+    }
 
     const handleNewUpdateBtn = () => {
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
@@ -272,6 +329,11 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     }
 
     const handleTimeInput = (e, setTimeState) => {
+        if(parseInt(e.target.value) > 24 ) {
+            setIsMoreThan24(true);
+            return;
+        }
+        setIsMoreThan24(false);
         setTimeState(parseInt(e.target.value));
     }
 
@@ -304,7 +366,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             timeArr.push({time, date})
         }
 
-        timeArr = timeArr.filter( (i) => i.time !== 0 && i.time !== NaN && i.time !== undefined && i.time !== null)
+        timeArr = timeArr.filter( (i) => i.time !== 0 && !isNaN(i.time) && i.time !== undefined && i.time !== null)
         
         await updateDoc(documentRef, {
             "task.timeSpent" : timeArr
@@ -316,6 +378,11 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         updateTime([day1, day2, day3, day4, day5, day6, day7], [day1Time, day2Time, day3Time, day4Time, day5Time, day6Time, day7Time]);
     }
+
+    useEffect( () => {
+        setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7, backBtnCounter, frontBtnCounter);
+
+    }, [backBtnCounter, frontBtnCounter])
 
     return(
         <div className="taskDetails">
@@ -419,50 +486,59 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                 {isLogTimeBtnClicked ?
                 <div className="updateHoursContainer">
                     <h2>Enter Hours</h2>
-                    <form name="logTime" className="logTimeForm">
-                        <div className="specificDayContainer">
-                            <label htmlFor="howManyHours1" className="sr-only">How many hours on {day1}</label>
-                            <p aria-hidden="true">{day1}</p>
-                            <input type="number" id="howManyHours1" onChange={(e) => {handleTimeInput(e, setDay1Time)}} value={day1Time}/>
-                        </div>
+                    <div className="logTimeFlexContainer">
+                        <button className="moreDaysBtn" onClick={() => {setBackBtnCounter(backBtnCounter + 1)}}>
+                            <i className="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <form name="logTime" className="logTimeForm">
+                            <div className="specificDayContainer">
+                                <label htmlFor="howManyHours1" className="sr-only">How many hours on {day1}</label>
+                                <p aria-hidden="true">{day1}</p>
+                                <input type="number" id="howManyHours1" onChange={(e) => {handleTimeInput(e, setDay1Time)}} value={day1Time}/>
+                            </div>
 
-                        <div className="specificDayContainer">
-                            <label htmlFor="howManyHours2" className="sr-only">How many hours on {day2}</label>
-                            <p aria-hidden="true">{day2}</p>
-                            <input type="number" id="howManyHours2" onChange={(e) => {handleTimeInput(e, setDay2Time)}} value={day2Time}/>
-                        </div>
+                            <div className="specificDayContainer">
+                                <label htmlFor="howManyHours2" className="sr-only">How many hours on {day2}</label>
+                                <p aria-hidden="true">{day2}</p>
+                                <input type="number" id="howManyHours2" onChange={(e) => {handleTimeInput(e, setDay2Time)}} value={day2Time}/>
+                            </div>
 
-                        <div className="specificDayContainer">
-                            <label htmlFor="howManyHours3" className="sr-only">How many hours on {day3}</label>
-                            <p aria-hidden="true">{day3}</p>
-                            <input type="number" id="howManyHours3" onChange={(e) => {handleTimeInput(e, setDay3Time)}} value={day3Time}/>
-                        </div>
+                            <div className="specificDayContainer">
+                                <label htmlFor="howManyHours3" className="sr-only">How many hours on {day3}</label>
+                                <p aria-hidden="true">{day3}</p>
+                                <input type="number" id="howManyHours3" onChange={(e) => {handleTimeInput(e, setDay3Time)}} value={day3Time}/>
+                            </div>
 
-                        <div className="specificDayContainer">
-                            <label htmlFor="howManyHours4" className="sr-only">How many hours on {day4}</label>
-                            <p aria-hidden="true">{day4}</p>
-                            <input type="number" id="howManyHours4" onChange={(e) => {handleTimeInput(e, setDay4Time)}} value={day4Time}/>
-                        </div>
+                            <div className="specificDayContainer">
+                                <label htmlFor="howManyHours4" className="sr-only">How many hours on {day4}</label>
+                                <p aria-hidden="true">{day4}</p>
+                                <input type="number" id="howManyHours4" onChange={(e) => {handleTimeInput(e, setDay4Time)}} value={day4Time}/>
+                            </div>
 
-                        <div className="specificDayContainer">
-                            <label htmlFor="howManyHours5" className="sr-only">How many hours on {day5}</label>
-                            <p aria-hidden="true">{day5}</p>
-                            <input type="number" id="howManyHours5" onChange={(e) => {handleTimeInput(e, setDay5Time)}} value={day5Time}/>
-                        </div>
+                            <div className="specificDayContainer">
+                                <label htmlFor="howManyHours5" className="sr-only">How many hours on {day5}</label>
+                                <p aria-hidden="true">{day5}</p>
+                                <input type="number" id="howManyHours5" onChange={(e) => {handleTimeInput(e, setDay5Time)}} value={day5Time}/>
+                            </div>
 
-                        <div className="specificDayContainer">
-                            <label htmlFor="howManyHours6" className="sr-only">How many hours on {day6}</label>
-                            <p aria-hidden="true">{day6}</p>
-                            <input type="number" id="howManyHours6" onChange={(e) => {handleTimeInput(e, setDay6Time)}} value={day6Time}/>
-                        </div>
+                            <div className="specificDayContainer">
+                                <label htmlFor="howManyHours6" className="sr-only">How many hours on {day6}</label>
+                                <p aria-hidden="true">{day6}</p>
+                                <input type="number" id="howManyHours6" onChange={(e) => {handleTimeInput(e, setDay6Time)}} value={day6Time}/>
+                            </div>
 
-                        <div className="specificDayContainer">
-                            <label htmlFor="howManyHours7" className="sr-only">How many hours on {day7}</label>
-                            <p aria-hidden="true">{day7}</p>
-                            <input type="number" id="howManyHours7" onChange={(e) => {handleTimeInput(e, setDay7Time)}} value={day7Time}/>
-                        </div>
-                    </form>
-                    <p className="totalHours">Total Hours: {timeSpent}</p>
+                            <div className="specificDayContainer">
+                                <label htmlFor="howManyHours7" className="sr-only">How many hours on {day7}</label>
+                                <p aria-hidden="true">{day7}</p>
+                                <input type="number" id="howManyHours7" onChange={(e) => {handleTimeInput(e, setDay7Time)}} value={day7Time}/>
+                            </div>
+                        </form>
+                        <button className="moreDaysBtn" onClick={() => {setFrontBtnCounter(frontBtnCounter + 1)}}>
+                            <i className="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <p className="totalHours">Total Hours Logged: {timeSpent} {timeSpent <= 1 ? "hour" : "hours"}</p>
+                    {isMoreThan24 ? <p className="loggingError">You cannot log more than 24 hours in a day.</p> : null}
                     <div className="logTimeOptionBtns">
                         <button onClick={submitLoggedTime} className="logTimeBtnTwo">Log Time</button>
                         <button onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}>Cancel</button>

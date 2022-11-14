@@ -1,10 +1,9 @@
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
-// import CustomizeTab from "./CustomizeTab";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
-import { collection, getDocs, deleteDoc, doc, addDoc, getDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
 import { useState , useEffect, useContext} from "react";
 import errorMessageOne from "../assets/errorMessageOne.gif";
 import errorMessageTwo from "../assets/errorMessageTwo.gif";

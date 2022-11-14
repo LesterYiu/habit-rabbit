@@ -176,7 +176,7 @@
         flex-direction: column;
         align-items: center;
         margin: 0 10px;
-        
+        text-align: center;
     }
 
     .logTimeOptionBtns {
@@ -418,5 +418,19 @@
         margin-top: 20px;
         padding-top: 5px;
         border-top: 1px solid rgba(212, 212, 212, 0.9);
+    }
+
+    .logTimeFlexContainer {
+        display: flex;
+        align-items: center;
+    }
+
+    .moreDaysBtn {
+        height: 50%;
+        margin-top: 10px;
+
+        i {
+            margin: 0;
+        }
     }
 }
