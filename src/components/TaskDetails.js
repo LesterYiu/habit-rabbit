@@ -6,6 +6,7 @@ import { debounce } from "../utils/globalFunctions";
 import { AppContext } from "../Contexts/AppContext";
 import { db } from "./firebase";
 import {useToggle} from "../utils/customHooks";
+import _ from "lodash";
 
 const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList}) => {
 
@@ -359,6 +360,9 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         } else if (isDoneBtnClicked) {
             documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
         }
+
+
+        // Find the difference between the locally stored dates/times array from the one on the database. The differences will be placed into a copied version of the database version and then reuploaded onto the database.
         
         for(let i in datesArr) {
             const date = datesArr[i];
@@ -366,10 +370,37 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             timeArr.push({time, date})
         }
 
-        timeArr = timeArr.filter( (i) => i.time !== 0 && !isNaN(i.time) && i.time !== undefined && i.time !== null)
-        
+        const docSnap = await getDoc(documentRef);
+
+        const currentTimeSpent = docSnap.data().task.timeSpent;
+
+        const localArr = [];
+
+        for(let i in datesArr) {
+            localArr.push({time: dateTimeArr[i], date: datesArr[i]})
+        }
+
+        const filteredLocalArr = [];
+
+        localArr.forEach( (obj) => {
+            filteredLocalArr.push(obj)
+        })
+
+        // This is what goes out of frame
+        const difference = (_.differenceWith(currentTimeSpent, filteredLocalArr, _.isEqual));
+
+        timeArr = timeArr.filter( (i) => !isNaN(i.time) && i.time !== undefined && i.time !== null);
+
+        timeArr.push(...difference);
+
+        // Removes duplication of dates object by removing old dates and replaces it with new dates object.
+        const uniqueArr = _.unionBy(timeArr, ...difference, "date");
+
+        // Filters out the date objects containing zero to avoid unneccesary uploads.
+        const finalArr = uniqueArr.filter((dateObj) => dateObj.time !== 0);
+
         await updateDoc(documentRef, {
-            "task.timeSpent" : timeArr
+            "task.timeSpent" : finalArr
         })
     }
     
