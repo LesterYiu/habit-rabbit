@@ -245,7 +245,9 @@ const Home = () => {
         await deleteDoc(doneDoc);
     }
 
-    const changeSearchedToFinishedTask = async (id, i) => {
+    const changeSearchedToFinishedTask = async (id, i, e) => {
+        e.target.disabled = true;
+        e.target.innerText = "Updating"
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
 
         // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
@@ -258,7 +260,7 @@ const Home = () => {
 
     }
 
-    const changeSearchedToUnfinishedTask = async (id, i) => {
+    const changeSearchedToUnfinishedTask = async (id, i, e) => {
 
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
 
@@ -354,7 +356,7 @@ const Home = () => {
 
             const doneBtn = doneBtnContainer.firstChild;
 
-            if(!doneBtn.disabled){
+            if(doneBtn.disabled){
                 return;
             }
 
@@ -376,7 +378,7 @@ const Home = () => {
             </div>
         )
     }
-
+    
     if (isAuth && !isSearchBarPopulated) {
         return(
             <>
@@ -396,11 +398,11 @@ const Home = () => {
                                 <p>🏠 <span>Your workspace</span></p>
                             </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
-                            {currentUserTime >= 5 && currentUserTime < 12 ? 
+                            {currentUserTime >= 0 && currentUserTime < 12 ? 
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
                             {currentUserTime >= 12 && currentUserTime < 18 ?
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
-                            {currentUserTime >= 18 && currentUserTime < 5 ?
+                            {currentUserTime >= 18 ?
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
                             <div className="taskFilters">
                                 <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={() => {handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked)}}>Ongoing</button>
@@ -578,11 +580,11 @@ const Home = () => {
                                 <p>🏠 <span>Your workspace</span></p>
                             </div>
                             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
-                            {currentUserTime >= 5 && currentUserTime < 12 ? 
+                            {currentUserTime >= 0 && currentUserTime < 12 ? 
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
                             {currentUserTime >= 12 && currentUserTime < 18 ?
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
-                            {currentUserTime >= 18 && currentUserTime < 5 ?
+                            {currentUserTime >= 18 ?
                             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
                             <div className="taskFilters">
                                 <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleSearchedOngoingBtn}>Ongoing</button>
@@ -632,8 +634,8 @@ const Home = () => {
                                         <div className="taskMainContainer">
                                         {date.map( (i) => {
                                             return (
-                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                                    <input type="checkbox" className="taskCheckbox" onChange={() => {changeSearchedToFinishedTask(i.id, i)}}/>
+                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
+                                                    {/* <input type="checkbox" className="taskCheckbox" onChange={() => {changeSearchedToFinishedTask(i.id, i)}}/> */}
                                                     <div className="taskText">
                                                         <button onClick={() => {directToTaskDetails(i)}}>
                                                             <p className="taskName">{i.task.name}</p>
@@ -648,7 +650,7 @@ const Home = () => {
                                                         <p>Planned Completion:</p>
                                                         <p>{i.task.reformattedDeadline}</p>
                                                     </div>
-                                                    <div className="buttonContainer">
+                                                    {/* <div className="buttonContainer">
                                                         <button onClick={() => {directToTaskDetails(i)}}>
                                                             <i className="fa-solid fa-ellipsis"></i>
                                                         </button>
@@ -656,6 +658,16 @@ const Home = () => {
                                                             <span className="sr-only">Remove Task</span>
                                                             <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
                                                         </button>
+                                                    </div> */}
+                                                    <div className="buttonContainer buttonHidden">
+                                                        <button className="finishButton" onClick={(e) => {changeSearchedToFinishedTask(i.id, i, e)}}>Done</button>
+                                                        <button onClick={() => {directToTaskDetails(i)}}>
+                                                            <i className="fa-solid fa-angle-down"></i>
+                                                        </button>
+                                                        {/* <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                                            <span className="sr-only">Remove Task</span>
+                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                        </button> */}
                                                     </div>
                                                 </div>
                                             )                     
