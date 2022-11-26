@@ -477,7 +477,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                         <p className="label">Percent Complete</p>
                         {isEnableOn ? 
                         <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 400)}/> : 
-                        <input type="range" value={taskCompletion} onClick={() => {setIsRangeClicked(true)}}/> }
+                        <input type="range" value={taskCompletion || " "} onChange={debounce((e) => handleProgressBar(e), 400)} onClick={() => {setIsRangeClicked(true)}}/> }
                     </div>
                 </div>
             </div>

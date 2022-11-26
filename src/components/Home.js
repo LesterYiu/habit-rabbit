@@ -1,10 +1,10 @@
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
 import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
-import { useState , useEffect, useContext} from "react";
+import { useState , useEffect, useContext, useRef} from "react";
 import errorMessageOne from "../assets/errorMessageOne.gif";
 import errorMessageTwo from "../assets/errorMessageTwo.gif";
 import { AppContext } from "../Contexts/AppContext";
@@ -39,12 +39,16 @@ const Home = () => {
     const [isTaskExpanded, setIsTaskExpanded] = useState(false);
     const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
 
+    const isMounted = useRef(false);
+
     // useContext variables
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
     const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+
+    const navigate = useNavigate();
 
     // On initial mount, if the user is signed in, this will set their user information in state.
     useEffect( () => {
@@ -57,6 +61,35 @@ const Home = () => {
             }
         })
     }, [setUsername, setUserUID, setUserPic, setIsAuth])
+
+    useEffect( () => {
+
+        // In situation where user UID token expires / cleared from login
+
+        if(!isMounted.current) {
+            isMounted.current = true;
+            return;
+        }
+
+        if(userUID === "notSignedIn") {
+            navigate('/login')
+        }
+    }, [userUID])
+
+    useEffect( () => {
+        // Sorts the tasks by deadline date
+        for (let i in reformattedTask) {
+            if(reformattedTask[i] !== undefined) {
+                reformattedTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline);
+            }
+        } 
+
+        for (let i in reformattedDoneTask) {
+            if(reformattedDoneTask[i] !== undefined) {
+                reformattedDoneTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline)
+            }
+        }
+    }, [])
 
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
     useEffect( () => {
@@ -106,19 +139,6 @@ const Home = () => {
 
     }, [reformattedTask, reformattedDoneTask, searchedTaskList, doneSearchedTaskList])
 
-    // Sorts the tasks by deadline date
-    for (let i in reformattedTask) {
-        if(reformattedTask[i] !== undefined) {
-            reformattedTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline);
-        }
-    } 
-
-    for (let i in reformattedDoneTask) {
-        if(reformattedDoneTask[i] !== undefined) {
-            reformattedDoneTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline)
-        }
-    }
-
     const handleButtonSwitch = (switchToFalse, switchToTrue) => {
         switchToTrue(true);
         switchToFalse(false);
@@ -156,34 +176,40 @@ const Home = () => {
         await deleteDoc(doneDoc);
     }
 
-    const changeToFinishedTask = async (id, i) => {
+    const updateDatabase = async (collectionType, postDocType, finishedStateSet, i) => {
+
+        /*
+        - collectionType = which collection to add data to
+        - postDocType = doc in current collection we want to delete
+        - finishedSetState = state function to update UI to add to opposite collection (ex: if we remove from finished section, then we update state on unfinished section)
+        */
+
+        await addDoc(collectionType, i);
+        await deleteDoc(postDocType);
+
+        const data = await getDocs(collectionType);
+        finishedStateSet(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+    }
+
+    const changeToFinishedTask = async (id, i, e) => {
+        e.target.disabled = true;
+
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-        
+        e.target.innerText = "Updating"
         // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
 
         // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
 
+        await updateDatabase(doneCollection, postDoc, setDoneTaskList, i);
         setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
-
-        await addDoc(doneCollection, i);
-        await deleteDoc(postDoc);
-
-        const doneData = await getDocs(doneCollection);
-        setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
-        
     }
 
-    const changeToUnfinishedTask = async (id, i) => {
-
+    const changeToUnfinishedTask = async (id, i, e) => {
+        e.target.disabled = true;
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
-
+        e.target.innerText = "Updating"
+        await updateDatabase(collectionRef, doneDoc, setTaskList, i);
         setDoneTaskList(doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)])); 
-
-        await addDoc(collectionRef, i);
-        await deleteDoc(doneDoc);
-
-        const data = await getDocs(collectionRef);
-        setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     }
 
     // Filters out the user's checked task from the searched task list of tasks
@@ -319,6 +345,23 @@ const Home = () => {
         
     }
 
+    const handleScroll = (e) => {
+        const doneBtnContainer = e.target.childNodes[2];
+
+        if(e.type === "mouseover" && e.target.className === "taskContainer"){
+            doneBtnContainer.className = 'buttonContainer'
+        } else if (e.type === "mouseleave" && e.target.className === "taskContainer"){
+
+            const doneBtn = doneBtnContainer.firstChild;
+
+            if(!doneBtn.disabled){
+                return;
+            }
+
+            doneBtnContainer.className = 'buttonContainer buttonHidden'            
+        }
+    }
+
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
@@ -412,8 +455,7 @@ const Home = () => {
                                             <div className="taskMainContainer">
                                                 {reformattedTask[date].map( (i) => {
                                                     return (
-                                                        <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                                            <input type="checkbox" className="taskCheckbox" onChange={() => {changeToFinishedTask(i.id, i)}}/>
+                                                        <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
                                                             <div className="taskText">
                                                                 <button onClick={() => {directToTaskDetails(i)}}>
                                                                     <p className="taskName">{i.task.name}</p>
@@ -428,14 +470,15 @@ const Home = () => {
                                                                 <p>Planned Completion:</p>
                                                                 <p>{i.task.reformattedDeadline}</p>
                                                             </div>
-                                                            <div className="buttonContainer">
+                                                            <div className="buttonContainer buttonHidden">
+                                                                <button className="finishButton" onClick={(e) => {changeToFinishedTask(i.id, i, e)}}>Done</button>
                                                                 <button onClick={() => {directToTaskDetails(i)}}>
-                                                                    <i className="fa-solid fa-ellipsis"></i>
+                                                                    <i className="fa-solid fa-angle-down"></i>
                                                                 </button>
-                                                                <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
+                                                                {/* <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
                                                                     <span className="sr-only">Remove Task</span>
                                                                     <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                                </button>
+                                                                </button> */}
                                                             </div>
                                                         </div>
                                                     )                     
@@ -456,11 +499,11 @@ const Home = () => {
                                             </div>
                                             {reformattedDoneTask[date].map( (i) => {
                                                 return (
-                                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                                        <div className="checkboxContainer">
+                                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
+                                                        {/* <div className="checkboxContainer">
                                                             <input type="checkbox" className="taskCheckbox taskCheckboxChecked" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
                                                             <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
-                                                        </div>
+                                                        </div> */}
                                                         <div className="taskText">
                                                             <button onClick={() => {directToTaskDetails(i)}}>
                                                                 <p className="taskName">{i.task.name}</p>
@@ -475,6 +518,17 @@ const Home = () => {
                                                             <p>Planned Completion:</p>
                                                             <p>{i.task.reformattedDeadline}</p>
                                                         </div>
+                                                            <div className="buttonContainer buttonHidden">
+                                                                <button className="finishButton" onClick={(e) => {changeToUnfinishedTask(i.id, i, e)}}>Not Done</button>
+                                                                <button onClick={() => {directToTaskDetails(i)}}>
+                                                                    <i className="fa-solid fa-angle-down"></i>
+                                                                </button>
+                                                                {/* <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
+                                                                    <span className="sr-only">Remove Task</span>
+                                                                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+                                                                </button> */}
+                                                            </div>
+                                                            {/* 
                                                         <div className="buttonContainer">
                                                             <button onClick={() => {directToTaskDetails(i)}}>
                                                                 <i className="fa-solid fa-ellipsis"></i>
@@ -484,6 +538,7 @@ const Home = () => {
                                                                 <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
                                                             </button>
                                                         </div>
+                                                            */}
                                                     </div>
                                                 )
                                             })}
@@ -546,22 +601,22 @@ const Home = () => {
                             </div>
                             <div className="allTasksContainer">
                             {isOngoingSearchTaskFound && isToDoBtnClicked ? 
-                            <div className="noTaskFoundContainer">
-                                <p>No results found.</p>
-                                <p>We couldn't find what you're looking for</p>
-                                <div className="errorImageContainer errorImageContainerTwo">
-                                    <img src={errorMessageTwo} alt="" />
-                                </div>
-                            </div> : null
+                                <div className="noTaskFoundContainer">
+                                    <p>No results found.</p>
+                                    <p>We couldn't find what you're looking for</p>
+                                    <div className="errorImageContainer errorImageContainerTwo">
+                                        <img src={errorMessageTwo} alt="" />
+                                    </div>
+                                </div> : null
                             }
                             {isFinishedSearchTaskFound && isDoneBtnClicked ? 
-                            <div className="noTaskFoundContainer">
-                                <p>No results found.</p>
-                                <p>We couldn't find what you're looking for</p>
-                                <div className="errorImageContainer errorImageContainerTwo">
-                                    <img src={errorMessageTwo} alt="" />
-                                </div>
-                            </div> : null
+                                <div className="noTaskFoundContainer">
+                                    <p>No results found.</p>
+                                    <p>We couldn't find what you're looking for</p>
+                                    <div className="errorImageContainer errorImageContainerTwo">
+                                        <img src={errorMessageTwo} alt="" />
+                                    </div>
+                                </div> : null
                             }
                             {isToDoBtnClicked ?
                             searchedTaskList.map( (date) => {

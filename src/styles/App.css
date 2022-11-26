@@ -734,6 +734,24 @@ button {
       font-size: 1.4rem; }
     .homeDashboard .taskContainer .buttonContainer .exitBtn {
       margin-left: 15px; }
+    .homeDashboard .taskContainer .buttonContainer .finishButton {
+      background-color: #0D66D0;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 15px;
+      border-radius: 2px;
+      margin-right: 1px;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      cursor: pointer; }
+    .homeDashboard .taskContainer .buttonContainer .fa-angle-down {
+      background-color: #0D66D0;
+      padding: 7px 5px;
+      border-radius: 2px;
+      font-size: 0.7rem;
+      color: white;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+  .homeDashboard .taskContainer .buttonContainer.buttonHidden {
+    display: none; }
   .homeDashboard .taskContainer input[type="checkbox"] {
     -webkit-appearance: none;
     -moz-appearance: none;
