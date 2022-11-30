@@ -74,7 +74,7 @@ const Home = () => {
         if(userUID === "notSignedIn") {
             navigate('/login')
         }
-    }, [userUID])
+    }, [userUID, navigate])
 
     useEffect( () => {
         // Sorts the tasks by deadline date
@@ -89,7 +89,7 @@ const Home = () => {
                 reformattedDoneTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline)
             }
         }
-    }, [])
+    }, [reformattedDoneTask, reformattedTask])
 
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
     useEffect( () => {
@@ -161,20 +161,20 @@ const Home = () => {
 
 
     // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only
-    const deleteTask = async (id, i) => {
-        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
-        setTaskList(newTaskList);
-        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-        await deleteDoc(postDoc);
-    }
+    // const deleteTask = async (id, i) => {
+    //     const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
+    //     setTaskList(newTaskList);
+    //     const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+    //     await deleteDoc(postDoc);
+    // }
 
     //  Delete tasks for finished task list only.
-    const deleteDoneTask = async (id ,i) => {
-        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
-        setDoneTaskList(newDoneList);
-        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
-        await deleteDoc(doneDoc);
-    }
+    // const deleteDoneTask = async (id ,i) => {
+    //     const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+    //     setDoneTaskList(newDoneList);
+    //     const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+    //     await deleteDoc(doneDoc);
+    // }
 
     const updateDatabase = async (collectionType, postDocType, finishedStateSet, i) => {
 
@@ -227,14 +227,14 @@ const Home = () => {
         setState(taskArrayContainer)
     }
 
-    const deleteTaskSearchedList = async(id, i) => {
-        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
+    // const deleteTaskSearchedList = async(id, i) => {
+    //     filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
 
-        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
-        setTaskList(newTaskList);
-        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-        await deleteDoc(postDoc);
-    }
+    //     const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
+    //     setTaskList(newTaskList);
+    //     const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+    //     await deleteDoc(postDoc);
+    // }
 
     const deleteTaskSearchedDoneList = async(id, i) => {
         filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
@@ -316,9 +316,9 @@ const Home = () => {
 
         const userInput = e.target.value;
         const regex = new RegExp(`${userInput}`, "gi");
-        // setTextInput(userInput);
+        setTextInput(userInput);
 
-        // matchTaskWithSearch(userInput, regex);
+        matchTaskWithSearch(userInput, regex);
 
     }
 
