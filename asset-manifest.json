@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/habit-rabbit/static/css/main.104e0d12.css",
+    "main.js": "/habit-rabbit/static/js/main.275aee8a.js",
+    "static/media/heroBanner.png": "/habit-rabbit/static/media/heroBanner.08e2dd0566378f69901b.png",
+    "static/media/errorMessageOne.gif": "/habit-rabbit/static/media/errorMessageOne.e88ddd678d5bb5efa3f4.gif",
+    "index.html": "/habit-rabbit/index.html",
+    "main.104e0d12.css.map": "/habit-rabbit/static/css/main.104e0d12.css.map",
+    "main.275aee8a.js.map": "/habit-rabbit/static/js/main.275aee8a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.104e0d12.css",
+    "static/js/main.275aee8a.js"
+  ]
+}
