@@ -14,7 +14,7 @@ import TaskDetails from './TaskDetails';
 
 function App() {
 
-  const [isAuth, setIsAuth] = useState(localStorage.isAuth === "true");
+  const [isAuth, setIsAuth] = useState("true");
   const [username, setUsername] = useState("");
   const [userUID, setUserUID] = useState("notSignedIn");
   const [userPic, setUserPic] = useState("");

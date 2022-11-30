@@ -49,7 +49,7 @@ const CreateAccount = () => {
             await setUsername(currentAuth.currentUser.displayName);
 
             setIsAuth(true);
-            localStorage.setItem("isAuth", !auth.currentUser.isAnonymous);
+            // localStorage.setItem("isAuth", !auth.currentUser.isAnonymous);
 
             navigate('/home');
 

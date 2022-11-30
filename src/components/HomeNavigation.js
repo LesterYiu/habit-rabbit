@@ -18,7 +18,7 @@ const HomeNavigation = ({setIsNewTaskClicked}) => {
             setIsAuth(false);
             setUsername('');
             setUserUID('notSignedIn');
-            localStorage.clear();
+            // localStorage.clear();
         })
     }
     

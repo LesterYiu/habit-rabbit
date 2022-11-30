@@ -15,7 +15,7 @@ const Login = () => {
         signInWithPopup(auth, provider).then( (result) => {
 
             setIsAuth(!auth.currentUser.isAnonymous);
-            localStorage.setItem("isAuth", !auth.currentUser.isAnonymous)
+            // localStorage.setItem("isAuth", !auth.currentUser.isAnonymous)
 
             setUsername(result.user.displayName);
             setUserUID(auth.currentUser.uid);
