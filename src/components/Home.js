@@ -316,9 +316,9 @@ const Home = () => {
 
         const userInput = e.target.value;
         const regex = new RegExp(`${userInput}`, "gi");
-        setTextInput(userInput);
+        // setTextInput(userInput);
 
-        matchTaskWithSearch(userInput, regex);
+        // matchTaskWithSearch(userInput, regex);
 
     }
 
