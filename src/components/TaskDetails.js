@@ -6,7 +6,7 @@ import { debounce } from "../utils/globalFunctions";
 import { AppContext } from "../Contexts/AppContext";
 import { db } from "./firebase";
 import {useToggle} from "../utils/customHooks";
-import _ from "lodash";
+// import _ from "lodash";
 
 const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList}) => {
 
