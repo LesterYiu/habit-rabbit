@@ -272,21 +272,21 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     const handleNewComments = async (e) => {
         e.preventDefault();
-        const textareaStr = textareaEl.current.value;
-        const beginningWhiteSpace = /^(?!\s).+(?<!\s)$/gm;
-        if(textareaStr.length === 0 || textareaStr === null || textareaStr === undefined || !beginningWhiteSpace.test(`${textareaEl.current.value}`)) {
-            return;
-        }
-        setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
+        // const textareaStr = textareaEl.current.value;
+        // const beginningWhiteSpace = /^(?!\s).+(?<!\s)$/gm;
+        // if(textareaStr.length === 0 || textareaStr === null || textareaStr === undefined || !beginningWhiteSpace.test(`${textareaEl.current.value}`)) {
+        //     return;
+        // }
+        // setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
 
-        const updateObj = {
-            taskUpdate: textareaEl.current.value,
-            date: format(new Date(), 'MMM dd, yyyy'),
-            timePublished: (new Date()).getHours(),
-            minutesPublished: (new Date()).getMinutes()
-        }
+        // const updateObj = {
+        //     taskUpdate: textareaEl.current.value,
+        //     date: format(new Date(), 'MMM dd, yyyy'),
+        //     timePublished: (new Date()).getHours(),
+        //     minutesPublished: (new Date()).getMinutes()
+        // }
 
-        setUpdates([...updates, updateObj]);
+        // setUpdates([...updates, updateObj]);
 
     }
 
