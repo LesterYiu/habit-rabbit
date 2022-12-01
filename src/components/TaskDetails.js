@@ -272,9 +272,8 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     const handleNewComments = async (e) => {
         e.preventDefault();
-        const textareaStr = textareaEl.current.value;
-        const beginningWhiteSpace = /^(?!\s).+(?<!\s)$/gm;
-        if(textareaStr.length === 0 || textareaStr === null || textareaStr === undefined || !beginningWhiteSpace.test(`${textareaEl.current.value}`)) {
+        const textareaStr = textareaEl.current.value.replace(/^ +/gm, '');
+        if(textareaStr.length === 0 || textareaStr === null || textareaStr === undefined ) {
             return;
         }
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
