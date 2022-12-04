@@ -11,7 +11,12 @@ import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
 import { getHours } from "date-fns";
 import TaskDetails from "./TaskDetails";
-import { debounce } from "../utils/globalFunctions";
+import { debounce, handleScroll } from "../utils/globalFunctions";
+import SingleTask from "./SingleTask";
+import SingleDoneTask from "./SingleDoneTask";
+import SearchedSingleTask from "./SearchedSingleTask";
+import SearchedDoneSingleTask from "./SearchedDoneSingleTask";
+import DashboardHeader from "./DashboardHeader";
 
 const Home = () => {
 
@@ -159,23 +164,6 @@ const Home = () => {
         setTaskState(taskListArrangedByWeek);            
     }
 
-
-    // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only
-    const deleteTask = async (id, i) => {
-        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
-        setTaskList(newTaskList);
-        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-        await deleteDoc(postDoc);
-    }
-
-    //  Delete tasks for finished task list only.
-    const deleteDoneTask = async (id ,i) => {
-        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
-        setDoneTaskList(newDoneList);
-        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
-        await deleteDoc(doneDoc);
-    }
-
     const updateDatabase = async (collectionType, postDocType, finishedStateSet, i) => {
 
         /*
@@ -189,27 +177,6 @@ const Home = () => {
 
         const data = await getDocs(collectionType);
         finishedStateSet(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-    }
-
-    const changeToFinishedTask = async (id, i, e) => {
-        e.target.disabled = true;
-
-        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-        e.target.innerText = "Updating"
-        // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
-
-        // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
-
-        await updateDatabase(doneCollection, postDoc, setDoneTaskList, i);
-        setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
-    }
-
-    const changeToUnfinishedTask = async (id, i, e) => {
-        e.target.disabled = true;
-        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
-        e.target.innerText = "Updating"
-        await updateDatabase(collectionRef, doneDoc, setTaskList, i);
-        setDoneTaskList(doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)])); 
     }
 
     // Filters out the user's checked task from the searched task list of tasks
@@ -227,6 +194,23 @@ const Home = () => {
         setState(taskArrayContainer)
     }
 
+
+    // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only
+    const deleteTask = async (id, i) => {
+        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
+        setTaskList(newTaskList);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        await deleteDoc(postDoc);
+    }
+
+    //  Delete tasks for finished task list only.
+    const deleteDoneTask = async (id ,i) => {
+        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+        setDoneTaskList(newDoneList);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        await deleteDoc(doneDoc);
+    }
+
     const deleteTaskSearchedList = async(id, i) => {
         filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
 
@@ -242,32 +226,6 @@ const Home = () => {
         const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
         setDoneTaskList(newDoneList);
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
-        await deleteDoc(doneDoc);
-    }
-
-    const changeSearchedToFinishedTask = async (id, i, e) => {
-        e.target.disabled = true;
-        e.target.innerText = "Updating"
-        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
-
-        // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
-                
-        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
-        filterFromReformattedTaskList(reformattedTask, setReformattedTask, i);
-
-        await addDoc(doneCollection, i);
-        await deleteDoc(postDoc);
-
-    }
-
-    const changeSearchedToUnfinishedTask = async (id, i, e) => {
-
-        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
-
-        filterFromReformattedTaskList(reformattedDoneTask, setReformattedDoneTask, i);
-        filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
-
-        await addDoc(collectionRef, i);
         await deleteDoc(doneDoc);
     }
 
@@ -322,46 +280,9 @@ const Home = () => {
 
     }
 
-    const handleSearchedOngoingBtn = () => {
-        const regex = new RegExp(`${textInput}`, "gi");
-        handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked);
-        matchTaskWithSearch(textInput, regex);
-    }
-
-    const handleSearchedFinishedBtn = () => {
-        const regex = new RegExp(`${textInput}`, "gi");
-        handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)
-        matchTaskWithSearch(textInput, regex);
-    }
-
     const directToTaskDetails = (taskData) => {
         setSpecificTask(taskData);
         setIsTaskExpanded(true);
-    }
-
-    const handleFrontArrowBtn = () => {
-        if(specificTask.length === 0) {
-            return;
-        }
-        setIsTaskExpanded(true);
-        
-    }
-
-    const handleScroll = (e) => {
-        const doneBtnContainer = e.target.childNodes[2];
-
-        if(e.type === "mouseover" && e.target.className === "taskContainer"){
-            doneBtnContainer.className = 'buttonContainer'
-        } else if (e.type === "mouseleave" && e.target.className === "taskContainer"){
-
-            const doneBtn = doneBtnContainer.firstChild;
-
-            if(doneBtn.disabled){
-                return;
-            }
-
-            doneBtnContainer.className = 'buttonContainer buttonHidden'            
-        }
     }
 
     if(isAuth && isTaskExpanded) {
@@ -386,39 +307,7 @@ const Home = () => {
                     <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <div className="userLocationBar">
-                                <div className="userLocationButtons">
-                                    <button disabled>
-                                        <i className="fa-solid fa-arrow-left arrowDisabled"></i>
-                                    </button>
-                                    <button onClick={handleFrontArrowBtn} disabled={isSpecificTaskEmpty}>
-                                        <i className={isSpecificTaskEmpty ? "fa-solid fa-arrow-right arrowDisabled" : "fa-solid fa-arrow-right"}></i>
-                                    </button>
-                                </div>
-                                <p>🏠 <span>Your workspace</span></p>
-                            </div>
-                            <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
-                            {currentUserTime >= 0 && currentUserTime < 12 ? 
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
-                            {currentUserTime >= 12 && currentUserTime < 18 ?
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
-                            {currentUserTime >= 18 ?
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
-                            <div className="taskFilters">
-                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={() => {handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked)}}>Ongoing</button>
-                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={() => {handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)}}>Finished</button>
-                            </div>
-                            <div className="taskFinderContainer">
-                                <button className="filterContainer">
-                                    <i className="fa-solid fa-sort"></i>
-                                    <p>Filter</p>
-                                </button>
-                                <div className="searchContainer">
-                                    <i className="fa-solid fa-magnifying-glass" aria-hidden="true" ></i>
-                                    <span className="sr-only">Search</span>
-                                    <input type="text" className="searchBarInput" placeholder="Search for task..." onChange={debounce((e) => handleSearchForTask(e), 100)}/>
-                                </div>
-                            </div>
+                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} handleSearchForTask={handleSearchForTask}/>
                             <div className="allTasksContainer">
                                 {isPageLoading && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer loadingContainer">
@@ -457,32 +346,7 @@ const Home = () => {
                                             <div className="taskMainContainer">
                                                 {reformattedTask[date].map( (i) => {
                                                     return (
-                                                        <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
-                                                            <div className="taskText">
-                                                                <button onClick={() => {directToTaskDetails(i)}}>
-                                                                    <p className="taskName">{i.task.name}</p>
-                                                                </button>
-                                                                <p className="taskDescription">{i.task.description}</p>
-                                                                <div className="labelContainer">
-                                                                    <p className={i.task.priority}>{i.task.priority}</p>
-                                                                    {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
-                                                                </div>
-                                                            </div>
-                                                            <div className="dueDateContainer">
-                                                                <p>Planned Completion:</p>
-                                                                <p>{i.task.reformattedDeadline}</p>
-                                                            </div>
-                                                            <div className="buttonContainer buttonHidden">
-                                                                <button className="finishButton" onClick={(e) => {changeToFinishedTask(i.id, i, e)}}>Done</button>
-                                                                <button onClick={() => {directToTaskDetails(i)}}>
-                                                                    <i className="fa-solid fa-angle-down"></i>
-                                                                </button>
-                                                                {/* <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                                                    <span className="sr-only">Remove Task</span>
-                                                                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                                </button> */}
-                                                            </div>
-                                                        </div>
+                                                        <SingleTask i={i} directToTaskDetails={directToTaskDetails} updateDatabase={updateDatabase} setDoneTaskList={setDoneTaskList} taskList={taskList} setTaskList={setTaskList} userUID={userUID} key={uuid()}/>
                                                     )                     
                                                 })}
                                             </div>
@@ -501,47 +365,7 @@ const Home = () => {
                                             </div>
                                             {reformattedDoneTask[date].map( (i) => {
                                                 return (
-                                                    <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
-                                                        {/* <div className="checkboxContainer">
-                                                            <input type="checkbox" className="taskCheckbox taskCheckboxChecked" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
-                                                            <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
-                                                        </div> */}
-                                                        <div className="taskText">
-                                                            <button onClick={() => {directToTaskDetails(i)}}>
-                                                                <p className="taskName">{i.task.name}</p>
-                                                            </button>
-                                                            <p className="taskDescription">{i.task.description}</p>
-                                                            <div className="labelContainer">
-                                                                <p className={i.task.priority}>{i.task.priority}</p>
-                                                                {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
-                                                            </div>
-                                                        </div>
-                                                        <div className="dueDateContainer">
-                                                            <p>Planned Completion:</p>
-                                                            <p>{i.task.reformattedDeadline}</p>
-                                                        </div>
-                                                            <div className="buttonContainer buttonHidden">
-                                                                <button className="finishButton" onClick={(e) => {changeToUnfinishedTask(i.id, i, e)}}>Not Done</button>
-                                                                <button onClick={() => {directToTaskDetails(i)}}>
-                                                                    <i className="fa-solid fa-angle-down"></i>
-                                                                </button>
-                                                                {/* <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
-                                                                    <span className="sr-only">Remove Task</span>
-                                                                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                                </button> */}
-                                                            </div>
-                                                            {/* 
-                                                        <div className="buttonContainer">
-                                                            <button onClick={() => {directToTaskDetails(i)}}>
-                                                                <i className="fa-solid fa-ellipsis"></i>
-                                                            </button>
-                                                            <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
-                                                                <span className="sr-only">Remove Task</span>
-                                                                <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                            </button>
-                                                        </div>
-                                                            */}
-                                                    </div>
+                                                    <SingleDoneTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} userUID={userUID} updateDatabase={updateDatabase} setTaskList={setTaskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList}/>
                                                 )
                                             })}
                                         </div>
@@ -568,39 +392,7 @@ const Home = () => {
                     <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <div className="userLocationBar">
-                                <div className="userLocationButtons">
-                                    <button disabled>
-                                        <i className="fa-solid fa-arrow-left arrowDisabled"></i>
-                                    </button>
-                                    <button onClick={handleFrontArrowBtn} disabled={isSpecificTaskEmpty}>
-                                        <i className={isSpecificTaskEmpty ? "fa-solid fa-arrow-right arrowDisabled" : "fa-solid fa-arrow-right"}></i>
-                                    </button>
-                                </div>
-                                <p>🏠 <span>Your workspace</span></p>
-                            </div>
-                            <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
-                            {currentUserTime >= 0 && currentUserTime < 12 ? 
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
-                            {currentUserTime >= 12 && currentUserTime < 18 ?
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
-                            {currentUserTime >= 18 ?
-                            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
-                            <div className="taskFilters">
-                                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleSearchedOngoingBtn}>Ongoing</button>
-                                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleSearchedFinishedBtn}>Finished</button>
-                            </div>
-                            <div className="taskFinderContainer">
-                                <button className="filterContainer">
-                                    <i className="fa-solid fa-sort"></i>
-                                    <p>Filter</p>
-                                </button>
-                                <div className="searchContainer">
-                                    <i className="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                                    <span className="sr-only">Search</span>
-                                    <input type="text" className="searchBarInput" placeholder="Search for task..." onChange={debounce((e) => handleSearchForTask(e), 100)}/>
-                                </div>
-                            </div>
+                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} handleSearchForTask={handleSearchForTask}/>
                             <div className="allTasksContainer">
                             {isOngoingSearchTaskFound && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer">
@@ -634,42 +426,7 @@ const Home = () => {
                                         <div className="taskMainContainer">
                                         {date.map( (i) => {
                                             return (
-                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
-                                                    {/* <input type="checkbox" className="taskCheckbox" onChange={() => {changeSearchedToFinishedTask(i.id, i)}}/> */}
-                                                    <div className="taskText">
-                                                        <button onClick={() => {directToTaskDetails(i)}}>
-                                                            <p className="taskName">{i.task.name}</p>
-                                                        </button>
-                                                        <p className="taskDescription">{i.task.description}</p>
-                                                        <div className="labelContainer">
-                                                            <p className={i.task.priority}>{i.task.priority}</p>
-                                                            {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
-                                                        </div>
-                                                    </div>
-                                                    <div className="dueDateContainer">
-                                                        <p>Planned Completion:</p>
-                                                        <p>{i.task.reformattedDeadline}</p>
-                                                    </div>
-                                                    {/* <div className="buttonContainer">
-                                                        <button onClick={() => {directToTaskDetails(i)}}>
-                                                            <i className="fa-solid fa-ellipsis"></i>
-                                                        </button>
-                                                        <button className="exitBtn" onClick={() => {deleteTaskSearchedList(i.id, i)}}>
-                                                            <span className="sr-only">Remove Task</span>
-                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                        </button>
-                                                    </div> */}
-                                                    <div className="buttonContainer buttonHidden">
-                                                        <button className="finishButton" onClick={(e) => {changeSearchedToFinishedTask(i.id, i, e)}}>Done</button>
-                                                        <button onClick={() => {directToTaskDetails(i)}}>
-                                                            <i className="fa-solid fa-angle-down"></i>
-                                                        </button>
-                                                        {/* <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                                                            <span className="sr-only">Remove Task</span>
-                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                        </button> */}
-                                                    </div>
-                                                </div>
+                                                <SearchedSingleTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} userUID={userUID} filterFromReformattedTaskList={filterFromReformattedTaskList} searchedTaskList={searchedTaskList} setSearchedTaskList={setSearchedTaskList} reformattedTask={reformattedTask} setReformattedTask={setReformattedTask}/>
                                             )                     
                                         })}
                                         </div>
@@ -689,35 +446,7 @@ const Home = () => {
                                         <div className="taskMainContainer">
                                         {date.map( (i) => {
                                             return (
-                                                <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}}>
-                                                    <div className="checkboxContainer">
-                                                        <input type="checkbox" className="taskCheckbox taskCheckboxChecked" checked onChange={() => {changeSearchedToUnfinishedTask(i.id, i)}}/>
-                                                        <i className="fa-solid fa-check" onClick={() => {changeSearchedToUnfinishedTask(i.id, i)}}></i>
-                                                    </div>
-                                                    <div className="taskText">
-                                                        <button onClick={() => {directToTaskDetails(i)}}>
-                                                            <p className="taskName">{i.task.name}</p>
-                                                        </button>
-                                                        <p className="taskDescription">{i.task.description}</p>
-                                                        <div className="labelContainer">
-                                                            <p className={i.task.priority}>{i.task.priority}</p>
-                                                            {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
-                                                        </div>
-                                                    </div>
-                                                    <div className="dueDateContainer">
-                                                        <p>Planned Completion:</p>
-                                                        <p>{i.task.reformattedDeadline}</p>
-                                                    </div>
-                                                    <div className="buttonContainer">
-                                                        <button onClick={() => {directToTaskDetails(i)}}>
-                                                            <i className="fa-solid fa-ellipsis"></i>
-                                                        </button>
-                                                        <button className="exitBtn" onClick={() => {deleteTaskSearchedDoneList(i.id, i)}}>
-                                                            <span className="sr-only">Remove Task</span>
-                                                            <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                <SearchedDoneSingleTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} userUID={userUID} filterFromReformattedTaskList={filterFromReformattedTaskList} reformattedDoneTask={reformattedDoneTask} setReformattedDoneTask={setReformattedDoneTask} doneSearchedTaskList={doneSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
                                             )                     
                                         })}
                                         </div>
