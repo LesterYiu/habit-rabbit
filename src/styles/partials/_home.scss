@@ -284,6 +284,28 @@
             cursor: pointer;
 
         }
+
+        .dropdownOptions {
+            width: 100%;
+            position: absolute;
+            top: 100%;
+            background-color: white;
+            border: 1px solid rgb(212, 212, 212);
+
+            li {
+                border-bottom: 1px solid rgb(212, 212, 212);
+            }
+
+            button {
+                font-weight: 300;
+                font-size: 0.7rem;
+                padding-left: 5px;
+            }
+        }
+
+        .dropdownOptions.hidden { 
+            display: none;
+        }
     }
 
     .noTaskFoundContainer {

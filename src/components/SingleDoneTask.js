@@ -1,6 +1,6 @@
 import uuid from "react-uuid";
-import { handleScroll } from "../utils/globalFunctions";
-import { doc, collection } from "firebase/firestore"
+import { handleDropDown, handleScroll } from "../utils/globalFunctions";
+import { doc, collection, deleteDoc } from "firebase/firestore"
 import { db } from "./firebase"
 
 const SingleDoneTask = ({i, directToTaskDetails, userUID, updateDatabase, setTaskList, setDoneTaskList, doneTaskList}) => {
@@ -17,12 +17,16 @@ const SingleDoneTask = ({i, directToTaskDetails, userUID, updateDatabase, setTas
         await updateDatabase(collectionRef, doneDoc, setTaskList, i);
     }
 
+    //  Delete tasks for finished task list only.
+    const deleteDoneTask = async (id ,i) => {
+        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+        setDoneTaskList(newDoneList);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        await deleteDoc(doneDoc);
+    }
+
     return(
         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
-            {/* <div className="checkboxContainer">
-                <input type="checkbox" className="taskCheckbox taskCheckboxChecked" checked onChange={() => {changeToUnfinishedTask(i.id, i)}}/>
-                <i className="fa-solid fa-check" onClick={() => {changeToUnfinishedTask(i.id, i)}}></i>
-            </div> */}
             <div className="taskText">
                 <button onClick={() => {directToTaskDetails(i)}}>
                     <p className="taskName">{i.task.name}</p>
@@ -39,25 +43,23 @@ const SingleDoneTask = ({i, directToTaskDetails, userUID, updateDatabase, setTas
             </div>
                 <div className="buttonContainer buttonHidden">
                     <button className="finishButton" onClick={(e) => {changeToUnfinishedTask(i.id, i, e)}}>Not Done</button>
-                    <button onClick={() => {directToTaskDetails(i)}}>
+                    <button onClick={(e) => {handleDropDown(e)}}>
                         <i className="fa-solid fa-angle-down"></i>
                     </button>
-                    {/* <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
-                        <span className="sr-only">Remove Task</span>
-                        <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                    </button> */}
+                    <div className="dropdownOptions hidden">
+                        <ul>
+                            <li>
+                                <button>View Task</button>
+                            </li>
+                            <li>
+                                <button>Edit Task</button>
+                            </li>
+                            <li>
+                                <button onClick={() => {deleteDoneTask(i.id, i)}}>Delete Task</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                {/* 
-            <div className="buttonContainer">
-                <button onClick={() => {directToTaskDetails(i)}}>
-                    <i className="fa-solid fa-ellipsis"></i>
-                </button>
-                <button className="exitBtn" onClick={() => {deleteDoneTask(i.id, i)}}>
-                    <span className="sr-only">Remove Task</span>
-                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                </button>
-            </div>
-                */}
         </div>
     )
 }

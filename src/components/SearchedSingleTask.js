@@ -1,9 +1,9 @@
 import uuid from "react-uuid"
-import { handleScroll } from "../utils/globalFunctions"
+import { handleScroll, handleDropDown } from "../utils/globalFunctions"
 import { doc, collection, addDoc, deleteDoc } from "firebase/firestore"
-import { db } from "./firebase"
+import { db } from "./firebase";
 
-const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformattedTaskList, searchedTaskList, setSearchedTaskList, reformattedTask, setReformattedTask}) => {
+const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformattedTaskList, searchedTaskList, setSearchedTaskList, reformattedTask, setReformattedTask, setTaskList, taskList}) => {
 
     // Database Collection Reference for user's list of tasks
     const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
@@ -23,9 +23,17 @@ const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformat
 
     }
 
+    const deleteTaskSearchedList = async(id, i) => {
+        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
+
+        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
+        setTaskList(newTaskList);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        await deleteDoc(postDoc);
+    }
+
     return(
         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
-            {/* <input type="checkbox" className="taskCheckbox" onChange={() => {changeSearchedToFinishedTask(i.id, i)}}/> */}
             <div className="taskText">
                 <button onClick={() => {directToTaskDetails(i)}}>
                     <p className="taskName">{i.task.name}</p>
@@ -40,24 +48,24 @@ const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformat
                 <p>Planned Completion:</p>
                 <p>{i.task.reformattedDeadline}</p>
             </div>
-            {/* <div className="buttonContainer">
-                <button onClick={() => {directToTaskDetails(i)}}>
-                    <i className="fa-solid fa-ellipsis"></i>
-                </button>
-                <button className="exitBtn" onClick={() => {deleteTaskSearchedList(i.id, i)}}>
-                    <span className="sr-only">Remove Task</span>
-                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                </button>
-            </div> */}
             <div className="buttonContainer buttonHidden">
                 <button className="finishButton" onClick={(e) => {changeSearchedToFinishedTask(i.id, i, e)}}>Done</button>
-                <button onClick={() => {directToTaskDetails(i)}}>
+                <button onClick={(e) => {handleDropDown(e)}}>
                     <i className="fa-solid fa-angle-down"></i>
                 </button>
-                {/* <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                    <span className="sr-only">Remove Task</span>
-                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                </button> */}
+                <div className="dropdownOptions hidden">
+                    <ul>
+                        <li>
+                            <button>View Task</button>
+                        </li>
+                        <li>
+                            <button>Edit Task</button>
+                        </li>
+                        <li>
+                            <button onClick={() => {deleteTaskSearchedList(i.id, i)}}>Delete Task</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     )

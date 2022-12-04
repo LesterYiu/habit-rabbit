@@ -1,6 +1,6 @@
 import { debounce } from "../utils/globalFunctions";
 
-const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, currentUserTime, username, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, handleSearchForTask}) => {
+const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, currentUserTime, username, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, handleSearchForTask, textInput, matchTaskWithSearch}) => {
 
     const handleFrontArrowBtn = () => {
         if(specificTask.length === 0) {
@@ -8,6 +8,19 @@ const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, 
         }
         setIsTaskExpanded(true);
         
+    }
+
+    // Updates the UI when user changes task progress then changes tabs without reloading the page
+    const handleSearchedOngoingBtn = () => {
+        const regex = new RegExp(`${textInput}`, "gi");
+        handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked);
+        matchTaskWithSearch(textInput, regex);
+    }
+
+    const handleSearchedFinishedBtn = () => {
+        const regex = new RegExp(`${textInput}`, "gi");
+        handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)
+        matchTaskWithSearch(textInput, regex);
     }
 
     return(
@@ -31,8 +44,8 @@ const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, 
             {currentUserTime >= 18 ?
             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
             <div className="taskFilters">
-                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={() => {handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked)}}>Ongoing</button>
-                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={() => {handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)}}>Finished</button>
+                <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleSearchedOngoingBtn}>Ongoing</button>
+                <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleSearchedFinishedBtn}>Finished</button>
             </div>
             <div className="taskFinderContainer">
                 <button className="filterContainer">

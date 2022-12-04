@@ -23,4 +23,14 @@ export const handleScroll = (e) => {
 
             doneBtnContainer.className = 'buttonContainer buttonHidden'            
         }
+}
+
+export const handleDropDown = (e) => {
+    const dropdownContainer = e.target.parentNode.parentNode.children[2];
+
+    if(dropdownContainer.className === "dropdownOptions hidden") {
+        dropdownContainer.className = "dropdownOptions";
+    } else {
+        dropdownContainer.className = "dropdownOptions hidden";
     }
+}

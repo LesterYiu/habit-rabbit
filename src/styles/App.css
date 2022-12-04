@@ -763,6 +763,20 @@ button {
     display: block;
     margin: 0 25px 0 0;
     cursor: pointer; }
+  .homeDashboard .taskContainer .dropdownOptions {
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    background-color: white;
+    border: 1px solid #d4d4d4; }
+    .homeDashboard .taskContainer .dropdownOptions li {
+      border-bottom: 1px solid #d4d4d4; }
+    .homeDashboard .taskContainer .dropdownOptions button {
+      font-weight: 300;
+      font-size: 0.7rem;
+      padding-left: 5px; }
+  .homeDashboard .taskContainer .dropdownOptions.hidden {
+    display: none; }
 
 .homeDashboard .noTaskFoundContainer {
   display: flex;

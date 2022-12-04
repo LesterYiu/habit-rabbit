@@ -1,9 +1,9 @@
 import uuid from "react-uuid";
-import { handleScroll } from "../utils/globalFunctions";
+import { handleScroll, handleDropDown } from "../utils/globalFunctions";
 import { doc, collection, addDoc, deleteDoc } from "firebase/firestore"
 import { db } from "./firebase"
 
-const SearchedDoneSingleTask = ({i, directToTaskDetails, userUID, filterFromReformattedTaskList, reformattedDoneTask, setReformattedDoneTask, doneSearchedTaskList, setDoneSearchedTaskList}) => {
+const SearchedDoneSingleTask = ({i, directToTaskDetails, userUID, filterFromReformattedTaskList, reformattedDoneTask, setReformattedDoneTask, doneSearchedTaskList, setDoneSearchedTaskList, doneTaskList, setDoneTaskList}) => {
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -19,12 +19,17 @@ const SearchedDoneSingleTask = ({i, directToTaskDetails, userUID, filterFromRefo
         await deleteDoc(doneDoc);
     }
 
+    const deleteTaskSearchedDoneList = async(id, i) => {
+        filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
+
+        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+        setDoneTaskList(newDoneList);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        await deleteDoc(doneDoc);
+    }
+
     return(
         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
-            {/* <div className="checkboxContainer">
-                <input type="checkbox" className="taskCheckbox taskCheckboxChecked" checked onChange={() => {changeSearchedToUnfinishedTask(i.id, i)}}/>
-                <i className="fa-solid fa-check" onClick={() => {changeSearchedToUnfinishedTask(i.id, i)}}></i>
-            </div> */}
             <div className="taskText">
                 <button onClick={() => {directToTaskDetails(i)}}>
                     <p className="taskName">{i.task.name}</p>
@@ -39,24 +44,24 @@ const SearchedDoneSingleTask = ({i, directToTaskDetails, userUID, filterFromRefo
                 <p>Planned Completion:</p>
                 <p>{i.task.reformattedDeadline}</p>
             </div>
-            {/* <div className="buttonContainer">
-                <button onClick={() => {directToTaskDetails(i)}}>
-                    <i className="fa-solid fa-ellipsis"></i>
-                </button>
-                <button className="exitBtn" onClick={() => {deleteTaskSearchedDoneList(i.id, i)}}>
-                    <span className="sr-only">Remove Task</span>
-                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                </button>
-            </div> */}
             <div className="buttonContainer buttonHidden">
                 <button className="finishButton" onClick={(e) => {changeSearchedToUnfinishedTask(i.id, i, e)}}>Not Done</button>
-                <button onClick={() => {directToTaskDetails(i)}}>
+                <button onClick={(e) => {handleDropDown(e)}}>
                     <i className="fa-solid fa-angle-down"></i>
                 </button>
-                {/* <button className="exitBtn" onClick={() => {deleteTask(i.id, i)}}>
-                    <span className="sr-only">Remove Task</span>
-                    <i className="fa-solid fa-circle-xmark" aria-hidden="true"></i>
-                </button> */}
+                <div className="dropdownOptions hidden">
+                    <ul>
+                        <li>
+                            <button>View Task</button>
+                        </li>
+                        <li>
+                            <button>Edit Task</button>
+                        </li>
+                        <li>
+                            <button onClick={() => {deleteTaskSearchedDoneList(i.id, i)}}>Delete Task</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     )
