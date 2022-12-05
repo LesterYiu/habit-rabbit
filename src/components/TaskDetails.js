@@ -46,23 +46,14 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     // useContext variables
     const {userUID, username, userPic} = useContext(AppContext);
-
+    
     // To get the data from database on mount
     useEffect( () => {
         
         const getUpdateCommentsAndProgress = async () => {
             // If this task is not complete then the data is updated within the ongoing tasks collection
 
-            let documentRef;
-
-            if(isToDoBtnClicked) {
-                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-
-            } else if (isDoneBtnClicked) {
-
-                // If this task is complete (different collection) then the data is updated within the finished tasks collection
-                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-            }
+            let documentRef = determineWhichRef()
 
             const docSnap = await getDoc(documentRef);
             setUpdates(docSnap.data().task.updates);
@@ -86,13 +77,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         const handleUpdateDocument = async () => {
 
-            let documentRef;
-
-            if(isToDoBtnClicked) {
-                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-            } else if (isDoneBtnClicked) {
-                documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-            }
+            let documentRef = determineWhichRef();
 
             await updateDoc(documentRef, {
                 "task.updates": updates
@@ -168,14 +153,23 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     }, [backBtnCounter, frontBtnCounter])
 
-    // Called with an array containing all 7 day's dates + an array containing the state function to set a new day time.
-    async function getDocument() {
+    function determineWhichRef(){
+
         let documentRef;
+
         if(isToDoBtnClicked) {
             documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
         } else if (isDoneBtnClicked) {
             documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
         }
+
+        return documentRef;
+    }
+
+
+    // Called with an array containing all 7 day's dates + an array containing the state function to set a new day time.
+    async function getDocument() {
+        let documentRef = determineWhichRef();
 
         // If the dates on the log time modal match the dates of the hours logged in the database, it will populate the hours.
         const docSnap = await getDoc(documentRef);
@@ -357,13 +351,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         const datesArr = arguments[0];
         const dateTimeArr = arguments[1];
 
-        let documentRef;
-
-        if(isToDoBtnClicked) {
-            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-        } else if (isDoneBtnClicked) {
-            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-        }
+        let documentRef = determineWhichRef();
 
         // Find the difference between the locally stored dates/times array from the one on the database. The differences will be placed into a copied version of the database version and then reuploaded onto the database.
         
@@ -415,17 +403,41 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     const resetTime = async () => {
 
-        let documentRef;
-
-        if(isToDoBtnClicked) {
-            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-        } else if (isDoneBtnClicked) {
-            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-        }
+        let documentRef = determineWhichRef();
 
         await updateDoc(documentRef, {
             "task.timeSpent" : []
         })
+    }
+
+    const updateTaskName = async (e) => {
+        let documentRef = determineWhichRef();
+
+        specificTask.task.name = e.target.value;
+
+        await updateDoc(documentRef, {
+            "task.name" : e.target.value
+        });
+    }
+
+    const updateTaskDescription = async(e) => {
+        let documentRef = determineWhichRef();
+
+        specificTask.task.description = e.target.value;
+
+        await updateDoc(documentRef, {
+            "task.description" : e.target.value
+        });
+    }
+
+    const updatePriority = async(e) => {
+        let documentRef = determineWhichRef();
+
+        specificTask.task.priority = e.target.value;
+
+        await updateDoc(documentRef, {
+            "task.priority" : e.target.value
+        });
     }
 
     return(
@@ -467,7 +479,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                     <i className="fa-regular fa-clipboard"></i>
                     <div className="taskNameContainer">
                         <p className="label">Task</p>
-                        <h1>{specificTask.task.name}</h1>
+                        {isEnableOn ? <input type="text" defaultValue={specificTask.task.name} onChange={debounce( (e) => {updateTaskName(e)}, 300)}/> : <h1>{specificTask.task.name}</h1>}
                     </div>
                     {isEnableOn ? <p className="enableIndicator">Currently Editting</p> : null}
                 </div>
@@ -500,7 +512,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             </div> : null}
             <div className="taskDescription">
                 <p className="label">Description</p>
-                <p>{specificTask.task.description}</p>
+                {isEnableOn ? <textarea defaultValue={specificTask.task.description} onChange={debounce((e) => {updateTaskDescription(e)}, 300)}></textarea> : <p className="descriptionParagraph">{specificTask.task.description}</p>}
             </div>
             <div className="taskData">
                 <div className="taskDates taskInfoContainer">
@@ -509,7 +521,15 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                 </div>
                 <div className="priorityLevel taskInfoContainer">
                     <p className="label">Priority</p>
-                    <p>{specificTask.task.priority}</p>
+                    {isEnableOn ? 
+                    <form name="selectPriority">
+                        <select onChange={updatePriority} defaultValue={specificTask.task.priority}>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </form>: 
+                    <p>{specificTask.task.priority}</p>}
                 </div>
             </div>
             <div className="taskLabelContainer taskInfoContainer">

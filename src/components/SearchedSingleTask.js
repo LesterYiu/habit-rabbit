@@ -56,7 +56,7 @@ const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformat
                 <div className="dropdownOptions hidden">
                     <ul>
                         <li>
-                            <button>View Task</button>
+                            <button onClick={() => {directToTaskDetails(i)}}>View Task</button>
                         </li>
                         <li>
                             <button>Edit Task</button>

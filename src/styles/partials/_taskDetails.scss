@@ -66,6 +66,10 @@
         padding: 0 30px;
     }
 
+    .taskDescription textarea {
+        width: 100%;
+    }
+
     .taskData {
         display: flex;
     }
@@ -438,5 +442,16 @@
         i {
             margin: 0;
         }
+    }
+
+    .descriptionParagraph {
+        overflow-wrap: break-word;
+    }
+    
+    select {
+        background-color: white;
+        border: 1px solid rgba(212, 212, 212, 0.9);
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        border-radius: 5px;
     }
 }
