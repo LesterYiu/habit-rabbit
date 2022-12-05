@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
+import { useNavigate } from "react-router-dom";
 
-const HomeNavigation = ({setIsNewTaskClicked}) => {
+const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded}) => {
 
     // useContext variables
     const {setIsAuth, username, setUsername, setUserUID, userPic} = useContext(AppContext)
+
+    const navigate = useNavigate();
 
     const handleNewTask = () => {
         setIsNewTaskClicked(true);
@@ -20,6 +23,14 @@ const HomeNavigation = ({setIsNewTaskClicked}) => {
             setUserUID('notSignedIn');
             localStorage.clear();
         })
+    }
+
+    const redirectToHome = () => {
+        if(isTaskExpanded) {
+            setIsTaskExpanded(false);
+        } else {
+            navigate('/home');
+        }
     }
     
     return(
@@ -36,8 +47,10 @@ const HomeNavigation = ({setIsNewTaskClicked}) => {
             <p className="homeNavSubsection">Main Navigation</p>
             <ul>
                 <li>
-                    <Link to="/home" className="homeBtnOne homeBtn"><span aria-hidden="true">🏠</span> Home</Link>
-                    <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                    <button onClick={redirectToHome} className="homeBtnOne homeBtn">
+                        <div><span aria-hidden="true">🏠</span> Home</div>
+                        <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>                        
+                    </button>
                 </li>
                 <li>
                     <button onClick={handleNewTask} className="homeBtnFive homeBtn"><span aria-hidden="true">✨</span>New Task</button>

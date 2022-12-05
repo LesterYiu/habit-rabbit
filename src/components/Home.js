@@ -11,7 +11,6 @@ import { AppContext } from "../Contexts/AppContext";
 import uuid from "react-uuid";
 import { getHours } from "date-fns";
 import TaskDetails from "./TaskDetails";
-import { debounce, handleScroll } from "../utils/globalFunctions";
 import SingleTask from "./SingleTask";
 import SingleDoneTask from "./SingleDoneTask";
 import SearchedSingleTask from "./SearchedSingleTask";
@@ -34,7 +33,6 @@ const Home = () => {
 
     const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
     const [isPageLoading, setIsPageLoading] = useState(true);
-    const [textInput, setTextInput] = useState("");
     const [currentUserTime, setCurrentUserTime] = useState("");
 
     const [isOngoingTaskListZero, setIsOngoingTaskListZero] = useState(false);
@@ -208,43 +206,6 @@ const Home = () => {
         }
     }
 
-    const matchTaskWithSearch = (userInputValue, regex) => {
-        if (userInputValue === "") {
-            setIsSearchBarPopulated(false)
-            return false;
-        } else {
-            let allTaskResults = [];
-            let allDoneTaskResults = [];
-
-            setIsSearchBarPopulated(true);
-            
-            const matchTaskToUserText = (listOfTasksHolder, listOfTasks) => {
-                for (let i in listOfTasks) {
-                    for (let o in listOfTasks[i]) {
-                        if (listOfTasks[i][o].task.name.match(regex)) {
-                            listOfTasksHolder.push(listOfTasks[i][o])
-                        }
-                    }
-                }
-            }
-            matchTaskToUserText(allTaskResults, reformattedTask);
-            matchTaskToUserText(allDoneTaskResults, reformattedDoneTask);
-
-            reformatTaskByDate(allTaskResults, setSearchedTaskList);
-            reformatTaskByDate(allDoneTaskResults, setDoneSearchedTaskList);
-        }
-    }
-
-    const handleSearchForTask = (e) => {
-
-        const userInput = e.target.value;
-        const regex = new RegExp(`${userInput}`, "gi");
-        setTextInput(userInput);
-
-        matchTaskWithSearch(userInput, regex);
-
-    }
-
     const directToTaskDetails = (taskData) => {
         setSpecificTask(taskData);
         setIsTaskExpanded(true);
@@ -253,7 +214,7 @@ const Home = () => {
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
-                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
+                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
                 <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList}/>
                 {isNewTaskClicked ? 
                 <>
@@ -272,7 +233,7 @@ const Home = () => {
                     <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} handleSearchForTask={handleSearchForTask} textInput={textInput} matchTaskWithSearch={matchTaskWithSearch}/>
+                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
                             <div className="allTasksContainer">
                                 {isPageLoading && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer loadingContainer">
@@ -357,7 +318,7 @@ const Home = () => {
                     <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} handleSearchForTask={handleSearchForTask} textInput={textInput} matchTaskWithSearch={matchTaskWithSearch}/>
+                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
                             <div className="allTasksContainer">
                             {isOngoingSearchTaskFound && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer">

@@ -372,8 +372,26 @@
     }
 
     .searchContainer {
+        position: relative;
         display: flex;
         align-items: center;
+
+        .lds-ring {
+            position: absolute;
+            right: 20px;
+            top: 10%;
+            height: 20px;
+            width: 20px;
+
+            div {
+                height: 20px;
+                width: 20px;
+                border: 3px solid #A5D6A7;
+                border-radius: 50%;
+                animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                border-color: #A5D6A7 transparent transparent transparent;
+            }
+        }
     }
 
     .searchBarInput {

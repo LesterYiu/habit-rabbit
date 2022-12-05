@@ -163,6 +163,11 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLogTimeBtnClicked, day1, day2, day3, day4, day5, day6, day7])
 
+    useEffect( () => {
+        setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7, backBtnCounter, frontBtnCounter);
+
+    }, [backBtnCounter, frontBtnCounter])
+
     // Called with an array containing all 7 day's dates + an array containing the state function to set a new day time.
     async function getDocument() {
         let documentRef;
@@ -360,7 +365,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
         }
 
-
         // Find the difference between the locally stored dates/times array from the one on the database. The differences will be placed into a copied version of the database version and then reuploaded onto the database.
         
         for(let i in datesArr) {
@@ -409,10 +413,20 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         updateTime([day1, day2, day3, day4, day5, day6, day7], [day1Time, day2Time, day3Time, day4Time, day5Time, day6Time, day7Time]);
     }
 
-    useEffect( () => {
-        setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7, backBtnCounter, frontBtnCounter);
+    const resetTime = async () => {
 
-    }, [backBtnCounter, frontBtnCounter])
+        let documentRef;
+
+        if(isToDoBtnClicked) {
+            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+        } else if (isDoneBtnClicked) {
+            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+        }
+
+        await updateDoc(documentRef, {
+            "task.timeSpent" : []
+        })
+    }
 
     return(
         <div className="taskDetails">
@@ -476,7 +490,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                         <p className="label">Percent Complete</p>
                         {isEnableOn ? 
                         <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 400)}/> : 
-                        <input type="range" value={taskCompletion || " "} onChange={debounce((e) => handleProgressBar(e), 400)} onClick={() => {setIsRangeClicked(true)}}/> }
+                        <input type="range" value={taskCompletion || "0"} onChange={debounce((e) => handleProgressBar(e), 400)} onClick={() => {setIsRangeClicked(true)}}/> }
                     </div>
                 </div>
             </div>
@@ -513,6 +527,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             <div className="updateTaskBtns">
                 <button className="updatesBtn" onClick={handleNewUpdateBtn}><i className="fa-solid fa-note-sticky" aria-hidden="true"></i>New Updates</button>
                 <button className="logTimeBtn" onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}><i className="fa-regular fa-clock" aria-hidden="true"></i>Log Time</button>
+                <button className="resetBtn" onClick={resetTime}>Reset</button>
                 {isLogTimeBtnClicked ?
                 <div className="updateHoursContainer">
                     <h2>Enter Hours</h2>
@@ -541,7 +556,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
                             <div className="specificDayContainer">
                                 <label htmlFor="howManyHours4" className="sr-only">How many hours on {day4}</label>
-                                <p aria-hidden="true">{day4}</p>
+                                <p aria-hidden="true" className="todayContainerTitle">{day4}</p>
                                 <input type="number" id="howManyHours4" onChange={(e) => {handleTimeInput(e, setDay4Time)}} value={day4Time}/>
                             </div>
 

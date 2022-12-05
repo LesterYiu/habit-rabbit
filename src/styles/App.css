@@ -829,8 +829,22 @@ button {
   padding: 0px 25px 15px 25px; }
 
 .homeDashboard .searchContainer {
+  position: relative;
   display: flex;
   align-items: center; }
+  .homeDashboard .searchContainer .lds-ring {
+    position: absolute;
+    right: 20px;
+    top: 10%;
+    height: 20px;
+    width: 20px; }
+    .homeDashboard .searchContainer .lds-ring div {
+      height: 20px;
+      width: 20px;
+      border: 3px solid #A5D6A7;
+      border-radius: 50%;
+      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: #A5D6A7 transparent transparent transparent; }
 
 .homeDashboard .searchBarInput {
   height: 40px;
@@ -1087,7 +1101,6 @@ button {
     cursor: pointer; }
     .createTaskForm .priorityContainer label {
       width: 100px !important;
-      margin-right: 20px !important;
       cursor: pointer; }
     .createTaskForm .priorityContainer input {
       height: 20px;
@@ -1415,6 +1428,9 @@ abbr {
     align-items: center;
     margin: 0 10px;
     text-align: center; }
+  .taskDetails .todayContainerTitle {
+    background-color: #E9E8E7;
+    border-radius: 5px; }
   .taskDetails .logTimeOptionBtns {
     display: flex;
     font-size: 1rem; }

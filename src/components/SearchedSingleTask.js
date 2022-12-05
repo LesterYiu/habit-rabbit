@@ -36,9 +36,9 @@ const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformat
         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
             <div className="taskText">
                 <button onClick={() => {directToTaskDetails(i)}}>
-                    <p className="taskName">{i.task.name}</p>
+                    <p className="taskName">{i.task.name.length > 50 ? i.task.name.slice(0, 50) + "..." : i.task.name}</p>
                 </button>
-                <p className="taskDescription">{i.task.description}</p>
+                <p className="taskDescription">{i.task.description.length > 50 ? i.task.description.slice(0, 50) + "...": i.task.description}</p>
                 <div className="labelContainer">
                     <p className={i.task.priority}>{i.task.priority}</p>
                     {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}

@@ -105,6 +105,7 @@
         .updatesBtn {
             background-color: #2873D3;
         }
+        
     }
 
     .updateTasksContainer {
@@ -177,6 +178,11 @@
         align-items: center;
         margin: 0 10px;
         text-align: center;
+    }
+    
+    .todayContainerTitle {
+        background-color: #E9E8E7;
+        border-radius: 5px;
     }
 
     .logTimeOptionBtns {

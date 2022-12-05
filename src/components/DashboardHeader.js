@@ -1,13 +1,56 @@
 import { debounce } from "../utils/globalFunctions";
+import { useEffect, useState } from "react";
 
-const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, currentUserTime, username, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, handleSearchForTask, textInput, matchTaskWithSearch}) => {
+const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, currentUserTime, username, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, reformatTaskByDate, setSearchedTaskList, setDoneSearchedTaskList}) => {
+
+    const [textInput, setTextInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFrontArrowBtn = () => {
         if(specificTask.length === 0) {
             return;
         }
         setIsTaskExpanded(true);
-        
+    }
+
+    const handleSearchForTask = (e) => {
+        let timeout;
+        clearTimeout(timeout);
+        setIsLoading(true);
+        timeout = setTimeout( () => {
+            const userInput = e.target.value;
+            const regex = new RegExp(`${userInput}`, "gi");
+            setTextInput(userInput);
+            matchTaskWithSearch(userInput, regex);
+            setIsLoading(false);
+        }, 500)
+    }
+
+    const matchTaskWithSearch = (userInputValue, regex) => {
+        if (userInputValue === "") {
+            setIsSearchBarPopulated(false)
+            return false;
+        } else {
+            let allTaskResults = [];
+            let allDoneTaskResults = [];
+
+            setIsSearchBarPopulated(true);
+            
+            const matchTaskToUserText = (listOfTasksHolder, listOfTasks) => {
+                for (let i in listOfTasks) {
+                    for (let o in listOfTasks[i]) {
+                        if (listOfTasks[i][o].task.name.match(regex)) {
+                            listOfTasksHolder.push(listOfTasks[i][o])
+                        }
+                    }
+                }
+            }
+            matchTaskToUserText(allTaskResults, reformattedTask);
+            matchTaskToUserText(allDoneTaskResults, reformattedDoneTask);
+
+            reformatTaskByDate(allTaskResults, setSearchedTaskList);
+            reformatTaskByDate(allDoneTaskResults, setDoneSearchedTaskList);
+        }
     }
 
     // Updates the UI when user changes task progress then changes tabs without reloading the page
@@ -56,6 +99,7 @@ const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, 
                     <i className="fa-solid fa-magnifying-glass" aria-hidden="true" ></i>
                     <span className="sr-only">Search</span>
                     <input type="text" className="searchBarInput" placeholder="Search for task..." onChange={debounce((e) => handleSearchForTask(e), 100)}/>
+                    {isLoading ? <div className="lds-ring"><div></div></div> : null}
                 </div>
             </div>
         </>
