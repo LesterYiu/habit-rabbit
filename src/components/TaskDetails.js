@@ -7,6 +7,7 @@ import { AppContext } from "../Contexts/AppContext";
 import { db } from "./firebase";
 import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
+import { startOfWeek } from "date-fns/esm";
 
 const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList}) => {
 
@@ -281,7 +282,8 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             taskUpdate: textareaEl.current.value,
             date: format(new Date(), 'MMM dd, yyyy'),
             timePublished: (new Date()).getHours(),
-            minutesPublished: (new Date()).getMinutes()
+            minutesPublished: (new Date()).getMinutes(),
+            uuid: uuid()
         }
 
         setUpdates([...updates, updateObj]);
@@ -440,6 +442,109 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         });
     }
 
+    const updateDate = async (e) => {
+
+        let documentRef = determineWhichRef();
+
+        const dateString = e.target.value.replace(/([-])/g, '');
+        const year = +dateString.substring(0, 4);
+        const month = +dateString.substring(4, 6);
+        const day = +dateString.substring(6, 8);
+        const date = new Date(year, month - 1, day);
+
+        const reformattedDeadline = format(date, 'MMM dd, yyyy');
+        specificTask.task.reformattedDeadline = reformattedDeadline;
+
+        const firstDayOfWeek = startOfWeek(date);
+        const firstDayOfWeekUnformatted = format(firstDayOfWeek, 'yyyy-MM-dd');
+        const firstDayOfWeekTimestamp = new Date(format(firstDayOfWeek, 'yyyy-MM-dd'));
+        const startDayOfWeek = format(firstDayOfWeek, 'MMM dd, yyyy');
+        const deadline = e.target.value;
+
+        await updateDoc(documentRef, {
+            "task.deadline" : deadline,
+            "task.firstDayOfWeekUnformatted" : firstDayOfWeekUnformatted,
+            "task.firstDayOfWeekTimestamp" : firstDayOfWeekTimestamp,
+            "task.reformattedDeadline" : reformattedDeadline,
+            "task.startDayOfWeek": startDayOfWeek
+        });
+    }
+
+    const convertArmyToStandardTime = (time) => {
+        const timeArr = time.split(":");
+        const hourTime = parseInt(timeArr[0]);
+
+        if (hourTime > 12){
+            timeArr[0] = timeArr[0] - 12;
+            return timeArr.join(":")
+        } else if (hourTime === 0){
+            timeArr[0] = 12;
+            return timeArr.join(":")
+        } else {
+            return time;
+        }
+    }
+
+    const updateTimeInput = async (e) => {
+        let documentRef = determineWhichRef();
+
+        specificTask.task.time = e.target.value;
+        await updateDoc(documentRef, {
+            "task.time" : e.target.value
+        })
+    }
+
+    /*
+    
+    When user cilcks "update comment"
+
+    - the paragraph will be given a class of hidden
+
+    - the input text will be unhidden
+        - on the input text, there will be an updateComment function that executes on change with account to debouncing
+
+        - this will directly change what is on the UI atm and also update to the database.
+
+    */
+
+    const toggleEditComments = (e) => {
+        let commentParagraphEl = e.target.offsetParent.offsetParent.childNodes[1].childNodes[1];
+        let commentInputEl = e.target.offsetParent.offsetParent.childNodes[1].childNodes[2];
+        let ulEl = e.target.parentNode.parentNode;
+        if(e.target.textContent === "Edit Update") {
+            ulEl.style.display = "none";
+            let doneEditingBtn = e.target.parentNode.nextSibling.firstChild;
+            e.target.className = "hiddenUpdate";
+            commentParagraphEl.className = "hiddenUpdate";
+            commentInputEl.className = "";
+            doneEditingBtn.className = "";
+        } else if (e.target.textContent === "Done Editing"){
+            let editBtn = e.target.parentNode.previousSibling.firstChild;
+            ulEl.style.display = "none";
+            e.target.className = "hiddenUpdate";
+            commentInputEl.className = "hiddenUpdate";
+            editBtn.className = "";
+            commentParagraphEl.className = "";
+        }
+
+    }
+
+    const updateComment = async (e, updateObj) => {
+        let documentRef = determineWhichRef();
+        let commentParagraphEl = e.target.previousSibling;
+        let inputInfo = e.target.value;
+        const updatesArr = [...updates];
+        for(let property of updatesArr) {
+            if(property.uuid === updateObj.uuid){
+                property.taskUpdate = inputInfo;
+            }
+        }
+        commentParagraphEl.textContent = e.target.value;
+        await updateDoc(documentRef, {
+            "task.updates" : updatesArr
+        })
+    }
+
     return(
         <div className="taskDetails">
             {isTaskProgressNotUpdated ? 
@@ -517,13 +622,21 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             <div className="taskData">
                 <div className="taskDates taskInfoContainer">
                     <p className="label">Planned Competion Date</p>
-                    <p>{format(new Date(specificTask.task.deadline), 'MMM e')}</p>
+                    {isEnableOn ? 
+                    <input type="date" onChange={debounce((e) => {updateDate(e)}, 300)} defaultValue={specificTask.task.deadline}/> : 
+                    <p>{specificTask.task.reformattedDeadline}</p>}
+                </div>
+                <div className="dueTimeLabel">
+                    <p className="label">Due Time</p>
+                    {isEnableOn ? 
+                    <input type="time" defaultValue={specificTask.task.time} onChange={(e) => {updateTimeInput(e)}}/> :
+                    <p>{parseInt(specificTask.task.time.replace(/([:])/g, '')) > 1159 ? `${convertArmyToStandardTime(specificTask.task.time)} PM` : `${convertArmyToStandardTime(specificTask.task.time)} AM` }</p>}
                 </div>
                 <div className="priorityLevel taskInfoContainer">
                     <p className="label">Priority</p>
                     {isEnableOn ? 
                     <form name="selectPriority">
-                        <select onChange={updatePriority} defaultValue={specificTask.task.priority}>
+                        <select onChange={debounce(updatePriority, 300)} defaultValue={specificTask.task.priority}>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
@@ -644,6 +757,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                             <div className="commentText">
                                 <p className="username">{username}</p>
                                 <p>{update.taskUpdate}</p>
+                                <input type="text" className="hiddenUpdate" onChange={debounce( (e) => {updateComment(e, update)}, 300)} defaultValue={update.taskUpdate}/>
                                 <p className="timePublished">{`Posted on ${update.date} at ${time}`}</p>
                             </div>
                             <div className="buttonsContainer">
@@ -652,7 +766,10 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                                 </button>
                                 <ul className="alterUpdateOption">
                                     <li>
-                                        <button>Edit Update</button>
+                                        <button onClick={(e) => {toggleEditComments(e)}}>Edit Update</button>
+                                    </li>
+                                    <li>
+                                        <button className="hiddenUpdate" onClick={(e) => {toggleEditComments(e)}}>Done Editing</button>
                                     </li>
                                     <li>
                                         <button onClick={() => {handleDeleteUpdate(update)}}>Delete Update</button>
