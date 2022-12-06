@@ -1,5 +1,5 @@
 import {format} from "date-fns";
-import {  doc, updateDoc, getDoc, deleteDoc } from "firebase/firestore";
+import {  doc, updateDoc, getDoc, deleteDoc, collection } from "firebase/firestore";
 import { useEffect, useState, useRef, useContext} from "react";
 import uuid from "react-uuid";
 import { debounce } from "../utils/globalFunctions";
@@ -9,7 +9,7 @@ import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
 import { startOfWeek } from "date-fns/esm";
 
-const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList}) => {
+const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList, updateDatabase}) => {
 
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
     const [isLogTimeBtnClicked, setIsLogTimeBtnClicked] = useState(false);
@@ -50,19 +50,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     
     // To get the data from database on mount
     useEffect( () => {
-        
-        const getUpdateCommentsAndProgress = async () => {
-            // If this task is not complete then the data is updated within the ongoing tasks collection
-
-            let documentRef = determineWhichRef()
-
-            const docSnap = await getDoc(documentRef);
-            setUpdates(docSnap.data().task.updates);
-            
-            setTaskCompletion(docSnap.data().task.completion);
-
-        }
-
+    
         getUpdateCommentsAndProgress()
 
     }, [isDoneBtnClicked, isToDoBtnClicked, specificTask.id, userUID]);
@@ -74,40 +62,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         if(!isMounted.current) {
             isMounted.current = true;
             return;
-        }
-
-        const handleUpdateDocument = async () => {
-
-            let documentRef = determineWhichRef();
-
-            await updateDoc(documentRef, {
-                "task.updates": updates
-            })
-        }
-
-        const handleUpdateProgress = () => {
-
-            if(isToDoBtnClicked) {
-                const handleOngoingTask = async () => {
-                    const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-
-                    await updateDoc(documentRef, {
-                        "task.completion": taskCompletion
-                    })
-                }
-                handleOngoingTask();
-            } else if (isDoneBtnClicked) {
-
-                const handleFinishedTask = async () => {
-                    const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-                    
-                    await updateDoc(documentRef, {
-                        "task.completion": taskCompletion
-                    })
-                }
-                
-                handleFinishedTask();
-            }
         }
 
         handleUpdateDocument();
@@ -153,6 +107,94 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7, backBtnCounter, frontBtnCounter);
 
     }, [backBtnCounter, frontBtnCounter])
+
+    async function changeTaskStatus () {
+
+        if(specificTask.task.completion === "100" && isToDoBtnClicked) {
+            const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+            const updatedTask = {...specificTask};
+            const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${updatedTask.id}`);
+
+            updatedTask.task.completion = "100";
+            await updateDatabase(doneCollection, postDoc, setDoneTaskList, updatedTask);
+
+        } else if (specificTask.task.completion !== "100" && isDoneBtnClicked) {
+            const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+            const updatedTask = {...specificTask};
+            const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${updatedTask.id}`);
+
+            updatedTask.task.completion = taskCompletion;
+            await updateDatabase(collectionRef, doneDoc, setTaskList, updatedTask);
+        }
+    }
+    /*
+    
+    If the user has changed the task completion bar to 100% then grab the current task, save it into a variable, delete it from the database, and add an altered current task with a changed completion bar to the database
+
+    */
+// console.log(specificTask.task.completion)
+        async function handleUpdateDocument() {
+
+            let documentRef = determineWhichRef();
+
+            await updateDoc(documentRef, {
+                "task.updates": updates
+            })
+        }
+
+        async function handleUpdateProgress() {
+
+            if(isToDoBtnClicked) {
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+                const correspondingRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+
+                try {
+                    await updateDoc(documentRef, {
+                        "task.completion": taskCompletion
+                    })
+                } catch {
+                    await updateDoc(correspondingRef, {
+                        "task.completion": taskCompletion
+                    })
+
+                    console.log('working')
+                }
+
+                specificTask.task.completion = taskCompletion;
+                
+            } else if (isDoneBtnClicked) {
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+                const correspondingRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
+                
+                try {
+                    await updateDoc(documentRef, {
+                        "task.completion": taskCompletion
+                    })
+                } catch {
+                    await updateDoc(correspondingRef, {
+                        "task.completion": taskCompletion
+                    })
+                    
+                }
+
+                specificTask.task.completion = taskCompletion;
+
+            }
+
+            changeTaskStatus();
+        }
+
+    async function getUpdateCommentsAndProgress() {
+        // If this task is not complete then the data is updated within the ongoing tasks collection
+
+        let documentRef = determineWhichRef()
+
+        const docSnap = await getDoc(documentRef);
+        setUpdates(docSnap.data().task.updates);
+        
+        setTaskCompletion(docSnap.data().task.completion);
+
+    }
 
     function determineWhichRef(){
 
@@ -494,19 +536,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         })
     }
 
-    /*
-    
-    When user cilcks "update comment"
-
-    - the paragraph will be given a class of hidden
-
-    - the input text will be unhidden
-        - on the input text, there will be an updateComment function that executes on change with account to debouncing
-
-        - this will directly change what is on the UI atm and also update to the database.
-
-    */
-
     const toggleEditComments = (e) => {
         let commentParagraphEl = e.target.offsetParent.offsetParent.childNodes[1].childNodes[1];
         let commentInputEl = e.target.offsetParent.offsetParent.childNodes[1].childNodes[2];
@@ -543,6 +572,24 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         await updateDoc(documentRef, {
             "task.updates" : updatesArr
         })
+    }
+
+    const convertTimeToStandard = (update) => {
+        // When time is given seperate (hours and minutes are seperated), convert to standard time format
+        let hours;
+        let time;
+        if(update.timePublished <= 11) {
+            hours = update.timePublished;
+            time = `${hours}:${update.minutesPublished}AM`
+        } else if (update.timePublished === 12) {
+            hours = update.timePublished;
+            time = `${hours}:${update.minutesPublished}PM`                    
+        } else if (update.timePublished > 12) {
+            hours = update.timePublished - 12;
+            time = `${hours}:${update.minutesPublished}PM`
+        }
+
+        return time;
     }
 
     return(
@@ -606,8 +653,8 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                     <div className="percentContainer">
                         <p className="label">Percent Complete</p>
                         {isEnableOn ? 
-                        <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 400)}/> : 
-                        <input type="range" value={taskCompletion || "0"} onChange={debounce((e) => handleProgressBar(e), 400)} onClick={() => {setIsRangeClicked(true)}}/> }
+                        <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 300)}/> : 
+                        <input type="range" value={taskCompletion || "0"} onChange={debounce((e) => handleProgressBar(e), 300)} onClick={() => {setIsRangeClicked(true)}}/> }
                     </div>
                 </div>
             </div>
@@ -737,18 +784,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             </form> : null}
             {updates ? 
             updates.map( (update) => {
-                let hours;
-                let time;
-                if(update.timePublished <= 11) {
-                    hours = update.timePublished;
-                    time = `${hours}:${update.minutesPublished}AM`
-                } else if (update.timePublished === 12) {
-                    hours = update.timePublished;
-                    time = `${hours}:${update.minutesPublished}PM`                    
-                } else if (update.timePublished > 12) {
-                    hours = update.timePublished - 12;
-                    time = `${hours}:${update.minutesPublished}PM`
-                }
 
                 return <div key={uuid()} className="taskCommentContainer">
                             <div className="profilePicContainer">
@@ -758,7 +793,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                                 <p className="username">{username}</p>
                                 <p>{update.taskUpdate}</p>
                                 <input type="text" className="hiddenUpdate" onChange={debounce( (e) => {updateComment(e, update)}, 300)} defaultValue={update.taskUpdate}/>
-                                <p className="timePublished">{`Posted on ${update.date} at ${time}`}</p>
+                                <p className="timePublished">{`Posted on ${update.date} at ${convertTimeToStandard(update)}`}</p>
                             </div>
                             <div className="buttonsContainer">
                                 <button className="moreOptionsBtn" onClick={handleOptionsBtn}>
