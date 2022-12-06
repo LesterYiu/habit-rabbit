@@ -31,13 +31,9 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const [day7Time, setDay7Time] = useState(0);
     const [backBtnCounter, setBackBtnCounter] = useState(0);
     const [frontBtnCounter, setFrontBtnCounter] = useState(0);
-
-    const [taskCompletion, setTaskCompletion] = useState("");
     const [updates, setUpdates] = useState([]);
     const [timeSpent, setTimeSpent] = useState(0);
-    const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
     const [isMoreThan24, setIsMoreThan24] = useState(false);
-
     const [isEnableOn, setIsEnableOn] = useToggle();
 
     const isMounted = useRef(false);
@@ -66,10 +62,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         handleUpdateDocument();
 
-        if(taskCompletion !== "") {
-            handleUpdateProgress();
-        }
-    }, [updates, taskCompletion, specificTask.id, userUID, isDoneBtnClicked, isToDoBtnClicked])
+    }, [updates, specificTask.id, userUID, isDoneBtnClicked, isToDoBtnClicked])
 
     // To get dates for log time
     useEffect( () => {
@@ -78,16 +71,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7);
 
     }, [setIsSpecificTaskEmpty])
-
-    // Handle loading
-    useEffect( () => {
-        let timeout;
-        clearTimeout(timeout);
-
-        timeout = setTimeout( () => {
-            setIsTaskProgressNotUpdated(false);
-        }, 400)
-    }, [taskCompletion])
 
     // Handles on mount loading of time inputs
 
@@ -108,31 +91,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     }, [backBtnCounter, frontBtnCounter])
 
-    async function changeTaskStatus () {
-
-        if(specificTask.task.completion === "100" && isToDoBtnClicked) {
-            const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
-            const updatedTask = {...specificTask};
-            const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${updatedTask.id}`);
-
-            updatedTask.task.completion = "100";
-            await updateDatabase(doneCollection, postDoc, setDoneTaskList, updatedTask);
-
-        } else if (specificTask.task.completion !== "100" && isDoneBtnClicked) {
-            const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
-            const updatedTask = {...specificTask};
-            const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${updatedTask.id}`);
-
-            updatedTask.task.completion = taskCompletion;
-            await updateDatabase(collectionRef, doneDoc, setTaskList, updatedTask);
-        }
-    }
-    /*
-    
-    If the user has changed the task completion bar to 100% then grab the current task, save it into a variable, delete it from the database, and add an altered current task with a changed completion bar to the database
-
-    */
-// console.log(specificTask.task.completion)
         async function handleUpdateDocument() {
 
             let documentRef = determineWhichRef();
@@ -140,48 +98,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             await updateDoc(documentRef, {
                 "task.updates": updates
             })
-        }
-
-        async function handleUpdateProgress() {
-
-            if(isToDoBtnClicked) {
-                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-                const correspondingRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-
-                try {
-                    await updateDoc(documentRef, {
-                        "task.completion": taskCompletion
-                    })
-                } catch {
-                    await updateDoc(correspondingRef, {
-                        "task.completion": taskCompletion
-                    })
-
-                    console.log('working')
-                }
-
-                specificTask.task.completion = taskCompletion;
-                
-            } else if (isDoneBtnClicked) {
-                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
-                const correspondingRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-                
-                try {
-                    await updateDoc(documentRef, {
-                        "task.completion": taskCompletion
-                    })
-                } catch {
-                    await updateDoc(correspondingRef, {
-                        "task.completion": taskCompletion
-                    })
-                    
-                }
-
-                specificTask.task.completion = taskCompletion;
-
-            }
-
-            changeTaskStatus();
         }
 
     async function getUpdateCommentsAndProgress() {
@@ -192,8 +108,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         const docSnap = await getDoc(documentRef);
         setUpdates(docSnap.data().task.updates);
         
-        setTaskCompletion(docSnap.data().task.completion);
-
     }
 
     function determineWhichRef(){
@@ -348,10 +262,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     }
 
-    const handleProgressBar = (e) => {
-        setTaskCompletion(e.target.value);
-    }
-
     const enableEditBtn = () => {
         setIsEnableOn();
         setIsRangeClicked(false);
@@ -448,6 +358,15 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const resetTime = async () => {
 
         let documentRef = determineWhichRef();
+
+        setDay1Time(0)
+        setDay2Time(0)
+        setDay3Time(0)
+        setDay4Time(0)
+        setDay5Time(0)
+        setDay6Time(0)
+        setDay7Time(0)
+        setTimeSpent(0);
 
         await updateDoc(documentRef, {
             "task.timeSpent" : []
@@ -594,11 +513,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     return(
         <div className="taskDetails">
-            {isTaskProgressNotUpdated ? 
-            <div className="pageOverlay">
-                <div className="lds-ring"><div></div></div>
-            </div>
-            : null}
             {isDeleteModalOn ?
                 <>
                 <div className="deleteModal">
@@ -649,12 +563,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                             <i className="fa-solid fa-trash toolBarBtn" aria-hidden="true"></i>
                             <p>Delete task</p>
                         </button>
-                    </div>
-                    <div className="percentContainer">
-                        <p className="label">Percent Complete</p>
-                        {isEnableOn ? 
-                        <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 300)}/> : 
-                        <input type="range" value={taskCompletion || "0"} onChange={debounce((e) => handleProgressBar(e), 300)} onClick={() => {setIsRangeClicked(true)}}/> }
                     </div>
                 </div>
             </div>
@@ -707,7 +615,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             <div className="updateTaskBtns">
                 <button className="updatesBtn" onClick={handleNewUpdateBtn}><i className="fa-solid fa-note-sticky" aria-hidden="true"></i>New Updates</button>
                 <button className="logTimeBtn" onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}><i className="fa-regular fa-clock" aria-hidden="true"></i>Log Time</button>
-                <button className="resetBtn" onClick={resetTime}>Reset</button>
                 {isLogTimeBtnClicked ?
                 <div className="updateHoursContainer">
                     <h2>Enter Hours</h2>
@@ -766,6 +673,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                     {isMoreThan24 ? <p className="loggingError">You cannot log more than 24 hours in a day.</p> : null}
                     <div className="logTimeOptionBtns">
                         <button onClick={submitLoggedTime} className="logTimeBtnTwo">Log Time</button>
+                        <button className="resetBtn" onClick={resetTime}>Reset Time</button>
                         <button onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}>Cancel</button>
                     </div>
                 </div> : null}
