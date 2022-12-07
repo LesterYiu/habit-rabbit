@@ -1,17 +1,12 @@
 import { debounce } from "../utils/globalFunctions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, currentUserTime, username, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, reformatTaskByDate, setSearchedTaskList, setDoneSearchedTaskList}) => {
+const DashboardHeader = ({currentUserTime, username, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, reformatTaskByDate, setSearchedTaskList, setDoneSearchedTaskList}) => {
 
     const [textInput, setTextInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleFrontArrowBtn = () => {
-        if(specificTask.length === 0) {
-            return;
-        }
-        setIsTaskExpanded(true);
-    }
+    const [isFilterModalOn, setIsFilterModalOn] = useState(false);
+    const [isSortModalOn, setIsSortModalOn] = useState(false);
 
     const handleSearchForTask = (e) => {
         let timeout;
@@ -68,17 +63,6 @@ const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, 
 
     return(
         <>
-            <div className="userLocationBar">
-                <div className="userLocationButtons">
-                    <button disabled>
-                        <i className="fa-solid fa-arrow-left arrowDisabled"></i>
-                    </button>
-                    <button onClick={handleFrontArrowBtn} disabled={isSpecificTaskEmpty}>
-                        <i className={isSpecificTaskEmpty ? "fa-solid fa-arrow-right arrowDisabled" : "fa-solid fa-arrow-right"}></i>
-                    </button>
-                </div>
-                <p>🏠 <span>Your workspace</span></p>
-            </div>
             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
             {currentUserTime >= 0 && currentUserTime < 12 ? 
             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
@@ -91,10 +75,57 @@ const DashboardHeader = ({specificTask, setIsTaskExpanded, isSpecificTaskEmpty, 
                 <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleSearchedFinishedBtn}>Finished</button>
             </div>
             <div className="taskFinderContainer">
-                <button className="filterContainer">
-                    <i className="fa-solid fa-sort"></i>
-                    <p>Filter</p>
-                </button>
+                <div className="taskListButtons">
+                    <div className="buttonRelativePosition">
+                        <button className="filterContainer" onClick={() => {setIsFilterModalOn(!isFilterModalOn)}}>
+                            <i className="fa-solid fa-arrow-down-wide-short"></i>
+                            <p>Filter</p>
+                        </button>
+                        {isFilterModalOn ?
+                        <div className="filterModal">
+                            <form name="filterForm">
+                                <fieldset>
+                                    <legend className="sr-only">Choose how to filter your task lists</legend>
+
+                                    <div>
+                                        <input type="radio" name="filterOption" id="allTask" defaultChecked/>
+                                        <label htmlFor="allTask">All</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" name="filterOption" id="lateTask"/>
+                                        <label htmlFor="lateTask">Late Tasks</label>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div> : null}
+                    </div>
+                    <div className="buttonRelativePosition">
+                        <button className="filterContainer" onClick={() => {setIsSortModalOn(!isSortModalOn)}}>
+                            <i className="fa-solid fa-sort"></i>
+                            <p>Sort</p>
+                        </button>
+                        {isSortModalOn ?
+                        <div className="filterModal">
+                            <form name="sortForm">
+                                <fieldset>
+                                    <legend className="sr-only">Choose how to sort your task lists</legend>
+
+                                    <div>
+                                        <input type="radio" name="filterOption" id="allTask" defaultChecked/>
+                                        <label htmlFor="allTask">Default</label>
+                                    </div>
+
+                                    <div>
+                                        <input type="radio" name="filterOption" id="priorityTask"/>
+                                        <label htmlFor="priorityTask">Priority</label>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div> : null}
+                    </div>
+                </div>
                 <div className="searchContainer">
                     <i className="fa-solid fa-magnifying-glass" aria-hidden="true" ></i>
                     <span className="sr-only">Search</span>

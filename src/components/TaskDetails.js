@@ -1,5 +1,5 @@
 import {format} from "date-fns";
-import {  doc, updateDoc, getDoc, deleteDoc, collection } from "firebase/firestore";
+import {  doc, updateDoc, getDoc, deleteDoc, collection, getDocs, addDoc } from "firebase/firestore";
 import { useEffect, useState, useRef, useContext} from "react";
 import uuid from "react-uuid";
 import { debounce } from "../utils/globalFunctions";
@@ -9,7 +9,7 @@ import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
 import { startOfWeek } from "date-fns/esm";
 
-const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList, updateDatabase}) => {
+const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase, reformatTaskByDate, setReformattedTask, setReformattedDoneTask}) => {
 
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
     const [isLogTimeBtnClicked, setIsLogTimeBtnClicked] = useState(false);
@@ -35,6 +35,8 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const [timeSpent, setTimeSpent] = useState(0);
     const [isMoreThan24, setIsMoreThan24] = useState(false);
     const [isEnableOn, setIsEnableOn] = useToggle();
+    const [taskCompletion, setTaskCompletion] = useState(specificTask.task.completion)
+    const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
 
     const isMounted = useRef(false);
     const isMountedTwo = useRef(false);
@@ -43,7 +45,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     // useContext variables
     const {userUID, username, userPic} = useContext(AppContext);
-    
+
     // To get the data from database on mount
     useEffect( () => {
     
@@ -62,7 +64,11 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         handleUpdateDocument();
 
-    }, [updates, specificTask.id, userUID, isDoneBtnClicked, isToDoBtnClicked])
+        if(taskCompletion !== "") {
+            handleUpdateProgress();
+        }
+
+    }, [updates, taskCompletion, specificTask.id, userUID, isDoneBtnClicked, isToDoBtnClicked])
 
     // To get dates for log time
     useEffect( () => {
@@ -70,6 +76,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
         setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7);
 
+        
     }, [setIsSpecificTaskEmpty])
 
     // Handles on mount loading of time inputs
@@ -91,42 +98,81 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     }, [backBtnCounter, frontBtnCounter])
 
-        async function handleUpdateDocument() {
+    // Handle loading
+    useEffect( () => {
+        let timeout;
+        clearTimeout(timeout);
 
-            let documentRef = determineWhichRef();
+        timeout = setTimeout( () => {
+            setIsTaskProgressNotUpdated(false);
+        }, 400)
+    }, [taskCompletion])
 
-            await updateDoc(documentRef, {
-                "task.updates": updates
-            })
-        }
+    // Updates the home page UI as progress bar (task completion) is changed
+    useEffect( () => {
+        reformatTaskByDate(taskList, setReformattedTask);
+        reformatTaskByDate(doneTaskList, setReformattedDoneTask);
+    }, [taskList, doneTaskList]);
+
+    async function handleUpdateDocument() {
+
+        let documentRef = determineWhichRef(specificTask.id);
+
+        await updateDoc(documentRef, {
+            "task.updates": updates
+        })
+    }
 
     async function getUpdateCommentsAndProgress() {
         // If this task is not complete then the data is updated within the ongoing tasks collection
 
-        let documentRef = determineWhichRef()
+        let documentRef = determineWhichRef(specificTask.id)
 
         const docSnap = await getDoc(documentRef);
         setUpdates(docSnap.data().task.updates);
         
     }
 
-    function determineWhichRef(){
-
+    function determineWhichRef(taskID){
         let documentRef;
 
-        if(isToDoBtnClicked) {
-            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, specificTask.id);
-        } else if (isDoneBtnClicked) {
-            documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, specificTask.id);
+        for(let arr of reformattedTask) {
+
+            // Determines the correct week to begin looping through to find a match
+            if(arr[0].task.firstDayOfWeekUnformatted === specificTask.task.firstDayOfWeekUnformatted) {
+                
+                for(let singleTask of arr) {
+                    
+                    // If the current task we are on can be found in the incomplete task list then we can safely determine we will need to make edits from the incomplete collection, not the complete collection
+                    if(singleTask.uuid === specificTask.uuid) {
+                        documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, taskID);
+                        return documentRef;
+                    }
+                }
+            }
         }
 
-        return documentRef;
+        for(let arr of reformattedDoneTask) {
+
+            if(arr[0].task.firstDayOfWeekUnformatted === specificTask.task.firstDayOfWeekUnformatted) {
+
+                for(let singleTask of arr) {
+
+                    if(singleTask.uuid === specificTask.uuid) {
+                        documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, taskID);
+                        return documentRef;
+                    }
+
+                }
+
+            }
+        }
     }
 
 
     // Called with an array containing all 7 day's dates + an array containing the state function to set a new day time.
     async function getDocument() {
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         // If the dates on the log time modal match the dates of the hours logged in the database, it will populate the hours.
         const docSnap = await getDoc(documentRef);
@@ -222,10 +268,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         setIsNewUpdateBtnClicked(!isNewUpdateBtnClicked);
     }
 
-    const handleBackArrowBtn = () => {
-        setIsTaskExpanded(false);
-    }
-
     const handleNewComments = async (e) => {
         e.preventDefault();
         const textareaStr = textareaEl.current.value.replace(/^ +/gm, '');
@@ -305,7 +347,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         const datesArr = arguments[0];
         const dateTimeArr = arguments[1];
 
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         // Find the difference between the locally stored dates/times array from the one on the database. The differences will be placed into a copied version of the database version and then reuploaded onto the database.
         
@@ -357,7 +399,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     const resetTime = async () => {
 
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         setDay1Time(0)
         setDay2Time(0)
@@ -374,7 +416,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     }
 
     const updateTaskName = async (e) => {
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         specificTask.task.name = e.target.value;
 
@@ -384,7 +426,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     }
 
     const updateTaskDescription = async(e) => {
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         specificTask.task.description = e.target.value;
 
@@ -394,7 +436,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     }
 
     const updatePriority = async(e) => {
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         specificTask.task.priority = e.target.value;
 
@@ -405,7 +447,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
 
     const updateDate = async (e) => {
 
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         const dateString = e.target.value.replace(/([-])/g, '');
         const year = +dateString.substring(0, 4);
@@ -447,7 +489,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     }
 
     const updateTimeInput = async (e) => {
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
 
         specificTask.task.time = e.target.value;
         await updateDoc(documentRef, {
@@ -478,7 +520,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     }
 
     const updateComment = async (e, updateObj) => {
-        let documentRef = determineWhichRef();
+        let documentRef = determineWhichRef(specificTask.id);
         let commentParagraphEl = e.target.previousSibling;
         let inputInfo = e.target.value;
         const updatesArr = [...updates];
@@ -511,8 +553,118 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         return time;
     }
 
+    const handleProgressBar = async (e) => {
+        setTaskCompletion(e.target.value);
+    }
+
+    async function handleUpdateProgress() {
+        let documentRef = determineWhichRef(specificTask.id);
+
+        // determines which collection the task is located in
+        const taskCollectionName = documentRef.path.split("/")[4];
+
+        if(taskCompletion === "100" && taskCollectionName === "ongoingTask") {
+
+            // Stops duplicates from being added into our data after the user flips the progress bar continuously while updating it appropriately
+            for(let task of doneTaskList) {
+                if(task.uuid === specificTask.uuid) {
+
+                    const newDocumentRef = await formatUpdatedData();
+
+                    const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+                    const updatedTask = {...specificTask};
+                    updatedTask.task.completion = "100";
+                    await addDoc(doneCollection, updatedTask)
+                    await deleteDoc(newDocumentRef);
+                    const data = await getDocs(doneCollection);
+                    setDoneTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+                    return
+                }
+            }
+
+            const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+            const updatedTask = {...specificTask};
+            updatedTask.task.completion = "100";
+            const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${updatedTask.id}`);
+            await updateDatabase(doneCollection, postDoc, setDoneTaskList, updatedTask);
+            return;
+        } else if (taskCompletion !== "100" && taskCollectionName === "finishedTask") {
+
+            const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+            const updatedTask = {...specificTask};
+            updatedTask.task.completion = taskCompletion;
+            const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${updatedTask.id}`);
+            await updateDatabase(collectionRef, doneDoc, setTaskList, updatedTask);
+            return;
+        }
+
+        try {
+            await updateDoc(documentRef, {
+                "task.completion" : taskCompletion
+            })
+        } catch {
+            const newDocumentRef = await formatUpdatedData();
+            const newCollectionName = newDocumentRef.path.split("/")[4]; 
+            console.log(newCollectionName, taskCompletion)
+            if(newCollectionName === "ongoingTask" && taskCompletion !== "100") {
+                console.log('First Block')
+                const updatedTask = {...specificTask};
+                updatedTask.task.completion = taskCompletion;
+
+                await updateDoc(newDocumentRef, {
+                    "task.completion" : taskCompletion
+                })
+            } else if (newCollectionName === "finishedTask" && taskCompletion !== "100") {
+
+                const ongoingCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+                const updatedTask = {...specificTask};
+                updatedTask.task.completion = taskCompletion;
+                await addDoc(ongoingCollectionRef, updatedTask)
+                await deleteDoc(newDocumentRef);
+                const data = await getDocs(ongoingCollectionRef);
+                setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+                return
+                
+            }
+        }
+    }
+
+    const formatUpdatedData = async () => {
+        const ongoingCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+        const doneCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+
+        const updatedOngoingTasksRef = await getDocs(ongoingCollectionRef);
+
+        const updatedDoneTasksRef = await getDocs(doneCollectionRef)
+
+        const updatedUnfinishedTask = updatedOngoingTasksRef.docs.map((doc) => ({...doc.data(), id: doc.id}));  
+    
+        const updatedDoneTasks = updatedDoneTasksRef.docs.map((doc) => ({...doc.data(), id: doc.id}));  
+
+        let newDocRef;
+
+        for(let task of updatedUnfinishedTask) {
+            if(task.uuid === specificTask.uuid) {
+                newDocRef = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`, task.id);
+                return newDocRef;
+            }
+        }
+
+        for(let task of updatedDoneTasks) {
+            if(task.uuid === specificTask.uuid) {
+                newDocRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, task.id);
+                return newDocRef;                
+            }
+        }
+    }
+
     return(
         <div className="taskDetails">
+            {isTaskProgressNotUpdated ? 
+            <div className="pageOverlay">
+                <div className="lds-ring"><div></div></div>
+            </div>
+            : null}
             {isDeleteModalOn ?
                 <>
                 <div className="deleteModal">
@@ -529,17 +681,6 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                 </div>
                 <div className="overlayModal"></div>
             </> : null}
-            <div className="userLocationBar">
-                <div className="userLocationButtons">
-                    <button onClick={handleBackArrowBtn}>
-                        <i className="fa-solid fa-arrow-left"></i>  
-                    </button>
-                    <button disabled>
-                        <i className="fa-solid fa-arrow-right arrowDisabled"></i>
-                    </button>
-                </div>
-                <p>🏠 <span>Your workspace</span>/ <span>Task Details</span></p>
-            </div>
             <div className="taskHeader">
                 <div className="taskInformation">
                     <i className="fa-regular fa-clipboard"></i>
@@ -561,9 +702,12 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                         </button>
                         <button className="taskBtnContainer" onClick={setIsDeleteModalOn}>
                             <i className="fa-solid fa-trash toolBarBtn" aria-hidden="true"></i>
-                            <p>Delete task</p>
+                            <p>Delete Task</p>
                         </button>
                     </div>
+                    {isEnableOn ? 
+                    <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 300)}/> : 
+                    <input type="range" value={taskCompletion || "0"} onChange={debounce((e) => handleProgressBar(e), 300)} onClick={() => {setIsRangeClicked(true)}}/> }
                 </div>
             </div>
             {isRangeClicked && !isEnableOn? 

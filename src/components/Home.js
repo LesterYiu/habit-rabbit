@@ -117,13 +117,8 @@ const Home = () => {
     }, [userUID, setUserUID, doneSearchedTaskList, searchedTaskList, isTaskExpanded]);
 
     useEffect( () => {
-        const reformatTaskList = () => {
-
-            reformatTaskByDate(taskList, setReformattedTask);
-            reformatTaskByDate(doneTaskList, setReformattedDoneTask);
-
-        }
-        reformatTaskList();
+        reformatTaskByDate(taskList, setReformattedTask);
+        reformatTaskByDate(doneTaskList, setReformattedDoneTask);
     }, [taskList, doneTaskList]);
 
     useEffect( () => {
@@ -215,7 +210,7 @@ const Home = () => {
         return(
             <div className="homePage">
                 <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
-                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} updateDatabase={updateDatabase}/>
+                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase} reformatTaskByDate={reformatTaskByDate} setReformattedTask={setReformattedTask} setReformattedDoneTask={setReformattedDoneTask}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
@@ -233,7 +228,7 @@ const Home = () => {
                     <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
+                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
                             <div className="allTasksContainer">
                                 {isPageLoading && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer loadingContainer">
