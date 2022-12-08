@@ -43,7 +43,7 @@ const Home = () => {
     const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
 
     const isMounted = useRef(false);
-    const overallDashboardEl = useRef(null);
+    const navPaddingDiv = useRef(null);
 
     // useContext variables
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext);
@@ -210,8 +210,9 @@ const Home = () => {
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
-                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded} setIsSearchBarPopulated={setIsSearchBarPopulated} />
-                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase} overallDashboardEl={overallDashboardEl}/>
+                <div ref={navPaddingDiv}></div>
+                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded} setIsSearchBarPopulated={setIsSearchBarPopulated} navPaddingDiv={navPaddingDiv}/>
+                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
@@ -226,8 +227,9 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} overallDashboardEl={overallDashboardEl}/>
-                    <div className="homeDashboard homeSection" ref={overallDashboardEl}>
+                    <div ref={navPaddingDiv}></div>
+                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} navPaddingDiv={navPaddingDiv}/>
+                    <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
                             <div className="allTasksContainer">
@@ -311,8 +313,9 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} overallDashboardEl={overallDashboardEl}/>
-                    <div className="homeDashboard homeSection" ref={overallDashboardEl}>
+                    <div ref={navPaddingDiv}></div>
+                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} navPaddingDiv={navPaddingDiv}/>
+                    <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
                             <div className="allTasksContainer">

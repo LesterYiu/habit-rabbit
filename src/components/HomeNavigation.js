@@ -5,7 +5,7 @@ import { useContext, useRef, useState } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
-const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, setIsSearchBarPopulated, overallDashboardEl}) => {
+const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, setIsSearchBarPopulated, navPaddingDiv}) => {
 
     // useContext variables
     const {setIsAuth, username, setUsername, setUserUID, userPic} = useContext(AppContext)
@@ -40,11 +40,17 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     }
 
     const redirectToHome = () => {
-        setIsSearchBarPopulated(false);
-        handleNavToggleBtn()
+        if(isNavExpanded === true) {
+            setIsNavExpanded(false)
+            handleNavToggleBtn()
+        }
+
+        if(isTaskExpanded === undefined) return
+
         if(isTaskExpanded) {
             setIsTaskExpanded(false);
         } else {
+            setIsTaskExpanded(true);
             navigate('/home');
         }
     }
@@ -61,7 +67,8 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     }
     
     const handleExpandNav = () => {
-        overallDashboardEl.current.className = "homeDashboard homeSection expandedNav"
+        // Only occurs if on home component
+        navPaddingDiv.current.className = "navExpandedPadding";
         navEl.current.className = "homeNavigation homeSection";
         profileTextEl.current.className = "profileInfoText"
         profileInfoContainerEl.current.className = "profileInfoContainer";
@@ -77,7 +84,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     }
 
     const handleShrinkBtn = () => {
-        overallDashboardEl.current.className = "homeDashboard homeSection"
+        navPaddingDiv.current.className = "";
         navEl.current.className = "homeNavigation homeSection minimizedNav";
         profileTextEl.current.className = "profileInfoText defaultHidden";
         profileInfoContainerEl.current.className = "profileInfoContainer minimizedInfoContainer";

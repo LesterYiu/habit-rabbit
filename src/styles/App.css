@@ -575,6 +575,9 @@ fieldset {
   .homePage .homeNavigation.minimizedNav {
     width: 100px;
     position: relative; }
+  .homePage .navExpandedPadding {
+    display: block;
+    padding-left: 100px; }
   .homePage .homeNavigation {
     padding: 20px 25px 50px 25px;
     background-color: white;
@@ -1345,7 +1348,7 @@ abbr {
 
 .taskDetails {
   padding: 35px 0px 20px 0;
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column; }
   .taskDetails .userLocationBar {
