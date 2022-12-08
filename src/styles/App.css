@@ -572,21 +572,25 @@ fieldset {
 .homePage {
   display: flex;
   width: 100%; }
+  .homePage .homeNavigation.minimizedNav {
+    width: 100px;
+    position: relative; }
   .homePage .homeNavigation {
     padding: 20px 25px 50px 25px;
-    position: relative;
-    width: 20%;
+    background-color: white;
+    position: fixed;
+    z-index: 20;
+    width: 250px;
     min-height: 100vh;
     max-height: 100%;
     border-top: 1px solid rgba(212, 212, 212, 0.9);
     border-left: 1px solid rgba(212, 212, 212, 0.9);
     border-right: 1px solid rgba(212, 212, 212, 0.9);
     display: flex;
-    flex-direction: column;
-    align-items: center; }
+    flex-direction: column; }
     .homePage .homeNavigation a,
     .homePage .homeNavigation button {
-      margin: 20px 0;
+      margin: 15px 0;
       display: flex;
       border: 1px solid rgba(212, 212, 212, 0.9);
       padding: 10px 15px;
@@ -595,28 +599,31 @@ fieldset {
       font-size: 0.7rem; }
     .homePage .homeNavigation button {
       align-items: center; }
-    .homePage .homeNavigation span {
-      margin-right: 15px; }
+    .homePage .homeNavigation ul.minimizedUl {
+      width: 50px; }
     .homePage .homeNavigation ul {
       width: 100%; }
       .homePage .homeNavigation ul button {
         width: 100%; }
+    .homePage .homeNavigation .expandedButtonText {
+      margin-left: 10px; }
     .homePage .homeNavigation li {
       position: relative; }
-    .homePage .homeNavigation i {
-      position: absolute;
-      z-index: 20;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 10px;
-      font-size: 0.7rem; }
-  .homePage .homeDashboard {
-    width: 80%;
-    display: flex;
-    flex-direction: column; }
+      .homePage .homeNavigation li i {
+        position: absolute;
+        z-index: 20;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+        font-size: 0.7rem; }
+    .homePage .homeNavigation .accountButtons {
+      border-bottom: 2px solid #d4d4d4; }
   .homePage .dashboardContent {
     padding: 35px 0px 25px 0px;
     overflow-y: scroll; }
+  .homePage .homeDashboard.homeSection.expandedNav {
+    padding-left: 100px;
+    width: 100%; }
   .homePage .userLocationBar {
     width: 100%;
     display: flex;
@@ -635,17 +642,18 @@ fieldset {
     border-bottom: 4px solid #78A27A; }
   .homePage .dashboardStatus {
     margin-bottom: 15px; }
+  .homePage .profileInfoContainer.minimizedInfoContainer {
+    display: block;
+    padding-bottom: 10px; }
   .homePage .profileInfoContainer {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
     border-bottom: 2px solid #d4d4d4;
     width: 100%;
     padding-bottom: 15px; }
   .homePage .profilePicCont {
     display: inline-block;
-    height: 60px;
-    width: 60px; }
+    height: 50px;
+    width: 50px; }
     .homePage .profilePicCont img {
       border-radius: 50%;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
@@ -655,42 +663,48 @@ fieldset {
       height: 100%;
       width: 100%; }
   .homePage .profileInfoText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-left: 15px; }
     .homePage .profileInfoText .profileWelcome {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       color: #8c959e; }
     .homePage .profileInfoText .navDisplayName {
       text-align: center;
       display: flex;
       align-items: center;
-      font-size: 1.2rem; }
+      font-size: 1rem; }
   .homePage .homeNavSubsection {
     width: 100%;
     font-weight: 700;
     font-size: 0.8rem;
     text-align: start;
     margin-top: 25px; }
-
-.homeBtn {
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-
-.homeBtnOne {
-  background-color: #F6F4F9; }
-
-.homeBtnTwo {
-  background-color: #F6F4F9; }
-
-.homeBtnThree {
-  background-color: #EDF2EC; }
-
-.homeBtnFour {
-  background-color: #E6F3FB; }
-
-.homeBtnFive {
-  background-color: #FBF1F4; }
-
-.homeBtnSix {
-  background-color: #FAF1F4; }
+  .homePage .homeBtn {
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+  .homePage .homeBtnOne {
+    background-color: #F6F4F9; }
+  .homePage .homeBtnTwo {
+    background-color: #F6F4F9; }
+  .homePage .homeBtnThree {
+    background-color: #EDF2EC; }
+  .homePage .homeBtnFour {
+    background-color: #E6F3FB; }
+  .homePage .homeBtnFive {
+    background-color: #FBF1F4; }
+  .homePage .homeBtnSix {
+    background-color: #FAF1F4; }
+  .homePage button.expandBtn {
+    width: 50px; }
+  .homePage .defaultHidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px; }
 
 .overlayBackground {
   position: fixed;
@@ -700,331 +714,296 @@ fieldset {
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 10; }
-
-.checkboxContainer {
-  position: relative; }
-
-.taskCheckboxChecked {
-  background-color: rgba(0, 0, 0, 0.778); }
-
-.fa-check {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: white; }
-
-.customizableTabSection {
-  display: block;
-  width: 20%;
-  min-height: 100vh;
-  max-height: 100%;
-  padding: 20px 25px 50px 25px;
-  border-top: 1px solid rgba(212, 212, 212, 0.9);
-  border-left: 1px solid rgba(212, 212, 212, 0.9);
-  border-right: 1px solid rgba(212, 212, 212, 0.9); }
-
-.homeDashboard h1 {
-  margin-bottom: 15px;
-  padding: 0 25px; }
-
-.homeDashboard .dashboardGreeting {
-  margin-left: 15px;
-  margin-bottom: 5px;
-  padding: 0 25px; }
-
-.homeDashboard .allTasksContainer {
-  position: relative;
-  margin: 0 25px; }
-  .homeDashboard .allTasksContainer .lds-ring {
+  .overlayBackground .taskCheckboxChecked {
+    background-color: rgba(0, 0, 0, 0.778); }
+  .overlayBackground .fa-check {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); }
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: white; }
+  .overlayBackground .checkboxContainer {
+    position: relative; }
 
-.homeDashboard .taskContainer {
-  border: 1px solid #d4d4d4;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-  height: 130px;
-  border-radius: 5px;
-  padding: 25px 25px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+.homeDashboard {
+  width: calc(100% - 100px);
   display: flex;
-  align-items: center;
-  position: relative;
-  transition: all 0.8s ease-out 1s; }
-  .homeDashboard .taskContainer button {
-    border: 0; }
-  .homeDashboard .taskContainer .dueDateContainer {
-    position: absolute;
-    bottom: 10px;
-    right: 20px; }
-  .homeDashboard .taskContainer .buttonContainer {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border: 0;
-    display: flex; }
-    .homeDashboard .taskContainer .buttonContainer i {
-      font-size: 1.4rem; }
-    .homeDashboard .taskContainer .buttonContainer .exitBtn {
-      margin-left: 15px; }
-    .homeDashboard .taskContainer .buttonContainer .finishButton {
-      background-color: #0D66D0;
-      color: white;
-      font-size: 0.7rem;
-      padding: 2px 15px;
-      border-radius: 2px;
-      margin-right: 1px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      cursor: pointer; }
-    .homeDashboard .taskContainer .buttonContainer .fa-angle-down {
-      background-color: #0D66D0;
-      padding: 7px 5px;
-      border-radius: 2px;
-      font-size: 0.7rem;
-      color: white;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .homeDashboard .taskContainer .buttonContainer.buttonHidden {
-    display: none; }
-  .homeDashboard .taskContainer input[type="checkbox"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: 1px solid #111111;
-    border-radius: 50%;
-    height: 30px;
-    width: 30px;
-    display: block;
-    margin: 0 25px 0 0;
-    cursor: pointer; }
-  .homeDashboard .taskContainer .dropdownOptions {
-    width: 100%;
-    position: absolute;
-    top: 100%;
-    background-color: white;
-    border: 1px solid #d4d4d4; }
-    .homeDashboard .taskContainer .dropdownOptions li {
-      border-bottom: 1px solid #d4d4d4; }
-    .homeDashboard .taskContainer .dropdownOptions button {
-      font-weight: 300;
-      font-size: 0.7rem;
-      padding-left: 5px; }
-  .homeDashboard .taskContainer .dropdownOptions.hidden {
-    display: none; }
-
-.homeDashboard .noTaskFoundContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  margin-top: 50px;
-  white-space: nowrap; }
-
-.homeDashboard .loadingContainer {
-  height: 200px; }
-  .homeDashboard .loadingContainer p {
-    margin-bottom: 150px; }
-
-.homeDashboard .errorImageContainer {
-  width: 80px;
-  height: auto; }
-  .homeDashboard .errorImageContainer img {
-    display: block;
-    height: 100%;
-    width: 100%; }
-
-.homeDashboard .errorImageContainerTwo {
-  margin-top: 20px; }
-
-.homeDashboard .taskMainContainer.closedContainer {
-  height: 0;
-  overflow-y: hidden; }
-
-.homeDashboard .taskMainContainer.openContainer {
-  height: initial;
-  overflow-y: auto; }
-
-.homeDashboard .fa-sort,
-.homeDashboard .fa-magnifying-glass,
-.homeDashboard .fa-arrow-down-wide-short {
-  font-size: 0.8rem; }
-
-.homeDashboard .fa-magnifying-glass {
-  margin-right: 10px; }
-
-.homeDashboard .taskFinderContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  border-bottom: 1px solid #e0e1e3;
-  padding: 0px 25px 15px 25px; }
-  .homeDashboard .taskFinderContainer .taskListButtons {
-    display: flex; }
-    .homeDashboard .taskFinderContainer .taskListButtons button {
-      margin-right: 10px; }
-
-.homeDashboard .searchContainer {
-  position: relative;
-  display: flex;
-  align-items: center; }
-  .homeDashboard .searchContainer .lds-ring {
-    position: absolute;
-    right: 20px;
-    top: 10%;
-    height: 20px;
-    width: 20px; }
-    .homeDashboard .searchContainer .lds-ring div {
-      height: 20px;
-      width: 20px;
-      border: 3px solid #A5D6A7;
-      border-radius: 50%;
-      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-      border-color: #A5D6A7 transparent transparent transparent; }
-
-.homeDashboard .searchBarInput {
-  height: 40px;
-  border: 0;
-  padding: 5px 15px;
-  border-radius: 10px;
-  border: 1px solid rgba(212, 212, 212, 0.8);
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-
-.homeDashboard .searchBarInput::placeholder {
-  font-family: "Nunito Sans", sans-serif; }
-
-.homeDashboard .toDoTask,
-.homeDashboard .doneTask {
-  width: 50%;
-  padding: 5px 0px; }
-
-.homeDashboard .toDoTask {
-  border-radius: 15px 0px 0px 15px; }
-
-.homeDashboard .doneTask {
-  border-radius: 0px 15px 15px 0px; }
-
-.homeDashboard .taskText {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; }
-
-.homeDashboard .taskButtonActive {
-  color: white;
-  background-color: black; }
-
-.homeDashboard .taskFilters {
-  margin: 30px 0 20px 0;
-  padding: 0 25px; }
-
-.homeDashboard .labelContainer {
-  display: flex; }
-  .homeDashboard .labelContainer p {
-    border: 1px solid rgba(212, 212, 212, 0.8);
+  flex-direction: column; }
+  .homeDashboard h1 {
+    margin-bottom: 15px;
+    padding: 0 25px; }
+  .homeDashboard .dashboardGreeting {
+    margin-left: 15px;
+    margin-bottom: 5px;
+    padding: 0 25px; }
+  .homeDashboard .allTasksContainer {
+    position: relative;
+    margin: 0 25px; }
+    .homeDashboard .allTasksContainer .lds-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+  .homeDashboard .taskContainer {
+    border: 1px solid #d4d4d4;
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    height: 130px;
     border-radius: 5px;
-    margin-right: 10px;
+    padding: 25px 25px;
     margin-top: 10px;
-    padding: 5px; }
-  .homeDashboard .labelContainer .personal {
-    background-color: #FBF1F4; }
-  .homeDashboard .labelContainer .school {
-    background-color: #F6F4F9; }
-  .homeDashboard .labelContainer .work {
-    background-color: #EDF2EC; }
-  .homeDashboard .labelContainer .importantDate {
-    background-color: #E6F3FB; }
-  .homeDashboard .labelContainer .appointment {
-    background-color: #F6F4F9; }
-  .homeDashboard .labelContainer .exercise {
-    background-color: #FAF1F4; }
-  .homeDashboard .labelContainer .chores {
-    background-color: #f8f1fb; }
-  .homeDashboard .labelContainer .low {
-    background-color: #A5D6A7; }
-  .homeDashboard .labelContainer .medium {
-    background-color: #FEEFD0; }
-  .homeDashboard .labelContainer .high {
-    background-color: #FFCED6; }
-
-.homeDashboard .buttonRelativePosition {
-  position: relative; }
-
-.homeDashboard .filterContainer {
-  background-color: #e6f3fbc5;
-  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-  padding: 5px 20px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center; }
-  .homeDashboard .filterContainer p {
-    margin-left: 10px; }
-
-.homeDashboard .filterModal {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  z-index: 10;
-  width: 200px;
-  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-  background-color: white; }
-  .homeDashboard .filterModal fieldset {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: all 0.8s ease-out 1s; }
+    .homeDashboard .taskContainer button {
+      border: 0; }
+    .homeDashboard .taskContainer .dueDateContainer {
+      position: absolute;
+      bottom: 10px;
+      right: 20px; }
+    .homeDashboard .taskContainer .buttonContainer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      border: 0;
+      display: flex; }
+      .homeDashboard .taskContainer .buttonContainer i {
+        font-size: 1.4rem; }
+      .homeDashboard .taskContainer .buttonContainer .exitBtn {
+        margin-left: 15px; }
+      .homeDashboard .taskContainer .buttonContainer .finishButton {
+        background-color: #0D66D0;
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 15px;
+        border-radius: 2px;
+        margin-right: 1px;
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        cursor: pointer; }
+      .homeDashboard .taskContainer .buttonContainer .fa-angle-down {
+        background-color: #0D66D0;
+        padding: 7px 5px;
+        border-radius: 2px;
+        font-size: 0.7rem;
+        color: white;
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    .homeDashboard .taskContainer .buttonContainer.buttonHidden {
+      display: none; }
+    .homeDashboard .taskContainer input[type="checkbox"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      border: 1px solid #111111;
+      border-radius: 50%;
+      height: 30px;
+      width: 30px;
+      display: block;
+      margin: 0 25px 0 0;
+      cursor: pointer; }
+    .homeDashboard .taskContainer .dropdownOptions {
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      background-color: white;
+      border: 1px solid #d4d4d4; }
+      .homeDashboard .taskContainer .dropdownOptions li {
+        border-bottom: 1px solid #d4d4d4; }
+      .homeDashboard .taskContainer .dropdownOptions button {
+        font-weight: 300;
+        font-size: 0.7rem;
+        padding-left: 5px; }
+    .homeDashboard .taskContainer .dropdownOptions.hidden {
+      display: none; }
+  .homeDashboard .noTaskFoundContainer {
     display: flex;
     flex-direction: column;
-    padding: 0; }
-    .homeDashboard .filterModal fieldset div {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid rgba(181, 179, 179, 0.8);
-      padding: 5px 0; }
-      .homeDashboard .filterModal fieldset div input[type="radio"] {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        border: 1px solid black;
-        height: 17px;
-        width: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 2px;
-        margin: 0 10px;
-        cursor: pointer; }
-      .homeDashboard .filterModal fieldset div input[type=radio]:checked::before {
-        content: '✔️';
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 10px;
-        line-height: 12px; }
-      .homeDashboard .filterModal fieldset div label {
-        cursor: pointer;
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        font-weight: 300;
-        font-size: 0.8rem; }
-
-.homeDashboard .taskDeadlineDateContainer {
-  display: flex;
-  position: relative; }
-  .homeDashboard .taskDeadlineDateContainer p {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    margin-top: 50px;
+    white-space: nowrap; }
+  .homeDashboard .loadingContainer {
+    height: 200px; }
+    .homeDashboard .loadingContainer p {
+      margin-bottom: 150px; }
+  .homeDashboard .errorImageContainer {
+    width: 80px;
+    height: auto; }
+    .homeDashboard .errorImageContainer img {
+      display: block;
+      height: 100%;
+      width: 100%; }
+  .homeDashboard .errorImageContainerTwo {
+    margin-top: 20px; }
+  .homeDashboard .taskMainContainer.closedContainer {
+    height: 0;
+    overflow-y: hidden; }
+  .homeDashboard .taskMainContainer.openContainer {
+    height: initial;
+    overflow-y: auto; }
+  .homeDashboard .fa-sort,
+  .homeDashboard .fa-magnifying-glass,
+  .homeDashboard .fa-arrow-down-wide-short {
+    font-size: 0.8rem; }
+  .homeDashboard .fa-magnifying-glass {
+    margin-right: 10px; }
+  .homeDashboard .taskFinderContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
     border-bottom: 1px solid #e0e1e3;
-    background-color: #f4f4f4;
+    padding: 0px 25px 15px 25px; }
+    .homeDashboard .taskFinderContainer .taskListButtons {
+      display: flex; }
+      .homeDashboard .taskFinderContainer .taskListButtons button {
+        margin-right: 10px; }
+  .homeDashboard .searchContainer {
+    position: relative;
+    display: flex;
+    align-items: center; }
+    .homeDashboard .searchContainer .lds-ring {
+      position: absolute;
+      right: 20px;
+      top: 10%;
+      height: 20px;
+      width: 20px; }
+      .homeDashboard .searchContainer .lds-ring div {
+        height: 20px;
+        width: 20px;
+        border: 3px solid #A5D6A7;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #A5D6A7 transparent transparent transparent; }
+  .homeDashboard .searchBarInput {
+    height: 40px;
+    border: 0;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 212, 212, 0.8);
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+  .homeDashboard .searchBarInput::placeholder {
+    font-family: "Nunito Sans", sans-serif; }
+  .homeDashboard .toDoTask,
+  .homeDashboard .doneTask {
+    width: 50%;
+    padding: 5px 0px; }
+  .homeDashboard .toDoTask {
+    border-radius: 15px 0px 0px 15px; }
+  .homeDashboard .doneTask {
+    border-radius: 0px 15px 15px 0px; }
+  .homeDashboard .taskText {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+  .homeDashboard .taskButtonActive {
+    color: white;
+    background-color: black; }
+  .homeDashboard .taskFilters {
+    margin: 30px 0 20px 0;
+    padding: 0 25px; }
+  .homeDashboard .labelContainer {
+    display: flex; }
+    .homeDashboard .labelContainer p {
+      border: 1px solid rgba(212, 212, 212, 0.8);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      border-radius: 5px;
+      margin-right: 10px;
+      margin-top: 10px;
+      padding: 5px; }
+    .homeDashboard .labelContainer .personal {
+      background-color: #FBF1F4; }
+    .homeDashboard .labelContainer .school {
+      background-color: #F6F4F9; }
+    .homeDashboard .labelContainer .work {
+      background-color: #EDF2EC; }
+    .homeDashboard .labelContainer .importantDate {
+      background-color: #E6F3FB; }
+    .homeDashboard .labelContainer .appointment {
+      background-color: #F6F4F9; }
+    .homeDashboard .labelContainer .exercise {
+      background-color: #FAF1F4; }
+    .homeDashboard .labelContainer .chores {
+      background-color: #f8f1fb; }
+    .homeDashboard .labelContainer .low {
+      background-color: #A5D6A7; }
+    .homeDashboard .labelContainer .medium {
+      background-color: #FEEFD0; }
+    .homeDashboard .labelContainer .high {
+      background-color: #FFCED6; }
+  .homeDashboard .buttonRelativePosition {
+    position: relative; }
+  .homeDashboard .filterContainer {
+    background-color: #e6f3fbc5;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+    padding: 5px 20px;
     border-radius: 5px;
-    padding: 5px 5px 5px 15px;
-    width: 100%; }
-  .homeDashboard .taskDeadlineDateContainer i {
+    display: flex;
+    align-items: center; }
+    .homeDashboard .filterContainer p {
+      margin-left: 10px; }
+  .homeDashboard .filterModal {
     position: absolute;
-    bottom: 4px;
-    right: 27px; }
+    top: 110%;
+    left: 0;
+    z-index: 10;
+    width: 200px;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+    background-color: white; }
+    .homeDashboard .filterModal fieldset {
+      display: flex;
+      flex-direction: column;
+      padding: 0; }
+      .homeDashboard .filterModal fieldset div {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(181, 179, 179, 0.8);
+        padding: 5px 0; }
+        .homeDashboard .filterModal fieldset div input[type="radio"] {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          border: 1px solid black;
+          height: 17px;
+          width: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 2px;
+          margin: 0 10px;
+          cursor: pointer; }
+        .homeDashboard .filterModal fieldset div input[type=radio]:checked::before {
+          content: '✔️';
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 10px;
+          line-height: 12px; }
+        .homeDashboard .filterModal fieldset div label {
+          cursor: pointer;
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          font-weight: 300;
+          font-size: 0.8rem; }
+  .homeDashboard .taskDeadlineDateContainer {
+    display: flex;
+    position: relative; }
+    .homeDashboard .taskDeadlineDateContainer p {
+      border-bottom: 1px solid #e0e1e3;
+      background-color: #f4f4f4;
+      border-radius: 5px;
+      padding: 5px 5px 5px 15px;
+      width: 100%; }
+    .homeDashboard .taskDeadlineDateContainer i {
+      position: absolute;
+      bottom: 4px;
+      right: 27px; }
 
 .createTaskForm {
   position: fixed;

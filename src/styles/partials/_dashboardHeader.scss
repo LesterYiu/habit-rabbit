@@ -1,4 +1,7 @@
 .homeDashboard {
+    width: calc(100% - 100px);
+    display: flex;
+    flex-direction: column;
 
     h1 {
         margin-bottom: 15px;

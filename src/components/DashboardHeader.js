@@ -61,6 +61,16 @@ const DashboardHeader = ({currentUserTime, username, isToDoBtnClicked, handleBut
         matchTaskWithSearch(textInput, regex);
     }
 
+    const handleFilterAndSortBtn = (e) => {
+        if(e.target.textContent === "Filter") {
+            setIsFilterModalOn(!isFilterModalOn);
+            setIsSortModalOn(false);
+        } else if (e.target.textContent === "Sort") {
+            setIsSortModalOn(!isSortModalOn);
+            setIsFilterModalOn(false);
+        }
+    }
+
     return(
         <>
             <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
@@ -77,7 +87,7 @@ const DashboardHeader = ({currentUserTime, username, isToDoBtnClicked, handleBut
             <div className="taskFinderContainer">
                 <div className="taskListButtons">
                     <div className="buttonRelativePosition">
-                        <button className="filterContainer" onClick={() => {setIsFilterModalOn(!isFilterModalOn)}}>
+                        <button className="filterContainer" onClick={(e) => {handleFilterAndSortBtn(e)}}>
                             <i className="fa-solid fa-arrow-down-wide-short"></i>
                             <p>Filter</p>
                         </button>
@@ -101,7 +111,7 @@ const DashboardHeader = ({currentUserTime, username, isToDoBtnClicked, handleBut
                         </div> : null}
                     </div>
                     <div className="buttonRelativePosition">
-                        <button className="filterContainer" onClick={() => {setIsSortModalOn(!isSortModalOn)}}>
+                        <button className="filterContainer" onClick={(e) => {handleFilterAndSortBtn(e)}}>
                             <i className="fa-solid fa-sort"></i>
                             <p>Sort</p>
                         </button>
