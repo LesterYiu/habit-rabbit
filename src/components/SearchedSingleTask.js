@@ -1,6 +1,6 @@
 import uuid from "react-uuid"
 import { handleScroll, handleDropDown } from "../utils/globalFunctions"
-import { doc, collection, addDoc, deleteDoc } from "firebase/firestore"
+import { doc, collection, addDoc, deleteDoc, getDoc } from "firebase/firestore"
 import { db } from "./firebase";
 
 const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformattedTaskList, searchedTaskList, setSearchedTaskList, reformattedTask, setReformattedTask, setTaskList, taskList}) => {
@@ -8,17 +8,19 @@ const SearchedSingleTask = ({i, directToTaskDetails, userUID, filterFromReformat
     // Database Collection Reference for user's list of tasks
     const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
 
-    const changeSearchedToFinishedTask = async (id, i, e) => {
-        e.target.disabled = true;
-        e.target.innerText = "Updating"
+    const changeSearchedToFinishedTask = async (id, i) => {
+
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        const currentTask = (await getDoc(postDoc)).data();
+        const currentTaskCopy = {...currentTask};
+        currentTaskCopy.task.completion = "100";
 
         // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
                 
         filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
         filterFromReformattedTaskList(reformattedTask, setReformattedTask, i);
 
-        await addDoc(doneCollection, i);
+        await addDoc(doneCollection, currentTaskCopy);
         await deleteDoc(postDoc);
 
     }

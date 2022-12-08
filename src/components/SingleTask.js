@@ -1,6 +1,6 @@
 import uuid from "react-uuid"
 import { handleScroll } from "../utils/globalFunctions"
-import { doc, collection, deleteDoc } from "firebase/firestore"
+import { doc, collection, deleteDoc, getDoc } from "firebase/firestore"
 import { db } from "./firebase"
 import { handleDropDown } from "../utils/globalFunctions"
 
@@ -12,13 +12,16 @@ const SingleTask = ({i, directToTaskDetails, updateDatabase, setDoneTaskList, ta
     const changeToFinishedTask = async (id, i) => {
 
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        const currentTask = (await getDoc(postDoc)).data();
+        const currentTaskCopy = {...currentTask};
+        currentTaskCopy.task.completion = "100";
 
         // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
 
         // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
 
         setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
-        await updateDatabase(doneCollection, postDoc, setDoneTaskList, i);
+        await updateDatabase(doneCollection, postDoc, setDoneTaskList, currentTaskCopy);
     }
 
     // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only

@@ -1588,14 +1588,30 @@ abbr {
     .taskDetails .taskBtnContainer p {
       font-weight: bold;
       margin-left: 10px; }
-  .taskDetails .errorContainer {
-    position: relative; }
-    .taskDetails .errorContainer .percentError {
-      color: red;
-      font-size: 0.7rem;
-      margin-left: 30px;
-      position: absolute;
-      top: 5px; }
+  .taskDetails .savingMessageContainer {
+    display: flex;
+    margin-left: 30px; }
+    .taskDetails .savingMessageContainer .lds-ring {
+      height: 20px;
+      width: 20px; }
+      .taskDetails .savingMessageContainer .lds-ring div {
+        height: 20px;
+        width: 20px;
+        border: 3px solid #A5D6A7;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #A5D6A7 transparent transparent transparent; }
+  .taskDetails .percentError,
+  .taskDetails .savingStatusMessage {
+    font-size: 0.7rem;
+    top: 5px;
+    padding-top: 10px; }
+  .taskDetails .percentError {
+    color: #e00000;
+    margin-left: 30px; }
+  .taskDetails .savingStatusMessage {
+    color: #015e01;
+    margin-left: 20px; }
   .taskDetails .deleteModal {
     position: fixed;
     z-index: 30;

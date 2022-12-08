@@ -1,6 +1,6 @@
 import uuid from "react-uuid";
 import { handleScroll, handleDropDown } from "../utils/globalFunctions";
-import { doc, collection, addDoc, deleteDoc } from "firebase/firestore"
+import { doc, collection, addDoc, deleteDoc, getDoc } from "firebase/firestore"
 import { db } from "./firebase"
 
 const SearchedDoneSingleTask = ({i, directToTaskDetails, userUID, filterFromReformattedTaskList, reformattedDoneTask, setReformattedDoneTask, doneSearchedTaskList, setDoneSearchedTaskList, doneTaskList, setDoneTaskList}) => {
@@ -11,11 +11,14 @@ const SearchedDoneSingleTask = ({i, directToTaskDetails, userUID, filterFromRefo
     const changeSearchedToUnfinishedTask = async (id, i, e) => {
 
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
+        const currentTask = (await getDoc(doneDoc)).data();
+        const currentTaskCopy = {...currentTask};
+        currentTaskCopy.task.completion = "0";
 
         filterFromReformattedTaskList(reformattedDoneTask, setReformattedDoneTask, i);
         filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
 
-        await addDoc(collectionRef, i);
+        await addDoc(collectionRef, currentTaskCopy);
         await deleteDoc(doneDoc);
     }
 

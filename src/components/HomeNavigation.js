@@ -1,11 +1,11 @@
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
-const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded}) => {
+const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, setIsSearchBarPopulated}) => {
 
     // useContext variables
     const {setIsAuth, username, setUsername, setUserUID, userPic} = useContext(AppContext)
@@ -26,6 +26,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded}
     }
 
     const redirectToHome = () => {
+        setIsSearchBarPopulated(false);
         if(isTaskExpanded) {
             setIsTaskExpanded(false);
         } else {

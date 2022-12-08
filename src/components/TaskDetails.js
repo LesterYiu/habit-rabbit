@@ -9,12 +9,20 @@ import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
 import { startOfWeek } from "date-fns/esm";
 
-const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase, reformatTaskByDate, setReformattedTask, setReformattedDoneTask}) => {
+const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase}) => {
 
+    // useContext variables
+    const {userUID, username, userPic} = useContext(AppContext);
+
+    // Toggles
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
     const [isLogTimeBtnClicked, setIsLogTimeBtnClicked] = useState(false);
     const [isRangeClicked, setIsRangeClicked] = useState(false);
     const [isDeleteModalOn, setIsDeleteModalOn] = useToggle();
+    const [isEnableOn, setIsEnableOn] = useToggle(); 
+    const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
+
+    // These will convert the day into the prefered reading format
     const [day1, setDay1] = useState("");
     const [day2, setDay2] = useState("");
     const [day3, setDay3] = useState("");
@@ -22,6 +30,8 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const [day5, setDay5] = useState("");
     const [day6, setDay6] = useState("");
     const [day7, setDay7] = useState("");
+    
+    // State relating to the hours spent on the corresponding day
     const [day1Time, setDay1Time] = useState(0);
     const [day2Time, setDay2Time] = useState(0);
     const [day3Time, setDay3Time] = useState(0);
@@ -29,22 +39,23 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     const [day5Time, setDay5Time] = useState(0);
     const [day6Time, setDay6Time] = useState(0);
     const [day7Time, setDay7Time] = useState(0);
+
+    // State to track the back/front buttons on the log time modal
     const [backBtnCounter, setBackBtnCounter] = useState(0);
     const [frontBtnCounter, setFrontBtnCounter] = useState(0);
+    
+
     const [updates, setUpdates] = useState([]);
     const [timeSpent, setTimeSpent] = useState(0);
     const [isMoreThan24, setIsMoreThan24] = useState(false);
-    const [isEnableOn, setIsEnableOn] = useToggle();
     const [taskCompletion, setTaskCompletion] = useState(specificTask.task.completion)
-    const [isTaskProgressNotUpdated, setIsTaskProgressNotUpdated] = useState(true);
+    const [isProgressSaved, setIsProgressSaved] = useState(true);
 
     const isMounted = useRef(false);
     const isMountedTwo = useRef(false);
 
+    // useRef variables
     const textareaEl = useRef(null)
-
-    // useContext variables
-    const {userUID, username, userPic} = useContext(AppContext);
 
     // To get the data from database on mount
     useEffect( () => {
@@ -108,19 +119,17 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         }, 400)
     }, [taskCompletion])
 
-    // Updates the home page UI as progress bar (task completion) is changed
-    useEffect( () => {
-        reformatTaskByDate(taskList, setReformattedTask);
-        reformatTaskByDate(doneTaskList, setReformattedDoneTask);
-    }, [taskList, doneTaskList]);
-
     async function handleUpdateDocument() {
 
+        setIsProgressSaved(false);
+        
         let documentRef = determineWhichRef(specificTask.id);
 
         await updateDoc(documentRef, {
             "task.updates": updates
         })
+
+        setIsProgressSaved(true)
     }
 
     async function getUpdateCommentsAndProgress() {
@@ -558,6 +567,9 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     }
 
     async function handleUpdateProgress() {
+
+        setIsProgressSaved(false);
+
         let documentRef = determineWhichRef(specificTask.id);
 
         // determines which collection the task is located in
@@ -569,7 +581,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             for(let task of doneTaskList) {
                 if(task.uuid === specificTask.uuid) {
 
-                    const newDocumentRef = await formatUpdatedData();
+                    const newDocumentRef = await getNewUpdatedRef();
 
                     const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
                     const updatedTask = {...specificTask};
@@ -578,6 +590,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                     await deleteDoc(newDocumentRef);
                     const data = await getDocs(doneCollection);
                     setDoneTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+                    setIsProgressSaved(true)
                     return
                 }
             }
@@ -587,7 +600,9 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             updatedTask.task.completion = "100";
             const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${updatedTask.id}`);
             await updateDatabase(doneCollection, postDoc, setDoneTaskList, updatedTask);
+            setIsProgressSaved(true);
             return;
+
         } else if (taskCompletion !== "100" && taskCollectionName === "finishedTask") {
 
             const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -595,6 +610,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             updatedTask.task.completion = taskCompletion;
             const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${updatedTask.id}`);
             await updateDatabase(collectionRef, doneDoc, setTaskList, updatedTask);
+            setIsProgressSaved(true);
             return;
         }
 
@@ -603,17 +619,17 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                 "task.completion" : taskCompletion
             })
         } catch {
-            const newDocumentRef = await formatUpdatedData();
+            const newDocumentRef = await getNewUpdatedRef();
             const newCollectionName = newDocumentRef.path.split("/")[4]; 
-            console.log(newCollectionName, taskCompletion)
+
             if(newCollectionName === "ongoingTask" && taskCompletion !== "100") {
-                console.log('First Block')
                 const updatedTask = {...specificTask};
                 updatedTask.task.completion = taskCompletion;
 
                 await updateDoc(newDocumentRef, {
                     "task.completion" : taskCompletion
                 })
+                setIsProgressSaved(true);
             } else if (newCollectionName === "finishedTask" && taskCompletion !== "100") {
 
                 const ongoingCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -623,19 +639,21 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                 await deleteDoc(newDocumentRef);
                 const data = await getDocs(ongoingCollectionRef);
                 setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+                setIsProgressSaved(true);
                 return
                 
             }
         }
     }
 
-    const formatUpdatedData = async () => {
+    // This is used to get a new collection reference of the current task that is shown on the UI. This is only used after the initial change of data from one collection to another.
+    const getNewUpdatedRef = async () => {
         const ongoingCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
         const doneCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
 
         const updatedOngoingTasksRef = await getDocs(ongoingCollectionRef);
 
-        const updatedDoneTasksRef = await getDocs(doneCollectionRef)
+        const updatedDoneTasksRef = await getDocs(doneCollectionRef);
 
         const updatedUnfinishedTask = updatedOngoingTasksRef.docs.map((doc) => ({...doc.data(), id: doc.id}));  
     
@@ -705,15 +723,21 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                             <p>Delete Task</p>
                         </button>
                     </div>
-                    {isEnableOn ? 
-                    <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 300)}/> : 
-                    <input type="range" value={taskCompletion || "0"} onChange={debounce((e) => handleProgressBar(e), 300)} onClick={() => {setIsRangeClicked(true)}}/> }
+                    <div>
+                        <p className="label">Task Completion</p>
+                        {isEnableOn ? 
+                        <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 300)}/> : 
+                        <input type="range" value={taskCompletion || "0"} onChange={debounce((e) => handleProgressBar(e), 300)} onClick={() => {setIsRangeClicked(true)}}/> }
+                    </div>
                 </div>
             </div>
             {isRangeClicked && !isEnableOn? 
-            <div className="errorContainer">
-                <p className="percentError">Please click the edit button in order to make changes.</p>
-            </div> : null}
+            <p className="percentError">Please click the edit button in order to make changes.</p> : null}
+            {isProgressSaved ? null : 
+            <div className="savingMessageContainer">
+                <div className="lds-ring"><div></div></div>
+                <p className="savingStatusMessage">Currently saving...</p>
+            </div>}
             <div className="taskDescription">
                 <p className="label">Description</p>
                 {isEnableOn ? <textarea defaultValue={specificTask.task.description} onChange={debounce((e) => {updateTaskDescription(e)}, 300)}></textarea> : <p className="descriptionParagraph">{specificTask.task.description}</p>}
@@ -742,6 +766,10 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                         </select>
                     </form>: 
                     <p>{specificTask.task.priority}</p>}
+                </div>
+                <div className="taskInfoContainer dueTimeLabel">
+                    <p className="label">Task Completion</p>
+                    <p>{taskCompletion}%</p>
                 </div>
             </div>
             <div className="taskLabelContainer taskInfoContainer">

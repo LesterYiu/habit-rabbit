@@ -172,7 +172,7 @@ const Home = () => {
         finishedStateSet(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
     }
 
-    // Filters out the user's checked task from the searched task list of tasks
+    // Filters out the user's checked task from the searched task list of tasks. i = specificTask
     const filterFromReformattedTaskList = (reformattedTaskList, setState, i) => {
         let taskArrayContainer = [];
 
@@ -209,8 +209,8 @@ const Home = () => {
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
-                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
-                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase} reformatTaskByDate={reformatTaskByDate} setReformattedTask={setReformattedTask} setReformattedDoneTask={setReformattedDoneTask}/>
+                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded} setIsSearchBarPopulated={setIsSearchBarPopulated}/>
+                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
@@ -225,7 +225,7 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} />
+                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated}/>
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
@@ -310,7 +310,7 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked} />
+                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated}/>
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
