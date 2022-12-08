@@ -25,6 +25,13 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     const profileTextEl = useRef(null);
     const profileInfoContainerEl = useRef(null);
 
+    const arrowIconOne = useRef(null);
+    const arrowIconTwo = useRef(null);
+    const arrowIconThree = useRef(null);
+    const arrowIconFour = useRef(null);
+    const arrowIconFive = useRef(null);
+    const arrowIconSix = useRef(null);
+
     const navigate = useNavigate();
 
     const handleNewTask = () => {
@@ -69,11 +76,14 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     
     const handleExpandNav = () => {
         // Only occurs if on home component
+
+        // Profile Info + Hidden Padding
         navPaddingDiv.current.className = "navExpandedPadding";
         navEl.current.className = "homeNavigation homeSection";
         profileTextEl.current.className = "profileInfoText"
         profileInfoContainerEl.current.className = "profileInfoContainer";
 
+        // Button Text
         homeText.current.className = "expandedButtonText";
         newTaskText.current.className = "expandedButtonText";
         calendarText.current.className = "expandedButtonText";
@@ -81,8 +91,16 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
         settingsText.current.className = "expandedButtonText";
         logOutText.current.className = "expandedButtonText";
 
+        // Button Ul Container
         ulOneEl.current.className =  "";
         ulTwoEl.current.className = "accountButtons";
+
+        arrowIconOne.current.className = "fa-solid fa-chevron-right";
+        arrowIconTwo.current.className = "fa-solid fa-chevron-right";
+        arrowIconThree.current.className = "fa-solid fa-chevron-right";
+        arrowIconFour.current.className = "fa-solid fa-chevron-right";
+        arrowIconFive.current.className = "fa-solid fa-chevron-right";
+        arrowIconSix.current.className = "fa-solid fa-chevron-right";
     }
 
     const handleShrinkBtn = () => {
@@ -100,6 +118,13 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
 
         ulOneEl.current.className =  "minimizedUl";
         ulTwoEl.current.className = "minimizedUl accountButtons";
+
+        arrowIconOne.current.className = "fa-solid fa-chevron-right defaultHidden";
+        arrowIconTwo.current.className = "fa-solid fa-chevron-right defaultHidden";
+        arrowIconThree.current.className = "fa-solid fa-chevron-right defaultHidden";
+        arrowIconFour.current.className = "fa-solid fa-chevron-right defaultHidden";
+        arrowIconFive.current.className = "fa-solid fa-chevron-right defaultHidden";
+        arrowIconSix.current.className = "fa-solid fa-chevron-right defaultHidden";
     }
 
     return(
@@ -118,30 +143,30 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
                     <li>
                         <button onClick={redirectToHome} className="homeBtnOne homeBtn">
                             <div><span aria-hidden="true">🏡</span>&nbsp;<span className="defaultHidden" ref={homeText}>Home</span></div>
-                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>                        
+                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconOne}></i>                        
                         </button>
                     </li>
                     <li>
                         <button onClick={handleNewTask} className="homeBtnFive homeBtn"><span aria-hidden="true">✨</span>&nbsp;<span className="defaultHidden" ref={newTaskText}>New&nbsp;Task</span></button>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ></i>
+                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconTwo}></i>
                     </li>
                     <li>
                         <Link to="/calendar" className="homeBtnTwo homeBtn"><span aria-hidden="true">🗓️</span> <span className="defaultHidden" ref={calendarText}>Calendar</span></Link>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>
+                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconThree}></i>
                     </li>
                     <li>
                         <Link to="/statistics" className="homeBtnThree homeBtn"><span aria-hidden="true">📊</span><span className="defaultHidden" ref={statisticsText}>Statistics</span></Link>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>
+                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFour}></i>
                     </li>
                 </ul>
                 <ul className="minimizedUl accountButtons" ref={ulTwoEl}>
                     <li>
                         <Link to="/settings" className="homeBtnFour homeBtn"><span aria-hidden="true">⚙️</span><span className="defaultHidden" ref={settingsText}>Settings</span></Link>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>
+                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFive}></i>
                     </li>
                     <li>                    
                         <button onClick={signUserOut} className="homeBtnSix homeBtn"><span aria-hidden="true">🚪</span><span className="defaultHidden" ref={logOutText}>Logout</span></button>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>
+                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconSix}></i>
                     </li>
                 </ul>
                 <button className="expandBtn" onClick={handleNavToggleBtn}>

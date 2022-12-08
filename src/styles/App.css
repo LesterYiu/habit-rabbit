@@ -88,6 +88,9 @@ h4 {
   font-size: 0.9rem !important;
   margin-bottom: 10px; }
 
+.taskName.hoverOverTask {
+  text-decoration: underline; }
+
 .taskDescription {
   font-size: 0.8rem !important; }
 
@@ -748,7 +751,9 @@ fieldset {
       display: flex;
       justify-content: center; }
   .homePage button.expandBtn {
-    width: 100%; } }
+    width: 100%; }
+  .homePage .homeDashboard .taskContainer {
+    align-items: center; } }
 
 .homeDashboard {
   width: calc(100% - 100px);
@@ -920,7 +925,8 @@ fieldset {
   .homeDashboard .toDoTask,
   .homeDashboard .doneTask {
     width: 50%;
-    padding: 5px 0px; }
+    padding: 5px 0px;
+    height: 35px; }
   .homeDashboard .toDoTask {
     border-radius: 15px 0px 0px 15px; }
   .homeDashboard .doneTask {
@@ -1428,10 +1434,13 @@ abbr {
     margin-top: 5px; }
     .taskDetails .userLocationBar span {
       margin: 0 10px; }
+  .taskDetails .taskBtnContainer p {
+    font-size: 0.7rem !important; }
   .taskDetails .taskToolBar {
     height: 100%;
-    margin-right: 20px;
-    display: flex; }
+    margin-left: 20px;
+    display: flex;
+    order: 1; }
     .taskDetails .taskToolBar button {
       margin-left: 15px; }
     .taskDetails .taskToolBar .toolBarBtn {
@@ -1447,6 +1456,7 @@ abbr {
     border-bottom: 1px solid rgba(212, 212, 212, 0.9);
     padding: 0 30px 20px 30px; }
   .taskDetails .taskInformation {
+    width: 40%;
     display: flex;
     align-items: center; }
     .taskDetails .taskInformation i {
@@ -1454,6 +1464,22 @@ abbr {
       background-color: #EDF2EC;
       padding: 10px 15px;
       border-radius: 10px; }
+  .taskDetails .taskNameContainer {
+    width: 100%; }
+    .taskDetails .taskNameContainer .label {
+      padding-bottom: 3px;
+      padding-left: 3px; }
+    .taskDetails .taskNameContainer h1 {
+      border: 2px solid transparent;
+      padding: 2px;
+      width: 75%; }
+    .taskDetails .taskNameContainer input[type="text"] {
+      font-weight: 700;
+      font-family: "Inter", sans-serif;
+      width: 75%; }
+  .taskDetails .plannedCompletionPara {
+    padding: 2px;
+    border: 2px solid transparent; }
   .taskDetails p.label {
     margin-bottom: 10px; }
   .taskDetails .taskDescription,
@@ -1466,10 +1492,25 @@ abbr {
   .taskDetails .taskDescription textarea {
     width: 100%; }
   .taskDetails .taskData {
-    display: flex; }
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; }
+  .taskDetails input[type="date"] {
+    padding: 2px; }
+  .taskDetails input[type="date"],
+  .taskDetails input[type="time"],
+  .taskDetails .taskDetails select {
+    font-size: 0.9rem;
+    font-family: "Inter", sans-serif; }
+  .taskDetails .label,
+  .taskDetails .dueTimeParagraph,
+  .taskDetails .taskCompletionPara,
+  .taskDetails .priorityParagraph {
+    padding: 2px;
+    border: 2px solid transparent; }
   .taskDetails .dueTimeLabel,
   .taskDetails .completionLabel {
-    margin: 0px 50px; }
+    margin: 0px 85px; }
   .taskDetails .labelContainer {
     display: flex; }
     .taskDetails .labelContainer p {
@@ -1494,11 +1535,11 @@ abbr {
   .taskDetails .updateTasksContainer {
     border: 1px solid rgba(212, 212, 212, 0.9);
     padding: 15px;
-    margin: 25px 30px;
+    margin: 25px 30px 10px 30px;
     border-radius: 5px;
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
   .taskDetails .taskDetailsForm {
-    margin: 30px 30px 0 30px; }
+    margin: 10px 30px 0 30px; }
     .taskDetails .taskDetailsForm textarea {
       width: 100%;
       border: 1px solid rgba(212, 212, 212, 0.9);
@@ -1517,6 +1558,7 @@ abbr {
       margin-right: 15px;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
   .taskDetails .updateHoursContainer {
+    width: 80%;
     position: absolute;
     z-index: 10;
     top: 100%;
@@ -1612,6 +1654,7 @@ abbr {
       left: 50%;
       transform: translate(-50%, -50%); }
   .taskDetails .editContainer {
+    width: 60%;
     display: flex;
     align-items: center; }
   .taskDetails p.enableIndicator {
@@ -1639,7 +1682,8 @@ abbr {
     border: 1px solid rgba(212, 212, 212, 0.9);
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     padding: 5px 8px;
-    border-radius: 5px; }
+    border-radius: 5px;
+    height: 45px; }
     .taskDetails .taskBtnContainer p {
       font-weight: bold;
       margin-left: 10px; }
@@ -1731,6 +1775,7 @@ abbr {
     border-top: 1px solid rgba(212, 212, 212, 0.9); }
   .taskDetails .logTimeFlexContainer {
     display: flex;
+    justify-content: center;
     align-items: center; }
   .taskDetails .moreDaysBtn {
     height: 50%;
@@ -1738,14 +1783,121 @@ abbr {
     .taskDetails .moreDaysBtn i {
       margin: 0; }
   .taskDetails .descriptionParagraph {
-    overflow-wrap: break-word; }
-  .taskDetails select {
+    overflow-wrap: break-word;
+    padding: 2px;
+    border: 2px solid transparent; }
+  .taskDetails textarea {
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem; }
+  .taskDetails select,
+  .taskDetails textarea,
+  .taskDetails input[type="text"],
+  .taskDetails input[type="time"],
+  .taskDetails input[type="date"] {
     background-color: white;
     border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     border-radius: 5px; }
   .taskDetails .hiddenUpdate {
     display: none; }
+  .taskDetails .rangeDiv {
+    width: 52%; }
+  .taskDetails input[type="range"] {
+    width: 100%; }
+  .taskDetails .taskDetails button.taskBtnContainer p {
+    font-size: 0.8rem; }
+
+@media (max-width: 1090px) {
+  .taskDetails .dueTimeLabel {
+    margin: 0 0 0 50px; }
+  .taskDetails .taskToolBar {
+    flex-direction: column; }
+  .taskDetails button.taskBtnContainer {
+    margin-left: 0px; }
+    .taskDetails button.taskBtnContainer p {
+      font-size: 0.7rem; }
+  .taskDetails .taskBtnContainerOne {
+    margin-bottom: 10px; }
+  .taskDetails .rangeDiv {
+    width: 70%; }
+    .taskDetails .rangeDiv input[type="range"] {
+      width: 100%; }
+  .taskDetails .taskInfoContainer {
+    width: calc(50% - 25px);
+    margin-bottom: 25px; } }
+
+@media (max-width: 1115px) {
+  .taskDetails .logTimeForm {
+    flex-wrap: wrap; }
+  .taskDetails .specificDayContainer {
+    width: 30%;
+    margin-bottom: 15px; } }
+
+@media (max-width: 768px) {
+  .taskDetails .totalHours {
+    margin-bottom: 10px; }
+  .taskDetails .taskHeader {
+    flex-direction: column; }
+  .taskDetails .taskInformation,
+  .taskDetails .editContainer {
+    width: 100%; }
+  .taskDetails .taskInformation {
+    margin-bottom: 15px; }
+  .taskDetails button.taskBtnContainer {
+    margin-bottom: 0; }
+  .taskDetails .rangeDiv {
+    width: 50%; }
+  .taskDetails .taskToolBar {
+    flex-direction: row;
+    align-items: center; }
+  .taskDetails .taskBtnContainer {
+    margin-right: 10px; }
+  .taskDetails .updateTaskBtns {
+    width: 100%; }
+    .taskDetails .updateTaskBtns button {
+      width: calc(50% - (15px / 2)); }
+    .taskDetails .updateTaskBtns .logTimeBtn {
+      margin-right: 0; }
+  .taskDetails .logTimeOptionBtns {
+    flex-wrap: wrap; }
+    .taskDetails .logTimeOptionBtns .logTimeBtnTwo {
+      margin-right: 10px; }
+    .taskDetails .logTimeOptionBtns .resetBtn {
+      margin-right: 0;
+      margin-bottom: 10px; }
+    .taskDetails .logTimeOptionBtns button {
+      font-size: 0.8rem;
+      width: calc(50% - 5px); }
+    .taskDetails .logTimeOptionBtns .logTimeBtnTwo {
+      margin-bottom: 10px; } }
+
+@media (max-width: 500px) {
+  .taskDetails .updateTaskBtns {
+    display: flex;
+    flex-direction: column; }
+    .taskDetails .updateTaskBtns .updatesBtn,
+    .taskDetails .updateTaskBtns .logTimeBtn {
+      width: 100%; }
+    .taskDetails .updateTaskBtns .updatesBtn {
+      margin-bottom: 10px; }
+  .taskDetails .editContainer {
+    flex-direction: column; }
+  .taskDetails .taskToolBar {
+    width: 100%;
+    margin-left: 0; }
+  .taskDetails .taskBtnContainer {
+    width: 50%;
+    margin-right: 0; }
+  .taskDetails .taskBtnContainerOne {
+    margin-right: 10px; }
+  .taskDetails .rangeDiv {
+    width: 100%; } }
+
+@media (max-width: 385px) {
+  .taskDetails .logTimeForm {
+    justify-content: center; }
+  .taskDetails button.cancelBtn {
+    width: 100%;
+    margin-right: 0; } }
 
 .toDoListSection {
   margin-top: 25px;

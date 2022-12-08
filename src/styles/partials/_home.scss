@@ -249,6 +249,7 @@
     .checkboxContainer {
         position: relative;
     }
+
     
 }
 
@@ -281,6 +282,10 @@
         
         button.expandBtn {
             width: 100%;
+        }
+
+        .homeDashboard .taskContainer {
+            align-items: center;
         }
 
     }

@@ -36,7 +36,7 @@ const SingleTask = ({i, directToTaskDetails, updateDatabase, setDoneTaskList, ta
         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
             <div className="taskText">
                 <button onClick={() => {directToTaskDetails(i)}}>
-                    <p className="taskName">{i.task.name.length > 50 ? i.task.name.slice(0, 50) + "..." : i.task.name}</p>
+                    <p className="taskName" onMouseOver={(e) => {e.target.className = "taskName hoverOverTask"}} onMouseLeave={(e) => {e.target.className = "taskName"}}>{i.task.name.length > 50 ? i.task.name.slice(0, 50) + "..." : i.task.name}</p>
                 </button>
                 <p className="taskDescription">{i.task.description.length > 50 ? i.task.description.slice(0, 50) + "...": i.task.description}</p>
             </div>

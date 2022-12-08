@@ -707,11 +707,10 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                         <p className="label">Task</p>
                         {isEnableOn ? <input type="text" defaultValue={specificTask.task.name} onChange={debounce( (e) => {updateTaskName(e)}, 300)}/> : <h1>{specificTask.task.name}</h1>}
                     </div>
-                    {isEnableOn ? <p className="enableIndicator">Currently Editting</p> : null}
                 </div>
                 <div className="editContainer">
                     <div className="taskToolBar">
-                        <button onClick={enableEditBtn} className="taskBtnContainer">
+                        <button onClick={enableEditBtn} className="taskBtnContainer taskBtnContainerOne">
                             <div className="toolBarCombo">
                                 <i className="fa-solid fa-pencil toolBarBtn" aria-hidden="true"></i>
                                 {isEnableOn ? 
@@ -724,7 +723,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                             <p>Delete Task</p>
                         </button>
                     </div>
-                    <div>
+                    <div className="rangeDiv">
                         <p className="label">Task Completion</p>
                         {isEnableOn ? 
                         <input type="range" defaultValue={taskCompletion} onChange={debounce((e) => handleProgressBar(e), 300)}/> : 
@@ -741,20 +740,20 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
             </div>}
             <div className="taskDescription">
                 <p className="label">Description</p>
-                {isEnableOn ? <textarea defaultValue={specificTask.task.description} onChange={debounce((e) => {updateTaskDescription(e)}, 300)}></textarea> : <p className="descriptionParagraph">{specificTask.task.description}</p>}
+                {isEnableOn ? <textarea defaultValue={specificTask.task.description} onChange={debounce((e) => {updateTaskDescription(e)}, 300)} rows="1"></textarea> : <p className="descriptionParagraph">{specificTask.task.description}</p>}
             </div>
             <div className="taskData">
                 <div className="taskDates taskInfoContainer">
-                    <p className="label">Planned Competion Date</p>
+                    <p className="label">Due Date</p>
                     {isEnableOn ? 
                     <input type="date" onChange={debounce((e) => {updateDate(e)}, 300)} defaultValue={specificTask.task.deadline}/> : 
-                    <p>{specificTask.task.reformattedDeadline}</p>}
+                    <p className="plannedCompletionPara">{specificTask.task.reformattedDeadline}</p>}
                 </div>
-                <div className="dueTimeLabel">
+                <div className="dueTimeLabel taskInfoContainer">
                     <p className="label">Due Time</p>
                     {isEnableOn ? 
                     <input type="time" defaultValue={specificTask.task.time} onChange={(e) => {updateTimeInput(e)}}/> :
-                    <p>{parseInt(specificTask.task.time.replace(/([:])/g, '')) > 1159 ? `${convertArmyToStandardTime(specificTask.task.time)} PM` : `${convertArmyToStandardTime(specificTask.task.time)} AM` }</p>}
+                    <p className="dueTimeParagraph">{parseInt(specificTask.task.time.replace(/([:])/g, '')) > 1159 ? `${convertArmyToStandardTime(specificTask.task.time)} PM` : `${convertArmyToStandardTime(specificTask.task.time)} AM` }</p>}
                 </div>
                 <div className="priorityLevel taskInfoContainer">
                     <p className="label">Priority</p>
@@ -766,11 +765,11 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                             <option value="high">High</option>
                         </select>
                     </form>: 
-                    <p>{specificTask.task.priority}</p>}
+                    <p className="priorityParagraph">{specificTask.task.priority}</p>}
                 </div>
                 <div className="taskInfoContainer dueTimeLabel">
                     <p className="label">Task Completion</p>
-                    <p>{taskCompletion}%</p>
+                    <p className="taskCompletionPara">{taskCompletion}%</p>
                 </div>
             </div>
             <div className="taskLabelContainer taskInfoContainer">
@@ -847,7 +846,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                     <div className="logTimeOptionBtns">
                         <button onClick={submitLoggedTime} className="logTimeBtnTwo">Log Time</button>
                         <button className="resetBtn" onClick={resetTime}>Reset Time</button>
-                        <button onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}}>Cancel</button>
+                        <button onClick={() => {setIsLogTimeBtnClicked(!isLogTimeBtnClicked)}} className="cancelBtn">Cancel</button>
                     </div>
                 </div> : null}
             </div>
