@@ -73,9 +73,9 @@ const DashboardHeader = ({currentUserTime, username, isToDoBtnClicked, handleBut
 
     return(
         <>
-            <h1><span aria-hidden="true">📮</span> Tasks Dashboard <span aria-hidden="true">📮</span></h1>
+            <h1 className="noWrapText"><span aria-hidden="true" className="phoneHidden">📮</span> Tasks Dashboard <span aria-hidden="true" className="phoneHidden">📮</span></h1>
             {currentUserTime >= 0 && currentUserTime < 12 ? 
-            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}? 🌞</p> : null}
+            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?&nbsp;🌞</p> : null}
             {currentUserTime >= 12 && currentUserTime < 18 ?
             <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
             {currentUserTime >= 18 ?

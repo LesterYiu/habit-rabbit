@@ -29,13 +29,14 @@
     .taskContainer {
         border: 1px solid rgb(212, 212, 212);
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        height: 130px;
+        height: 150px;
         border-radius: 5px;
         padding: 25px 25px;
         margin-top: 10px;
         margin-bottom: 10px;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
         position: relative;
         transition: all 0.8s ease-out 1s;
 
@@ -43,10 +44,16 @@
             border: 0;
         }
 
+        .taskAdditionalInfo {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
         .dueDateContainer {
-            position: absolute;
-            bottom: 10px;
-            right: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .buttonContainer {
@@ -273,7 +280,6 @@
             box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             border-radius: 5px;
             margin-right: 10px;
-            margin-top: 10px;
             padding: 5px;
         }
 
@@ -336,6 +342,7 @@
     }
 
     .filterModal {
+        border-radius: 5px;
         position: absolute;
         top: 110%;
         left: 0;
@@ -352,7 +359,7 @@
             div {
                 display: flex;
                 align-items: center;
-                border-bottom: 1px solid rgba(181, 179, 179, 0.8);
+                border-bottom: 0.5px solid rgba(181, 179, 179, 0.8);
                 padding: 5px 0;
 
                 input[type="radio"] {
@@ -398,15 +405,103 @@
         p {
             border-bottom: 1px solid rgb(224, 225, 227);
             background-color: rgb(244, 244, 244);
-            border-radius: 5px;
+            border-radius: 5px 0 0 5px;
             padding: 5px 5px 5px 15px;
             width: 100%;
         }
 
-        i {
-            position: absolute;
-            bottom: 4px;
-            right: 27px;
+        // i {
+        //     position: absolute;
+        //     bottom: 4px;
+        //     right: 27px;
+        // }
+    }
+
+    .dropdownBtn {
+        border-bottom: 1px solid rgb(224, 225, 227);
+        background-color: rgb(244, 244, 244);
+        border-radius: 0 5px 5px 0;
+        padding-right: 15px;
+    }
+
+    .noWrapText {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .taskFinderContainer {
+        flex-direction: column;
+    }
+
+    .taskListButtons {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .buttonRelativePosition {
+        width: calc(50% - 10px);
+
+        button {
+            margin-right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .searchContainer {
+        width: 100%;
+        margin-top: 20px;
+
+        input {
+            width: 100%;
+        }
+    }
+}
+
+@media(max-width: 575px) {
+    .homeDashboard {
+        width: calc(100% - 75px);
+
+        .taskContainer {
+            height: 170px;
+            align-items: flex-start;
+        }
+    }
+}
+
+@media(max-width: 480px) {
+    .homeDashboard {
+
+        .taskContainer {
+            height: 200px;
+
+            .taskAdditionalInfo {
+                flex-direction: column;
+            }
+        }
+
+        .taskDescription {
+            display: none;
+        }
+
+        .labelContainer {
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .dueDateContainer p {
+            text-align: center;
+        }
+
+        .phoneHidden {
+            display: none;
+        }
+
+        h1.noWrapText {
+            text-align: center;
         }
     }
 }

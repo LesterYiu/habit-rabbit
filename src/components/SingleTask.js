@@ -39,14 +39,16 @@ const SingleTask = ({i, directToTaskDetails, updateDatabase, setDoneTaskList, ta
                     <p className="taskName">{i.task.name.length > 50 ? i.task.name.slice(0, 50) + "..." : i.task.name}</p>
                 </button>
                 <p className="taskDescription">{i.task.description.length > 50 ? i.task.description.slice(0, 50) + "...": i.task.description}</p>
+            </div>
+            <div className="taskAdditionalInfo">
                 <div className="labelContainer">
                     <p className={i.task.priority}>{i.task.priority}</p>
                     {i.task.label.map( (labelName) => <p key={uuid()} className={labelName}>{labelName}</p>)}
                 </div>
-            </div>
-            <div className="dueDateContainer">
-                <p>Planned Completion:</p>
-                <p>{i.task.reformattedDeadline}</p>
+                <div className="dueDateContainer">
+                    <p>Planned Completion:</p>
+                    <p>{i.task.reformattedDeadline}</p>
+                </div>
             </div>
             <div className="buttonContainer buttonHidden">
                 <button className="finishButton" onClick={(e) => {changeToFinishedTask(i.id, i, e)}}>Done</button>

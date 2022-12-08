@@ -262,7 +262,7 @@ const Home = () => {
                                         <div key={uuid()}>
                                             <div className="taskDeadlineDateContainer">
                                                 <p>{`Week of ${reformattedTask[date][0].task.startDayOfWeek} (${reformattedTask[date].length})`}</p>
-                                                <button onClick={(e) => {handleDropdownTasks(e)}}>
+                                                <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
                                                     <span className="sr-only">dropdown button</span>
                                                     <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                                 </button>
@@ -282,7 +282,7 @@ const Home = () => {
                                         <div key={uuid()}>
                                             <div className="taskDeadlineDateContainer">
                                                 <p>{`Week of ${reformattedDoneTask[date][0].task.startDayOfWeek} (${reformattedDoneTask[date].length})`}</p>
-                                                <button onClick={(e) => {handleDropdownTasks(e)}}>
+                                                <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
                                                     <span className="sr-only">dropdown button</span>
                                                     <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                                 </button>
@@ -343,7 +343,7 @@ const Home = () => {
                                     <div key={uuid()}>
                                         <div className="taskDeadlineDateContainer">
                                             <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
-                                            <button onClick={(e) => {handleDropdownTasks(e)}}>
+                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
                                                 <span className="sr-only">dropdown button</span>
                                                 <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                             </button>
@@ -363,7 +363,7 @@ const Home = () => {
                                     <div key={uuid()}>
                                         <div className="taskDeadlineDateContainer">
                                             <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
-                                            <button onClick={(e) => {handleDropdownTasks(e)}}>
+                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
                                                 <span className="sr-only">dropdown button</span>
                                                 <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                             </button>

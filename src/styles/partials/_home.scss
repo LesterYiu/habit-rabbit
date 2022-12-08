@@ -36,15 +36,12 @@
             border-radius: 10px;
             font-weight: 600;
             font-size: 0.7rem;
+            height: 40px;
         }
 
         button {
             align-items: center;
         }
-
-        // span {
-        //     margin-right: 15px;
-        // }
 
         ul.minimizedUl {
             width: 50px;
@@ -52,6 +49,7 @@
 
         ul {
             width: 100%;
+            transition-duration: 0.8s;
 
             button {
                 width: 100%;
@@ -76,7 +74,6 @@
         }
 
         .accountButtons {
-            // border-top: 2px solid #d4d4d4;
             border-bottom: 2px solid #d4d4d4;
         }
     }
@@ -211,6 +208,9 @@
 
     button.expandBtn {
         width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .defaultHidden {
@@ -250,6 +250,40 @@
         position: relative;
     }
     
+}
+
+// Media queries
+
+@media (max-width: 575px) {
+    .homePage {
+
+        .profilePicCont {
+            height: auto;
+            width: 100%;
+        }
+
+        .homeNavigation.minimizedNav {
+            width: 75px;
+        }
+
+        .homeNavigation {
+            padding: 20px 15px 50px 15px;
+
+            ul.minimizedUl {
+                width: 100%;
+            }
+
+            .homeBtn {
+                display: flex;
+                justify-content: center;
+            }
+        }
+        
+        button.expandBtn {
+            width: 100%;
+        }
+
+    }
 }
 
 // Customizable tab styles

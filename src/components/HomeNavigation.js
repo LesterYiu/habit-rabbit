@@ -21,6 +21,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
 
     const navEl = useRef(null);
     const ulOneEl = useRef(null);
+    const ulTwoEl = useRef(null);
     const profileTextEl = useRef(null);
     const profileInfoContainerEl = useRef(null);
 
@@ -81,6 +82,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
         logOutText.current.className = "expandedButtonText";
 
         ulOneEl.current.className =  "";
+        ulTwoEl.current.className = "accountButtons";
     }
 
     const handleShrinkBtn = () => {
@@ -97,6 +99,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
         logOutText.current.className = "expandedButtonText defaultHidden";
 
         ulOneEl.current.className =  "minimizedUl";
+        ulTwoEl.current.className = "minimizedUl accountButtons";
     }
 
     return(
@@ -107,19 +110,19 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
                         <img src={userPic ? userPic : null} alt="" />
                     </div>
                     <div className="profileInfoText defaultHidden" ref={profileTextEl}>
-                        <p className="profileWelcome">Good Day👋</p>
+                        <p className="profileWelcome">Good&nbsp;Day&nbsp;👋</p>
                         <p className="navDisplayName">{username}</p>
                     </div>
                 </div>
                 <ul className="minimizedUl" ref={ulOneEl}>
                     <li>
                         <button onClick={redirectToHome} className="homeBtnOne homeBtn">
-                            <div><span aria-hidden="true">🏠</span> <span className="defaultHidden" ref={homeText}>Home</span></div>
+                            <div><span aria-hidden="true">🏡</span>&nbsp;<span className="defaultHidden" ref={homeText}>Home</span></div>
                             <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>                        
                         </button>
                     </li>
                     <li>
-                        <button onClick={handleNewTask} className="homeBtnFive homeBtn"><span aria-hidden="true">✨</span><span className="defaultHidden" ref={newTaskText}>New Task</span></button>
+                        <button onClick={handleNewTask} className="homeBtnFive homeBtn"><span aria-hidden="true">✨</span>&nbsp;<span className="defaultHidden" ref={newTaskText}>New&nbsp;Task</span></button>
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ></i>
                     </li>
                     <li>
@@ -131,7 +134,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>
                     </li>
                 </ul>
-                <ul className="accountButtons">
+                <ul className="minimizedUl accountButtons" ref={ulTwoEl}>
                     <li>
                         <Link to="/settings" className="homeBtnFour homeBtn"><span aria-hidden="true">⚙️</span><span className="defaultHidden" ref={settingsText}>Settings</span></Link>
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true"></i>

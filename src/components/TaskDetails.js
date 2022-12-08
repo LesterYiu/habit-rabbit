@@ -619,6 +619,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
                 "task.completion" : taskCompletion
             })
         } catch {
+            console.clear();
             const newDocumentRef = await getNewUpdatedRef();
             const newCollectionName = newDocumentRef.path.split("/")[4]; 
 
