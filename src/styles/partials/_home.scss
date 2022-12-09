@@ -231,7 +231,7 @@
     right: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.2);
-    z-index: 10;
+    z-index: 20;
 
     .taskCheckboxChecked {
         background-color: rgba(0, 0, 0, 0.778);
@@ -253,6 +253,9 @@
     
 }
 
+.overlayBackground.homeNavigationOverlay {
+    z-index: 10;
+}
 // Media queries
 
 @media (max-width: 575px) {

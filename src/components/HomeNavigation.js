@@ -176,7 +176,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
                     <i className="fa-solid fa-chevron-left"></i>}
                 </button>
             </nav>
-            {isNavExpanded ? <div className="overlayBackground"></div> : null}
+            {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay"></div> : null}
         </>
     )
 }

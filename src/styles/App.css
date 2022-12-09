@@ -724,7 +724,7 @@ fieldset {
   right: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
-  z-index: 10; }
+  z-index: 20; }
   .overlayBackground .taskCheckboxChecked {
     background-color: rgba(0, 0, 0, 0.778); }
   .overlayBackground .fa-check {
@@ -736,6 +736,9 @@ fieldset {
     color: white; }
   .overlayBackground .checkboxContainer {
     position: relative; }
+
+.overlayBackground.homeNavigationOverlay {
+  z-index: 10; }
 
 @media (max-width: 575px) {
   .homePage .profilePicCont {
@@ -858,8 +861,7 @@ fieldset {
     margin: 0 auto;
     text-align: center;
     position: relative;
-    margin-top: 50px;
-    white-space: nowrap; }
+    margin-top: 50px; }
   .homeDashboard .loadingContainer {
     height: 200px; }
     .homeDashboard .loadingContainer p {
@@ -1046,6 +1048,8 @@ fieldset {
 @media (max-width: 768px) {
   .taskFinderContainer {
     flex-direction: column; }
+  .homeDashboard .filterModal {
+    width: 100%; }
   .taskListButtons {
     width: 100%;
     display: flex;
@@ -1091,35 +1095,40 @@ fieldset {
   position: fixed;
   top: 50%;
   left: 50%;
-  min-width: 70%;
-  min-height: 85%;
-  height: 90%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 90vh;
+  width: 80vw;
   transform: translate(-50%, -50%);
   border-radius: 5px;
   background-color: #F1F5F9;
-  z-index: 20;
+  z-index: 30;
   box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.66667px 3.50231px rgba(0, 0, 0, 0.00962963); }
   .createTaskForm .formPrimarySection {
-    padding: 20px 80px 20px 80px;
-    width: 70%; }
+    padding: 30px 80px 30px 80px;
+    width: 100%; }
   .createTaskForm button {
     border: 0; }
   .createTaskForm fieldset {
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
     width: 100%;
-    height: 100%;
     display: flex;
+    flex-direction: column;
     padding: 0px;
     border: 0;
     margin: 0; }
   .createTaskForm .formField {
     margin-top: 10px; }
   .createTaskForm legend {
+    width: 100%;
     display: flex;
     align-items: center;
     height: 80px;
     margin-top: 25px; }
     .createTaskForm legend h2 {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       text-transform: capitalize;
       color: black;
       border-bottom: 3px solid #d4d4d4;
@@ -1133,9 +1142,13 @@ fieldset {
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
   .createTaskForm .formSection {
     width: 100%;
-    margin-bottom: 35px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center; }
+    .createTaskForm .formSection input[type="time"],
+    .createTaskForm .formSection input[type="text"],
+    .createTaskForm .formSection input[type="date"] {
+      width: 100%; }
     .createTaskForm .formSection label,
     .createTaskForm .formSection input {
       display: inline-block; }
@@ -1144,7 +1157,6 @@ fieldset {
       margin-bottom: 15px;
       color: #6D767E; }
     .createTaskForm .formSection input {
-      width: 100%;
       padding: 0px 0px 0px 8px;
       background-color: #FFFFFF;
       margin-left: 30px;
@@ -1158,6 +1170,7 @@ fieldset {
   .createTaskForm .buttonSection {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end; }
     .createTaskForm .buttonSection button {
       padding: 5px 0;
@@ -1197,7 +1210,7 @@ fieldset {
     background-color: #FFFFFF;
     padding: 35px 30px;
     border-radius: 5px;
-    margin-top: 50px; }
+    margin-top: 35px; }
     .createTaskForm .prioritySection label {
       margin: 0; }
     .createTaskForm .prioritySection input {
@@ -1225,11 +1238,11 @@ fieldset {
       cursor: pointer; }
 
 .formSecondarySection {
-  min-height: 100%;
-  width: 30%;
+  width: 100%;
   background-color: #FFFFFF;
-  padding: 30px 40px 20px 40px;
+  padding: 20px 80px 20px 80px;
   display: flex;
+  height: 70vh;
   flex-direction: column;
   justify-content: space-between; }
   .formSecondarySection .labelSection {
@@ -1286,6 +1299,7 @@ fieldset {
     margin-bottom: 10px;
     margin-top: 20px; }
   .formSecondarySection select {
+    width: 100%;
     background-color: transparent;
     border: 1px solid rgba(212, 212, 212, 0.9);
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
@@ -1367,6 +1381,48 @@ input[type="color"] {
     padding-left: 10px;
     color: #ff6781;
     cursor: pointer; }
+
+@media (max-width: 1090px) {
+  .createTaskForm {
+    width: 60vw; }
+    .createTaskForm .formSection.prioritySection {
+      flex-wrap: wrap; }
+    .createTaskForm .priorityContainer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%; }
+    .createTaskForm .paragraphLabel {
+      width: 100%;
+      margin: 0 0 10px 0; }
+    .createTaskForm .lowPriorityContainer.priorityContainer,
+    .createTaskForm .mediumPriorityContainer.priorityContainer,
+    .createTaskForm .highPriorityContainer.priorityContainer {
+      margin-right: 0;
+      margin-bottom: 15px; }
+    .createTaskForm .formSection {
+      flex-direction: column; }
+      .createTaskForm .formSection label {
+        width: 100%; }
+      .createTaskForm .formSection input {
+        margin: 0; } }
+
+@media (max-width: 785px) {
+  .createTaskForm {
+    width: 80vw; }
+    .createTaskForm .buttonSection {
+      flex-direction: column;
+      justify-content: center; }
+    .createTaskForm .submitBtn {
+      margin: 15px 0 0 0; }
+    .createTaskForm .formSecondarySection,
+    .createTaskForm .formPrimarySection {
+      padding: 20px 40px; } }
+
+@media (max-width: 400px) {
+  .createTaskForm {
+    width: 90vw; }
+  .formSecondarySection {
+    height: 80vh; } }
 
 .react-calendar {
   border-radius: 10px; }

@@ -142,7 +142,6 @@
         text-align: center;
         position: relative;
         margin-top: 50px;
-        white-space: nowrap;
     }
 
     .loadingContainer {
@@ -433,6 +432,12 @@
 @media (max-width: 768px) {
     .taskFinderContainer {
         flex-direction: column;
+    }
+
+    .homeDashboard {
+        .filterModal {
+            width: 100%;
+        }
     }
 
     .taskListButtons {
