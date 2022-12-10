@@ -577,12 +577,12 @@ fieldset {
   width: 100%; }
   .homePage .homeNavigation.minimizedNav {
     width: 100px;
-    position: relative; }
+    position: fixed; }
   .homePage .navExpandedPadding {
     display: block;
     padding-left: 100px; }
   .homePage .homeNavigation {
-    padding: 20px 25px 50px 25px;
+    padding: 20px 25px 20px 25px;
     background-color: white;
     position: fixed;
     z-index: 20;
@@ -626,7 +626,14 @@ fieldset {
         font-size: 0.7rem; }
     .homePage .homeNavigation .accountButtons {
       border-bottom: 2px solid #d4d4d4; }
+    .homePage .homeNavigation .exitTaskDetailsBtn {
+      width: 50px;
+      margin: 0;
+      position: absolute;
+      bottom: 20px; }
   .homePage .dashboardContent {
+    margin-left: 100px;
+    width: 100%;
     padding: 35px 0px 25px 0px;
     overflow-y: scroll; }
   .homePage .homeDashboard.homeSection.expandedNav {
@@ -1482,8 +1489,8 @@ abbr {
   font-size: 0.6rem; }
 
 .taskDetails {
+  margin-left: 100px;
   padding: 35px 0px 20px 0;
-  width: 100%;
   display: flex;
   flex-direction: column; }
   .taskDetails .userLocationBar {
@@ -1925,6 +1932,11 @@ abbr {
       width: calc(50% - 5px); }
     .taskDetails .logTimeOptionBtns .logTimeBtnTwo {
       margin-bottom: 10px; } }
+
+@media (max-width: 575px) {
+  .homePage .dashboardContent,
+  .taskDetails {
+    margin-left: 75px; } }
 
 @media (max-width: 500px) {
   .taskDetails .updateTaskBtns {

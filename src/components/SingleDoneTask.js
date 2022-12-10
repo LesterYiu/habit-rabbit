@@ -1,32 +1,7 @@
 import uuid from "react-uuid";
 import { handleDropDown, handleScroll } from "../utils/globalFunctions";
-import { doc, collection, deleteDoc, getDoc } from "firebase/firestore"
-import { db } from "./firebase"
 
-const SingleDoneTask = ({i, directToTaskDetails, userUID, updateDatabase, setTaskList, setDoneTaskList, doneTaskList}) => {
-
-    // Database Collection Reference for user's list of tasks
-    const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
-
-    const changeToUnfinishedTask = async (id, i) => {
-
-        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
-        const currentTask = (await getDoc(doneDoc)).data();
-        const currentTaskCopy = {...currentTask};
-        currentTaskCopy.task.completion = "0";
-
-        setDoneTaskList(doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)])); 
-
-        await updateDatabase(collectionRef, doneDoc, setTaskList, currentTaskCopy);
-    }
-
-    //  Delete tasks for finished task list only.
-    const deleteDoneTask = async (id ,i) => {
-        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
-        setDoneTaskList(newDoneList);
-        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
-        await deleteDoc(doneDoc);
-    }
+const SingleDoneTask = ({i, directToTaskDetails, changeToUnfinishedTask, deleteDoneTask}) => {
 
     return(
         <div className="taskContainer" key={uuid()} style={{background:i.task.taskColour}} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>

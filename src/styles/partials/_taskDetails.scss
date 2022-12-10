@@ -1,6 +1,6 @@
 .taskDetails {
+    margin-left: 100px;
     padding: 35px 0px 20px 0;
-    width: 100%;
     display: flex;
     flex-direction: column;
 
@@ -684,6 +684,13 @@
                 margin-bottom: 10px;
             }
         }
+    }
+}
+
+@media(max-width: 575px) {
+    .homePage .dashboardContent,
+    .taskDetails{
+        margin-left: 75px;
     }
 }
 

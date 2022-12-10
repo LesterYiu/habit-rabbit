@@ -3,7 +3,7 @@ import NewTask from "./NewTask";
 import { Navigate, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
-import { collection, getDocs, deleteDoc, addDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, addDoc, doc, getDoc } from "firebase/firestore";
 import { useState , useEffect, useContext, useRef} from "react";
 import errorMessageOne from "../assets/errorMessageOne.gif";
 import errorMessageTwo from "../assets/errorMessageTwo.gif";
@@ -13,8 +13,6 @@ import { getHours } from "date-fns";
 import TaskDetails from "./TaskDetails";
 import SingleTask from "./SingleTask";
 import SingleDoneTask from "./SingleDoneTask";
-import SearchedSingleTask from "./SearchedSingleTask";
-import SearchedDoneSingleTask from "./SearchedDoneSingleTask";
 import DashboardHeader from "./DashboardHeader";
 
 const Home = () => {
@@ -206,6 +204,109 @@ const Home = () => {
         setSpecificTask(taskData);
         setIsTaskExpanded(true);
     }
+    
+
+    // Functions relating to individual task components
+
+    const changeToFinishedTask = async (id, i) => {
+
+        // Database Collection Reference for user's list of tasks
+        const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        const currentTask = (await getDoc(postDoc)).data();
+        const currentTaskCopy = {...currentTask};
+        currentTaskCopy.task.completion = "100";
+
+        // This will move a document from the unfinished task collection into the finished task collection if the checkbox is clicked for the first time. This will also set new pieces of state for both the done and to do sections of the home page, thereby re-rendering both with new information.
+
+        // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
+
+        setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
+        await updateDatabase(doneCollection, postDoc, setDoneTaskList, currentTaskCopy);
+    }
+
+    // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only
+    const deleteTask = async (id, i) => {
+        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
+        setTaskList(newTaskList);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        await deleteDoc(postDoc);
+    }
+
+    const changeSearchedToFinishedTask = async (id, i) => {
+
+        // Database Collection Reference for user's list of tasks
+        const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        const currentTask = (await getDoc(postDoc)).data();
+        const currentTaskCopy = {...currentTask};
+        currentTaskCopy.task.completion = "100";
+
+        // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
+                
+        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
+        filterFromReformattedTaskList(reformattedTask, setReformattedTask, i);
+
+        await addDoc(doneCollection, currentTaskCopy);
+        await deleteDoc(postDoc);
+
+    }
+
+    const deleteTaskSearchedList = async(id, i) => {
+        filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
+
+        const newTaskList = taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]);
+        setTaskList(newTaskList);
+        const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
+        await deleteDoc(postDoc);
+    }
+
+    const changeToUnfinishedTask = async (id, i) => {
+        
+        // Database Collection Reference for user's list of tasks
+        const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        const currentTask = (await getDoc(doneDoc)).data();
+        const currentTaskCopy = {...currentTask};
+        currentTaskCopy.task.completion = "0";
+
+        setDoneTaskList(doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)])); 
+
+        await updateDatabase(collectionRef, doneDoc, setTaskList, currentTaskCopy);
+    }
+
+    //  Delete tasks for finished task list only.
+    const deleteDoneTask = async (id ,i) => {
+        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+        setDoneTaskList(newDoneList);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        await deleteDoc(doneDoc);
+    }
+
+    const changeSearchedToUnfinishedTask = async (id, i) => {
+
+        // Database Collection Reference for user's list of tasks
+        const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
+        const currentTask = (await getDoc(doneDoc)).data();
+        const currentTaskCopy = {...currentTask};
+        currentTaskCopy.task.completion = "0";
+
+        filterFromReformattedTaskList(reformattedDoneTask, setReformattedDoneTask, i);
+        filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
+
+        await addDoc(collectionRef, currentTaskCopy);
+        await deleteDoc(doneDoc);
+    }
+
+    const deleteTaskSearchedDoneList = async(id, i) => {
+        filterFromReformattedTaskList(doneSearchedTaskList, setDoneSearchedTaskList, i);
+
+        const newDoneList = doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)]);
+        setDoneTaskList(newDoneList);
+        const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
+        await deleteDoc(doneDoc);
+    }
 
     if(isAuth && isTaskExpanded) {
         return(
@@ -270,7 +371,7 @@ const Home = () => {
                                             <div className="taskMainContainer">
                                                 {reformattedTask[date].map( (i) => {
                                                     return (
-                                                        <SingleTask i={i} directToTaskDetails={directToTaskDetails} updateDatabase={updateDatabase} setDoneTaskList={setDoneTaskList} taskList={taskList} setTaskList={setTaskList} userUID={userUID} key={uuid()}/>
+                                                        <SingleTask i={i} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()}/>
                                                     )                     
                                                 })}
                                             </div>
@@ -289,7 +390,7 @@ const Home = () => {
                                             </div>
                                             {reformattedDoneTask[date].map( (i) => {
                                                 return (
-                                                    <SingleDoneTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} userUID={userUID} updateDatabase={updateDatabase} setTaskList={setTaskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList}/>
+                                                    <SingleDoneTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeToUnfinishedTask} deleteDoneTask={deleteDoneTask}/>
                                                 )
                                             })}
                                         </div>
@@ -351,7 +452,7 @@ const Home = () => {
                                         <div className="taskMainContainer">
                                         {date.map( (i) => {
                                             return (
-                                                <SearchedSingleTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} userUID={userUID} filterFromReformattedTaskList={filterFromReformattedTaskList} searchedTaskList={searchedTaskList} setSearchedTaskList={setSearchedTaskList} reformattedTask={reformattedTask} setReformattedTask={setReformattedTask} taskList={taskList} setTaskList={setTaskList}/>
+                                                <SingleTask i={i} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()}/>
                                             )                     
                                         })}
                                         </div>
@@ -371,7 +472,7 @@ const Home = () => {
                                         <div className="taskMainContainer">
                                         {date.map( (i) => {
                                             return (
-                                                <SearchedDoneSingleTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} userUID={userUID} filterFromReformattedTaskList={filterFromReformattedTaskList} reformattedDoneTask={reformattedDoneTask} setReformattedDoneTask={setReformattedDoneTask} doneSearchedTaskList={doneSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} doneTaskList={doneTaskList} setDoneTaskList={setDoneTaskList}/>
+                                                <SingleDoneTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeSearchedToUnfinishedTask} deleteDoneTask={deleteTaskSearchedDoneList}/>
                                             )                     
                                         })}
                                         </div>

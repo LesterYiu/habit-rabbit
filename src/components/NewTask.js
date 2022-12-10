@@ -299,14 +299,6 @@ const NewTask = ({setTaskList, setIsNewTaskClicked}) => {
                             {isExistingTaskSelected ? <p className="customTaskErrorMsg">A task label must be selected before proceeding. Please click the + button.</p> : null}
                             {isMaxLabelsReachedExisting ? <p className="customTaskErrorMsg">You can only select 4 task labels per task.</p> : null}
                         </div>
-                        {/* <div className="labelSection colorSection">
-                            <label htmlFor="colorChoice">Task Colour:</label>
-                            <input type="color" id="colorChoice" onChange={(e) => {setTaskColour(e.target.value)}}/>
-                            <div className="colorChoiceHelp">
-                                <span aria-hidden="true">ℹ️</span>
-                                <p>To choose a colour, simply click the colour block above.</p>
-                            </div>
-                        </div> */}
                         <div className="chosenLabelsSection">
                             <p>Applied Task Labels:</p>
                             {labelList.length > 0 ?

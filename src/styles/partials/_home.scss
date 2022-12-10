@@ -4,7 +4,7 @@
 
     .homeNavigation.minimizedNav {
         width: 100px;
-        position: relative;
+        position: fixed;
     }
 
     .navExpandedPadding {
@@ -14,7 +14,7 @@
 
     // Home Navigation
     .homeNavigation {
-        padding: 20px 25px 50px 25px;
+        padding: 20px 25px 20px 25px;
         background-color: white;
         position: fixed;
         z-index: 20;
@@ -76,9 +76,18 @@
         .accountButtons {
             border-bottom: 2px solid #d4d4d4;
         }
+    
+        .exitTaskDetailsBtn {
+            width: 50px;
+            margin: 0;
+            position: absolute;
+            bottom: 20px;
+        }
     }
 
     .dashboardContent {
+        margin-left: 100px;
+        width: 100%;
         padding: 35px 0px 25px 0px;
         overflow-y: scroll;
     }
