@@ -13,16 +13,16 @@ const NavigationBar = ({isAuth, setIsNavExpanded, isNavExpanded}) => {
                             </li>
                         </div>
                         <li className="aboutUsButton desktopHiddenAnchor">
-                            <a href="https://github.com/LesterYiu.com">Product</a>
+                            <a href="https://github.com/LesterYiu">Product</a>
                         </li>
                         <li className="desktopHiddenAnchor">
                             <a href="https://github.com/LesterYiu">About Us</a>
                         </li>
                         <li className="desktopHiddenAnchor">
-                            <a href="https://github.com/LesterYiu">Contact</a>
+                            <a href="https://www.linkedin.com/in/lester-y-404010238/">Contact</a>
                         </li>
                         <li className="desktopHiddenAnchor">
-                            <a href="https://github.com/LesterYiu">Source Code</a>
+                            <a href="https://github.com/LesterYiu/habit-rabbit">Source Code</a>
                         </li>
                     </div>
                     {isAuth ?

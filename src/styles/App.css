@@ -483,7 +483,7 @@ fieldset {
     margin-right: 20px; }
   .frontPage nav .loginButton {
     border-right: 1px solid black;
-    padding-right: 10px; }
+    padding-right: 20px; }
 
 .frontPage .leftNavigation,
 .frontPage .rightNavigation {
@@ -651,10 +651,8 @@ fieldset {
     border-right: 0; }
 
 .frontPage .bottomNavContainer {
-  position: absolute;
-  bottom: 25px;
-  width: 100%;
-  padding: 0 25px; }
+  margin-top: 20px;
+  width: 100%; }
 
 .frontPage .exitModalBtn {
   position: absolute;
@@ -736,12 +734,199 @@ fieldset {
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
   cursor: not-allowed; }
 
-.errorInput {
-  border: 1px solid red; }
+.createAccountPage {
+  position: relative; }
+  .createAccountPage main {
+    display: flex; }
+  .createAccountPage .errorInput {
+    border: 1px solid red; }
+  .createAccountPage .errorEmailMessage {
+    border: 1px solid red;
+    color: red; }
+  .createAccountPage .createAccountSection {
+    width: 60%;
+    padding-left: 25px;
+    background-color: #A5D6A7;
+    height: calc(100vh - 40px);
+    display: flex;
+    align-items: center; }
+    .createAccountPage .createAccountSection h2 {
+      font-size: 2rem;
+      color: white; }
+    .createAccountPage .createAccountSection input {
+      width: 100%;
+      padding: 10px 5px 10px 55px;
+      border-radius: 25px;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      font-family: inherit;
+      margin: 10px 0; }
+  .createAccountPage .formOne {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+  .createAccountPage .signInSection {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 200px 0;
+    background-image: url("../assets/signUpPageBlob.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: 50%; }
+    .createAccountPage .signInSection h1 {
+      font-size: 2.5rem !important; }
+    .createAccountPage .signInSection .signInBtn {
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      border-radius: 25px;
+      width: 250px;
+      padding: 15px 25px;
+      background-color: white; }
+    .createAccountPage .signInSection .signInText {
+      margin: 25px 0;
+      padding: 0 50px; }
+  .createAccountPage .logoSection {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    display: flex;
+    align-items: center; }
+    .createAccountPage .logoSection .imageContainer {
+      width: 50px;
+      height: 50px;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white; }
+      .createAccountPage .logoSection .imageContainer img {
+        height: auto;
+        width: 100%;
+        padding: 10px; }
+    .createAccountPage .logoSection p {
+      margin-left: 15px;
+      font-weight: bold; }
+  .createAccountPage .googleBtn {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    margin: 15px 0; }
+    .createAccountPage .googleBtn i {
+      font-size: 1.3rem; }
+  .createAccountPage .credentialsSection {
+    text-align: center;
+    color: white; }
+  .createAccountPage .optionText {
+    margin-bottom: 25px; }
+  .createAccountPage .labelInputContainer {
+    width: 100%;
+    position: relative; }
+    .createAccountPage .labelInputContainer i {
+      position: absolute;
+      left: 25px;
+      color: rgba(212, 212, 212, 0.9);
+      font-size: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%); }
+  .createAccountPage .continueBtn {
+    background-color: white;
+    padding: 15px;
+    border-radius: 25px;
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    width: 250px;
+    margin-top: 25px; }
+  .createAccountPage footer {
+    padding: 10px 0;
+    border-top: 1px solid rgba(212, 212, 212, 0.9); }
+    .createAccountPage footer ul {
+      display: flex;
+      justify-content: space-between; }
+      .createAccountPage footer ul li {
+        width: 50%; }
+      .createAccountPage footer ul p {
+        font-size: 0.8rem; }
+      .createAccountPage footer ul a {
+        display: inline-block; }
+      .createAccountPage footer ul .creditFooterLink {
+        text-align: end; }
+  .createAccountPage .formTwo {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 50px; }
+    .createAccountPage .formTwo p {
+      font-size: 0.9rem; }
+    .createAccountPage .formTwo input[type="file"] {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px; }
+    .createAccountPage .formTwo label {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      color: black;
+      font-weight: bold;
+      padding: 10px 15px;
+      margin: 25px 0;
+      width: 250px;
+      border: 1px solid black;
+      box-shadow: 2px 4px rgba(0, 0, 0, 0.7); }
+    .createAccountPage .formTwo button[type="submit"] {
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      background-color: white;
+      border-radius: 25px;
+      padding: 15px 30px; }
+    .createAccountPage .formTwo form {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+    .createAccountPage .formTwo .profileImageDirections {
+      width: 85%; }
+  .createAccountPage .profileImageContainer {
+    margin: 25px 0;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    .createAccountPage .profileImageContainer img {
+      width: 100%;
+      height: 100%; }
 
-.errorEmailMessage {
-  border: 1px solid red;
-  color: red; }
+@media (max-width: 940px) {
+  .createAccountPage main {
+    flex-direction: column; }
+  .createAccountPage .signInSection {
+    width: 100%;
+    padding: 80px 0;
+    background-position-x: 50%; }
+    .createAccountPage .signInSection h1 {
+      font-size: 2rem !important; }
+  .createAccountPage .createAccountSection {
+    width: 100%;
+    padding-left: 0;
+    order: -1; } }
 
 .homePage {
   display: flex;
@@ -838,7 +1023,7 @@ fieldset {
     padding-bottom: 15px; }
   .homePage .profilePicCont {
     display: inline-block;
-    height: auto;
+    height: 50px;
     width: 50px; }
     .homePage .profilePicCont img {
       border-radius: 50%;
@@ -847,7 +1032,8 @@ fieldset {
       border-radius: 50%;
       padding: 5px;
       height: 100%;
-      width: 100%; }
+      width: 100%;
+      object-fit: cover; }
   .homePage .profileInfoText {
     display: flex;
     flex-direction: column;

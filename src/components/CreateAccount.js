@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "./firebase";
+import { useRef, useState } from "react";
+import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { auth, provider } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { storage } from "./firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
+import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
+import profileImage from "../assets/profileImage.png"
 
 const CreateAccount = () => {
 
@@ -18,15 +21,18 @@ const CreateAccount = () => {
     const [isEmailExist, setIsEmailExist] = useState(false);
 
     const {setIsAuth, setUsername, setUserUID, userUID} = useContext(AppContext)
+
     const navigate = useNavigate();
     const currentAuth = getAuth();
+    const emailEl = useRef(null);
+
     const emailRegex =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 
     const handleContinueBtn = (e) => {
         e.preventDefault();
-        const emailEle = e.target.parentNode[0].value;
-        const matchResult = emailRegex.test(emailEle);
-
+        const matchResult = emailRegex.test(emailEl.current.value);
+        console.log(emailEl.current.value)
         if (matchResult === true && registerPassword.length >= 6) {
             setIsCreatedAcc(!isCreatedAcc);            
         }
@@ -81,30 +87,103 @@ const CreateAccount = () => {
         }
     }
 
+    const signInWithGoogle = () => {
+        signInWithPopup(auth, provider).then( (result) => {
+
+            setIsAuth(!auth.currentUser.isAnonymous);
+            localStorage.setItem("isAuth", !auth.currentUser.isAnonymous)
+            setUsername(result.user.displayName);
+            setUserUID(auth.currentUser.uid);
+            navigate('/home');
+        })
+    }
+
     return(
-        <div className="wrapper">
-            {isCreatedAcc === false ?
-            <form aria-label="form" name="createAccount">
-                <label htmlFor="email">Email</label>
-                <input type="text" required onChange={(e) => {setRegisterEmail(e.target.value)}} className={isEmailExist ? "errorInput" : null}/>
-                
-                {isEmailExist ? <p className="errorEmailMessage">A user with this email address already exists. Please login.</p> : null}
+        <div className="createAccountPage">
+            <main>
+                <div className="signInSection">
+                    <Link to="/"> 
+                        <div className="logoSection">
+                            <div className="imageContainer">
+                                <img src={logo} alt="" />
+                            </div>
+                            <p>Habit Rabbit</p>
+                        </div>
+                    </Link>
+                    <h1>Hello Friend!</h1>
+                    <p className="signInText">If you already have an account, please login with your personal information!</p>
+                    <Link to="/login" className="signInBtn">Sign In</Link>
+                </div>
+                <div className="createAccountSection">
+                    {isCreatedAcc === false ?
+                    <div className="wrapper credentialsSection">
+                        <h2>Create Account</h2>
+                        <div className="loginPage">
+                            <button className="googleBtn" onClick={signInWithGoogle}> 
+                                <span className="sr-only">Sign in with Google</span> 
+                                <i className="fa-brands fa-google"></i>
+                            </button>
+                        </div>
+                        <p className="optionText">or use your email for registration:</p>
+                        <form aria-label="form" name="createAccount" className="formOne">
 
-                <label htmlFor="password">Password</label>
-                <input type="password" required onChange={(e) => {setRegisterPassword(e.target.value)}}/>
+                            <div className="labelInputContainer">
+                                <label htmlFor="name" className="sr-only">Display Name</label>
+                                <input type="text" id="name" required onChange={(e) => {setDisplayName(e.target.value)}} placeholder="Name"/>
+                                <i className="fa-regular fa-user"></i>
+                            </div>
 
-                <button type="submit" onClick={(e) => {handleContinueBtn(e)}}>Continue</button>
-            </form> : null}
-            {isCreatedAcc ? 
-            <form aria-label="form" name="customizeAccount">
-                
-                <label htmlFor="profilePicture">Profile Picture</label>
-                <input type="file" onChange={(e) => {setImageUpload(e.target.files[0])}}/>
-                
-                <label htmlFor="name">Display Name</label>
-                <input type="text" id="name" required onChange={(e) => {setDisplayName(e.target.value)}}/>
-                <button type="submit" onClick={(e) => {registerUser(e)}}>Create Account</button>
-            </form> : null}
+                            <div className="labelInputContainer">
+                                <label htmlFor="email" className="sr-only">Email</label>
+                                <input ref={emailEl} type="text" required onChange={(e) => {setRegisterEmail(e.target.value)}} className={isEmailExist ? "errorInput" : null} placeholder="Email"/>
+                                <i className="fa-regular fa-envelope"></i>
+                            </div>
+
+                            <div className="labelInputContainer">
+                                <label htmlFor="password" className="sr-only">Password</label>
+                                <input type="password" required onChange={(e) => {setRegisterPassword(e.target.value)}} placeholder="Password"/>
+                                <i className="fa-solid fa-lock"></i>
+                            </div>
+                            {isEmailExist ? <p className="errorEmailMessage">A user with this email address already exists. Please login.</p> : null}
+                            <button type="submit" className="continueBtn" onClick={(e) => {handleContinueBtn(e)}}>Continue</button>
+                        </form>
+                    </div>: null}
+                    {isCreatedAcc ? 
+                    <div className="formTwo">
+                        <h2>Welcome {displayName}!</h2>
+                        <div className="profileImageContainer">
+                            <img src={profileImage} alt="" />
+                        </div>
+                        <p className="profileImageDirections">Take a minute to personalize your account by setting a profile picture! Don't worry, this step is optional. Once you're ready, click "Create Account".</p>
+                        <form aria-label="form" name="customizeAccount">
+                            
+                            <label htmlFor="profilePicture">
+                                <p>{imageUpload ? "Picture Selected" : "Select Picture"}</p>
+                                {imageUpload ? 
+                                <i className="fa-solid fa-square-check"></i> :
+                                <i className="fa-solid fa-camera"></i>}
+                            </label>
+                            <input id="profilePicture" type="file" accept="image/png, image/jpg, image/gif, image/jpeg" onChange={(e) => {setImageUpload(e.target.files[0])}}/>
+                            
+                            <button type="submit" onClick={(e) => {registerUser(e)}}>Create Account</button>
+                        </form> 
+                    </div>
+                    : null}
+                </div>
+            </main>
+            <footer>
+                <div className="wrapper">
+                    <ul>
+                        <li>
+                            <p>©2022 Habit Rabbit Labs, Inc.</p>
+                        </li>
+                        <li className="creditFooterLink">
+                            <p>Made by <a href="https://github.com/LesterYiu" target="_blank" rel="noopener">Lester Yiu</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+
         </div>
     )
 }

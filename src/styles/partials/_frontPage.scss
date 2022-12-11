@@ -16,7 +16,7 @@
 
         .loginButton{
             border-right: 1px solid black;
-            padding-right: 10px;
+            padding-right: 20px;
         }
 
     }
@@ -260,10 +260,8 @@
     }
 
     .bottomNavContainer {
-        position: absolute;
-        bottom: 25px;
+        margin-top: 20px;
         width: 100%;
-        padding: 0 25px;
     }
 
     .exitModalBtn {

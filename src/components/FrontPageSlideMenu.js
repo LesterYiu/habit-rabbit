@@ -16,7 +16,7 @@ const FrontPageSlideMenu = ({setIsNavExpanded}) => {
                     </div>
                 </li>
                 <li className="aboutUsButton">
-                    <a href="https://github.com/LesterYiu.com">Product
+                    <a href="https://github.com/LesterYiu">Product
                         <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                     </a>
                 </li>
@@ -26,12 +26,12 @@ const FrontPageSlideMenu = ({setIsNavExpanded}) => {
                     </a>
                 </li>
                 <li>
-                    <a href="https://github.com/LesterYiu">Contact
+                    <a href="https://www.linkedin.com/in/lester-y-404010238/">Contact
                         <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="https://github.com/LesterYiu">Source Code
+                    <a href="https://github.com/LesterYiu/habit-rabbit">Source Code
                         <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                     </a>
                 </li>
