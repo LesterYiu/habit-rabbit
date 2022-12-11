@@ -18,7 +18,6 @@ const NewTask = ({setTaskList, setIsNewTaskClicked}) => {
     const [firstDayOfWeekTimestamp, setFirstDayOfWeekTimestamp] = useState("")
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
-    const [taskColour, setTaskColour] = useState("");
     const [isTaskExist, setIsTaskExist] = useState(false);
     const [isDuplicateFound, setIsDuplicateFound] = useState(false);
     const [isCustomTaskSelected, setIsCustomTaskSelected] = useState(false);
@@ -81,7 +80,7 @@ const NewTask = ({setTaskList, setIsNewTaskClicked}) => {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, taskColour, label: [...labelList], completion: 0, updates:[], timeSpent: {}}, uuid: uuid()});
+                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, label: [...labelList], completion: 0, updates:[], timeSpent: {}}, uuid: uuid()});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel(e);
@@ -105,7 +104,6 @@ const NewTask = ({setTaskList, setIsNewTaskClicked}) => {
         
         setFirstDayOfWeekUnformatted(format(firstDayOfWeek, 'yyyy-MM-dd'));
         setFirstDayOfWeekTimestamp(new Date(format(firstDayOfWeek, 'yyyy-MM-dd')));
-
         setDeadline(e.target.value);
 
     }

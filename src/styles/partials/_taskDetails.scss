@@ -1,4 +1,5 @@
 .taskDetails {
+    width: 100%;
     margin-left: 100px;
     padding: 35px 0px 20px 0;
     display: flex;
@@ -692,6 +693,11 @@
     .taskDetails{
         margin-left: 75px;
     }
+
+    .taskDetails .profilePicContainer {
+        width: 14%;
+        height: auto;
+    }
 }
 
 @media (max-width: 500px) {
@@ -731,6 +737,12 @@
         .rangeDiv {
             width: 100%;
         }
+    }
+}
+
+@media (max-width: 450px) {
+    .taskDetails .profilePicContainer {
+        width: 20%;
     }
 }
 

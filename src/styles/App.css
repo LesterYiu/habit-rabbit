@@ -512,7 +512,7 @@ fieldset {
 .frontPage .flexHeader {
   display: flex;
   justify-content: space-between;
-  margin: 150px 0 100px 0; }
+  margin: 100px 0 50px 0; }
 
 .frontPage .heroInfo {
   display: flex;
@@ -532,6 +532,177 @@ fieldset {
   padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid rgba(212, 212, 212, 0.8); }
+
+.frontPage .mobileHambugerBtn {
+  display: none; }
+
+.frontPage .hamburgerIcon {
+  font-size: 1.5rem; }
+
+.frontPage .contentOneContainer {
+  display: flex;
+  margin-bottom: 75px; }
+
+.frontPage .imageContainer {
+  min-width: 60%;
+  width: 60%;
+  box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.66667px 3.50231px rgba(0, 0, 0, 0.00962963); }
+  .frontPage .imageContainer img {
+    width: 100%;
+    height: auto; }
+
+.frontPage .contentOneIconContainer {
+  width: 75px; }
+  .frontPage .contentOneIconContainer img {
+    width: 100%;
+    height: auto; }
+
+.frontPage .contentOneInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 50px; }
+  .frontPage .contentOneInfo h2 {
+    padding: 20px 0 10px 0; }
+  .frontPage .contentOneInfo p {
+    font-size: 1rem;
+    color: #666665; }
+
+.frontPage footer ul {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(212, 212, 212, 0.8);
+  padding: 25px 0; }
+  .frontPage footer ul li {
+    color: #878685;
+    width: 50%; }
+  .frontPage footer ul p {
+    font-size: 0.9rem; }
+
+.frontPage footer .creditFooterLink {
+  display: flex;
+  justify-content: flex-end; }
+  .frontPage footer .creditFooterLink a {
+    display: inline-block; }
+
+.frontPage .slideMenu {
+  position: fixed;
+  height: 100vh;
+  width: 250px;
+  top: 0;
+  background-color: white;
+  border-right: 1px solid rgba(212, 212, 212, 0.8);
+  padding: 20px 25px 20px 25px; }
+  .frontPage .slideMenu ul {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .frontPage .slideMenu ul li {
+      font-family: "Inter", sans-serif;
+      font-weight: 600;
+      margin-bottom: 15px;
+      margin-right: 0;
+      font-size: 0.8rem;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      border-radius: 10px;
+      width: 100%;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .frontPage .slideMenu ul li a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        padding: 10px 15px; }
+    .frontPage .slideMenu ul li:nth-child(2) {
+      background-color: #F6F4F9; }
+    .frontPage .slideMenu ul li:nth-child(3) {
+      background-color: #F6F4F9; }
+    .frontPage .slideMenu ul li:nth-child(4) {
+      background-color: #EDF2EC; }
+    .frontPage .slideMenu ul li:nth-child(5) {
+      background-color: #E6F3FB; }
+    .frontPage .slideMenu ul li:nth-child(6) {
+      background-color: #FBF1F4; }
+    .frontPage .slideMenu ul li:nth-child(7) {
+      background-color: #FAF1F4; }
+    .frontPage .slideMenu ul .fa-chevron-right {
+      font-size: 0.7rem; }
+    .frontPage .slideMenu ul .logo {
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0 0 25px 0; }
+      .frontPage .slideMenu ul .logo img {
+        height: auto;
+        width: 80%; }
+      .frontPage .slideMenu ul .logo div {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+  .frontPage .slideMenu .loginButton {
+    border-right: 0; }
+
+.frontPage .bottomNavContainer {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+  padding: 0 25px; }
+
+.frontPage .exitModalBtn {
+  position: absolute;
+  top: 15px;
+  right: 25px; }
+  .frontPage .exitModalBtn i {
+    font-size: 1.2rem; }
+
+@media (max-width: 940px) {
+  .frontPage .flexHeader {
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0 50px 0; }
+  .frontPage .heroInfo {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; }
+  .frontPage .heroBtn {
+    width: 40%; }
+  .frontPage .heroImageContainer {
+    order: -1; }
+  .frontPage .desktopHiddenAnchor {
+    display: none; }
+  .frontPage .mobileHambugerBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .frontPage .contentOneContainer {
+    flex-direction: column; }
+  .frontPage .contentOneInfo {
+    order: -1;
+    padding-left: 0;
+    margin-bottom: 25px; }
+  .frontPage .imageContainer {
+    width: 100%;
+    min-width: 100%; } }
+
+@media (max-width: 480px) {
+  .frontPage footer ul {
+    flex-direction: column; }
+    .frontPage footer ul li {
+      width: 100%; }
+  .frontPage footer .creditFooterLink {
+    justify-content: flex-start;
+    margin-top: 15px; } }
 
 .login-with-google-btn {
   cursor: pointer;
@@ -667,7 +838,7 @@ fieldset {
     padding-bottom: 15px; }
   .homePage .profilePicCont {
     display: inline-block;
-    height: 50px;
+    height: auto;
     width: 50px; }
     .homePage .profilePicCont img {
       border-radius: 50%;
@@ -748,11 +919,14 @@ fieldset {
   z-index: 10; }
 
 @media (max-width: 575px) {
-  .homePage .profilePicCont {
-    height: auto;
-    width: 100%; }
   .homePage .homeNavigation.minimizedNav {
     width: 75px; }
+  .homePage .profileInfoContainer {
+    display: flex;
+    justify-content: center; }
+  .homePage .profilePicCont {
+    width: 40px;
+    height: 40px; }
   .homePage .homeNavigation {
     padding: 20px 15px 50px 15px; }
     .homePage .homeNavigation ul.minimizedUl {
@@ -979,6 +1153,8 @@ fieldset {
       background-color: #FEEFD0; }
     .homeDashboard .labelContainer .high {
       background-color: #FFCED6; }
+    .homeDashboard .labelContainer .lateLabel {
+      background-color: #fedde7; }
   .homeDashboard .buttonRelativePosition {
     position: relative; }
   .homeDashboard .filterContainer {
@@ -1489,6 +1665,7 @@ abbr {
   font-size: 0.6rem; }
 
 .taskDetails {
+  width: 100%;
   margin-left: 100px;
   padding: 35px 0px 20px 0;
   display: flex;
@@ -1936,7 +2113,10 @@ abbr {
 @media (max-width: 575px) {
   .homePage .dashboardContent,
   .taskDetails {
-    margin-left: 75px; } }
+    margin-left: 75px; }
+  .taskDetails .profilePicContainer {
+    width: 14%;
+    height: auto; } }
 
 @media (max-width: 500px) {
   .taskDetails .updateTaskBtns {
@@ -1959,6 +2139,10 @@ abbr {
     margin-right: 10px; }
   .taskDetails .rangeDiv {
     width: 100%; } }
+
+@media (max-width: 450px) {
+  .taskDetails .profilePicContainer {
+    width: 20%; } }
 
 @media (max-width: 385px) {
   .taskDetails .logTimeForm {

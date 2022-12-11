@@ -76,6 +76,7 @@ const Home = () => {
         if(userUID === "notSignedIn") {
             navigate('/login')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userUID])
 
     useEffect( () => {
@@ -91,6 +92,7 @@ const Home = () => {
                 reformattedDoneTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
@@ -369,9 +371,9 @@ const Home = () => {
                                                 </button>
                                             </div>
                                             <div className="taskMainContainer">
-                                                {reformattedTask[date].map( (i) => {
+                                                {reformattedTask[date].map( (specificTask) => {
                                                     return (
-                                                        <SingleTask i={i} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()}/>
+                                                        <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()}/>
                                                     )                     
                                                 })}
                                             </div>
@@ -388,9 +390,9 @@ const Home = () => {
                                                     <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                                 </button>
                                             </div>
-                                            {reformattedDoneTask[date].map( (i) => {
+                                            {reformattedDoneTask[date].map( (specificTask) => {
                                                 return (
-                                                    <SingleDoneTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeToUnfinishedTask} deleteDoneTask={deleteDoneTask}/>
+                                                    <SingleDoneTask key={uuid()} specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeToUnfinishedTask} deleteDoneTask={deleteDoneTask}/>
                                                 )
                                             })}
                                         </div>
@@ -450,9 +452,9 @@ const Home = () => {
                                             </button>
                                         </div>
                                         <div className="taskMainContainer">
-                                        {date.map( (i) => {
+                                        {date.map( (specificTask) => {
                                             return (
-                                                <SingleTask i={i} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()}/>
+                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()}/>
                                             )                     
                                         })}
                                         </div>
@@ -470,9 +472,9 @@ const Home = () => {
                                             </button>
                                         </div>
                                         <div className="taskMainContainer">
-                                        {date.map( (i) => {
+                                        {date.map( (specificTask) => {
                                             return (
-                                                <SingleDoneTask key={uuid()} i={i} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeSearchedToUnfinishedTask} deleteDoneTask={deleteTaskSearchedDoneList}/>
+                                                <SingleDoneTask key={uuid()} specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeSearchedToUnfinishedTask} deleteDoneTask={deleteTaskSearchedDoneList}/>
                                             )                     
                                         })}
                                         </div>

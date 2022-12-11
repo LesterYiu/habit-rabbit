@@ -56,7 +56,7 @@
     .flexHeader{
         display: flex;
         justify-content: space-between;
-        margin: 150px 0 100px 0;
+        margin: 100px 0 50px 0;
     }
 
     .heroInfo {
@@ -81,5 +81,278 @@
         padding: 8px 10px;
         border-radius: 8px;
         border: 1px solid rgba(212, 212, 212, 0.8);
+    }
+
+    .mobileHambugerBtn {
+        display: none;
+    }
+
+    .hamburgerIcon {
+        font-size: 1.5rem;
+    }
+
+    // Main Section Styles
+
+    .contentOneContainer {
+        display: flex;
+        margin-bottom: 75px;
+    }
+
+    .imageContainer {
+        min-width: 60%;
+        width: 60%;
+        box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
+    
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .contentOneIconContainer {
+        width: 75px;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .contentOneInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 50px;
+
+        h2 {
+            padding: 20px 0 10px 0;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #666665;
+        }
+    }
+
+    // Footer Section Styles
+    
+    footer {
+        ul {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(212, 212, 212, 0.8);
+            padding: 25px 0;
+
+            li {
+                color: #878685;
+                width: 50%;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+        }
+
+        .creditFooterLink {
+            display: flex;
+            justify-content: flex-end;
+
+            a {
+                display: inline-block;
+            }
+        }
+    }
+
+    // Slide Menu 
+
+    .slideMenu {
+        position: fixed;
+        height: 100vh;
+        width: 250px;
+        top: 0;
+        background-color: white;
+        border-right: 1px solid rgba(212, 212, 212, 0.8);
+        padding: 20px 25px 20px 25px;
+
+        ul {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            li {
+                font-family: "Inter", sans-serif;
+                font-weight: 600;
+                margin-bottom: 15px;
+                margin-right: 0;
+                font-size: 0.8rem;
+                border: 1px solid rgba(212, 212, 212, 0.9);
+                border-radius: 10px;
+                width: 100%;
+                box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                a {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    height: 100%;
+                    width: 100%;
+                    padding: 10px 15px;
+                }
+            }
+
+            li:nth-child(2) {
+                background-color: #F6F4F9;
+            }
+
+            li:nth-child(3) {
+                background-color: #F6F4F9;
+            }
+
+            li:nth-child(4) {
+                background-color: #EDF2EC;
+            }
+
+            li:nth-child(5) {
+                background-color: #E6F3FB;
+            }
+
+            li:nth-child(6) {
+                background-color: #FBF1F4;
+            }
+
+            li:nth-child(7) {
+                background-color: #FAF1F4;
+            }
+
+            .fa-chevron-right {
+                font-size: 0.7rem;
+            }
+
+            .logo {
+                border: 1px solid rgba(212, 212, 212, 0.9);
+                width: 75px;
+                height: 75px;
+                border-radius: 50%;
+                padding: 0;
+                margin: 0 0 25px 0;
+
+                img {
+                    height: auto;
+                    width: 80%;
+                }
+
+                div {
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+
+        .loginButton {
+            border-right: 0;
+        }
+    }
+
+    .bottomNavContainer {
+        position: absolute;
+        bottom: 25px;
+        width: 100%;
+        padding: 0 25px;
+    }
+
+    .exitModalBtn {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+
+        i {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+@media(max-width: 940px) {
+    .frontPage {
+
+        // Header
+
+        .flexHeader {
+            flex-direction: column;
+            align-items: center;
+            margin: 50px 0 50px 0;
+        }
+
+        .heroInfo {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .heroBtn {
+            width: 40%;
+        }
+
+        .heroImageContainer {
+            order: -1;
+        }
+
+        // Nav
+        
+        .desktopHiddenAnchor {
+            display: none;
+        }
+
+        .mobileHambugerBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        // Content
+
+        .contentOneContainer {
+            flex-direction: column;
+        }
+
+        .contentOneInfo {
+            order: -1;
+            padding-left: 0;
+            margin-bottom: 25px;
+        }
+
+        .imageContainer {
+            width: 100%;
+            min-width: 100%;
+        }
+    }
+}
+
+@media(max-width: 480px) {
+    .frontPage {
+
+        footer {
+            ul {
+                flex-direction: column;
+
+                li {
+                    width: 100%;
+                }
+            }
+
+            .creditFooterLink {
+                justify-content: flex-start;
+                margin-top: 15px;
+            }
+
+        }
     }
 }
