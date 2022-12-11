@@ -71,7 +71,7 @@ const FrontPage = () => {
                             <p>©2022 Habit Rabbit Labs, Inc.</p>
                         </li>
                         <li className="creditFooterLink">
-                            <p>Made by <a href="https://github.com/LesterYiu" target="_blank" rel="noopener">Lester Yiu</a></p>
+                            <p>Made by <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer">Lester Yiu</a></p>
                         </li>
                     </ul>
                 </div>

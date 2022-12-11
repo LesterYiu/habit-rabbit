@@ -69,6 +69,7 @@
             width: 250px;
             padding: 15px 25px;
             background-color: white;
+            font-weight: bold;
         }
 
         .signInText {
@@ -155,32 +156,6 @@
         margin-top: 25px;
     }
 
-    footer {
-        padding: 10px 0;
-        border-top: 1px solid rgba(212, 212, 212, 0.9);
-
-        ul {
-            display: flex;
-            justify-content: space-between;
-
-            li {
-                width: 50%;
-            }
-
-            p {
-                font-size: 0.8rem;
-            }
-
-            a {
-                display: inline-block;
-            }
-
-            .creditFooterLink {
-                text-align: end;
-            }
-        }
-    }
-
     .formTwo {
         color: white;
         display: flex;
@@ -253,6 +228,33 @@
             height: 100%;
         }
     }
+
+    footer {
+        padding: 10px 0;
+        border-top: 1px solid rgba(212, 212, 212, 0.9);
+        color: #878685;
+
+        ul {
+            display: flex;
+            justify-content: space-between;
+
+            li {
+                width: 50%;
+            }
+
+            p {
+                font-size: 0.8rem;
+            }
+
+            a {
+                display: inline-block;
+            }
+
+            .creditFooterLink {
+                text-align: end;
+            }
+        }
+    }
 }
 
 @media (max-width: 940px) {
@@ -276,6 +278,27 @@
             width: 100%;
             padding-left: 0;
             order: -1;
+        }
+    }
+}
+
+@media(max-width: 480px) {
+    footer {
+        ul {
+            flex-direction: column;
+
+            li {
+                width: 100% !important;
+            }
+        }
+
+        .creditFooterLink {
+            justify-content: flex-start;
+            margin-top: 15px;
+        }
+
+        p {
+            text-align: start;
         }
     }
 }

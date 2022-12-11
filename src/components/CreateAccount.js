@@ -100,16 +100,18 @@ const CreateAccount = () => {
 
     return(
         <div className="createAccountPage">
+            <nav>
+                <Link to="/"> 
+                    <div className="logoSection">
+                        <div className="imageContainer">
+                            <img src={logo} alt="" />
+                        </div>
+                        <p>Habit Rabbit</p>
+                    </div>
+                </Link>
+            </nav>
             <main>
                 <div className="signInSection">
-                    <Link to="/"> 
-                        <div className="logoSection">
-                            <div className="imageContainer">
-                                <img src={logo} alt="" />
-                            </div>
-                            <p>Habit Rabbit</p>
-                        </div>
-                    </Link>
                     <h1>Hello Friend!</h1>
                     <p className="signInText">If you already have an account, please login with your personal information!</p>
                     <Link to="/login" className="signInBtn">Sign In</Link>
@@ -118,7 +120,7 @@ const CreateAccount = () => {
                     {isCreatedAcc === false ?
                     <div className="wrapper credentialsSection">
                         <h2>Create Account</h2>
-                        <div className="loginPage">
+                        <div>
                             <button className="googleBtn" onClick={signInWithGoogle}> 
                                 <span className="sr-only">Sign in with Google</span> 
                                 <i className="fa-brands fa-google"></i>
@@ -178,7 +180,7 @@ const CreateAccount = () => {
                             <p>©2022 Habit Rabbit Labs, Inc.</p>
                         </li>
                         <li className="creditFooterLink">
-                            <p>Made by <a href="https://github.com/LesterYiu" target="_blank" rel="noopener">Lester Yiu</a></p>
+                            <p>Made by <a href="https://github.com/LesterYiu" target="_blank" rel="noreferrer">Lester Yiu</a></p>
                         </li>
                     </ul>
                 </div>
