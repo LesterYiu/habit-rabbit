@@ -1,13 +1,17 @@
-import heroBanner from "../assets/heroBanner.png";
-import NavigationBar from "./NavigationBar";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
+
+// Image Imports
+import heroBanner from "../assets/heroBanner.png";
 import displayImageOne from "../assets/displayImageOne.png";
 import displayImageIcon from "../assets/displayImageIcon.png";
 import displayImageTwo from "../assets/displayImageTwo.png";
 import displayImageIconTwo from "../assets/displayImageIconTwo.png";
-import { useState } from "react";
+
+// Component Imports
+import NavigationBar from "./NavigationBar";
 import FrontPageSlideMenu from "./FrontPageSlideMenu";
 
 const FrontPage = () => {

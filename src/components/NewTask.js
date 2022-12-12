@@ -6,7 +6,7 @@ import { useEffect, useContext } from "react";
 import {format, startOfWeek} from "date-fns";
 import { AppContext } from "../Contexts/AppContext";
 
-const NewTask = ({setTaskList, setIsNewTaskClicked}) => {
+const NewTask = () => {
     
     const [taskName, setTaskName] = useState("");
     const [description, setDescription] = useState("");
@@ -40,7 +40,7 @@ const NewTask = ({setTaskList, setIsNewTaskClicked}) => {
     const existingTaskInputEl = useRef(null);
 
     // useContext variables
-    const {username, userUID} = useContext(AppContext)
+    const {username, userUID, setIsNewTaskClicked, setTaskList} = useContext(AppContext)
 
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask`);
     const customLabelsCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/customLabels`);

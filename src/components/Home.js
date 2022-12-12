@@ -1,23 +1,26 @@
-import HomeNavigation from "./HomeNavigation";
-import NewTask from "./NewTask";
 import { Navigate, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "./firebase";
 import { collection, getDocs, deleteDoc, addDoc, doc, getDoc } from "firebase/firestore";
 import { useState , useEffect, useContext, useRef} from "react";
-import errorMessageOne from "../assets/errorMessageOne.gif";
-import errorMessageTwo from "../assets/errorMessageTwo.gif";
 import { AppContext } from "../Contexts/AppContext";
-import uuid from "react-uuid";
 import { getHours } from "date-fns";
+import uuid from "react-uuid";
+
+// Component Imports
 import TaskDetails from "./TaskDetails";
 import SingleTask from "./SingleTask";
 import SingleDoneTask from "./SingleDoneTask";
 import DashboardHeader from "./DashboardHeader";
+import HomeNavigation from "./HomeNavigation";
+import NewTask from "./NewTask";
+
+// Image Imports
+import errorMessageOne from "../assets/errorMessageOne.gif";
+import errorMessageTwo from "../assets/errorMessageTwo.gif";
 
 const Home = () => {
 
-    const [taskList, setTaskList] = useState([]);
     const [doneTaskList, setDoneTaskList] = useState([]);
     const [reformattedTask, setReformattedTask] = useState([]);
     const [reformattedDoneTask, setReformattedDoneTask] = useState([]); 
@@ -25,7 +28,7 @@ const Home = () => {
     const [doneSearchedTaskList, setDoneSearchedTaskList] = useState([]);
     const [specificTask, setSpecificTask] = useState([]);
 
-    const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
+    // const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
     const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
     const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
 
@@ -41,15 +44,14 @@ const Home = () => {
     const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
 
     const isMounted = useRef(false);
-    const navPaddingDiv = useRef(null);
 
     // useContext variables
-    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic} = useContext(AppContext);
+    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic, isNewTaskClicked, setTaskList, taskList} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
     const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
-
+    
     const navigate = useNavigate();
 
     // On initial mount, if the user is signed in, this will set their user information in state.
@@ -313,12 +315,11 @@ const Home = () => {
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
-                <div ref={navPaddingDiv}></div>
-                <HomeNavigation setIsNewTaskClicked={setIsNewTaskClicked} setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded} setIsSearchBarPopulated={setIsSearchBarPopulated} navPaddingDiv={navPaddingDiv}/>
-                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setTaskList={setTaskList} taskList={taskList} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
+                <HomeNavigation setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
+                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
                 {isNewTaskClicked ? 
                 <>
-                    <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <NewTask/>
                     <div className="overlayBackground"></div>
                 </>
                 : null}
@@ -330,8 +331,7 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <div ref={navPaddingDiv}></div>
-                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} navPaddingDiv={navPaddingDiv}/>
+                    <HomeNavigation setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
@@ -405,7 +405,7 @@ const Home = () => {
                 </div>
                 {isNewTaskClicked ? 
                 <>
-                    <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <NewTask />
                     <div className="overlayBackground"></div>
                 </>
                 : null}
@@ -416,8 +416,7 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <div ref={navPaddingDiv}></div>
-                    <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth} setIsNewTaskClicked={setIsNewTaskClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} navPaddingDiv={navPaddingDiv}/>
+                    <HomeNavigation setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
@@ -489,7 +488,7 @@ const Home = () => {
                 </div>
                 {isNewTaskClicked ? 
                 <>
-                    <NewTask setTaskList={setTaskList} setIsNewTaskClicked={setIsNewTaskClicked}/>
+                    <NewTask />
                     <div className="overlayBackground"></div>
                 </>
                 : null}

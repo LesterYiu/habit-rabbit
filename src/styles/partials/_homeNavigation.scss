@@ -1,0 +1,215 @@
+.homeNavigation.minimizedNav {
+    width: 100px;
+    position: fixed;
+}
+
+.overlayBackground.homeNavigationOverlay {
+    z-index: 10;
+}
+
+.defaultHidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+// Home Navigation
+.homeNavigation {
+    padding: 20px 25px 20px 25px;
+    background-color: white;
+    position: fixed;
+    z-index: 20;
+    width: 250px;
+    min-height: 100vh;
+    max-height: 100%;
+    border-top: 1px solid rgba(212, 212, 212, 0.9);
+    border-left: 1px solid rgba(212, 212, 212, 0.9);
+    border-right: 1px solid rgba(212, 212, 212, 0.9);
+    display: flex;
+    flex-direction: column;
+
+    .homeBtn {
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    }
+
+    .homeBtnOne {
+        background-color: #F6F4F9;
+    }
+
+    .homeBtnTwo {
+        background-color: #F6F4F9;
+    }
+
+    .homeBtnThree {
+        background-color: #EDF2EC;
+    }
+
+    .homeBtnFour {
+        background-color: #E6F3FB;
+    }
+
+    .homeBtnFive {
+        background-color: #FBF1F4;
+    }
+
+    .homeBtnSix {
+        background-color: #FAF1F4;
+    }
+
+    button.expandBtn {
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    a,
+    button {
+        margin: 15px 0;
+        display: flex;
+        border: 1px solid rgba(212, 212, 212, 0.9);
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.7rem;
+        height: 40px;
+    }
+
+    button {
+        align-items: center;
+    }
+
+    ul.minimizedUl {
+        width: 50px;
+    }
+
+    ul {
+        width: 100%;
+        transition-duration: 0.8s;
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .expandedButtonText {
+        margin-left: 10px;
+    }
+
+    li {
+        position: relative;
+
+        i {
+            position: absolute;
+            z-index: 20;
+            top: 50%;
+            transform:translateY(-50%);
+            right: 10px;
+            font-size: 0.7rem;
+        }
+    }
+
+    .accountButtons {
+        border-bottom: 2px solid #d4d4d4;
+    }
+
+    .exitTaskDetailsBtn {
+        width: 50px;
+        margin: 0;
+        position: absolute;
+        bottom: 20px;
+    }
+
+    .profileInfoContainer.minimizedInfoContainer {
+        display: block;
+        padding-bottom: 10px;
+    }
+
+    .profileInfoContainer {
+        display: flex;
+        border-bottom: 2px solid rgb(212, 212, 212);
+        width: 100%;
+        padding-bottom: 15px;
+    }
+
+    .profilePicCont {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+
+        img {
+            border-radius: 50%;
+            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+            border: 1px solid rgba(212, 212, 212, 0.8);
+            border-radius: 50%;
+            padding: 5px;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .profileInfoText {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 15px;
+
+        .profileWelcome {
+            font-size: 0.7rem;
+            color: #8c959e;
+        }
+
+        .navDisplayName {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+    }
+}
+
+// Media queries
+
+@media (max-width: 575px) {
+    .homeNavigation {
+        padding: 20px 15px 50px 15px;
+
+        .profileInfoContainer {
+            display: flex;
+            justify-content: center;
+        }
+
+        .profilePicCont {
+            width: 40px;
+            height: 40px;
+        }
+
+        ul.minimizedUl {
+            width: 100%;
+        }
+
+        .homeBtn {
+            display: flex;
+            justify-content: center;
+        }
+        
+        button.expandBtn {
+            width: 100%;
+        }
+    }
+
+    .homeDashboard .taskContainer {
+        align-items: center;
+    }
+
+    .homeNavigation.minimizedNav {
+        width: 75px;
+    }
+
+}

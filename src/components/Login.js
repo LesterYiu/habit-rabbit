@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useState } from "react";
+
+// Image Imports
 import logo from "../assets/logo.png";
 
 const Login = () => {

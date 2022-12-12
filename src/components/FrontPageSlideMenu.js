@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
+
+// Image Imports
 import logo from "../assets/logo.png";
 
 const FrontPageSlideMenu = ({setIsNavExpanded}) => {

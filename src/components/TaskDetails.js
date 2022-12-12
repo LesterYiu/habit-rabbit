@@ -9,10 +9,10 @@ import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
 import { startOfWeek } from "date-fns/esm";
 
-const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setTaskList, taskList, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase}) => {
+const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase}) => {
 
     // useContext variables
-    const {userUID, username, userPic} = useContext(AppContext);
+    const {userUID, username, userPic, taskList, setTaskList} = useContext(AppContext);
 
     // Toggles
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
@@ -62,6 +62,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
     
         getUpdateCommentsAndProgress()
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDoneBtnClicked, isToDoBtnClicked, specificTask.id, userUID]);
     
     // To handle new updates, this will not run on initial mount
@@ -78,7 +79,7 @@ const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, i
         if(taskCompletion !== "") {
             handleUpdateProgress();
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updates, taskCompletion, specificTask.id, userUID, isDoneBtnClicked, isToDoBtnClicked])
 
     // To get dates for log time

@@ -1,14 +1,14 @@
 import { auth } from "./firebase";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { useContext, useRef, useState } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
-const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, setIsSearchBarPopulated, navPaddingDiv}) => {
+const HomeNavigation = ({setIsTaskExpanded, isTaskExpanded}) => {
 
     // useContext variables
-    const {setIsAuth, username, setUsername, setUserUID, userPic} = useContext(AppContext)
+    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked} = useContext(AppContext)
 
     const [isNavExpanded, setIsNavExpanded] = useState(false);
 
@@ -16,7 +16,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     const newTaskText = useRef(null);
     const calendarText = useRef(null);
     const statisticsText = useRef(null);
-    const settingsText = useRef(null);
+    // const settingsText = useRef(null);
     const logOutText = useRef(null);
 
     const navEl = useRef(null);
@@ -29,9 +29,10 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     const arrowIconTwo = useRef(null);
     const arrowIconThree = useRef(null);
     const arrowIconFour = useRef(null);
-    const arrowIconFive = useRef(null);
+    // const arrowIconFive = useRef(null);
     const arrowIconSix = useRef(null);
 
+    const location = useLocation();
     const navigate = useNavigate();
 
     const handleNewTask = () => {
@@ -48,6 +49,9 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
     }
 
     const redirectToHome = () => {
+        
+        if(location.pathname !== "/home") navigate('/home');
+
         if(isNavExpanded === true) {
             setIsNavExpanded(false)
             handleNavToggleBtn()
@@ -87,7 +91,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
         newTaskText.current.className = "expandedButtonText";
         calendarText.current.className = "expandedButtonText";
         statisticsText.current.className = "expandedButtonText";
-        settingsText.current.className = "expandedButtonText";
+        // settingsText.current.className = "expandedButtonText";
         logOutText.current.className = "expandedButtonText";
 
         // Button Ul Container
@@ -98,12 +102,11 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
         arrowIconTwo.current.className = "fa-solid fa-chevron-right";
         arrowIconThree.current.className = "fa-solid fa-chevron-right";
         arrowIconFour.current.className = "fa-solid fa-chevron-right";
-        arrowIconFive.current.className = "fa-solid fa-chevron-right";
+        // arrowIconFive.current.className = "fa-solid fa-chevron-right";
         arrowIconSix.current.className = "fa-solid fa-chevron-right";
     }
 
     const handleShrinkBtn = () => {
-        // navPaddingDiv.current.className = "";
         navEl.current.className = "homeNavigation homeSection minimizedNav";
         profileTextEl.current.className = "profileInfoText defaultHidden";
         profileInfoContainerEl.current.className = "profileInfoContainer minimizedInfoContainer";
@@ -112,7 +115,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
         newTaskText.current.className = "expandedButtonText defaultHidden";
         calendarText.current.className = "expandedButtonText defaultHidden";
         statisticsText.current.className = "expandedButtonText defaultHidden";
-        settingsText.current.className = "expandedButtonText defaultHidden";
+        // settingsText.current.className = "expandedButtonText defaultHidden";
         logOutText.current.className = "expandedButtonText defaultHidden";
 
         ulOneEl.current.className =  "minimizedUl";
@@ -122,7 +125,7 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
         arrowIconTwo.current.className = "fa-solid fa-chevron-right defaultHidden";
         arrowIconThree.current.className = "fa-solid fa-chevron-right defaultHidden";
         arrowIconFour.current.className = "fa-solid fa-chevron-right defaultHidden";
-        arrowIconFive.current.className = "fa-solid fa-chevron-right defaultHidden";
+        // arrowIconFive.current.className = "fa-solid fa-chevron-right defaultHidden";
         arrowIconSix.current.className = "fa-solid fa-chevron-right defaultHidden";
     }
 
@@ -173,13 +176,13 @@ const HomeNavigation = ({setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded,
                     </li>
                 </ul>
                 <ul className="minimizedUl accountButtons" ref={ulTwoEl}>
-                    <li>
+                    {/* <li>
                         <Link to="/settings" className="homeBtnFour homeBtn">
                             <span aria-hidden="true">⚙️</span>
                             <span className="defaultHidden" ref={settingsText}>Settings</span>
                         </Link>
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFive}></i>
-                    </li>
+                    </li> */}
                     <li>                    
                         <button onClick={signUserOut} className="homeBtnSix homeBtn">
                             <span aria-hidden="true">🚪</span>

@@ -755,6 +755,7 @@ fieldset {
       align-items: center; }
       .loginPage .loginFlex form button[type="submit"] {
         background-color: white;
+        color: black;
         padding: 15px;
         border-radius: 25px;
         border: 1px solid rgba(212, 212, 212, 0.9);
@@ -1050,6 +1051,147 @@ fieldset {
     margin-top: 15px; }
   footer p {
     text-align: start; } }
+
+.homeNavigation.minimizedNav {
+  width: 100px;
+  position: fixed; }
+
+.overlayBackground.homeNavigationOverlay {
+  z-index: 10; }
+
+.defaultHidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px; }
+
+.homeNavigation {
+  padding: 20px 25px 20px 25px;
+  background-color: white;
+  position: fixed;
+  z-index: 20;
+  width: 250px;
+  min-height: 100vh;
+  max-height: 100%;
+  border-top: 1px solid rgba(212, 212, 212, 0.9);
+  border-left: 1px solid rgba(212, 212, 212, 0.9);
+  border-right: 1px solid rgba(212, 212, 212, 0.9);
+  display: flex;
+  flex-direction: column; }
+  .homeNavigation .homeBtn {
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+  .homeNavigation .homeBtnOne {
+    background-color: #F6F4F9; }
+  .homeNavigation .homeBtnTwo {
+    background-color: #F6F4F9; }
+  .homeNavigation .homeBtnThree {
+    background-color: #EDF2EC; }
+  .homeNavigation .homeBtnFour {
+    background-color: #E6F3FB; }
+  .homeNavigation .homeBtnFive {
+    background-color: #FBF1F4; }
+  .homeNavigation .homeBtnSix {
+    background-color: #FAF1F4; }
+  .homeNavigation button.expandBtn {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .homeNavigation a,
+  .homeNavigation button {
+    margin: 15px 0;
+    display: flex;
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    height: 40px; }
+  .homeNavigation button {
+    align-items: center; }
+  .homeNavigation ul.minimizedUl {
+    width: 50px; }
+  .homeNavigation ul {
+    width: 100%;
+    transition-duration: 0.8s; }
+    .homeNavigation ul button {
+      width: 100%; }
+  .homeNavigation .expandedButtonText {
+    margin-left: 10px; }
+  .homeNavigation li {
+    position: relative; }
+    .homeNavigation li i {
+      position: absolute;
+      z-index: 20;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 10px;
+      font-size: 0.7rem; }
+  .homeNavigation .accountButtons {
+    border-bottom: 2px solid #d4d4d4; }
+  .homeNavigation .exitTaskDetailsBtn {
+    width: 50px;
+    margin: 0;
+    position: absolute;
+    bottom: 20px; }
+  .homeNavigation .profileInfoContainer.minimizedInfoContainer {
+    display: block;
+    padding-bottom: 10px; }
+  .homeNavigation .profileInfoContainer {
+    display: flex;
+    border-bottom: 2px solid #d4d4d4;
+    width: 100%;
+    padding-bottom: 15px; }
+  .homeNavigation .profilePicCont {
+    display: inline-block;
+    height: 50px;
+    width: 50px; }
+    .homeNavigation .profilePicCont img {
+      border-radius: 50%;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      border: 1px solid rgba(212, 212, 212, 0.8);
+      border-radius: 50%;
+      padding: 5px;
+      height: 100%;
+      width: 100%;
+      object-fit: cover; }
+  .homeNavigation .profileInfoText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 15px; }
+    .homeNavigation .profileInfoText .profileWelcome {
+      font-size: 0.7rem;
+      color: #8c959e; }
+    .homeNavigation .profileInfoText .navDisplayName {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      font-size: 1rem; }
+
+@media (max-width: 575px) {
+  .homeNavigation {
+    padding: 20px 15px 50px 15px; }
+    .homeNavigation .profileInfoContainer {
+      display: flex;
+      justify-content: center; }
+    .homeNavigation .profilePicCont {
+      width: 40px;
+      height: 40px; }
+    .homeNavigation ul.minimizedUl {
+      width: 100%; }
+    .homeNavigation .homeBtn {
+      display: flex;
+      justify-content: center; }
+    .homeNavigation button.expandBtn {
+      width: 100%; }
+  .homeDashboard .taskContainer {
+    align-items: center; }
+  .homeNavigation.minimizedNav {
+    width: 75px; } }
 
 .homePage {
   display: flex;
@@ -1480,7 +1622,7 @@ fieldset {
     position: absolute;
     top: 110%;
     left: 0;
-    z-index: 10;
+    z-index: 9;
     width: 200px;
     box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
     background-color: white; }
@@ -1917,61 +2059,190 @@ input[type="color"] {
     height: 80vh; } }
 
 .react-calendar {
-  border-radius: 10px; }
-
-.react-calendar__tile {
-  background-color: white;
-  border: 0;
-  font-size: 1rem; }
-
-.react-calendar__tile--now {
-  background-color: #A8DAAC; }
-  .react-calendar__tile--now abbr {
-    color: white; }
+  width: 100%;
+  background-color: transparent;
+  color: black;
+  border-radius: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em; }
 
 .react-calendar__navigation {
   display: flex;
-  align-items: center;
-  background-color: #A5D6A7;
-  padding: 5px 10px;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-  border: 1px solid #d4d4d4; }
-  .react-calendar__navigation span {
-    color: white; }
+  align-items: center; }
 
-.react-calendar__viewContainer {
-  border-radius: 0 0 10px 10px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-  border: 1px solid #d4d4d4;
-  padding: 10px 3px; }
+.react-calendar__navigation button {
+  color: black;
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  margin-top: 8px; }
 
-.react-calendar__navigation__label,
-.react-calendar__navigation__arrow {
-  border: 0;
-  color: white; }
+.react-calendar--doubleView {
+  width: 700px; }
 
-.react-calendar__navigation__arrow {
-  font-size: 1.5rem; }
-
-.react-calendar__navigation__next2-button,
-.react-calendar__navigation__prev2-button {
-  display: none; }
-
-.react-calendar__month-view__days__day {
+.react-calendar--doubleView .react-calendar__viewContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4px 0; }
+  margin: -0.5em; }
+
+.react-calendar--doubleView .react-calendar__viewContainer > * {
+  width: 50%;
+  margin: 0.5em; }
+
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.react-calendar button {
+  margin: 0;
+  border: 1px solid #F2F3F6;
+  outline: none;
+  position: relative;
+  height: 70px; }
+  .react-calendar button abbr {
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    font-weight: normal;
+    font-size: 0.8rem; }
+
+.react-calendar button:enabled:hover {
+  cursor: pointer; }
+
+.react-calendar__navigation {
+  display: flex;
+  height: 44px; }
+
+.react-calendar__navigation button {
+  min-width: 44px;
+  /* background: none; */ }
+
+.react-calendar__navigation button[disabled] {
+  background-color: black; }
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+  font-family: Nunito Sans ,sans-serif; }
+  .react-calendar__month-view__weekdays abbr {
+    text-transform: capitalize; }
 
 .react-calendar__month-view__weekdays__weekday {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5px; }
+  padding: 0;
+  border: 1px solid #d7d6d6;
+  border-radius: 2px 2px 0 0; }
 
-abbr {
-  color: #C8CCC4;
-  font-size: 0.6rem; }
+.react-calendar__month-view__weekNumbers .react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-weight: bold;
+  padding: calc(0.75em / 0.75) calc(0.5em / 0.75); }
+
+.react-calendar__month-view__days__day--weekend {
+  /* color: #d10000; */
+  color: black; }
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #7a7878; }
+
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  padding: 2em 0.5em; }
+
+.react-calendar__tile {
+  max-width: 100%;
+  text-align: center;
+  padding: 0.75em 0.5em;
+  background: white; }
+
+.react-calendar__tile:disabled {
+  background-color: #f0f0f0; }
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e6e6e6; }
+
+.react-calendar__tile--now {
+  /* background: #ffff76; */
+  background-color: #a5d6a7 !important; }
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #93be94; }
+
+.react-calendar__tile--hasActive {
+  background: #76baff; }
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #a9d4ff; }
+
+.react-calendar__tile--active {
+  background: #ecebeb;
+  color: #7f7f7f; }
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #edecec; }
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #e6e6e6; }
+
+abbr[title] {
+  text-decoration: none; }
+
+.react-calendar__navigation button {
+  border: 0; }
+
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button {
+  display: none; }
+
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+  background-color: white;
+  border: 1px solid #d7d6d6;
+  height: 25px;
+  width: 100px;
+  border-radius: 15px;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+  border: 1px solid rgba(212, 212, 212, 0.9);
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+
+.react-calendar__navigation__next-button::before {
+  content: "Next ";
+  color: black; }
+
+.react-calendar__navigation__prev-button::after {
+  content: " Back";
+  color: black; }
+
+.react-calendar__month-view {
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+
+.react-calendar__navigation__label__labelText {
+  font-size: 1.2rem; }
+
+.react-calendar__viewContainer {
+  margin-top: 20px; }
+
+.calendarSection {
+  position: relative;
+  padding: 25px 50px 0px 50px;
+  margin-left: 100px;
+  background-color: #F6F7FA;
+  height: 100vh; }
 
 .taskDetails {
   width: 100%;

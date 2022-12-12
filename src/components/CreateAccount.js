@@ -7,8 +7,10 @@ import { storage } from "./firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
-import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
+
+// Image Imports
+import logo from "../assets/logo.png";
 import profileImage from "../assets/profileImage.png"
 
 const CreateAccount = () => {
