@@ -75,11 +75,11 @@ const DashboardHeader = ({currentUserTime, username, isToDoBtnClicked, handleBut
         <>
             <h1 className="noWrapText"><span aria-hidden="true" className="phoneHidden">📮</span> Tasks Dashboard <span aria-hidden="true" className="phoneHidden">📮</span></h1>
             {currentUserTime >= 0 && currentUserTime < 12 ? 
-            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username}?&nbsp;🌞</p> : null}
+            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive day, {username.split(" ")[0]}?&nbsp;🌞</p> : null}
             {currentUserTime >= 12 && currentUserTime < 18 ?
-            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username}? ☕</p> : null}
+            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive afternoon, {username.split(" ")[0]}? ☕</p> : null}
             {currentUserTime >= 18 ?
-            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username}? 🌙</p> : null}
+            <p className="dashboardGreeting dashboardDayGreeting">Ready for another productive night, {username.split(" ")[0]}? 🌙</p> : null}
             <div className="taskFilters">
                 <button className={isToDoBtnClicked ? 'toDoTask taskButtonActive' : 'toDoTask'} onClick={handleSearchedOngoingBtn}>Ongoing</button>
                 <button className={isDoneBtnClicked ? 'doneTask taskButtonActive' : 'doneTask'} onClick={handleSearchedFinishedBtn}>Finished</button>

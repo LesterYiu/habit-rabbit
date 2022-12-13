@@ -37,7 +37,7 @@ const NavigationBar = ({isAuth, setIsNavExpanded, isNavExpanded}) => {
                         <li className="desktopHiddenAnchor">
                             <Link to="/login" className="loginButton">Login</Link>
                         </li>
-                        <li className="desktopHiddenAnchor">
+                        <li className="desktopHiddenAnchor createAccountLi">
                             <Link to="/create-account">Create Account</Link>
                         </li>
                     </div>}

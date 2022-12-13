@@ -98,6 +98,8 @@
 
     .expandedButtonText {
         margin-left: 10px;
+        color: black;
+        text-decoration: none;
     }
 
     li {
@@ -201,6 +203,11 @@
         
         button.expandBtn {
             width: 100%;
+
+            i {
+                color: black;
+                text-decoration: none;
+            }
         }
     }
 

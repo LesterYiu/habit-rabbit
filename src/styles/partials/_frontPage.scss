@@ -11,12 +11,20 @@
         }
     
         li {
-            margin-right: 20px;
+            margin-right: 35px;
         }
 
         .loginButton{
             border-right: 1px solid black;
             padding-right: 20px;
+        }
+
+        .rightNavigation li{
+            margin-right: 0;
+        }
+
+        .createAccountLi {
+            margin-left: 20px;
         }
 
     }

@@ -46,6 +46,8 @@ const HomeNavigation = () => {
             setUserUID('notSignedIn');
             localStorage.clear();
         })
+
+        navigate('/login')
     }
 
     const redirectToHome = () => {
@@ -143,7 +145,7 @@ const HomeNavigation = () => {
                     </div>
                     <div className="profileInfoText defaultHidden" ref={profileTextEl}>
                         <p className="profileWelcome">Good&nbsp;Day&nbsp;👋</p>
-                        <p className="navDisplayName">{username}</p>
+                        <p className="navDisplayName">{username.split(" ")[0]}</p>
                     </div>
                 </div>
                 <ul className="minimizedUl" ref={ulOneEl}>
