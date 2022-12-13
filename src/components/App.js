@@ -25,9 +25,10 @@ function App() {
   // For Navigation + Creating new tasks
   const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
   const [taskList, setTaskList] = useState([]);
+  const [isTaskExpanded, setIsTaskExpanded] = useState(false);
 
   return (
-    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList}}>
+    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded}}>
       <Routes>
         <Route path='/' element={<FrontPage />}/>
 

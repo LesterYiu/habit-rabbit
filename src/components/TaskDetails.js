@@ -9,10 +9,10 @@ import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
 import { startOfWeek } from "date-fns/esm";
 
-const TaskDetails = ({specificTask, setIsTaskExpanded, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase}) => {
+const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase}) => {
 
     // useContext variables
-    const {userUID, username, userPic, taskList, setTaskList} = useContext(AppContext);
+    const {userUID, username, userPic, taskList, setTaskList, setIsTaskExpanded} = useContext(AppContext);
 
     // Toggles
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);

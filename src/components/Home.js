@@ -40,13 +40,12 @@ const Home = () => {
     const [isFinishedTaskListZero, setIsFinishedTaskListZero] = useState(false);
     const [isOngoingSearchTaskFound, setIsOngoingSearchTaskFound] = useState(true);
     const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
-    const [isTaskExpanded, setIsTaskExpanded] = useState(false);
     const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
 
     const isMounted = useRef(false);
 
     // useContext variables
-    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, setUserPic, isNewTaskClicked, setTaskList, taskList} = useContext(AppContext);
+    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -146,6 +145,7 @@ const Home = () => {
     }
 
     const reformatTaskByDate = (taskListState, setTaskState) => {
+        // Sorts every date by completion week (start of week)
         let taskCounter = {};
         taskListState.forEach( (specificTask) => {
             if(taskCounter[specificTask.task.startDayOfWeek]) {
@@ -156,6 +156,11 @@ const Home = () => {
         })
 
         const taskListArrangedByWeek = Object.values(taskCounter).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp);
+
+        // Sorts every date by deadline date from most recent to latest.
+        for(let weeklyTasks of taskListArrangedByWeek) {
+            weeklyTasks.sort( (taskDeadlineA , taskDeadlineB) => new Date(taskDeadlineA.task.deadline.replace(/([-])/g, '/')) - new Date(taskDeadlineB.task.deadline.replace(/([-])/g, '/')));
+        }
 
         setTaskState(taskListArrangedByWeek);            
     }
@@ -315,8 +320,8 @@ const Home = () => {
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
-                <HomeNavigation setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
-                <TaskDetails specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
+                <HomeNavigation/>
+                <TaskDetails specificTask={specificTask} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask/>
@@ -331,7 +336,7 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <HomeNavigation setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
+                    <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
                             <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
@@ -416,10 +421,10 @@ const Home = () => {
         return(
             <>
                 <div className="homePage">
-                    <HomeNavigation setIsTaskExpanded={setIsTaskExpanded} isTaskExpanded={isTaskExpanded}/>
+                    <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} setIsTaskExpanded={setIsTaskExpanded} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
+                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
                             <div className="allTasksContainer">
                             {isOngoingSearchTaskFound && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer">

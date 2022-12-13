@@ -51,9 +51,6 @@ const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, de
                             <button onClick={() => {directToTaskDetails(specificTask)}}>View Task</button>
                         </li>
                         <li>
-                            <button>Edit Task</button>
-                        </li>
-                        <li>
                             <button onClick={() => {deleteTask(specificTask.id, specificTask)}}>Delete Task</button>
                         </li>
                     </ul>

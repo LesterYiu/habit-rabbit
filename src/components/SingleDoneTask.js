@@ -21,25 +21,22 @@ const SingleDoneTask = ({specificTask, directToTaskDetails, changeToUnfinishedTa
                     <p>{specificTask.task.reformattedDeadline}</p>
                 </div>
             </div>
-                <div className="buttonContainer buttonHidden">
-                    <button className="finishButton" onClick={(e) => {changeToUnfinishedTask(specificTask.id, specificTask, e)}}>Not Done</button>
-                    <button onClick={(e) => {handleDropDown(e)}}>
-                        <i className="fa-solid fa-angle-down"></i>
-                    </button>
-                    <div className="dropdownOptions hidden">
-                        <ul>
-                            <li>
-                                <button onClick={() => {directToTaskDetails(specificTask)}}>View Task</button>
-                            </li>
-                            <li>
-                                <button>Edit Task</button>
-                            </li>
-                            <li>
-                                <button onClick={() => {deleteDoneTask(specificTask.id, specificTask)}}>Delete Task</button>
-                            </li>
-                        </ul>
-                    </div>
+            <div className="buttonContainer buttonHidden">
+                <button className="finishButton" onClick={(e) => {changeToUnfinishedTask(specificTask.id, specificTask, e)}}>Not Done</button>
+                <button onClick={(e) => {handleDropDown(e)}}>
+                    <i className="fa-solid fa-angle-down"></i>
+                </button>
+                <div className="dropdownOptions hidden">
+                    <ul>
+                        <li>
+                            <button onClick={() => {directToTaskDetails(specificTask)}}>View Task</button>
+                        </li>
+                        <li>
+                            <button onClick={() => {deleteDoneTask(specificTask.id, specificTask)}}>Delete Task</button>
+                        </li>
+                    </ul>
                 </div>
+            </div>
         </div>
     )
 }

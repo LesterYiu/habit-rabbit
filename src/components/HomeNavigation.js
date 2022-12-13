@@ -5,10 +5,10 @@ import { useContext, useRef, useState } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
-const HomeNavigation = ({setIsTaskExpanded, isTaskExpanded}) => {
+const HomeNavigation = () => {
 
     // useContext variables
-    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked} = useContext(AppContext)
+    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded} = useContext(AppContext)
 
     const [isNavExpanded, setIsNavExpanded] = useState(false);
 
@@ -62,7 +62,6 @@ const HomeNavigation = ({setIsTaskExpanded, isTaskExpanded}) => {
         if(isTaskExpanded) {
             setIsTaskExpanded(false);
         } else {
-            setIsTaskExpanded(true);
             navigate('/home');
         }
     }
