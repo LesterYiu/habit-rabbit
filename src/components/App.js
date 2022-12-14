@@ -25,10 +25,19 @@ function App() {
   // For Navigation + Creating new tasks
   const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
   const [taskList, setTaskList] = useState([]);
+  const [doneTaskList, setDoneTaskList] = useState([]);
   const [isTaskExpanded, setIsTaskExpanded] = useState(false);
 
+  // Nav Expanded
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
+
+  // Filter & Modal filter selected
+  const [isLateSelected, setIsLateSelected] = useState(false);
+  const [isPrioritySelected, setIsPrioritySelected] = useState(false)
+  const [filteredAndSearchedTask, setFilteredAndSearchedTask] = useState([]);
+
   return (
-    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded}}>
+    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isNavExpanded, setIsNavExpanded, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask, filteredAndSearchedTask}}>
       <Routes>
         <Route path='/' element={<FrontPage />}/>
 

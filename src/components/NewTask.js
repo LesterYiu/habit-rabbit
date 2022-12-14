@@ -18,6 +18,7 @@ const NewTask = () => {
     const [firstDayOfWeekTimestamp, setFirstDayOfWeekTimestamp] = useState("")
     const [time, setTime] = useState("");
     const [priority, setPriority] = useState("");
+    const [priorityLevel, setPriorityLevel] = useState("");
     const [isTaskExist, setIsTaskExist] = useState(false);
     const [isDuplicateFound, setIsDuplicateFound] = useState(false);
     const [isCustomTaskSelected, setIsCustomTaskSelected] = useState(false);
@@ -80,7 +81,7 @@ const NewTask = () => {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, label: [...labelList], completion: 0, updates:[], timeSpent: {}}, uuid: uuid()});
+                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, priorityLevel, label: [...labelList], completion: 0, isLate: false, updates:[], timeSpent: {}}, uuid: uuid()});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel(e);
@@ -210,6 +211,17 @@ const NewTask = () => {
         setIsNewTaskClicked(false);
     }
 
+    const handlePriority = (e) => {
+        setPriority(e.target.value);
+        if(e.target.value === "low") {
+            setPriorityLevel(1)
+        } else if (e.target.value === "medium") {
+            setPriorityLevel(2);
+        } else {
+            setPriorityLevel(3);
+        }
+    }
+
     return(
         <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
             <fieldset>
@@ -240,17 +252,17 @@ const NewTask = () => {
                             <p className="paragraphLabel">Priority:</p>
                             <div className="lowPriorityContainer priorityContainer">
                                 <label htmlFor="lowPriority">Low</label>
-                                <input type="radio" id="lowPriority" name="priority" value="low" onClick={(e) => {setPriority(e.target.value)}} required/>
+                                <input type="radio" id="lowPriority" name="priority" value="low" onClick={handlePriority} required/>
                             </div>
 
                             <div className="mediumPriorityContainer priorityContainer">
                                 <label htmlFor="mediumPriority">Medium</label>
-                                <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={(e) => {setPriority(e.target.value)}}/>
+                                <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={handlePriority}/>
                             </div>
 
                             <div className="highPriorityContainer priorityContainer">
                                 <label htmlFor="highPiority">High</label>
-                                <input type="radio" id="highPiority" name="priority" value="high" onClick={(e) => {setPriority(e.target.value)}}/>
+                                <input type="radio" id="highPiority" name="priority" value="high" onClick={handlePriority}/>
                             </div>
                         </div>
                     </div>

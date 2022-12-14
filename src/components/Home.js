@@ -6,6 +6,7 @@ import { useState , useEffect, useContext, useRef} from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { getHours } from "date-fns";
 import uuid from "react-uuid";
+import { reformatTaskByDate } from "../utils/globalFunctions";
 
 // Component Imports
 import TaskDetails from "./TaskDetails";
@@ -19,14 +20,17 @@ import NewTask from "./NewTask";
 import errorMessageOne from "../assets/errorMessageOne.gif";
 import errorMessageTwo from "../assets/errorMessageTwo.gif";
 
+
 const Home = () => {
 
-    const [doneTaskList, setDoneTaskList] = useState([]);
     const [reformattedTask, setReformattedTask] = useState([]);
     const [reformattedDoneTask, setReformattedDoneTask] = useState([]); 
     const [searchedTaskList, setSearchedTaskList] = useState([]);
     const [doneSearchedTaskList, setDoneSearchedTaskList] = useState([]);
     const [specificTask, setSpecificTask] = useState([]);
+
+    // Sort & Filtered Tasks
+    const [filteredTasks, setFilteredTasks] = useState([]);
 
     // const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
     const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
@@ -40,12 +44,13 @@ const Home = () => {
     const [isFinishedTaskListZero, setIsFinishedTaskListZero] = useState(false);
     const [isOngoingSearchTaskFound, setIsOngoingSearchTaskFound] = useState(true);
     const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
+    const [isFilterSearchTaskFound, setIsFilterSearchTaskFound] = useState(true);
     const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
 
     const isMounted = useRef(false);
 
     // useContext variables
-    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded} = useContext(AppContext);
+    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -98,21 +103,7 @@ const Home = () => {
 
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
     useEffect( () => {
-
-        const getPost = async () => {
-            // data - ongoing tasks, doneData - finished tasks
-            const data = await getDocs(collectionRef);
-            const doneData = await getDocs(doneCollection);
-
-            // This will layout the docs data in an array with the document id which can be used later to remove each individual doc
-            setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-            setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
-
-            setIsPageLoading(false);
-        }
-        
         getPost();
-
         setCurrentUserTime(getHours(new Date()));
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,33 +127,13 @@ const Home = () => {
         checkLength(reformattedDoneTask, setIsFinishedTaskListZero);
         checkLength(searchedTaskList, setIsOngoingSearchTaskFound);
         checkLength(doneSearchedTaskList, setIsFinishedSearchTaskFound);
+        checkLength(filteredAndSearchedTask, setIsFilterSearchTaskFound);
 
     }, [reformattedTask, reformattedDoneTask, searchedTaskList, doneSearchedTaskList])
 
     const handleButtonSwitch = (switchToFalse, switchToTrue) => {
         switchToTrue(true);
         switchToFalse(false);
-    }
-
-    const reformatTaskByDate = (taskListState, setTaskState) => {
-        // Sorts every date by completion week (start of week)
-        let taskCounter = {};
-        taskListState.forEach( (specificTask) => {
-            if(taskCounter[specificTask.task.startDayOfWeek]) {
-                taskCounter[specificTask.task.startDayOfWeek].push(specificTask);
-            } else {
-                taskCounter[specificTask.task.startDayOfWeek] = [specificTask];
-            }
-        })
-
-        const taskListArrangedByWeek = Object.values(taskCounter).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp);
-
-        // Sorts every date by deadline date from most recent to latest.
-        for(let weeklyTasks of taskListArrangedByWeek) {
-            weeklyTasks.sort( (taskDeadlineA , taskDeadlineB) => new Date(taskDeadlineA.task.deadline.replace(/([-])/g, '/')) - new Date(taskDeadlineB.task.deadline.replace(/([-])/g, '/')));
-        }
-
-        setTaskState(taskListArrangedByWeek);            
     }
 
     const updateDatabase = async (collectionType, postDocType, finishedStateSet, i) => {
@@ -178,6 +149,18 @@ const Home = () => {
 
         const data = await getDocs(collectionType);
         finishedStateSet(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+    }
+
+    const getPost = async () => {
+        // data - ongoing tasks, doneData - finished tasks
+        const data = await getDocs(collectionRef);
+        const doneData = await getDocs(doneCollection);
+
+        // This will layout the docs data in an array with the document id which can be used later to remove each individual doc
+        setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+        setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
+
+        setIsPageLoading(false);
     }
 
     // Filters out the user's checked task from the searched task list of tasks. i = specificTask
@@ -217,6 +200,8 @@ const Home = () => {
 
     // Functions relating to individual task components
 
+
+    
     const changeToFinishedTask = async (id, i) => {
 
         // Database Collection Reference for user's list of tasks
@@ -230,9 +215,57 @@ const Home = () => {
 
         // This will update the state, immediately removing the task from the page to avoid repeated onClick function calls. Afterwards, it will remove the document from the ongoing task collection and add it to the finished task collection and then afterwards, update the state with the unfinished collection. This is triggered by the checkmark on the tasks on the "to do" section.
 
+        if(isLateSelected) {
+            changeLateToFinish(i, filteredTasks, setFilteredTasks);
+        }
+
         setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
+
         await updateDatabase(doneCollection, postDoc, setDoneTaskList, currentTaskCopy);
     }
+
+    function changeLateToFinish (dynamicTask, formattedListOfTasks, setStateFunction) {
+        const filteredTaskList = [];
+
+        for(let weeklyTasks of formattedListOfTasks) {
+            for(let specificTask of weeklyTasks) {
+                filteredTaskList.push(specificTask);
+            }
+        }
+
+        const finalFilteredTaskList = filteredTaskList.filter( (specificTask) => specificTask !== dynamicTask);
+
+
+        let taskCounter = {};
+        finalFilteredTaskList.forEach( (specificTask) => {
+            if(taskCounter[specificTask.task.startDayOfWeek]) {
+                taskCounter[specificTask.task.startDayOfWeek].push(specificTask);
+            } else {
+                taskCounter[specificTask.task.startDayOfWeek] = [specificTask];
+            }
+        })
+        
+
+        const taskListArrangedByWeek = Object.values(taskCounter).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp);
+
+        const lateTasksArr = [];
+
+        for(let taskWeek of taskListArrangedByWeek) {
+            for(let specificTask of taskWeek) {
+                const today = new Date();
+                const deadline = new Date(specificTask.task.deadline.replace(/([-])/g, '/'));
+                const deadlineTimeArr = specificTask.task.time.split(":");
+                deadline.setHours(deadlineTimeArr[0], deadlineTimeArr[1], 0, 0);
+
+                if(today > deadline) {
+                    lateTasksArr.push(specificTask);
+                }
+            }
+        }
+
+        reformatTaskByDate(lateTasksArr, setStateFunction);
+    }
+
 
     // Deletes the task found at the specific document id of the task. Filters out the tasklists to exclude the task selected and re-renders the page with newly filtered array. This is for ongoing task list only
     const deleteTask = async (id, i) => {
@@ -252,13 +285,16 @@ const Home = () => {
         currentTaskCopy.task.completion = "100";
 
         // Using the task that the user selects, insert it into the correct corresponding week array for donetasklist and donesearchtasklist
-                
+        if(isLateSelected) {
+            changeLateToFinish(i, filteredTasks, setFilteredTasks);
+            changeLateToFinish(i, filteredAndSearchedTask, setFilteredAndSearchedTask);
+        } 
+        
         filterFromReformattedTaskList(searchedTaskList, setSearchedTaskList, i);
         filterFromReformattedTaskList(reformattedTask, setReformattedTask, i);
 
         await addDoc(doneCollection, currentTaskCopy);
         await deleteDoc(postDoc);
-
     }
 
     const deleteTaskSearchedList = async(id, i) => {
@@ -321,7 +357,7 @@ const Home = () => {
         return(
             <div className="homePage">
                 <HomeNavigation/>
-                <TaskDetails specificTask={specificTask} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setDoneTaskList={setDoneTaskList} doneTaskList={doneTaskList} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
+                <TaskDetails specificTask={specificTask} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
                 {isNewTaskClicked ? 
                 <>
                     <NewTask/>
@@ -339,32 +375,43 @@ const Home = () => {
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
+                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks}/>
                             <div className="allTasksContainer">
-                                {isPageLoading && isToDoBtnClicked ? 
+                                {isPageLoading && isToDoBtnClicked && reformattedTask.length === 0 ? 
                                 <div className="noTaskFoundContainer loadingContainer">
                                     <p>Now loading...</p>
                                     <div className="lds-ring"><div></div></div>
-                                </div> : null
-                                }
-                                {isOngoingTaskListZero && isToDoBtnClicked && isPageLoading === false? 
+                                </div> : null}
+                                {isOngoingTaskListZero && isToDoBtnClicked && isPageLoading === false || isFinishedTaskListZero && isDoneBtnClicked && isPageLoading === false || isLateSelected && filteredTasks.length === 0 && isPageLoading === false && isToDoBtnClicked ? 
                                 <div className="noTaskFoundContainer">
                                     <p>There are currently no outstanding tasks.</p>
                                     <p>Take a sip of tea and relax!</p>
                                     <div className="errorImageContainer">
                                         <img src={errorMessageOne} alt="" />
                                     </div>
-                                </div> : null
-                                }
-                                {isFinishedTaskListZero && isDoneBtnClicked && isPageLoading === false?
-                                <div className="noTaskFoundContainer">
-                                    <p>There is currently nothing in this section!</p>
-                                    <p>Take a sip of tea and get back to work!</p>
-                                    <div className="errorImageContainer">
-                                        <img src={errorMessageOne} alt="" />
-                                    </div>
                                 </div> : null}
-                                {isToDoBtnClicked ?
+                                {isToDoBtnClicked && isLateSelected || isPrioritySelected ?
+                                Object.keys(filteredTasks).map( (date) => {
+                                        return (
+                                            <div key={uuid()}>
+                                                <div className="taskDeadlineDateContainer">
+                                                    <p>{`Week of ${filteredTasks[date][0].task.startDayOfWeek} (${filteredTasks[date].length})`}</p>
+                                                    <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                                        <span className="sr-only">dropdown button</span>
+                                                        <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div className="taskMainContainer">
+                                                    {filteredTasks[date].map( (specificTask) => {
+                                                        return (
+                                                            <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
+                                                        )                     
+                                                    })}
+                                                </div>
+                                            </div>
+                                        )
+                                    }): null}
+                                {isToDoBtnClicked && !isLateSelected && !isPrioritySelected?
                                 Object.keys(reformattedTask).map( (date) => {
                                     return (
                                         <div key={uuid()}>
@@ -378,13 +425,14 @@ const Home = () => {
                                             <div className="taskMainContainer">
                                                 {reformattedTask[date].map( (specificTask) => {
                                                     return (
-                                                        <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()}/>
+                                                        <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
                                                     )                     
                                                 })}
                                             </div>
                                         </div>
                                     )
-                                }) : 
+                                }) : null}
+                                {isDoneBtnClicked ?
                                 Object.keys(reformattedDoneTask).map( (date) => {
                                     return(
                                         <div key={uuid()}>
@@ -402,11 +450,10 @@ const Home = () => {
                                             })}
                                         </div>
                                     )
-                                })}
+                                }): null}
                             </div>
                         </div>
                     </div>
-                    {/* <CustomizeTab userUID={userUID}/> */}
                 </div>
                 {isNewTaskClicked ? 
                 <>
@@ -417,16 +464,15 @@ const Home = () => {
             </>
         )
     } else if (isAuth && isSearchBarPopulated){
-
         return(
             <>
                 <div className="homePage">
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} reformatTaskByDate={reformatTaskByDate} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList}/>
+                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks}/>
                             <div className="allTasksContainer">
-                            {isOngoingSearchTaskFound && isToDoBtnClicked ? 
+                            {isOngoingSearchTaskFound && isToDoBtnClicked && searchedTaskList.length === 0 && !isLateSelected|| isFinishedSearchTaskFound && isDoneBtnClicked && doneSearchedTaskList.length === 0 && !isLateSelected || filteredAndSearchedTask.length === 0  && isLateSelected ? 
                                 <div className="noTaskFoundContainer">
                                     <p>No results found.</p>
                                     <p>We couldn't find what you're looking for</p>
@@ -435,16 +481,28 @@ const Home = () => {
                                     </div>
                                 </div> : null
                             }
-                            {isFinishedSearchTaskFound && isDoneBtnClicked ? 
-                                <div className="noTaskFoundContainer">
-                                    <p>No results found.</p>
-                                    <p>We couldn't find what you're looking for</p>
-                                    <div className="errorImageContainer errorImageContainerTwo">
-                                        <img src={errorMessageTwo} alt="" />
+                            {isToDoBtnClicked && isLateSelected ?
+                            filteredAndSearchedTask.map( (date) => {
+                                return(
+                                    <div key={uuid()}>
+                                        <div className="taskDeadlineDateContainer">
+                                            <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
+                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                                <span className="sr-only">dropdown button</span>
+                                                <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div className="taskMainContainer">
+                                        {date.map( (specificTask) => {
+                                            return (
+                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
+                                            )                     
+                                        })}
+                                        </div>
                                     </div>
-                                </div> : null
-                            }
-                            {isToDoBtnClicked ?
+                                )
+                            }) : null }
+                            {isToDoBtnClicked && !isLateSelected && !isPrioritySelected ?
                             searchedTaskList.map( (date) => {
                                 return(
                                     <div key={uuid()}>
@@ -458,13 +516,14 @@ const Home = () => {
                                         <div className="taskMainContainer">
                                         {date.map( (specificTask) => {
                                             return (
-                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()}/>
+                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
                                             )                     
                                         })}
                                         </div>
                                     </div>
                                 )
-                            }) : 
+                            }) : null }
+                            {isDoneBtnClicked && !isLateSelected && !isPrioritySelected ?
                             doneSearchedTaskList.map( (date) => {
                                 return(
                                     <div key={uuid()}>
@@ -478,18 +537,17 @@ const Home = () => {
                                         <div className="taskMainContainer">
                                         {date.map( (specificTask) => {
                                             return (
-                                                <SingleDoneTask key={uuid()} specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeSearchedToUnfinishedTask} deleteDoneTask={deleteTaskSearchedDoneList}/>
+                                                <SingleDoneTask key={uuid()} specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeSearchedToUnfinishedTask} deleteDoneTask={deleteTaskSearchedDoneList} />
                                             )                     
                                         })}
                                         </div>
                                     </div>
                                 )
-                            }) 
+                            }) : null
                             }
                             </div>
                         </div>
                     </div>
-                    {/* <CustomizeTab/> */}
                 </div>
                 {isNewTaskClicked ? 
                 <>
@@ -499,8 +557,9 @@ const Home = () => {
                 : null}
             </>
         )
+    } else if(!isAuth && !isPageLoading) {
+        return <Navigate to="/login" replace/>
     }
-    return <Navigate to="/login" replace/>
 }
 
 export default Home;

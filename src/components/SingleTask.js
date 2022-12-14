@@ -1,23 +1,11 @@
-import { useEffect, useState } from "react"
-import uuid from "react-uuid"
-import { handleScroll } from "../utils/globalFunctions"
-import { handleDropDown } from "../utils/globalFunctions"
+import { useState ,useContext} from "react";
+import uuid from "react-uuid";
+import { AppContext } from "../Contexts/AppContext";
+import { handleScroll, handleDropDown } from "../utils/globalFunctions";
 
 const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, deleteTask}) => {
 
-    const [isLate, setIsLate] = useState(false);
-
-    useEffect( () => { 
-        const today = new Date();
-
-        const deadline = new Date(specificTask.task.deadline.replace(/([-])/g, '/'));
-        const deadlineTimeArr = specificTask.task.time.split(":");
-        deadline.setHours(deadlineTimeArr[0], deadlineTimeArr[1], 0, 0);
-
-        if(today > deadline) {
-            setIsLate(true);
-        }
-    }, [specificTask.task.deadline, specificTask.task.time])
+    const [isLate, setIsLate] = useState(specificTask.task.isLate);
 
     return(
         <div className="taskContainer" key={uuid()} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
@@ -32,7 +20,7 @@ const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, de
                     <p className={specificTask.task.priority}>{specificTask.task.priority}</p>
                     {specificTask.task.label.map( (labelName) => 
                     <p key={uuid()} className={labelName}>{labelName}</p>)}
-                    {isLate? 
+                    {isLate ? 
                     <p className="lateLabel">Late</p> : null}
                 </div>
                 <div className="dueDateContainer">

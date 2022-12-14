@@ -355,6 +355,22 @@ abbr[title] {
             height: auto;
         }
     }
+
+    .overlayBackground {
+        z-index: 20;
+    }
+
+    .overlayBackgroundTwo {
+        z-index: 40;
+    }
+
+    .homeNavigation {
+        z-index: 30;
+    }
+
+    .createTaskForm {
+        z-index: 50;
+    }
 }
 
 

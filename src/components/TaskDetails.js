@@ -9,10 +9,10 @@ import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
 import { startOfWeek } from "date-fns/esm";
 
-const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, setDoneTaskList, doneTaskList, reformattedTask, reformattedDoneTask, updateDatabase}) => {
+const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, reformattedTask, reformattedDoneTask, updateDatabase}) => {
 
     // useContext variables
-    const {userUID, username, userPic, taskList, setTaskList, setIsTaskExpanded} = useContext(AppContext);
+    const {userUID, username, userPic, taskList, setTaskList, setIsTaskExpanded, doneTaskList, setDoneTaskList} = useContext(AppContext);
 
     // Toggles
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
@@ -45,6 +45,7 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
     const [frontBtnCounter, setFrontBtnCounter] = useState(0);
     
 
+    const [selectedDeadline, setSelectedDeadline] = useState("");
     const [updates, setUpdates] = useState([]);
     const [timeSpent, setTimeSpent] = useState(0);
     const [isMoreThan24, setIsMoreThan24] = useState(false);
@@ -56,6 +57,10 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
 
     // useRef variables
     const textareaEl = useRef(null)
+
+    useEffect( () => {
+        checkIfLate()
+    }, [selectedDeadline])
 
     // To get the data from database on mount
     useEffect( () => {
@@ -126,9 +131,16 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
         
         let documentRef = determineWhichRef(specificTask.id);
 
-        await updateDoc(documentRef, {
-            "task.updates": updates
-        })
+        try {
+            await updateDoc(documentRef, {
+                "task.updates": updates
+            })
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();    
+            await updateDoc(newDocumentRef, {
+                "task.updates": updates
+            })
+        }
 
         setIsProgressSaved(true)
     }
@@ -396,9 +408,16 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
         // Filters out the date objects containing zero to avoid unneccesary uploads.
         const finalArr = uniqueArr.filter((dateObj) => dateObj.time !== 0);
 
-        await updateDoc(documentRef, {
-            "task.timeSpent" : finalArr
-        })
+        try {
+            await updateDoc(documentRef, {
+                "task.timeSpent" : finalArr
+            })
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();  
+            await updateDoc(newDocumentRef, {
+                "task.timeSpent" : finalArr
+            })
+        }
     }
     
     const submitLoggedTime = () => {
@@ -420,9 +439,16 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
         setDay7Time(0)
         setTimeSpent(0);
 
-        await updateDoc(documentRef, {
-            "task.timeSpent" : []
-        })
+        try {
+            await updateDoc(documentRef, {
+                "task.timeSpent" : []
+            })
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();  
+            await updateDoc(newDocumentRef, {
+                "task.timeSpent" : []
+            })
+        }
     }
 
     const updateTaskName = async (e) => {
@@ -430,9 +456,16 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
 
         specificTask.task.name = e.target.value;
 
-        await updateDoc(documentRef, {
-            "task.name" : e.target.value
-        });
+        try{
+            await updateDoc(documentRef, {
+                "task.name" : e.target.value
+            });
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();
+            await updateDoc(newDocumentRef, {
+                "task.name" : e.target.value
+            });
+        }
     }
 
     const updateTaskDescription = async(e) => {
@@ -440,23 +473,49 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
 
         specificTask.task.description = e.target.value;
 
-        await updateDoc(documentRef, {
-            "task.description" : e.target.value
-        });
+        try {
+            await updateDoc(documentRef, {
+                "task.description" : e.target.value
+            });
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();
+            await updateDoc(newDocumentRef, {
+                "task.description" : e.target.value
+            });
+        }
     }
 
     const updatePriority = async(e) => {
         let documentRef = determineWhichRef(specificTask.id);
 
         specificTask.task.priority = e.target.value;
+        let priorityLevel;
 
-        await updateDoc(documentRef, {
-            "task.priority" : e.target.value
-        });
+        if(e.target.value === "low") {
+            priorityLevel = 1;
+        } else if (e.target.value === "medium") {
+            priorityLevel = 2;
+        } else {
+            priorityLevel = 3;
+        }
+
+        try {
+            await updateDoc(documentRef, {
+                "task.priority" : e.target.value,
+                "task.priorityLevel" : priorityLevel
+            });
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();
+            await updateDoc(newDocumentRef, {
+                "task.priority" : e.target.value,
+                "task.priorityLevel" : priorityLevel
+            });
+        }
     }
 
     const updateDate = async (e) => {
 
+        setSelectedDeadline(e.target.value)
         let documentRef = determineWhichRef(specificTask.id);
 
         const dateString = e.target.value.replace(/([-])/g, '');
@@ -474,13 +533,24 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
         const startDayOfWeek = format(firstDayOfWeek, 'MMM dd, yyyy');
         const deadline = e.target.value;
 
-        await updateDoc(documentRef, {
-            "task.deadline" : deadline,
-            "task.firstDayOfWeekUnformatted" : firstDayOfWeekUnformatted,
-            "task.firstDayOfWeekTimestamp" : firstDayOfWeekTimestamp,
-            "task.reformattedDeadline" : reformattedDeadline,
-            "task.startDayOfWeek": startDayOfWeek
-        });
+        try {
+            await updateDoc(documentRef, {
+                "task.deadline" : deadline,
+                "task.firstDayOfWeekUnformatted" : firstDayOfWeekUnformatted,
+                "task.firstDayOfWeekTimestamp" : firstDayOfWeekTimestamp,
+                "task.reformattedDeadline" : reformattedDeadline,
+                "task.startDayOfWeek": startDayOfWeek
+            });
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();
+            await updateDoc(newDocumentRef, {
+                "task.deadline" : deadline,
+                "task.firstDayOfWeekUnformatted" : firstDayOfWeekUnformatted,
+                "task.firstDayOfWeekTimestamp" : firstDayOfWeekTimestamp,
+                "task.reformattedDeadline" : reformattedDeadline,
+                "task.startDayOfWeek": startDayOfWeek
+            });
+        }
     }
 
     const convertArmyToStandardTime = (time) => {
@@ -502,9 +572,16 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
         let documentRef = determineWhichRef(specificTask.id);
 
         specificTask.task.time = e.target.value;
-        await updateDoc(documentRef, {
-            "task.time" : e.target.value
-        })
+        try {
+            await updateDoc(documentRef, {
+                "task.time" : e.target.value
+            })
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();
+            await updateDoc(newDocumentRef, {
+                "task.time" : e.target.value
+            })
+        }
     }
 
     const toggleEditComments = (e) => {
@@ -540,9 +617,16 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
             }
         }
         commentParagraphEl.textContent = e.target.value;
-        await updateDoc(documentRef, {
-            "task.updates" : updatesArr
-        })
+        try {
+            await updateDoc(documentRef, {
+                "task.updates" : updatesArr
+            })
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();
+            await updateDoc(newDocumentRef, {
+                "task.updates" : updatesArr
+            })           
+        }
     }
 
     const convertTimeToStandard = (update) => {
@@ -674,6 +758,40 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
             if(task.uuid === specificTask.uuid) {
                 newDocRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, task.id);
                 return newDocRef;                
+            }
+        }
+    }
+
+    const checkIfLate = async () => {
+
+        if(selectedDeadline === "") return;
+
+        const today = new Date();
+        const deadline = new Date(selectedDeadline.replace(/([-])/g, '/'));
+        const deadlineTimeArr = specificTask.task.time.split(":");
+        const documentRef = determineWhichRef(specificTask.id);
+        deadline.setHours(deadlineTimeArr[0], deadlineTimeArr[1], 0, 0);
+        if(today > deadline) {
+            try {
+                await updateDoc(documentRef, {
+                    "task.isLate" : true
+                })                
+            } catch {
+                const newDocumentRef = await getNewUpdatedRef();
+                await updateDoc(newDocumentRef, {
+                    "task.isLate" : true
+                })   
+            }
+        } else if (today < deadline){
+            try {
+                await updateDoc(documentRef, {
+                    "task.isLate" : false
+                })    
+            } catch {
+                const newDocumentRef = await getNewUpdatedRef();
+                await updateDoc(newDocumentRef, {
+                    "task.isLate" : false
+                })
             }
         }
     }

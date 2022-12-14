@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 const HomeNavigation = () => {
 
     // useContext variables
-    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded} = useContext(AppContext)
-
-    const [isNavExpanded, setIsNavExpanded] = useState(false);
+    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, isNavExpanded, setIsNavExpanded} = useContext(AppContext)
 
     const homeText = useRef(null);
     const newTaskText = useRef(null);
@@ -36,6 +34,8 @@ const HomeNavigation = () => {
     const navigate = useNavigate();
 
     const handleNewTask = () => {
+        handleShrinkBtn();
+        setIsNavExpanded(false);
         setIsNewTaskClicked(true);
     }
 
@@ -65,6 +65,23 @@ const HomeNavigation = () => {
             setIsTaskExpanded(false);
         } else {
             navigate('/home');
+        }
+    }
+
+    const redirectToCalendar = () => {
+        if(location.pathname !== "/calendar") navigate('/calendar');
+
+        if(isNavExpanded === true) {
+            setIsNavExpanded(false)
+            handleNavToggleBtn()
+        }
+
+        if(isTaskExpanded === undefined) return
+
+        if(isTaskExpanded) {
+            setIsTaskExpanded(false);
+        } else {
+            navigate('/calendar');
         }
     }
 
@@ -162,10 +179,10 @@ const HomeNavigation = () => {
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconTwo}></i>
                     </li>
                     <li>
-                        <Link to="/calendar" className="homeBtnTwo homeBtn">
+                        <button to="/calendar" className="homeBtnTwo homeBtn" onClick={redirectToCalendar}>
                             <span aria-hidden="true">🗓️</span> 
                             <span className="defaultHidden" ref={calendarText}>Calendar</span>
-                        </Link>
+                        </button>
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconThree}></i>
                     </li>
                     <li>

@@ -2348,6 +2348,14 @@ abbr[title] {
     .calendarPage .noResultsFound .errorImageContainer {
       width: 150px;
       height: auto; }
+  .calendarPage .overlayBackground {
+    z-index: 20; }
+  .calendarPage .overlayBackgroundTwo {
+    z-index: 40; }
+  .calendarPage .homeNavigation {
+    z-index: 30; }
+  .calendarPage .createTaskForm {
+    z-index: 50; }
 
 @media (max-width: 940px) {
   .calendarPage .displayTasksSection {

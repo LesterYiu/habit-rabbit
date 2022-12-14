@@ -9,6 +9,7 @@ import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { format, startOfWeek } from "date-fns/esm";
 import uuid from "react-uuid";
+import { reformatTaskByDate } from "../utils/globalFunctions";
 
 // Image Imports
 import errorMessageOne from "../assets/errorMessageOne.gif";
@@ -22,7 +23,7 @@ const CalendarSection = () => {
     const [allDatesArray, setAllDatesArr] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isTaskExpanded} = useContext(AppContext);
 
     // Check for authen
     useEffect( () => {
@@ -60,25 +61,6 @@ const CalendarSection = () => {
         setIsLoading(false);
     }
 
-    const reformatTaskByDate = (taskListState, setTaskState) => {
-        let taskCounter = {};
-        taskListState.forEach( (specificTask) => {
-            if(taskCounter[specificTask.task.startDayOfWeek]) {
-                taskCounter[specificTask.task.startDayOfWeek].push(specificTask);
-            } else {
-                taskCounter[specificTask.task.startDayOfWeek] = [specificTask];
-            }
-        })
-
-        const taskListArrangedByWeek = Object.values(taskCounter).sort((a,b) => a[0].task.firstDayOfWeekTimestamp - b[0].task.firstDayOfWeekTimestamp);
-
-        for(let weeklyTasks of taskListArrangedByWeek) {
-            weeklyTasks.sort( (taskDeadlineA , taskDeadlineB) => new Date(taskDeadlineA.task.deadline.replace(/([-])/g, '/')) - new Date(taskDeadlineB.task.deadline.replace(/([-])/g, '/')));
-        }  
-        
-        setTaskState(taskListArrangedByWeek);    
-    }
-
     const handleSelectedWeek = () => {
         setSelectedWeekTasks([]);
 
@@ -106,7 +88,7 @@ const CalendarSection = () => {
             {isNewTaskClicked ? 
             <>
                 <NewTask />
-                <div className="overlayBackground"></div>
+                <div className="overlayBackground overlayBackgroundTwo"></div>
             </>
             : null}
             <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
