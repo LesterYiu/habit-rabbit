@@ -1,17 +1,13 @@
-import { useState ,useContext} from "react";
 import uuid from "react-uuid";
-import { AppContext } from "../Contexts/AppContext";
 import { handleScroll, handleDropDown } from "../utils/globalFunctions";
 
 const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, deleteTask}) => {
 
-    const [isLate, setIsLate] = useState(specificTask.task.isLate);
-
     return(
-        <div className="taskContainer" key={uuid()} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
+        <div className="taskContainer" key={uuid()} onPointerEnter={(e) => {handleScroll(e)}} onPointerLeave={(e) =>{handleScroll(e)}} onMouseOver={(e) => {handleScroll(e)}} >
             <div className="taskText">
                 <button onClick={() => {directToTaskDetails(specificTask)}}>
-                    <p className="taskName" onMouseOver={(e) => {e.target.className = "taskName hoverOverTask"}} onMouseLeave={(e) => {e.target.className = "taskName"}}>{specificTask.task.name.length > 50 ? specificTask.task.name.slice(0, 50) + "..." : specificTask.task.name}</p>
+                    <p className="taskName" onPointerEnter={(e) => {e.target.className = "taskName hoverOverTask"}} onPointerLeave={(e) => {e.target.className = "taskName"}}>{specificTask.task.name.length > 50 ? specificTask.task.name.slice(0, 50) + "..." : specificTask.task.name}</p>
                 </button>
                 <p className="taskDescription">{specificTask.task.description.length > 50 ? specificTask.task.description.slice(0, 50) + "...": specificTask.task.description}</p>
             </div>
@@ -20,7 +16,7 @@ const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, de
                     <p className={specificTask.task.priority}>{specificTask.task.priority}</p>
                     {specificTask.task.label.map( (labelName) => 
                     <p key={uuid()} className={labelName}>{labelName}</p>)}
-                    {isLate ? 
+                    {specificTask.task.isLate ? 
                     <p className="lateLabel">Late</p> : null}
                 </div>
                 <div className="dueDateContainer">

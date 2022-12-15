@@ -4,10 +4,10 @@ import { handleDropDown, handleScroll } from "../utils/globalFunctions";
 const SingleDoneTask = ({specificTask, directToTaskDetails, changeToUnfinishedTask, deleteDoneTask}) => {
 
     return(
-        <div className="taskContainer" key={uuid()} onMouseOver={(e) => {handleScroll(e)}} onMouseLeave={(e) =>{handleScroll(e)}}>
+        <div className="taskContainer" key={uuid()} onPointerEnter={(e) => {handleScroll(e)}} onPointerLeave={(e) =>{handleScroll(e)}}  onMouseOver={(e) => {handleScroll(e)}}>
             <div className="taskText">
                 <button onClick={() => {directToTaskDetails(specificTask)}}>
-                    <p className="taskName">{specificTask.task.name.length > 50 ? specificTask.task.name.slice(0, 50) + "..." : specificTask.task.name}</p>
+                    <p className="taskName" onPointerEnter={(e) => {e.target.className = "taskName hoverOverTask"}} onPointerLeave={(e) => {e.target.className = "taskName"}}>{specificTask.task.name.length > 50 ? specificTask.task.name.slice(0, 50) + "..." : specificTask.task.name}</p>
                 </button>
                 <p className="taskDescription">{specificTask.task.description.length > 50 ? specificTask.task.description.slice(0, 50) + "...": specificTask.task.description}</p>
             </div>

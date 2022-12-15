@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const HomeNavigation = () => {
 
     // useContext variables
-    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, isNavExpanded, setIsNavExpanded} = useContext(AppContext)
+    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, isNavExpanded, setIsNavExpanded, setIsLateSelected} = useContext(AppContext)
 
     const homeText = useRef(null);
     const newTaskText = useRef(null);
@@ -46,7 +46,6 @@ const HomeNavigation = () => {
             setUserUID('notSignedIn');
             localStorage.clear();
         })
-
         navigate('/login')
     }
 
@@ -64,6 +63,7 @@ const HomeNavigation = () => {
         if(isTaskExpanded) {
             setIsTaskExpanded(false);
         } else {
+            setIsLateSelected(false);
             navigate('/home');
         }
     }
@@ -82,6 +82,7 @@ const HomeNavigation = () => {
             setIsTaskExpanded(false);
         } else {
             navigate('/calendar');
+            
         }
     }
 

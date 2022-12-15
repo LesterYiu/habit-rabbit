@@ -591,6 +591,7 @@ fieldset {
 
 .frontPage .slideMenu {
   position: fixed;
+  z-index: 30;
   height: 100vh;
   width: 250px;
   top: 0;
@@ -1695,6 +1696,39 @@ fieldset {
   .homeDashboard .noWrapText {
     white-space: nowrap; }
 
+.homePage .loadingOverlayContainer {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  .homePage .loadingOverlayContainer .loadingContainer {
+    z-index: 20;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f6e2e8;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    box-shadow: 2px 4px #f08dab;
+    padding: 25px; }
+    .homePage .loadingOverlayContainer .loadingContainer p {
+      color: black;
+      font-weight: bold;
+      padding-bottom: 25px; }
+  .homePage .loadingOverlayContainer .imageContainer {
+    width: 75px;
+    height: auto; }
+    .homePage .loadingOverlayContainer .imageContainer img {
+      height: auto;
+      width: 100%; }
+
 @media (max-width: 768px) {
   .taskFinderContainer {
     flex-direction: column; }
@@ -1879,13 +1913,18 @@ fieldset {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    cursor: pointer; }
+    cursor: pointer;
+    position: relative; }
     .createTaskForm .priorityContainer label {
       width: 100px !important;
       cursor: pointer; }
     .createTaskForm .priorityContainer input {
       height: 20px;
-      cursor: pointer; }
+      cursor: pointer;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%); }
 
 .formSecondarySection {
   width: 100%;

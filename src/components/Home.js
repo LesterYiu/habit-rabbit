@@ -19,6 +19,7 @@ import NewTask from "./NewTask";
 // Image Imports
 import errorMessageOne from "../assets/errorMessageOne.gif";
 import errorMessageTwo from "../assets/errorMessageTwo.gif";
+import bunnyLoading from "../assets/bunnyLoading.gif";
 
 
 const Home = () => {
@@ -39,12 +40,12 @@ const Home = () => {
     const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
     const [isPageLoading, setIsPageLoading] = useState(true);
     const [currentUserTime, setCurrentUserTime] = useState("");
+    const [isTaskLoaded, setIsTaskLoaded] = useState(true);
 
     const [isOngoingTaskListZero, setIsOngoingTaskListZero] = useState(false);
     const [isFinishedTaskListZero, setIsFinishedTaskListZero] = useState(false);
     const [isOngoingSearchTaskFound, setIsOngoingSearchTaskFound] = useState(true);
     const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
-    const [isFilterSearchTaskFound, setIsFilterSearchTaskFound] = useState(true);
     const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
 
     const isMounted = useRef(false);
@@ -127,7 +128,6 @@ const Home = () => {
         checkLength(reformattedDoneTask, setIsFinishedTaskListZero);
         checkLength(searchedTaskList, setIsOngoingSearchTaskFound);
         checkLength(doneSearchedTaskList, setIsFinishedSearchTaskFound);
-        checkLength(filteredAndSearchedTask, setIsFilterSearchTaskFound);
 
     }, [reformattedTask, reformattedDoneTask, searchedTaskList, doneSearchedTaskList])
 
@@ -203,7 +203,7 @@ const Home = () => {
 
     
     const changeToFinishedTask = async (id, i) => {
-
+        setIsTaskLoaded(false);
         // Database Collection Reference for user's list of tasks
         const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
@@ -222,9 +222,11 @@ const Home = () => {
         setTaskList(taskList.filter( (task) => task !== taskList[taskList.indexOf(i)]));
 
         await updateDatabase(doneCollection, postDoc, setDoneTaskList, currentTaskCopy);
+        setIsTaskLoaded(true);
     }
 
     function changeLateToFinish (dynamicTask, formattedListOfTasks, setStateFunction) {
+        setIsTaskLoaded(false);
         const filteredTaskList = [];
 
         for(let weeklyTasks of formattedListOfTasks) {
@@ -264,6 +266,7 @@ const Home = () => {
         }
 
         reformatTaskByDate(lateTasksArr, setStateFunction);
+        setIsTaskLoaded(true);
     }
 
 
@@ -276,7 +279,7 @@ const Home = () => {
     }
 
     const changeSearchedToFinishedTask = async (id, i) => {
-
+        setIsTaskLoaded(false);
         // Database Collection Reference for user's list of tasks
         const doneCollection = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
         const postDoc = doc(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/${id}`);
@@ -295,6 +298,7 @@ const Home = () => {
 
         await addDoc(doneCollection, currentTaskCopy);
         await deleteDoc(postDoc);
+        setIsTaskLoaded(true);
     }
 
     const deleteTaskSearchedList = async(id, i) => {
@@ -307,7 +311,7 @@ const Home = () => {
     }
 
     const changeToUnfinishedTask = async (id, i) => {
-        
+        setIsTaskLoaded(false);
         // Database Collection Reference for user's list of tasks
         const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
@@ -318,6 +322,7 @@ const Home = () => {
         setDoneTaskList(doneTaskList.filter( (task) => task !== doneTaskList[doneTaskList.indexOf(i)])); 
 
         await updateDatabase(collectionRef, doneDoc, setTaskList, currentTaskCopy);
+        setIsTaskLoaded(true);
     }
 
     //  Delete tasks for finished task list only.
@@ -329,7 +334,7 @@ const Home = () => {
     }
 
     const changeSearchedToUnfinishedTask = async (id, i) => {
-
+        setIsTaskLoaded(false);
         // Database Collection Reference for user's list of tasks
         const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`)
@@ -342,6 +347,7 @@ const Home = () => {
 
         await addDoc(collectionRef, currentTaskCopy);
         await deleteDoc(doneDoc);
+        setIsTaskLoaded(true);
     }
 
     const deleteTaskSearchedDoneList = async(id, i) => {
@@ -352,7 +358,7 @@ const Home = () => {
         const doneDoc = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/${id}`);
         await deleteDoc(doneDoc);
     }
-
+    
     if(isAuth && isTaskExpanded) {
         return(
             <div className="homePage">
@@ -382,7 +388,7 @@ const Home = () => {
                                     <p>Now loading...</p>
                                     <div className="lds-ring"><div></div></div>
                                 </div> : null}
-                                {isOngoingTaskListZero && isToDoBtnClicked && isPageLoading === false || isFinishedTaskListZero && isDoneBtnClicked && isPageLoading === false || isLateSelected && filteredTasks.length === 0 && isPageLoading === false && isToDoBtnClicked ? 
+                                {(isOngoingTaskListZero && isToDoBtnClicked && isPageLoading === false) || (isFinishedTaskListZero && isDoneBtnClicked && isPageLoading === false) || (isLateSelected && filteredTasks.length === 0 && isPageLoading === false && isToDoBtnClicked) ? 
                                 <div className="noTaskFoundContainer">
                                     <p>There are currently no outstanding tasks.</p>
                                     <p>Take a sip of tea and relax!</p>
@@ -390,7 +396,7 @@ const Home = () => {
                                         <img src={errorMessageOne} alt="" />
                                     </div>
                                 </div> : null}
-                                {isToDoBtnClicked && isLateSelected || isPrioritySelected ?
+                                {(isToDoBtnClicked && isLateSelected) || isPrioritySelected ?
                                 Object.keys(filteredTasks).map( (date) => {
                                         return (
                                             <div key={uuid()}>
@@ -454,6 +460,19 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
+                    {!isTaskLoaded ?
+                    <>
+                        <div className="overlayBackground"></div>
+                        <div className="loadingOverlayContainer">
+                            <div className="loadingContainer">
+                                <p>Loading...</p>
+                                <div className="imageContainer">
+                                    <img src={bunnyLoading} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                    : null}
                 </div>
                 {isNewTaskClicked ? 
                 <>
@@ -472,7 +491,7 @@ const Home = () => {
                         <div className="dashboardContent">
                             <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks}/>
                             <div className="allTasksContainer">
-                            {isOngoingSearchTaskFound && isToDoBtnClicked && searchedTaskList.length === 0 && !isLateSelected|| isFinishedSearchTaskFound && isDoneBtnClicked && doneSearchedTaskList.length === 0 && !isLateSelected || filteredAndSearchedTask.length === 0  && isLateSelected ? 
+                            {(isOngoingSearchTaskFound && isToDoBtnClicked && searchedTaskList.length === 0 && !isLateSelected) ||( isFinishedSearchTaskFound && isDoneBtnClicked && doneSearchedTaskList.length === 0 && !isLateSelected) || (filteredAndSearchedTask.length === 0  && isLateSelected) ? 
                                 <div className="noTaskFoundContainer">
                                     <p>No results found.</p>
                                     <p>We couldn't find what you're looking for</p>
@@ -548,6 +567,19 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
+                    {!isTaskLoaded ?
+                    <>
+                        <div className="overlayBackground"></div>
+                        <div className="loadingOverlayContainer">
+                            <div className="loadingContainer">
+                                <p>Loading...</p>
+                                <div className="imageContainer">
+                                    <img src={bunnyLoading} alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                    : null}
                 </div>
                 {isNewTaskClicked ? 
                 <>

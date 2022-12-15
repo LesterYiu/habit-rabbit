@@ -2,7 +2,6 @@ import { debounce } from "../utils/globalFunctions";
 import { useContext, useState } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { reformatTaskByDate } from "../utils/globalFunctions";
-import { cloneDeep } from "lodash"
 import { useEffect } from "react";
 
 const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, setSearchedTaskList, setDoneSearchedTaskList, filteredTasks, setFilteredTasks}) => {

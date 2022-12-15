@@ -250,20 +250,19 @@ const NewTask = () => {
 
                         <div className="formSection prioritySection">
                             <p className="paragraphLabel">Priority:</p>
-                            <div className="lowPriorityContainer priorityContainer">
-                                <label htmlFor="lowPriority">Low</label>
+
+                            <label htmlFor="lowPriority" className="lowPriorityContainer priorityContainer">Low
                                 <input type="radio" id="lowPriority" name="priority" value="low" onClick={handlePriority} required/>
-                            </div>
+                            </label>
 
-                            <div className="mediumPriorityContainer priorityContainer">
-                                <label htmlFor="mediumPriority">Medium</label>
+                            <label htmlFor="mediumPriority" className="mediumPriorityContainer priorityContainer">Medium
                                 <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={handlePriority}/>
-                            </div>
+                            </label>
 
-                            <div className="highPriorityContainer priorityContainer">
-                                <label htmlFor="highPiority">High</label>
-                                <input type="radio" id="highPiority" name="priority" value="high" onClick={handlePriority}/>
-                            </div>
+                            <label htmlFor="highPiority" className="highPriorityContainer priorityContainer">High
+                                <input type="radio" id="highPiority" name="priority" value="high" onClick={handlePriority}/>                            
+                            </label>
+
                         </div>
                     </div>
                 </div>

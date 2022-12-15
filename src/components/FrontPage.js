@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AppContext } from "../Contexts/AppContext";
 
 // Image Imports
@@ -13,18 +13,35 @@ import displayImageIconTwo from "../assets/displayImageIconTwo.png";
 // Component Imports
 import NavigationBar from "./NavigationBar";
 import FrontPageSlideMenu from "./FrontPageSlideMenu";
+import { useEffect } from "react";
 
 const FrontPage = () => {
 
     const {isAuth} = useContext(AppContext);
     const [isNavExpanded, setIsNavExpanded] = useState(false);
 
+    useEffect( () => {
+        disableScrollForModalOn()
+    }, [isNavExpanded])
+
+    const disableScrollForModalOn = () => {
+        if(isNavExpanded) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+    }
+
     return(
         <div className="frontPage">
             <NavigationBar isAuth={isAuth} setIsNavExpanded={setIsNavExpanded} isNavExpanded={isNavExpanded}/>
 
             {isNavExpanded ?
-            <FrontPageSlideMenu setIsNavExpanded={setIsNavExpanded}/> : null
+            <>
+                <FrontPageSlideMenu setIsNavExpanded={setIsNavExpanded}/> 
+                <div className="overlayBackground"></div>
+            </>
+            : null
             }
             <header>
                 <div className="wrapper">

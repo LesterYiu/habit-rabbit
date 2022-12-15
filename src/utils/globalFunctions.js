@@ -10,10 +10,9 @@ export const debounce = (callbackFunction, delay) => {
 
 export const handleScroll = (e) => {
         const doneBtnContainer = e.target.childNodes[2];
-
-        if(e.type === "mouseover" && e.target.className === "taskContainer"){
+        if((e.type === "pointerenter" || e.type === "mouseover") && e.target.className === "taskContainer"){
             doneBtnContainer.className = 'buttonContainer'
-        } else if (e.type === "mouseleave" && e.target.className === "taskContainer"){
+        } else if (e.type === "pointerleave" && e.target.className === "taskContainer"){
 
             const doneBtn = doneBtnContainer.firstChild;
 

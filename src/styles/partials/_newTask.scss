@@ -186,6 +186,7 @@
         border-radius: 5px;
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         cursor: pointer;
+        position: relative;
 
         label {
             width: 100px !important;
@@ -195,6 +196,10 @@
         input {
             height: 20px;
             cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%)
         }
     }
 }
