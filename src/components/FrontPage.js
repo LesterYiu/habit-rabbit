@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
+import { disableScrollForModalOn } from "../utils/globalFunctions";
 
 // Image Imports
 import heroBanner from "../assets/heroBanner.png";
@@ -15,22 +16,15 @@ import NavigationBar from "./NavigationBar";
 import FrontPageSlideMenu from "./FrontPageSlideMenu";
 import { useEffect } from "react";
 
+
 const FrontPage = () => {
 
     const {isAuth} = useContext(AppContext);
     const [isNavExpanded, setIsNavExpanded] = useState(false);
 
     useEffect( () => {
-        disableScrollForModalOn()
+        disableScrollForModalOn(isNavExpanded)
     }, [isNavExpanded])
-
-    const disableScrollForModalOn = () => {
-        if(isNavExpanded) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = ''
-        }
-    }
 
     return(
         <div className="frontPage">
@@ -49,7 +43,7 @@ const FrontPage = () => {
                         <div className="heroInfo heroContainer">
                             <h1>Say goodbye to unfulfilled New Year's resolutions!</h1>
                             <p>We’re more than just a simple productivity app. Habit Rabbit eliminates the complexity of tracking habits, and busy agendas.</p>
-                            <Link to="/home" className="heroBtn">Join Today!</Link>
+                            <Link to="/home" className="heroBtn">{isAuth ? "Go to Dashboard" : "Join Today!"}</Link>
                         </div>
                         <div className="heroImageContainer heroContainer">
                             <img src={heroBanner} alt="" />

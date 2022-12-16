@@ -4,7 +4,7 @@ import { AppContext } from "../Contexts/AppContext";
 import { reformatTaskByDate } from "../utils/globalFunctions";
 import { useEffect } from "react";
 
-const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, setSearchedTaskList, setDoneSearchedTaskList, filteredTasks, setFilteredTasks}) => {
+const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, setSearchedTaskList, setDoneSearchedTaskList, filteredTasks, setFilteredTasks, isPageLoading}) => {
 
     const [textInput, setTextInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -156,7 +156,7 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
             <div className="taskFinderContainer">
                 <div className="taskListButtons">
                     <div className="buttonRelativePosition">
-                        <button className="filterContainer" onClick={handleFilterBtn} disabled={isDoneBtnClicked}>
+                        <button className="filterContainer" onClick={handleFilterBtn} disabled={isDoneBtnClicked || isPageLoading}>
                             <i className="fa-solid fa-arrow-down-wide-short"></i>
                             <p>Filter</p>
                         </button>

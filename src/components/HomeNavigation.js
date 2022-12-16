@@ -1,7 +1,7 @@
 import { auth } from "./firebase";
 import { Link, useLocation } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 

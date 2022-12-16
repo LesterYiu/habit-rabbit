@@ -6,7 +6,7 @@ import { useState , useEffect, useContext, useRef} from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { getHours } from "date-fns";
 import uuid from "react-uuid";
-import { reformatTaskByDate } from "../utils/globalFunctions";
+import { reformatTaskByDate, disableScrollForModalOn } from "../utils/globalFunctions";
 
 // Component Imports
 import TaskDetails from "./TaskDetails";
@@ -51,7 +51,7 @@ const Home = () => {
     const isMounted = useRef(false);
 
     // useContext variables
-    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask} = useContext(AppContext);
+    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask, isNavExpanded} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -130,6 +130,18 @@ const Home = () => {
         checkLength(doneSearchedTaskList, setIsFinishedSearchTaskFound);
 
     }, [reformattedTask, reformattedDoneTask, searchedTaskList, doneSearchedTaskList])
+
+    useEffect( () => {
+        disableScrollForModalOn(isNewTaskClicked);
+        
+    }, [isNewTaskClicked])
+
+    useEffect( () => {
+
+        if(isNewTaskClicked && document.body.style.overflow === 'hidden') return;
+
+        disableScrollForModalOn(isNavExpanded);
+    },[isNavExpanded])
 
     const handleButtonSwitch = (switchToFalse, switchToTrue) => {
         switchToTrue(true);
@@ -381,7 +393,7 @@ const Home = () => {
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks}/>
+                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
                             <div className="allTasksContainer">
                                 {isPageLoading && isToDoBtnClicked && reformattedTask.length === 0 ? 
                                 <div className="noTaskFoundContainer loadingContainer">
@@ -489,7 +501,7 @@ const Home = () => {
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks}/>
+                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
                             <div className="allTasksContainer">
                             {(isOngoingSearchTaskFound && isToDoBtnClicked && searchedTaskList.length === 0 && !isLateSelected) ||( isFinishedSearchTaskFound && isDoneBtnClicked && doneSearchedTaskList.length === 0 && !isLateSelected) || (filteredAndSearchedTask.length === 0  && isLateSelected) ? 
                                 <div className="noTaskFoundContainer">

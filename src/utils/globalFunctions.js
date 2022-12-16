@@ -63,3 +63,11 @@ export const reformatTaskByDate = (taskListState, setTaskState) => {
     
     setTaskState(taskListArrangedByWeek);            
 }
+
+export const disableScrollForModalOn = (modalConditional) => {
+    if(modalConditional) {
+        document.body.style.overflow = 'hidden'
+    } else {
+        document.body.style.overflow = ''
+    }
+}

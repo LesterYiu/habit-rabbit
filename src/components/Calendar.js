@@ -9,7 +9,7 @@ import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { format, startOfWeek } from "date-fns/esm";
 import uuid from "react-uuid";
-import { reformatTaskByDate } from "../utils/globalFunctions";
+import { reformatTaskByDate, disableScrollForModalOn } from "../utils/globalFunctions";
 
 // Image Imports
 import errorMessageOne from "../assets/errorMessageOne.gif";
@@ -23,7 +23,7 @@ const CalendarSection = () => {
     const [allDatesArray, setAllDatesArr] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList, isNavExpanded} = useContext(AppContext);
 
     // Check for authen
     useEffect( () => {
@@ -52,6 +52,19 @@ const CalendarSection = () => {
         handleSelectedWeek()
         // eslint-disable-next-line
     }, [reformattedTaskList, selectedTaskDate])
+
+    useEffect( () => {
+        disableScrollForModalOn(isNewTaskClicked);
+        
+    }, [isNewTaskClicked])
+
+    useEffect( () => {
+
+        if(isNewTaskClicked && document.body.style.overflow === 'hidden') return;
+
+        disableScrollForModalOn(isNavExpanded);
+    },[isNavExpanded])
+
 
     const getPost = async () => {
         const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);

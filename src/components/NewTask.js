@@ -5,6 +5,7 @@ import uuid from "react-uuid";
 import { useEffect, useContext } from "react";
 import {format, startOfWeek} from "date-fns";
 import { AppContext } from "../Contexts/AppContext";
+import FocusLock from 'react-focus-lock';
 
 const NewTask = () => {
     
@@ -243,116 +244,118 @@ const NewTask = () => {
     }
 
     return(
-        <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
-            <fieldset>
-                <div className="formPrimarySection">
-                    <legend><h2>Create a new task</h2></legend>
-                    <div className="formField">
-                        <div className="formSection">
-                            <label htmlFor="task">Task Name:</label>
-                            <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required ref={taskNameInputEl}/>
-                        </div>
+        <FocusLock>
+            <form aria-label="form" name="taskForm" className="createTaskForm" onSubmit={(e) => {createTask(e)}}>
+                <fieldset>
+                    <div className="formPrimarySection">
+                        <legend><h2>Create a new task</h2></legend>
+                        <div className="formField">
+                            <div className="formSection">
+                                <label htmlFor="task">Task Name:</label>
+                                <input type="text" id="task" onChange={(e) => {handleInputText(e, setTaskName)}} required ref={taskNameInputEl}/>
+                            </div>
 
-                        <div className="formSection">
-                            <label htmlFor="description">Task Description:</label>
-                            <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}} ref={taskDescriptionInputEl}/>
-                        </div>
+                            <div className="formSection">
+                                <label htmlFor="description">Task Description:</label>
+                                <input type="text" id="description" required onChange={(e) => {handleInputText(e, setDescription)}} ref={taskDescriptionInputEl}/>
+                            </div>
 
-                        <div className="formSection">
-                            <label htmlFor="date">Due Date:</label>
-                            <input type="date" id="date" required onChange={(e) => {handleDeadline(e)}} ref={taskDueDateInputEl}/>
-                        </div>
+                            <div className="formSection">
+                                <label htmlFor="date">Due Date:</label>
+                                <input type="date" id="date" required onChange={(e) => {handleDeadline(e)}} ref={taskDueDateInputEl}/>
+                            </div>
 
-                        <div className="formSection">
-                            <label htmlFor="time">Due Time:</label>
-                            <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}} ref={taskDueTimeInputEl}/>
-                        </div>
+                            <div className="formSection">
+                                <label htmlFor="time">Due Time:</label>
+                                <input type="time" id="time" required onChange={(e) => {handleInputText(e, setTime)}} ref={taskDueTimeInputEl}/>
+                            </div>
 
-                        <div className="formSection prioritySection">
-                            <p className="paragraphLabel">Priority:</p>
+                            <div className="formSection prioritySection">
+                                <p className="paragraphLabel">Priority:</p>
 
-                            <label htmlFor="lowPriority" className="lowPriorityContainer priorityContainer">Low
-                                <input type="radio" id="lowPriority" name="priority" value="low" onClick={handlePriority} required/>
-                            </label>
+                                <label htmlFor="lowPriority" className="lowPriorityContainer priorityContainer">Low
+                                    <input type="radio" id="lowPriority" name="priority" value="low" onClick={handlePriority} required/>
+                                </label>
 
-                            <label htmlFor="mediumPriority" className="mediumPriorityContainer priorityContainer">Medium
-                                <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={handlePriority}/>
-                            </label>
+                                <label htmlFor="mediumPriority" className="mediumPriorityContainer priorityContainer">Medium
+                                    <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={handlePriority}/>
+                                </label>
 
-                            <label htmlFor="highPiority" className="highPriorityContainer priorityContainer">High
-                                <input type="radio" id="highPiority" name="priority" value="high" onClick={handlePriority}/>                            
-                            </label>
+                                <label htmlFor="highPiority" className="highPriorityContainer priorityContainer">High
+                                    <input type="radio" id="highPiority" name="priority" value="high" onClick={handlePriority}/>                            
+                                </label>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="formSecondarySection">
-                    <div>
-                        <div className="labelSection">
-                            <label htmlFor="createLabel">Create a Task Label: </label>
-                            <div className="createLabelTextContainer">
-                                <input type="text" onChange={(e) => {handleRequiredLabelField(e)}} ref={customTaskInputEl} />
-                                <div className="createNewLabelBtn" aria-label="create label button" onClick={(e) => {handleNewTaskLabels(e)}}>+</div>
+                    <div className="formSecondarySection">
+                        <div>
+                            <div className="labelSection">
+                                <label htmlFor="createLabel">Create a Task Label: </label>
+                                <div className="createLabelTextContainer">
+                                    <input type="text" onChange={(e) => {handleRequiredLabelField(e)}} ref={customTaskInputEl} />
+                                    <div className="createNewLabelBtn" aria-label="create label button" onClick={(e) => {handleNewTaskLabels(e)}}>+</div>
+                                </div>
+                                {isTaskExist ? <p className="customTaskErrorMsg">This task already exists. Check the existing tasks labels section.</p> : null}
+                                {isCustomTaskSelected ? <p className="customTaskErrorMsg">A task label must be selected before proceeding. Please click the + button.</p> : null}
+                                {isMaxLabelsReachedCustom ? <p className="customTaskErrorMsg">You can only select 4 task labels per task.</p> : null}
+                                <div className="saveLabelsContainer">
+                                    <label htmlFor="saveLabel">Would you like to save your task label for future use?</label>
+                                    <input type="checkbox" id="saveLabel" ref={saveLabelInputEl}/>
+                                </div>
                             </div>
-                            {isTaskExist ? <p className="customTaskErrorMsg">This task already exists. Check the existing tasks labels section.</p> : null}
-                            {isCustomTaskSelected ? <p className="customTaskErrorMsg">A task label must be selected before proceeding. Please click the + button.</p> : null}
-                            {isMaxLabelsReachedCustom ? <p className="customTaskErrorMsg">You can only select 4 task labels per task.</p> : null}
-                            <div className="saveLabelsContainer">
-                                <label htmlFor="saveLabel">Would you like to save your task label for future use?</label>
-                                <input type="checkbox" id="saveLabel" ref={saveLabelInputEl}/>
+                            <div className="orSection">
+                                <div className="orSectionBorder"></div>
+                                <p className="orSectionText">or</p>
+                                <div className="orSectionBorder"></div>
                             </div>
-                        </div>
-                        <div className="orSection">
-                            <div className="orSectionBorder"></div>
-                            <p className="orSectionText">or</p>
-                            <div className="orSectionBorder"></div>
-                        </div>
-                        <div className="labelSection existingLabelSection">
-                            <label htmlFor="existingLabels">Existing Task Labels:</label>
-                            <div className="existingLabelButtons">
-                                <select name="" id="existingLabels" className="existingTaskSelect" required ref={existingTaskInputEl} onChange={(e) => {handleRequiredLabelField(e)}}>
-                                    <option value="" selected disabled hidden>Choose Here</option>
-                                    <option value="personal">Personal</option>
-                                    <option value="school">School</option>
-                                    <option value="work">Work</option>
-                                    <option value="appointment">Appointment</option>
-                                    <option value="exercise">Exercise</option>
-                                    <option value="chores">Chores</option>
-                                    {customExistingLabels ? customExistingLabels.map((label) => {
-                                        return <option key={label.id} value={label.taskLabel}>{label.taskLabel}</option>
-                                    }) : null}
-                                </select>
-                                <div className="createNewLabelBtn" aria-label="create label button" onClick={handleExistingTaskLabels}>+</div>
+                            <div className="labelSection existingLabelSection">
+                                <label htmlFor="existingLabels">Existing Task Labels:</label>
+                                <div className="existingLabelButtons">
+                                    <select name="" id="existingLabels" className="existingTaskSelect" required ref={existingTaskInputEl} onChange={(e) => {handleRequiredLabelField(e)}}>
+                                        <option value="" selected disabled hidden>Choose Here</option>
+                                        <option value="personal">Personal</option>
+                                        <option value="school">School</option>
+                                        <option value="work">Work</option>
+                                        <option value="appointment">Appointment</option>
+                                        <option value="exercise">Exercise</option>
+                                        <option value="chores">Chores</option>
+                                        {customExistingLabels ? customExistingLabels.map((label) => {
+                                            return <option key={label.id} value={label.taskLabel}>{label.taskLabel}</option>
+                                        }) : null}
+                                    </select>
+                                    <div className="createNewLabelBtn" aria-label="create label button" onClick={handleExistingTaskLabels}>+</div>
+                                </div>
+                                {isDuplicateFound ? <p className="customTaskErrorMsg">This task is already selected.</p> : null}
+                                {isExistingTaskSelected ? <p className="customTaskErrorMsg">A task label must be selected before proceeding. Please click the + button.</p> : null}
+                                {isMaxLabelsReachedExisting ? <p className="customTaskErrorMsg">You can only select 4 task labels per task.</p> : null}
                             </div>
-                            {isDuplicateFound ? <p className="customTaskErrorMsg">This task is already selected.</p> : null}
-                            {isExistingTaskSelected ? <p className="customTaskErrorMsg">A task label must be selected before proceeding. Please click the + button.</p> : null}
-                            {isMaxLabelsReachedExisting ? <p className="customTaskErrorMsg">You can only select 4 task labels per task.</p> : null}
-                        </div>
-                        <div className="chosenLabelsSection">
-                            <p>Applied Task Labels:</p>
-                            {labelList.length > 0 ?
-                            labelList.map( (label) => {
-                                return (
-                                    <div className="appliedTaskLabel" key={uuid()}>
-                                        <p>{label}</p>
-                                        <div role="button" onClick={removeTaskLabel}>
-                                            <span className="sr-only">remove task label</span>
-                                            <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+                            <div className="chosenLabelsSection">
+                                <p>Applied Task Labels:</p>
+                                {labelList.length > 0 ?
+                                labelList.map( (label) => {
+                                    return (
+                                        <div className="appliedTaskLabel" key={uuid()}>
+                                            <p>{label}</p>
+                                            <div role="button" onClick={removeTaskLabel}>
+                                                <span className="sr-only">remove task label</span>
+                                                <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                            : null}
+                                    )
+                                })
+                                : null}
+                            </div>
+                        </div>
+                        <div className="buttonSection">
+                            <div className="cancelBtn" onClick={(e) => {exitModal(e)}} aria-label="Leave Modal">Cancel</div>
+                            <button type="submit" className="submitBtn">Create</button>
                         </div>
                     </div>
-                    <div className="buttonSection">
-                        <div className="cancelBtn" onClick={(e) => {exitModal(e)}} aria-label="Leave Modal">Cancel</div>
-                        <button type="submit" className="submitBtn">Create</button>
-                    </div>
-                </div>
-                <button className="exitButton" onClick={(e) => {exitModal(e)}}><i className="fa-solid fa-circle-xmark" aria-hidden="true"></i><p className="sr-only">Exit Modal</p></button>
-            </fieldset>
-        </form>
+                    <button className="exitButton" onClick={(e) => {exitModal(e)}}><i className="fa-solid fa-circle-xmark" aria-hidden="true"></i><p className="sr-only">Exit Modal</p></button>
+                </fieldset>
+            </form>
+        </FocusLock>
     )
 }
 

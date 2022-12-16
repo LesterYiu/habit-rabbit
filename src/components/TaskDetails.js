@@ -144,7 +144,14 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
 
         let documentRef = determineWhichRef(specificTask.id)
 
-        const docSnap = await getDoc(documentRef);
+        let docSnap;
+        try {
+            docSnap = await getDoc(documentRef);
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();   
+            docSnap = await getDoc(newDocumentRef);
+        }
+        
         setUpdates(docSnap.data().task.updates);
         
     }
@@ -583,7 +590,6 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
                 "task.time" : e.target.value
             })
         } catch {
-            console.log('test')
             const newDocumentRef = await getNewUpdatedRef();
             await updateDoc(newDocumentRef, {
                 "task.time" : e.target.value
@@ -711,7 +717,6 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
                 "task.completion" : taskCompletion
             })
         } catch {
-            // console.clear();
             const newDocumentRef = await getNewUpdatedRef();
             const newCollectionName = newDocumentRef.path.split("/")[4]; 
 

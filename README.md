@@ -27,6 +27,7 @@ Habit Rabbit is a productivity application created for the sole purpose of stick
 - [node-sass](https://www.npmjs.com/package/node-sass)
 - [date-fns](https://www.npmjs.com/package/date-fns)
 - [Lodash](https://www.npmjs.com/package/lodash)
+- [React Focus Lock](https://www.npmjs.com/package/react-focus-lock)
 
 ## Additional Information
 
