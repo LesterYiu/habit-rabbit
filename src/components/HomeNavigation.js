@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import { useContext, useRef } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
+import FocusLock from 'react-focus-lock';
 
 const HomeNavigation = () => {
 
@@ -154,7 +155,8 @@ const HomeNavigation = () => {
         setIsNavExpanded(false);
     }
 
-    return(
+    if(!isNavExpanded) {
+        return(
         <>
             <nav className="homeNavigation homeSection minimizedNav" ref={navEl}>
                 <div className="profileInfoContainer minimizedInfoContainer" ref={profileInfoContainerEl}>
@@ -225,7 +227,81 @@ const HomeNavigation = () => {
             </nav>
             {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay"></div> : null}
         </>
-    )
+        )
+    } else {
+        return(
+            <FocusLock>
+                <nav className="homeNavigation homeSection" ref={navEl}>
+                    <div className="profileInfoContainer" ref={profileInfoContainerEl}>
+                        <div className="profilePicCont">
+                            <img src={userPic ? userPic : null} alt="" />
+                        </div>
+                        <div className="profileInfoText" ref={profileTextEl}>
+                            <p className="profileWelcome">Good&nbsp;Day&nbsp;👋</p>
+                            <p className="navDisplayName">{username.split(" ")[0]}</p>
+                        </div>
+                    </div>
+                    <ul ref={ulOneEl}>
+                        <li>
+                            <button onClick={redirectToHome} className="homeBtnOne homeBtn">
+                                <div><span aria-hidden="true">🏡</span>&nbsp;<span ref={homeText}>Home</span></div>
+                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconOne}></i>                        
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={handleNewTask} className="homeBtnFive homeBtn">
+                                <span aria-hidden="true">✨</span>&nbsp;<span ref={newTaskText}>New&nbsp;Task</span>
+                            </button>
+                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconTwo}></i>
+                        </li>
+                        <li>
+                            <button to="/calendar" className="homeBtnTwo homeBtn" onClick={redirectToCalendar}>
+                                <span aria-hidden="true">🗓️</span> 
+                                <span ref={calendarText}>Calendar</span>
+                            </button>
+                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconThree}></i>
+                        </li>
+                        <li>
+                            <Link to="/statistics" className="homeBtnThree homeBtn">
+                                <span aria-hidden="true">📊</span>
+                                <span ref={statisticsText}>Statistics</span>
+                            </Link>
+                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconFour}></i>
+                        </li>
+                    </ul>
+                    <ul className="accountButtons" ref={ulTwoEl}>
+                        {/* <li>
+                            <Link to="/settings" className="homeBtnFour homeBtn">
+                                <span aria-hidden="true">⚙️</span>
+                                <span className="defaultHidden" ref={settingsText}>Settings</span>
+                            </Link>
+                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFive}></i>
+                        </li> */}
+                        <li>                    
+                            <button onClick={signUserOut} className="homeBtnSix homeBtn">
+                                <span aria-hidden="true">🚪</span>
+                                <span ref={logOutText}>Logout</span>
+                            </button>
+                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconSix}></i>
+                        </li>
+                    </ul>
+                    <button className="expandBtn homeBtn" onClick={handleNavToggleBtn}>
+                        <span className="sr-only">Expand navigation</span>
+                        {!isNavExpanded ? 
+                        <i className="fa-solid fa-chevron-right"></i> : 
+                        <i className="fa-solid fa-chevron-left"></i>}
+                    </button>
+                    {isTaskExpanded ? 
+                        <button onClick={handleGoBackToHome} className="exitTaskDetailsBtn homeBtn">
+                            <i className="fa-solid fa-left-long" aria-hidden="true"></i>
+                            <span className="sr-only">Go Back</span>
+                        </button> 
+                    : null}
+                </nav>
+                {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay"></div> : null}
+            </FocusLock>
+        )
+    }
 }
 
 export default HomeNavigation;

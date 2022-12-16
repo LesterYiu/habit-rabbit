@@ -1451,7 +1451,8 @@ fieldset {
       border: 0;
       display: flex; }
       .homeDashboard .taskContainer .buttonContainer i {
-        font-size: 1.4rem; }
+        font-size: 1.4rem;
+        pointer-events: none; }
       .homeDashboard .taskContainer .buttonContainer .exitBtn {
         margin-left: 15px; }
       .homeDashboard .taskContainer .buttonContainer .finishButton {
@@ -1688,6 +1689,8 @@ fieldset {
       border-radius: 5px 0 0 5px;
       padding: 5px 5px 5px 15px;
       width: 100%; }
+    .homeDashboard .taskDeadlineDateContainer i {
+      pointer-events: none; }
   .homeDashboard .dropdownBtn {
     border-bottom: 1px solid #e0e1e3;
     background-color: #f4f4f4;

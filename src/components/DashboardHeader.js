@@ -1,10 +1,10 @@
-import { debounce } from "../utils/globalFunctions";
 import { useContext, useState } from "react";
 import { AppContext } from "../Contexts/AppContext";
-import { reformatTaskByDate } from "../utils/globalFunctions";
+import { reformatTaskByDate, handleOnKeyDown, debounce} from "../utils/globalFunctions";
 import { useEffect } from "react";
+import FocusLock from 'react-focus-lock';
 
-const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, setSearchedTaskList, setDoneSearchedTaskList, filteredTasks, setFilteredTasks, isPageLoading}) => {
+const DashboardHeader = ({currentUserTime, isToDoBtnClicked, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, setSearchedTaskList, setDoneSearchedTaskList, filteredTasks, setFilteredTasks, isPageLoading}) => {
 
     const [textInput, setTextInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +19,11 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
             matchFilteredTasksWithSearch(textInput, regex)
         }
     }, [isLateSelected])
+
+    const handleButtonSwitch = (switchToFalse, switchToTrue) => {
+        switchToTrue(true);
+        switchToFalse(false);
+    }
 
     const handleSearchForTask = (value) => {
         let timeout;
@@ -161,23 +166,26 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
                             <p>Filter</p>
                         </button>
                         {isFilterModalOn ?
+                        <FocusLock>
                         <div className="filterModal">
                             <form name="filterForm">
                                 <fieldset>
                                     <legend className="sr-only">Choose how to filter your task lists</legend>
 
-                                    <div onClick={handleDefaultOption}>
-                                        <input type="radio" name="filterOption" id="allTask" checked={!isLateSelected} readOnly/>
+                                    <div onClick={handleDefaultOption} onKeyDown={(e)=> {handleOnKeyDown(e, handleDefaultOption)}} tabIndex="0">
+                                        <input type="radio" name="filterOption" id="allTask" checked={!isLateSelected} readOnly tabIndex="-1"/>
                                         <label htmlFor="allTask">All</label>
                                     </div>
 
-                                    <div onClick={handleFilterByLate}>
-                                        <input type="radio" name="filterOption" id="lateTask" checked={isLateSelected} readOnly/>
+                                    <div onClick={handleFilterByLate} onKeyDown={(e) => {handleOnKeyDown(e, handleFilterByLate)}} tabIndex="0">
+                                        <input type="radio" name="filterOption" id="lateTask" checked={isLateSelected} readOnly tabIndex="-1" />
                                         <label htmlFor="lateTask">Late Tasks</label>
                                     </div>
                                 </fieldset>
                             </form>
-                        </div> : null}
+                        </div>
+                        </FocusLock>
+                        : null}
                     </div>
                     {isLateSelected ?
                     <div className="appliedFilters">

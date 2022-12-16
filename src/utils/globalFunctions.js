@@ -25,8 +25,7 @@ export const handleScroll = (e) => {
 }
 
 export const handleDropDown = (e) => {
-    const dropdownContainer = e.target.parentNode.parentNode.children[2];
-
+    const dropdownContainer = e.target.parentNode.parentNode.childNodes[2].childNodes[2];
     if(dropdownContainer.className === "dropdownOptions hidden") {
         dropdownContainer.className = "dropdownOptions";
     } else {
@@ -69,5 +68,20 @@ export const disableScrollForModalOn = (modalConditional) => {
         document.body.style.overflow = 'hidden'
     } else {
         document.body.style.overflow = ''
+    }
+}
+
+export const handleOnKeyDown = (e, executeFunc, optionalParameter, optionalParameter2) => {
+
+    if(e.type === "keydown" && e.key === "Enter") {
+        if(e.target.type === "radio" && e.target.checked === true && e.type === "keydown" && e.key === "Enter") {
+            e.target.checked = false;
+            return;
+        } else if (e.target.type === "radio" && e.target.checked === false) {
+            e.target.checked = true;
+            return;
+        }
+        
+        executeFunc(optionalParameter, optionalParameter2);
     }
 }

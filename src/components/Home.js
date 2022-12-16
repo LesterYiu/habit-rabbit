@@ -143,11 +143,6 @@ const Home = () => {
         disableScrollForModalOn(isNavExpanded);
     },[isNavExpanded])
 
-    const handleButtonSwitch = (switchToFalse, switchToTrue) => {
-        switchToTrue(true);
-        switchToFalse(false);
-    }
-
     const updateDatabase = async (collectionType, postDocType, finishedStateSet, i) => {
 
         /*
@@ -191,16 +186,20 @@ const Home = () => {
     }
 
     const handleDropdownTasks = (e) => {
-        const iconEl = e.target;
+        const iconEl = e.target.children[1];
         const taskMainContainerEl = e.target.offsetParent.nextSibling;
+        const directToTaskBtn = taskMainContainerEl.childNodes[0].childNodes[0].childNodes[0];
+
         if (iconEl.className === "fa-solid fa-caret-up") {
             // If the user wants the tasks to drop down
             iconEl.className = "fa-solid fa-caret-down";
             taskMainContainerEl.className = "taskMainContainer openContainer";
+            directToTaskBtn.tabIndex = 0;
         } else if (iconEl.className === "fa-solid fa-caret-down") {
             //  If the user wants the tasks to minimize
             iconEl.className = "fa-solid fa-caret-up";
             taskMainContainerEl.className = "taskMainContainer closedContainer";
+            directToTaskBtn.tabIndex = -1;
         }
     }
 
@@ -393,7 +392,7 @@ const Home = () => {
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
+                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
                             <div className="allTasksContainer">
                                 {isPageLoading && isToDoBtnClicked && reformattedTask.length === 0 ? 
                                 <div className="noTaskFoundContainer loadingContainer">
@@ -414,12 +413,12 @@ const Home = () => {
                                             <div key={uuid()}>
                                                 <div className="taskDeadlineDateContainer">
                                                     <p>{`Week of ${filteredTasks[date][0].task.startDayOfWeek} (${filteredTasks[date].length})`}</p>
-                                                    <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                                    <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}} tabIndex="0">
                                                         <span className="sr-only">dropdown button</span>
                                                         <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
-                                                <div className="taskMainContainer">
+                                                <div className="taskMainContainer" tabIndex="-1">
                                                     {filteredTasks[date].map( (specificTask) => {
                                                         return (
                                                             <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
@@ -435,12 +434,12 @@ const Home = () => {
                                         <div key={uuid()}>
                                             <div className="taskDeadlineDateContainer">
                                                 <p>{`Week of ${reformattedTask[date][0].task.startDayOfWeek} (${reformattedTask[date].length})`}</p>
-                                                <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                                <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}} tabIndex="0">
                                                     <span className="sr-only">dropdown button</span>
                                                     <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                                 </button>
                                             </div>
-                                            <div className="taskMainContainer">
+                                            <div className="taskMainContainer" tabIndex="-1">
                                                 {reformattedTask[date].map( (specificTask) => {
                                                     return (
                                                         <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
@@ -456,16 +455,18 @@ const Home = () => {
                                         <div key={uuid()}>
                                             <div className="taskDeadlineDateContainer">
                                                 <p>{`Week of ${reformattedDoneTask[date][0].task.startDayOfWeek} (${reformattedDoneTask[date].length})`}</p>
-                                                <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                                <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}} tabIndex="0">
                                                     <span className="sr-only">dropdown button</span>
                                                     <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                                 </button>
                                             </div>
+                                            <div className="taskMainContainer" tabIndex="-1">
                                             {reformattedDoneTask[date].map( (specificTask) => {
                                                 return (
                                                     <SingleDoneTask key={uuid()} specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeToUnfinishedTask} deleteDoneTask={deleteDoneTask}/>
                                                 )
                                             })}
+                                            </div>
                                         </div>
                                     )
                                 }): null}
@@ -501,7 +502,7 @@ const Home = () => {
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} handleButtonSwitch={handleButtonSwitch} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
+                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
                             <div className="allTasksContainer">
                             {(isOngoingSearchTaskFound && isToDoBtnClicked && searchedTaskList.length === 0 && !isLateSelected) ||( isFinishedSearchTaskFound && isDoneBtnClicked && doneSearchedTaskList.length === 0 && !isLateSelected) || (filteredAndSearchedTask.length === 0  && isLateSelected) ? 
                                 <div className="noTaskFoundContainer">
@@ -518,12 +519,12 @@ const Home = () => {
                                     <div key={uuid()}>
                                         <div className="taskDeadlineDateContainer">
                                             <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
-                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}} tabIndex="0">
                                                 <span className="sr-only">dropdown button</span>
-                                                <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
+                                                <i className="fa-solid fa-caret-down" aria-hidden="true" ></i>
                                             </button>
                                         </div>
-                                        <div className="taskMainContainer">
+                                        <div className="taskMainContainer" tabIndex="-1">
                                         {date.map( (specificTask) => {
                                             return (
                                                 <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
@@ -539,12 +540,12 @@ const Home = () => {
                                     <div key={uuid()}>
                                         <div className="taskDeadlineDateContainer">
                                             <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
-                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}} tabIndex="0">
                                                 <span className="sr-only">dropdown button</span>
                                                 <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                             </button>
                                         </div>
-                                        <div className="taskMainContainer">
+                                        <div className="taskMainContainer" tabIndex="-1">
                                         {date.map( (specificTask) => {
                                             return (
                                                 <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
@@ -560,12 +561,12 @@ const Home = () => {
                                     <div key={uuid()}>
                                         <div className="taskDeadlineDateContainer">
                                             <p>{`Week of ${date[0].task.startDayOfWeek} (${date.length})`}</p>
-                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}}>
+                                            <button className="dropdownBtn" onClick={(e) => {handleDropdownTasks(e)}} tabIndex="0">
                                                 <span className="sr-only">dropdown button</span>
                                                 <i className="fa-solid fa-caret-down" aria-hidden="true"></i>
                                             </button>
                                         </div>
-                                        <div className="taskMainContainer">
+                                        <div className="taskMainContainer" tabIndex="-1">
                                         {date.map( (specificTask) => {
                                             return (
                                                 <SingleDoneTask key={uuid()} specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToUnfinishedTask={changeSearchedToUnfinishedTask} deleteDoneTask={deleteTaskSearchedDoneList} />

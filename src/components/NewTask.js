@@ -5,6 +5,7 @@ import uuid from "react-uuid";
 import { useEffect, useContext } from "react";
 import {format, startOfWeek} from "date-fns";
 import { AppContext } from "../Contexts/AppContext";
+import { handleOnKeyDown } from "../utils/globalFunctions";
 import FocusLock from 'react-focus-lock';
 
 const NewTask = () => {
@@ -274,15 +275,15 @@ const NewTask = () => {
                                 <p className="paragraphLabel">Priority:</p>
 
                                 <label htmlFor="lowPriority" className="lowPriorityContainer priorityContainer">Low
-                                    <input type="radio" id="lowPriority" name="priority" value="low" onClick={handlePriority} required/>
+                                    <input type="radio" id="lowPriority" name="priority" value="low" onClick={handlePriority} required onKeyDown={(e) => {handleOnKeyDown(e)}} tabIndex="0"/>
                                 </label>
 
                                 <label htmlFor="mediumPriority" className="mediumPriorityContainer priorityContainer">Medium
-                                    <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={handlePriority}/>
+                                    <input type="radio" id="mediumPriority" name="priority" value="medium" onClick={handlePriority} onKeyDown={(e) => {handleOnKeyDown(e)}} tabIndex="0"/>
                                 </label>
 
                                 <label htmlFor="highPiority" className="highPriorityContainer priorityContainer">High
-                                    <input type="radio" id="highPiority" name="priority" value="high" onClick={handlePriority}/>                            
+                                    <input type="radio" id="highPiority" name="priority" value="high" onClick={handlePriority} onKeyDown={(e) => {handleOnKeyDown(e)}} tabIndex="0"/>                            
                                 </label>
 
                             </div>
