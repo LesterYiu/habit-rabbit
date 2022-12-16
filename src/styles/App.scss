@@ -33,9 +33,14 @@
 // Calendar Component Partials
 @import './partials/calendar';
 
-// Task Details Component Partials
+// Habit Tracker Component Partials
+@import './partials/habitTracker';
 
+// Task Details Component Partials
 @import './partials/taskDetails';
+
+// Signout Modal Component Partials
+@import "./partials/signOutModal";
 
 // Customizable Tab Component Partials (minus Calendar)
 @import './partials/customizableTabs';

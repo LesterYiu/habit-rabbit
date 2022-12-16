@@ -1090,6 +1090,11 @@ fieldset {
   flex-direction: column; }
   .homeNavigation .homeBtn {
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    .homeNavigation .homeBtn span:nth-child(1) {
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      margin-right: 5px; }
   .homeNavigation .homeBtnOne {
     background-color: #F6F4F9; }
   .homeNavigation .homeBtnTwo {
@@ -1739,13 +1744,13 @@ fieldset {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f6e2e8;
+    background-color: #A5D6A7;
     border-radius: 10px;
     border: 1px solid #d4d4d4;
-    box-shadow: 2px 4px #f08dab;
+    box-shadow: 2px 4px #6d906e;
     padding: 25px; }
     .homePage .loadingOverlayContainer .loadingContainer p {
-      color: black;
+      color: white;
       font-weight: bold;
       padding-bottom: 25px; }
   .homePage .loadingOverlayContainer .imageContainer {
@@ -1781,19 +1786,26 @@ fieldset {
   .homeDashboard {
     width: calc(100% - 75px); }
     .homeDashboard .taskContainer {
-      height: 170px;
-      align-items: flex-start; } }
+      height: 195px;
+      align-items: flex-start; }
+    .homeDashboard .taskText {
+      margin-top: 25px; } }
 
 @media (max-width: 480px) {
   .homeDashboard .taskContainer {
-    height: 200px; }
+    height: 215px; }
     .homeDashboard .taskContainer .taskAdditionalInfo {
       flex-direction: column; }
+  .homeDashboard .taskText {
+    margin-top: 35px; }
   .homeDashboard .taskDescription {
     display: none; }
   .homeDashboard .labelContainer {
     justify-content: center;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    flex-wrap: wrap; }
+    .homeDashboard .labelContainer p {
+      margin-bottom: 5px; }
   .homeDashboard .dueDateContainer p {
     text-align: center; }
   .homeDashboard .phoneHidden {
@@ -2459,6 +2471,14 @@ abbr[title] {
   .calendarPage .progressContainer {
     margin-top: 0; } }
 
+.habitPage .homeNavigation {
+  z-index: 19; }
+
+.habitPage .habitTrackingContent {
+  position: relative;
+  padding: 25px 50px 0px 50px;
+  margin-left: 100px; }
+
 .taskDetails {
   width: 100%;
   margin-left: 100px;
@@ -2945,6 +2965,44 @@ abbr[title] {
   .taskDetails button.cancelBtn {
     width: 100%;
     margin-right: 0; } }
+
+.signOutModal {
+  position: fixed;
+  z-index: 50;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+  border: 1px solid rgba(212, 212, 212, 0.9);
+  padding: 45px 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  .signOutModal p {
+    font-size: 1.1rem; }
+  .signOutModal .fa-door-open {
+    font-size: 3rem;
+    margin-bottom: 25px;
+    background-color: #A5D6A7;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    padding: 20px;
+    border-radius: 50%; }
+  .signOutModal .buttonList {
+    display: flex;
+    flex-direction: column; }
+  .signOutModal button {
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    border-radius: 25px;
+    margin-top: 15px;
+    padding: 10px 20px; }
+
+.signoutOverlay {
+  z-index: 40 !important; }
 
 .toDoListSection {
   margin-top: 25px;

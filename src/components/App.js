@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { AppContext } from '../Contexts/AppContext';
 
 // Component Imports
-import Statistics from './Statistics';
+import HabitTracker from './HabitTracker';
 import Home from './Home';
 import CreateAccount from './CreateAccount';
 import Login from './Login';
@@ -36,8 +36,11 @@ function App() {
   const [isPrioritySelected, setIsPrioritySelected] = useState(false)
   const [filteredAndSearchedTask, setFilteredAndSearchedTask] = useState([]);
 
+  // Signout Modals
+    const [isSignOutModalOn, setIsSignOutModalOn] = useState(false);
+
   return (
-    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isNavExpanded, setIsNavExpanded, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask, filteredAndSearchedTask}}>
+    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isNavExpanded, setIsNavExpanded, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask, filteredAndSearchedTask, isSignOutModalOn, setIsSignOutModalOn}}>
       <Routes>
         <Route path='/' element={<FrontPage />}/>
 
@@ -49,7 +52,7 @@ function App() {
 
         <Route path='/calendar' element={<CalendarSection />} />
 
-        <Route path='/statistics' element={<Statistics/>} />
+        <Route path='/habit-tracker' element={<HabitTracker/>} />
 
         <Route path='/settings' element={<Settings/>} />
 

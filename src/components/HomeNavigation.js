@@ -1,6 +1,4 @@
-import { auth } from "./firebase";
 import { Link, useLocation } from "react-router-dom";
-import { signOut } from "firebase/auth";
 import { useContext, useRef } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +7,12 @@ import FocusLock from 'react-focus-lock';
 const HomeNavigation = () => {
 
     // useContext variables
-    const {setIsAuth, username, setUsername, setUserUID, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, isNavExpanded, setIsNavExpanded, setIsLateSelected} = useContext(AppContext)
+    const {username, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, isNavExpanded, setIsNavExpanded, setIsLateSelected, setIsSignOutModalOn} = useContext(AppContext)
 
     const homeText = useRef(null);
     const newTaskText = useRef(null);
     const calendarText = useRef(null);
-    const statisticsText = useRef(null);
+    const habitText = useRef(null);
     // const settingsText = useRef(null);
     const logOutText = useRef(null);
 
@@ -40,19 +38,8 @@ const HomeNavigation = () => {
         setIsNewTaskClicked(true);
     }
 
-    const signUserOut = () => {
-        signOut(auth).then( () => {
-            setIsAuth(false);
-            setUsername('');
-            setUserUID('notSignedIn');
-            localStorage.clear();
-        })
-        navigate('/login')
-    }
-
-    const redirectToHome = () => {
-        
-        if(location.pathname !== "/home") navigate('/home');
+    const redirectToPage = (pathname) => {
+        if(location.pathname !== `/${pathname}`) navigate(`/${pathname}`);
 
         if(isNavExpanded === true) {
             setIsNavExpanded(false)
@@ -65,25 +52,7 @@ const HomeNavigation = () => {
             setIsTaskExpanded(false);
         } else {
             setIsLateSelected(false);
-            navigate('/home');
-        }
-    }
-
-    const redirectToCalendar = () => {
-        if(location.pathname !== "/calendar") navigate('/calendar');
-
-        if(isNavExpanded === true) {
-            setIsNavExpanded(false)
-            handleNavToggleBtn()
-        }
-
-        if(isTaskExpanded === undefined) return
-
-        if(isTaskExpanded) {
-            setIsTaskExpanded(false);
-        } else {
-            navigate('/calendar');
-            
+            navigate(`/${pathname}`);
         }
     }
 
@@ -110,7 +79,7 @@ const HomeNavigation = () => {
         homeText.current.className = "expandedButtonText";
         newTaskText.current.className = "expandedButtonText";
         calendarText.current.className = "expandedButtonText";
-        statisticsText.current.className = "expandedButtonText";
+        habitText.current.className = "expandedButtonText";
         // settingsText.current.className = "expandedButtonText";
         logOutText.current.className = "expandedButtonText";
 
@@ -134,7 +103,7 @@ const HomeNavigation = () => {
         homeText.current.className = "expandedButtonText defaultHidden";
         newTaskText.current.className = "expandedButtonText defaultHidden";
         calendarText.current.className = "expandedButtonText defaultHidden";
-        statisticsText.current.className = "expandedButtonText defaultHidden";
+        habitText.current.className = "expandedButtonText defaultHidden";
         // settingsText.current.className = "expandedButtonText defaultHidden";
         logOutText.current.className = "expandedButtonText defaultHidden";
 
@@ -170,8 +139,8 @@ const HomeNavigation = () => {
                 </div>
                 <ul className="minimizedUl" ref={ulOneEl}>
                     <li>
-                        <button onClick={redirectToHome} className="homeBtnOne homeBtn">
-                            <div><span aria-hidden="true">🏡</span>&nbsp;<span className="defaultHidden" ref={homeText}>Home</span></div>
+                        <button onClick={() => {redirectToPage('home')}} className="homeBtnOne homeBtn">
+                            <span aria-hidden="true">🏡</span>&nbsp;<span className="defaultHidden" ref={homeText}>Home</span>
                             <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconOne}></i>                        
                         </button>
                     </li>
@@ -182,17 +151,17 @@ const HomeNavigation = () => {
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconTwo}></i>
                     </li>
                     <li>
-                        <button to="/calendar" className="homeBtnTwo homeBtn" onClick={redirectToCalendar}>
+                        <button to="/calendar" className="homeBtnTwo homeBtn" onClick={() => {redirectToPage('calendar')}}>
                             <span aria-hidden="true">🗓️</span> 
                             <span className="defaultHidden" ref={calendarText}>Calendar</span>
                         </button>
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconThree}></i>
                     </li>
                     <li>
-                        <Link to="/statistics" className="homeBtnThree homeBtn">
+                        <button className="homeBtnThree homeBtn" onClick={() => {redirectToPage('habit-tracker')}}>
                             <span aria-hidden="true">📊</span>
-                            <span className="defaultHidden" ref={statisticsText}>Statistics</span>
-                        </Link>
+                            <span className="defaultHidden" ref={habitText}>Habit Tracker</span>
+                        </button>
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFour}></i>
                     </li>
                 </ul>
@@ -205,7 +174,7 @@ const HomeNavigation = () => {
                         <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFive}></i>
                     </li> */}
                     <li>                    
-                        <button onClick={signUserOut} className="homeBtnSix homeBtn">
+                        <button onClick={() => {setIsSignOutModalOn(true)}} className="homeBtnSix homeBtn">
                             <span aria-hidden="true">🚪</span>
                             <span className="defaultHidden" ref={logOutText}>Logout</span>
                         </button>
@@ -243,29 +212,29 @@ const HomeNavigation = () => {
                     </div>
                     <ul ref={ulOneEl}>
                         <li>
-                            <button onClick={redirectToHome} className="homeBtnOne homeBtn">
-                                <div><span aria-hidden="true">🏡</span>&nbsp;<span ref={homeText}>Home</span></div>
+                            <button onClick={() => {redirectToPage('home')}} className="homeBtnOne homeBtn">
+                                <span aria-hidden="true">🏡</span><span ref={homeText}>Home</span>
                                 <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconOne}></i>                        
                             </button>
                         </li>
                         <li>
                             <button onClick={handleNewTask} className="homeBtnFive homeBtn">
-                                <span aria-hidden="true">✨</span>&nbsp;<span ref={newTaskText}>New&nbsp;Task</span>
+                                <span aria-hidden="true">✨</span><span ref={newTaskText}>New&nbsp;Task</span>
                             </button>
                             <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconTwo}></i>
                         </li>
                         <li>
-                            <button to="/calendar" className="homeBtnTwo homeBtn" onClick={redirectToCalendar}>
+                            <button className="homeBtnTwo homeBtn" onClick={() => {redirectToPage('calendar')}}>
                                 <span aria-hidden="true">🗓️</span> 
                                 <span ref={calendarText}>Calendar</span>
                             </button>
                             <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconThree}></i>
                         </li>
                         <li>
-                            <Link to="/statistics" className="homeBtnThree homeBtn">
+                            <button className="homeBtn homeBtnThree" onClick={() => {redirectToPage('habit-tracker')}}>
                                 <span aria-hidden="true">📊</span>
-                                <span ref={statisticsText}>Statistics</span>
-                            </Link>
+                                <span ref={habitText}>Habit Tracker</span>
+                            </button>
                             <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconFour}></i>
                         </li>
                     </ul>
@@ -278,7 +247,7 @@ const HomeNavigation = () => {
                             <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFive}></i>
                         </li> */}
                         <li>                    
-                            <button onClick={signUserOut} className="homeBtnSix homeBtn">
+                            <button onClick={() => {setIsSignOutModalOn(true)}} className="homeBtnSix homeBtn">
                                 <span aria-hidden="true">🚪</span>
                                 <span ref={logOutText}>Logout</span>
                             </button>

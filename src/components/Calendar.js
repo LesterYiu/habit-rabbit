@@ -4,6 +4,8 @@ import { AppContext } from "../Contexts/AppContext";
 import Calendar from "react-calendar";
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
+import SignOutModal from "./SignOutModal";
+
 import { collection, getDocs } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -23,7 +25,7 @@ const CalendarSection = () => {
     const [allDatesArray, setAllDatesArr] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList, isNavExpanded} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isSignOutModalOn} = useContext(AppContext);
 
     // Check for authen
     useEffect( () => {
@@ -95,7 +97,7 @@ const CalendarSection = () => {
         }
         setAllDatesArr(allDatesArr)
     }
-    // {format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`}
+
     return(
         <div className="calendarPage">
             {isNewTaskClicked ? 
@@ -104,6 +106,12 @@ const CalendarSection = () => {
                 <div className="overlayBackground overlayBackgroundTwo"></div>
             </>
             : null}
+            {isSignOutModalOn ?
+            <>
+                <SignOutModal/>
+                <div className="overlayBackground signoutOverlay"></div>
+            </> 
+            : null }
             <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
             <div className="calendarSection">
                 <Calendar onChange={setCurrentDate} value={currentDate} onClickDay={(value) => {setSelectedTaskDate(value)}} tileContent={({ date }) => allDatesArray.includes(format(date, 'yyyy/MM/dd')) ? <i className="fa-solid fa-circle" aria-hidden="true"></i> : null} calendarType={"US"}/>

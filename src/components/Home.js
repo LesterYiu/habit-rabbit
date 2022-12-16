@@ -15,6 +15,7 @@ import SingleDoneTask from "./SingleDoneTask";
 import DashboardHeader from "./DashboardHeader";
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
+import SignOutModal from "./SignOutModal";
 
 // Image Imports
 import errorMessageOne from "../assets/errorMessageOne.gif";
@@ -51,7 +52,7 @@ const Home = () => {
     const isMounted = useRef(false);
 
     // useContext variables
-    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask, isNavExpanded} = useContext(AppContext);
+    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask, isNavExpanded, isSignOutModalOn, setIsSignOutModalOn} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -490,6 +491,12 @@ const Home = () => {
                 {isNewTaskClicked ? 
                 <>
                     <NewTask />
+                    <div className="overlayBackground"></div>
+                </>
+                : null}
+                {isSignOutModalOn ?
+                <>
+                    <SignOutModal/>
                     <div className="overlayBackground"></div>
                 </>
                 : null}

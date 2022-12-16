@@ -34,6 +34,13 @@
 
     .homeBtn {
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+
+        span:nth-child(1) {
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            margin-right: 5px;
+        }
     }
 
     .homeBtnOne {

@@ -1,0 +1,47 @@
+.signOutModal {
+    position:fixed;
+    z-index: 50;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    border: 1px solid rgba(212, 212, 212, 0.9);
+    padding: 45px 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    p {
+        font-size: 1.1rem;
+    }
+
+    .fa-door-open {
+        font-size: 3rem;
+        margin-bottom: 25px;
+        background-color: #A5D6A7;
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        border: 1px solid rgba(212, 212, 212, 0.9);
+        padding: 20px;
+        border-radius: 50%;
+    }
+
+    .buttonList {
+        display: flex;
+        flex-direction: column;
+    }
+
+    button {
+        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        border: 1px solid rgba(212, 212, 212, 0.9);
+        border-radius: 25px;
+        margin-top: 15px;
+        padding: 10px 20px;
+    }
+}
+
+.signoutOverlay {
+    z-index: 40 !important;
+}
