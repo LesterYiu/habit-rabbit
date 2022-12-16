@@ -44,8 +44,6 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
     const [backBtnCounter, setBackBtnCounter] = useState(0);
     const [frontBtnCounter, setFrontBtnCounter] = useState(0);
     
-
-    const [selectedDeadline, setSelectedDeadline] = useState("");
     const [updates, setUpdates] = useState([]);
     const [timeSpent, setTimeSpent] = useState(0);
     const [isMoreThan24, setIsMoreThan24] = useState(false);
@@ -57,10 +55,6 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
 
     // useRef variables
     const textareaEl = useRef(null)
-
-    useEffect( () => {
-        checkIfLate()
-    }, [selectedDeadline])
 
     // To get the data from database on mount
     useEffect( () => {
@@ -195,12 +189,19 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
     // Called with an array containing all 7 day's dates + an array containing the state function to set a new day time.
     async function getDocument() {
         let documentRef = determineWhichRef(specificTask.id);
-
         // If the dates on the log time modal match the dates of the hours logged in the database, it will populate the hours.
-        const docSnap = await getDoc(documentRef);
+        let docSnap;
+        let timeSpentArr;
 
-        // Array containing all the dates/times logged in from the database
-        const timeSpentArr = docSnap.data().task.timeSpent;
+        try{
+            docSnap = await getDoc(documentRef);
+            timeSpentArr = docSnap.data().task.timeSpent;
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef(); 
+            docSnap = await getDoc(newDocumentRef);
+            // Array containing all the dates/times logged in from the database
+            timeSpentArr = docSnap.data().task.timeSpent;
+        }
 
         // Array containing all the dates
         const datesArr = arguments[0];
@@ -379,9 +380,17 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
             timeArr.push({time, date})
         }
 
-        const docSnap = await getDoc(documentRef);
+        let docSnap;
+        let currentTimeSpent;
 
-        const currentTimeSpent = docSnap.data().task.timeSpent;
+        try {
+            docSnap = await getDoc(documentRef);
+            currentTimeSpent = docSnap.data().task.timeSpent;
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();  
+            docSnap = await getDoc(newDocumentRef);
+            currentTimeSpent = docSnap.data().task.timeSpent;
+        }
 
         const localArr = [];
 
@@ -514,8 +523,6 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
     }
 
     const updateDate = async (e) => {
-
-        setSelectedDeadline(e.target.value)
         let documentRef = determineWhichRef(specificTask.id);
 
         const dateString = e.target.value.replace(/([-])/g, '');
@@ -570,13 +577,13 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
 
     const updateTimeInput = async (e) => {
         let documentRef = determineWhichRef(specificTask.id);
-
         specificTask.task.time = e.target.value;
         try {
             await updateDoc(documentRef, {
                 "task.time" : e.target.value
             })
         } catch {
+            console.log('test')
             const newDocumentRef = await getNewUpdatedRef();
             await updateDoc(newDocumentRef, {
                 "task.time" : e.target.value
@@ -704,7 +711,7 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
                 "task.completion" : taskCompletion
             })
         } catch {
-            console.clear();
+            // console.clear();
             const newDocumentRef = await getNewUpdatedRef();
             const newCollectionName = newDocumentRef.path.split("/")[4]; 
 
@@ -758,40 +765,6 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
             if(task.uuid === specificTask.uuid) {
                 newDocRef = doc(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`, task.id);
                 return newDocRef;                
-            }
-        }
-    }
-
-    const checkIfLate = async () => {
-
-        if(selectedDeadline === "") return;
-
-        const today = new Date();
-        const deadline = new Date(selectedDeadline.replace(/([-])/g, '/'));
-        const deadlineTimeArr = specificTask.task.time.split(":");
-        const documentRef = determineWhichRef(specificTask.id);
-        deadline.setHours(deadlineTimeArr[0], deadlineTimeArr[1], 0, 0);
-        if(today > deadline) {
-            try {
-                await updateDoc(documentRef, {
-                    "task.isLate" : true
-                })                
-            } catch {
-                const newDocumentRef = await getNewUpdatedRef();
-                await updateDoc(newDocumentRef, {
-                    "task.isLate" : true
-                })   
-            }
-        } else if (today < deadline){
-            try {
-                await updateDoc(documentRef, {
-                    "task.isLate" : false
-                })    
-            } catch {
-                const newDocumentRef = await getNewUpdatedRef();
-                await updateDoc(newDocumentRef, {
-                    "task.isLate" : false
-                })
             }
         }
     }

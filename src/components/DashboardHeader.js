@@ -9,7 +9,6 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
     const [textInput, setTextInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isFilterModalOn, setIsFilterModalOn] = useState(false);
-    // const [isSortModalOn, setIsSortModalOn] = useState(false);
 
     // useContext variables
     const {username, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask} = useContext(AppContext);        
@@ -82,7 +81,6 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
     // Updates the UI when user changes task progress then changes tabs without reloading the page
     const handleSearchedOngoingBtn = () => {
         const regex = new RegExp(`${textInput}`, "gi");
-        // setIsSortModalOn(false);
         setIsFilterModalOn(false);
         handleButtonSwitch(setIsDoneBtnClicked, setIsToDoBtnClicked);
         matchTaskWithSearch(textInput, regex);
@@ -90,7 +88,6 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
 
     const handleSearchedFinishedBtn = () => {
         const regex = new RegExp(`${textInput}`, "gi");
-        // setIsSortModalOn(false);
         setIsFilterModalOn(false);
         handleButtonSwitch(setIsToDoBtnClicked, setIsDoneBtnClicked)
         matchTaskWithSearch(textInput, regex);
@@ -99,23 +96,14 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
 
     const handleFilterBtn = () => {
         setIsFilterModalOn(!isFilterModalOn);
-        // setIsSortModalOn(false)
     }
 
-    // const handleSortBtn = () => {
-    //     setIsSortModalOn(!isSortModalOn)
-    //     setIsFilterModalOn(false);
-    // }
-
     const handleDefaultOption = () => {
-        // setIsSortModalOn(false);
         setIsFilterModalOn(false);
         setFilteredTasks([]);
 
         setIsLateSelected(false);
         setIsPrioritySelected(false);
-
-
     }
 
     const determineWhichArrList = () => {
@@ -151,22 +139,6 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
         }
         reformatTaskByDate(lateTasksArr, setFilteredTasks);
     }
-
-    // const handleFilterByPriority = () => {
-    //     const reformattedTasksArr = determineWhichArrList();
-    //     const filteredByPriorityArr = cloneDeep(reformattedTasksArr);
-
-        
-    //     setIsPrioritySelected(true);
-    //     setIsSortModalOn(false);
-    //     setIsLateSelected(false);
-
-    //     for(let weeklyTasks of filteredByPriorityArr){
-    //         weeklyTasks.sort( (a, b) => a.task.priorityLevel - b.task.priorityLevel)
-    //     }
-
-    //     setFilteredTasks(filteredByPriorityArr);
-    // }
 
     return(
         <>
@@ -207,31 +179,16 @@ const DashboardHeader = ({currentUserTime, isToDoBtnClicked, handleButtonSwitch,
                             </form>
                         </div> : null}
                     </div>
-                    {/* <div className="buttonRelativePosition">
-                        <button className="filterContainer" onClick={handleSortBtn}>
-                            <i className="fa-solid fa-sort"></i>
-                            <p>Sort</p>
-                        </button>
-                        {isSortModalOn ?
-                        <div className="filterModal">
-                            <form name="sortForm">
-                                <fieldset>
-                                    <legend className="sr-only">Choose how to sort your task lists</legend>
-
-                                    <div onClick={handleDefaultOption}>
-                                        <input type="radio" name="filterOption" id="allTask" checked={!isPrioritySelected} readOnly/>
-                                        <label htmlFor="allTask">Default</label>
-                                    </div>
-
-                                    <div onClick={handleFilterByPriority}>
-                                        <input type="radio" name="filterOption" id="priorityTask" checked={isPrioritySelected} readOnly/>
-                                        <label htmlFor="priorityTask">Priority</label>
-                                    </div>
-
-                                </fieldset>
-                            </form>
-                        </div> : null}
-                    </div> */}
+                    {isLateSelected ?
+                    <div className="appliedFilters">
+                        <div className="lateFilterIndicator">
+                            <p>Late</p>
+                            <button onClick={() => {setIsLateSelected(false)}}>
+                                <span className="sr-only">Remove Late Filter</span>
+                                <i className="fa-regular fa-circle-xmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div> : null}
                 </div>
                 <div className="searchContainer">
                     <i className="fa-solid fa-magnifying-glass" aria-hidden="true" ></i>

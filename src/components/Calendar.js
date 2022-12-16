@@ -23,7 +23,7 @@ const CalendarSection = () => {
     const [allDatesArray, setAllDatesArr] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isTaskExpanded} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList} = useContext(AppContext);
 
     // Check for authen
     useEffect( () => {
@@ -82,7 +82,7 @@ const CalendarSection = () => {
         }
         setAllDatesArr(allDatesArr)
     }
-
+    // {format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`}
     return(
         <div className="calendarPage">
             {isNewTaskClicked ? 
@@ -101,7 +101,7 @@ const CalendarSection = () => {
                     {selectedWeekTasks.length && !isLoading ?
                     selectedWeekTasks.map( (specificTask) => {
                         return (
-                            <div className={`${specificTask.task.priority} taskContainer`} key={uuid()}>
+                            <div className={format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`} key={uuid()}>
                                 <p className="taskName">{specificTask.task.name}</p>
                                 <div className="deadlineSection">
                                     <i className="fa-regular fa-clock"></i>

@@ -1695,6 +1695,29 @@ fieldset {
     padding-right: 15px; }
   .homeDashboard .noWrapText {
     white-space: nowrap; }
+  .homeDashboard .appliedFilters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+    color: #7d7c7c;
+    border-radius: 5px;
+    padding: 0 10px;
+    background-color: #eeeded; }
+    .homeDashboard .appliedFilters p {
+      font-size: 0.9rem !important; }
+    .homeDashboard .appliedFilters i {
+      font-size: 0.7rem; }
+  .homeDashboard .lateFilterIndicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .homeDashboard .lateFilterIndicator button {
+      display: flex;
+      align-items: center;
+      margin-right: 0 !important;
+      margin-left: 10px;
+      color: #7d7c7c; }
 
 .homePage .loadingOverlayContainer {
   position: fixed;
@@ -2306,6 +2329,14 @@ abbr[title] {
   .calendarPage .overallTaskOverview {
     margin-left: 100px;
     padding: 25px 50px 0px 50px; }
+    .calendarPage .overallTaskOverview h2 {
+      font-size: 1.3rem;
+      text-decoration: underline;
+      background-color: #f4f4f4;
+      border-radius: 10px;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      padding: 5px 10px; }
   .calendarPage .displayTasksSection {
     display: flex;
     justify-content: space-between;
@@ -2395,6 +2426,9 @@ abbr[title] {
     z-index: 30; }
   .calendarPage .createTaskForm {
     z-index: 50; }
+  .calendarPage .currentTaskSelected {
+    box-shadow: 2px 4px #f57d3dcd !important;
+    border: 1px solid #f57d3dcd !important; }
 
 @media (max-width: 940px) {
   .calendarPage .displayTasksSection {

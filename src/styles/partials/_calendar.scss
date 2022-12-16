@@ -237,6 +237,16 @@ abbr[title] {
     .overallTaskOverview {
         margin-left: 100px;
         padding: 25px 50px 0px 50px;
+
+        h2 {
+            font-size: 1.3rem;
+            text-decoration: underline;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+            border: 1px solid rgba(212, 212, 212, 0.9);
+            padding: 5px 10px;
+        }
     }
 
     .displayTasksSection {
@@ -370,6 +380,11 @@ abbr[title] {
 
     .createTaskForm {
         z-index: 50;
+    }
+
+    .currentTaskSelected {
+        box-shadow: 2px 4px #f57d3dcd !important;
+        border: 1px solid #f57d3dcd !important;
     }
 }
 

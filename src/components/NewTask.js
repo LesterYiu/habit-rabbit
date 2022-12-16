@@ -25,6 +25,7 @@ const NewTask = () => {
     const [isExistingTaskSelected, setIsExistingTaskSelected] = useState(false);
     const [isMaxLabelsReachedCustom, setIsMaxLabelsReachedCustom] = useState(false);
     const [isMaxLabelsReachedExisting, setIsMaxLabelsReachedExisting] = useState(false);
+    const [isLate, setIsLate] = useState(false);
 
     // For all the custom created labels
     const [labelList, setLabelList] = useState([]);
@@ -56,6 +57,10 @@ const NewTask = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect( () => {
+        checkIfLate()
+    }, [time, deadline])
+
     const handleInputText = (e, setState) => {
         e.preventDefault();
         setState(e.target.value);
@@ -81,7 +86,7 @@ const NewTask = () => {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
                 { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, priorityLevel, label: [...labelList], completion: 0, isLate: false, updates:[], timeSpent: {}}, uuid: uuid()});
+                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, priorityLevel, label: [...labelList], completion: 0, isLate, updates:[], timeSpent: {}}, uuid: uuid()});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel(e);
@@ -219,6 +224,21 @@ const NewTask = () => {
             setPriorityLevel(2);
         } else {
             setPriorityLevel(3);
+        }
+    }
+
+    const checkIfLate = () => {
+        if (deadline === "" && time === "") return
+
+        const today = new Date();
+        const taskDeadline = new Date(deadline.replace(/([-])/g, '/'));
+        const deadlineTimeArr = time.split(":");
+        taskDeadline.setHours(deadlineTimeArr[0], deadlineTimeArr[1], 0, 0);
+
+        if(today > taskDeadline) {
+            setIsLate(true);
+        } else {
+            setIsLate(false);
         }
     }
 

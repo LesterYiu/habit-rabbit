@@ -432,6 +432,39 @@
     .noWrapText {
         white-space: nowrap;
     }
+
+    .appliedFilters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+        color: #7d7c7c;
+        border-radius: 5px;
+        padding: 0 10px;
+        background-color: #eeeded;
+
+        p {
+            font-size: 0.9rem !important;
+        }
+
+        i {
+            font-size: 0.7rem;
+        }
+    }
+
+    .lateFilterIndicator {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+            display: flex;
+            align-items: center;
+            margin-right: 0 !important;
+            margin-left: 10px;
+            color: #7d7c7c;
+        }
+    }
 }
 
 .homePage .loadingOverlayContainer {
