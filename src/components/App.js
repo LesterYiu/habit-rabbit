@@ -28,6 +28,10 @@ function App() {
   const [doneTaskList, setDoneTaskList] = useState([]);
   const [isTaskExpanded, setIsTaskExpanded] = useState(false);
 
+  // Home Navigation "ongoing tasks" & "finished tasks" toggles
+  const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
+  const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
+
   // Nav Expanded
   const [isNavExpanded, setIsNavExpanded] = useState(false);
 
@@ -40,7 +44,7 @@ function App() {
     const [isSignOutModalOn, setIsSignOutModalOn] = useState(false);
 
   return (
-    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isNavExpanded, setIsNavExpanded, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask, filteredAndSearchedTask, isSignOutModalOn, setIsSignOutModalOn}}>
+    <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isNavExpanded, setIsNavExpanded, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask, filteredAndSearchedTask, isSignOutModalOn, setIsSignOutModalOn, isToDoBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsDoneBtnClicked}}>
       <Routes>
         <Route path='/' element={<FrontPage />}/>
 

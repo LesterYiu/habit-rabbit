@@ -6,11 +6,12 @@ import { AppContext } from "../Contexts/AppContext";
 import { db } from "./firebase";
 import FocusLock from 'react-focus-lock';
 
-const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, deleteTask, isToDoBtnClicked}) => {
+const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, deleteTask}) => {
 
     const [isLate, setIsLate] = useState(specificTask.task.isLate)
-    const {userUID} = useContext(AppContext); 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const {userUID, isToDoBtnClicked} = useContext(AppContext); 
 
     useEffect( () => {
         checkIfLate();

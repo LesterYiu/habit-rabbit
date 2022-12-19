@@ -2,17 +2,17 @@ import {format} from "date-fns";
 import {  doc, updateDoc, getDoc, deleteDoc, collection, getDocs, addDoc } from "firebase/firestore";
 import { useEffect, useState, useRef, useContext} from "react";
 import uuid from "react-uuid";
-import { debounce } from "../utils/globalFunctions";
+import { debounce, updateDatabase } from "../utils/globalFunctions";
 import { AppContext } from "../Contexts/AppContext";
 import { db } from "./firebase";
 import {useToggle} from "../utils/customHooks";
 import _ from "lodash";
 import { startOfWeek } from "date-fns/esm";
 
-const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, isDoneBtnClicked, reformattedTask, reformattedDoneTask, updateDatabase}) => {
+const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
 
     // useContext variables
-    const {userUID, username, userPic, taskList, setTaskList, setIsTaskExpanded, doneTaskList, setDoneTaskList} = useContext(AppContext);
+    const {userUID, username, userPic, taskList, setTaskList, setIsTaskExpanded, doneTaskList, setDoneTaskList, isToDoBtnClicked, isDoneBtnClicked} = useContext(AppContext);
 
     // Toggles
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
@@ -83,12 +83,10 @@ const TaskDetails = ({specificTask, setIsSpecificTaskEmpty, isToDoBtnClicked, is
 
     // To get dates for log time
     useEffect( () => {
-        setIsSpecificTaskEmpty(false);
 
         setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7);
-
         
-    }, [setIsSpecificTaskEmpty])
+    }, [])
 
     // Handles on mount loading of time inputs
 

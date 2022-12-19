@@ -1,3 +1,5 @@
+import { addDoc, deleteDoc, getDocs } from "firebase/firestore";
+
 export const debounce = (callbackFunction, delay) => {
     let timeout;
     return (...args) => {
@@ -84,4 +86,19 @@ export const handleOnKeyDown = (e, executeFunc, optionalParameter, optionalParam
         
         executeFunc(optionalParameter, optionalParameter2);
     }
+}
+
+export const updateDatabase = async (collectionType, postDocType, finishedStateSet, i) => {
+
+    /*
+    - collectionType = which collection to add data to
+    - postDocType = doc in current collection we want to delete
+    - finishedSetState = state function to update UI to add to opposite collection (ex: if we remove from finished section, then we update state on unfinished section)
+    */
+
+    await addDoc(collectionType, i);
+    await deleteDoc(postDocType);
+
+    const data = await getDocs(collectionType);
+    finishedStateSet(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
 }

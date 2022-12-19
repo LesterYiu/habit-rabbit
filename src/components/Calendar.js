@@ -15,19 +15,22 @@ import { reformatTaskByDate, disableScrollForModalOn } from "../utils/globalFunc
 
 // Image Imports
 import errorMessageOne from "../assets/errorMessageOne.gif";
+import TaskDetails from "./TaskDetails";
 
 const CalendarSection = () => {
 
     const [currentDate, setCurrentDate] = useState(new Date());
     const [reformattedTaskList, setReformattedTaskList] = useState([]);
+    const [reformattedDoneTaskList, setReformattedDoneTaskList] = useState([]);
     const [selectedTaskDate, setSelectedTaskDate] = useState(new Date());
     const [selectedWeekTasks, setSelectedWeekTasks] = useState([]);
     const [allDatesArray, setAllDatesArr] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedTask, setSelectedTask] = useState({});
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isSignOutModalOn} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, setIsTaskExpanded, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isSignOutModalOn, isTaskExpanded, isAuth, setDoneTaskList, doneTaskList} = useContext(AppContext);
 
-    // Check for authen
+    // Check for authenticataion
     useEffect( () => {
         onAuthStateChanged( auth, (user) => {
             if (user) {
@@ -47,6 +50,7 @@ const CalendarSection = () => {
 
     useEffect( () => {
         reformatTaskByDate(taskList, setReformattedTaskList);
+        reformatTaskByDate(doneTaskList, setReformattedDoneTaskList);
         handleDates()
     }, [taskList])
 
@@ -70,8 +74,13 @@ const CalendarSection = () => {
 
     const getPost = async () => {
         const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
+        const doneCollectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/finishedTask/`);
+
         const data = await getDocs(collectionRef);
+        const doneData = await getDocs(doneCollectionRef)
+
         setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+        setDoneTaskList(doneData.docs.map((doc) => ({...doc.data(), id: doc.id})));
 
         setIsLoading(false);
     }
@@ -98,6 +107,32 @@ const CalendarSection = () => {
         setAllDatesArr(allDatesArr)
     }
 
+    const directToTaskDetails = (taskData) => {
+        setSelectedTask(taskData);
+        setIsTaskExpanded(true);
+    }
+
+    if(isAuth && isTaskExpanded) {
+        return(
+            <>
+                {isNewTaskClicked ? 
+                <>
+                    <NewTask />
+                    <div className="overlayBackground overlayBackgroundTwo"></div>
+                </>
+                : null}
+                {isSignOutModalOn ?
+                <>
+                    <SignOutModal/>
+                    <div className="overlayBackground signoutOverlay"></div>
+                </> 
+                : null }
+                <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
+                <TaskDetails specificTask={selectedTask} reformattedTask={reformattedTaskList} reformattedDoneTask={reformattedDoneTaskList}/>
+            </>
+        )
+    } 
+
     return(
         <div className="calendarPage">
             {isNewTaskClicked ? 
@@ -122,7 +157,7 @@ const CalendarSection = () => {
                     {selectedWeekTasks.length && !isLoading ?
                     selectedWeekTasks.map( (specificTask) => {
                         return (
-                            <div className={format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`} key={uuid()}>
+                            <div className={format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`} key={uuid()} onClick={() => {directToTaskDetails(specificTask)}}>
                                 <p className="taskName">{specificTask.task.name}</p>
                                 <div className="deadlineSection">
                                     <i className="fa-regular fa-clock"></i>

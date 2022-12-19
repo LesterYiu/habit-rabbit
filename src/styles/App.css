@@ -2364,7 +2364,8 @@ abbr[title] {
       border-radius: 15px;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
       border: 1px solid rgba(212, 212, 212, 0.9);
-      height: 150px; }
+      height: 150px;
+      cursor: pointer; }
     .calendarPage .displayTasksSection .taskName {
       font-size: 0.8rem !important; }
   .calendarPage .deadlineSection {

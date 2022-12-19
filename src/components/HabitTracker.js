@@ -6,10 +6,24 @@ import { disableScrollForModalOn } from "../utils/globalFunctions";
 import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
 import SignOutModal from "./SignOutModal";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 
 const HabitTracker = () => {
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, userPic, isNewTaskClicked, isSignOutModalOn, isNavExpanded} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, userPic, isNewTaskClicked, isSignOutModalOn, isNavExpanded, setUserPic} = useContext(AppContext);
+
+    // Check for authenticataion
+    useEffect( () => {
+        onAuthStateChanged( auth, (user) => {
+            if (user) {
+                setUsername(user.displayName);
+                setUserUID(user.auth.currentUser.uid);
+                setUserPic(user.photoURL);
+                setIsAuth(!user.isAnonymous);
+            }
+        })
+    }, [setUsername, setUserUID, setUserPic, setIsAuth])
 
     useEffect( () => {
 

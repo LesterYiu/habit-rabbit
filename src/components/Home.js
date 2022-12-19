@@ -6,7 +6,7 @@ import { useState , useEffect, useContext, useRef} from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { getHours } from "date-fns";
 import uuid from "react-uuid";
-import { reformatTaskByDate, disableScrollForModalOn } from "../utils/globalFunctions";
+import { reformatTaskByDate, disableScrollForModalOn, updateDatabase } from "../utils/globalFunctions";
 
 // Component Imports
 import TaskDetails from "./TaskDetails";
@@ -29,14 +29,9 @@ const Home = () => {
     const [reformattedDoneTask, setReformattedDoneTask] = useState([]); 
     const [searchedTaskList, setSearchedTaskList] = useState([]);
     const [doneSearchedTaskList, setDoneSearchedTaskList] = useState([]);
-    const [specificTask, setSpecificTask] = useState([]);
 
     // Sort & Filtered Tasks
     const [filteredTasks, setFilteredTasks] = useState([]);
-
-    // const [isNewTaskClicked, setIsNewTaskClicked] = useState(false);
-    const [isToDoBtnClicked, setIsToDoBtnClicked] = useState(true);
-    const [isDoneBtnClicked, setIsDoneBtnClicked] = useState(false);
 
     const [isSearchBarPopulated, setIsSearchBarPopulated] = useState(false);
     const [isPageLoading, setIsPageLoading] = useState(true);
@@ -47,12 +42,13 @@ const Home = () => {
     const [isFinishedTaskListZero, setIsFinishedTaskListZero] = useState(false);
     const [isOngoingSearchTaskFound, setIsOngoingSearchTaskFound] = useState(true);
     const [isFinishedSearchTaskFound, setIsFinishedSearchTaskFound] = useState(true);
-    const [isSpecificTaskEmpty, setIsSpecificTaskEmpty] = useState(true);
+
+    const [specificTask, setSpecificTask] = useState([]);
 
     const isMounted = useRef(false);
 
     // useContext variables
-    const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask, isNavExpanded, isSignOutModalOn, setIsSignOutModalOn} = useContext(AppContext);
+    const {setIsAuth, isAuth, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask, isNavExpanded, isSignOutModalOn, isToDoBtnClicked, isDoneBtnClicked} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -143,21 +139,6 @@ const Home = () => {
 
         disableScrollForModalOn(isNavExpanded);
     },[isNavExpanded])
-
-    const updateDatabase = async (collectionType, postDocType, finishedStateSet, i) => {
-
-        /*
-        - collectionType = which collection to add data to
-        - postDocType = doc in current collection we want to delete
-        - finishedSetState = state function to update UI to add to opposite collection (ex: if we remove from finished section, then we update state on unfinished section)
-        */
-
-        await addDoc(collectionType, i);
-        await deleteDoc(postDocType);
-
-        const data = await getDocs(collectionType);
-        finishedStateSet(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
-    }
 
     const getPost = async () => {
         // data - ongoing tasks, doneData - finished tasks
@@ -375,7 +356,7 @@ const Home = () => {
         return(
             <div className="homePage">
                 <HomeNavigation/>
-                <TaskDetails specificTask={specificTask} setIsSpecificTaskEmpty={setIsSpecificTaskEmpty} isToDoBtnClicked={isToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} updateDatabase={updateDatabase}/>
+                <TaskDetails specificTask={specificTask} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} />
                 {isNewTaskClicked ? 
                 <>
                     <NewTask/>
@@ -393,7 +374,7 @@ const Home = () => {
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
+                            <DashboardHeader currentUserTime={currentUserTime} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
                             <div className="allTasksContainer">
                                 {isPageLoading && isToDoBtnClicked && reformattedTask.length === 0 ? 
                                 <div className="noTaskFoundContainer loadingContainer">
@@ -422,7 +403,7 @@ const Home = () => {
                                                 <div className="taskMainContainer" tabIndex="-1">
                                                     {filteredTasks[date].map( (specificTask) => {
                                                         return (
-                                                            <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
+                                                            <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} />
                                                         )                     
                                                     })}
                                                 </div>
@@ -443,7 +424,7 @@ const Home = () => {
                                             <div className="taskMainContainer" tabIndex="-1">
                                                 {reformattedTask[date].map( (specificTask) => {
                                                     return (
-                                                        <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
+                                                        <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeToFinishedTask} deleteTask={deleteTask} key={uuid()} />
                                                     )                     
                                                 })}
                                             </div>
@@ -509,7 +490,7 @@ const Home = () => {
                     <HomeNavigation />
                     <div className="homeDashboard homeSection">
                         <div className="dashboardContent">
-                            <DashboardHeader specificTask={specificTask} isSpecificTaskEmpty={isSpecificTaskEmpty} currentUserTime={currentUserTime} username={username} isToDoBtnClicked={isToDoBtnClicked} setIsDoneBtnClicked={setIsDoneBtnClicked} setIsToDoBtnClicked={setIsToDoBtnClicked} isDoneBtnClicked={isDoneBtnClicked} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
+                            <DashboardHeader currentUserTime={currentUserTime} setIsSearchBarPopulated={setIsSearchBarPopulated} reformattedTask={reformattedTask} reformattedDoneTask={reformattedDoneTask} setSearchedTaskList={setSearchedTaskList} setDoneSearchedTaskList={setDoneSearchedTaskList} setFilteredTasks={setFilteredTasks} filteredTasks={filteredTasks} isPageLoading={isPageLoading}/>
                             <div className="allTasksContainer">
                             {(isOngoingSearchTaskFound && isToDoBtnClicked && searchedTaskList.length === 0 && !isLateSelected) ||( isFinishedSearchTaskFound && isDoneBtnClicked && doneSearchedTaskList.length === 0 && !isLateSelected) || (filteredAndSearchedTask.length === 0  && isLateSelected) ? 
                                 <div className="noTaskFoundContainer">
@@ -534,7 +515,7 @@ const Home = () => {
                                         <div className="taskMainContainer" tabIndex="-1">
                                         {date.map( (specificTask) => {
                                             return (
-                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
+                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()}/>
                                             )                     
                                         })}
                                         </div>
@@ -555,7 +536,7 @@ const Home = () => {
                                         <div className="taskMainContainer" tabIndex="-1">
                                         {date.map( (specificTask) => {
                                             return (
-                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()} isToDoBtnClicked={isToDoBtnClicked}/>
+                                                <SingleTask specificTask={specificTask} directToTaskDetails={directToTaskDetails} changeToFinishedTask={changeSearchedToFinishedTask} deleteTask={deleteTaskSearchedList} key={uuid()} />
                                             )                     
                                         })}
                                         </div>
@@ -609,9 +590,9 @@ const Home = () => {
                 : null}
             </>
         )
-    } else if(!isAuth && !isPageLoading) {
-        return <Navigate to="/login" replace/>
     }
+
+    return <Navigate to="/login" replace/>
 }
 
 export default Home;

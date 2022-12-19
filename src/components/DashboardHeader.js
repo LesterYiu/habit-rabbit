@@ -4,14 +4,14 @@ import { reformatTaskByDate, handleOnKeyDown, debounce} from "../utils/globalFun
 import { useEffect } from "react";
 import FocusLock from 'react-focus-lock';
 
-const DashboardHeader = ({currentUserTime, isToDoBtnClicked, setIsDoneBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, setSearchedTaskList, setDoneSearchedTaskList, filteredTasks, setFilteredTasks, isPageLoading}) => {
+const DashboardHeader = ({currentUserTime, setIsSearchBarPopulated, reformattedTask, reformattedDoneTask, setSearchedTaskList, setDoneSearchedTaskList, filteredTasks, setFilteredTasks, isPageLoading}) => {
 
     const [textInput, setTextInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isFilterModalOn, setIsFilterModalOn] = useState(false);
 
     // useContext variables
-    const {username, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask} = useContext(AppContext);        
+    const {username, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask, isToDoBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsDoneBtnClicked} = useContext(AppContext);        
 
     useEffect( () => {
         if(isLateSelected && textInput) {
