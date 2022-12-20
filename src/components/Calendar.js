@@ -16,6 +16,7 @@ import { reformatTaskByDate, disableScrollForModalOn } from "../utils/globalFunc
 // Image Imports
 import errorMessageOne from "../assets/errorMessageOne.gif";
 import TaskDetails from "./TaskDetails";
+import { Navigate } from "react-router-dom";
 
 const CalendarSection = () => {
 
@@ -28,7 +29,7 @@ const CalendarSection = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTask, setSelectedTask] = useState({});
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, setIsTaskExpanded, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isSignOutModalOn, isTaskExpanded, isAuth, setDoneTaskList, doneTaskList} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, setIsTaskExpanded, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isSignOutModalOn, isTaskExpanded, isAuth, setDoneTaskList, doneTaskList, setIsNewTaskClicked} = useContext(AppContext);
 
     // Check for authenticataion
     useEffect( () => {
@@ -118,7 +119,7 @@ const CalendarSection = () => {
                 {isNewTaskClicked ? 
                 <>
                     <NewTask />
-                    <div className="overlayBackground overlayBackgroundTwo"></div>
+                    <div className="overlayBackground overlayBackgroundTwo" onClick={() => {setIsNewTaskClicked(false)}}></div>
                 </>
                 : null}
                 {isSignOutModalOn ?
@@ -131,70 +132,72 @@ const CalendarSection = () => {
                 <TaskDetails specificTask={selectedTask} reformattedTask={reformattedTaskList} reformattedDoneTask={reformattedDoneTaskList}/>
             </>
         )
-    } 
-
-    return(
-        <div className="calendarPage">
-            {isNewTaskClicked ? 
-            <>
-                <NewTask />
-                <div className="overlayBackground overlayBackgroundTwo"></div>
-            </>
-            : null}
-            {isSignOutModalOn ?
-            <>
-                <SignOutModal/>
-                <div className="overlayBackground signoutOverlay"></div>
-            </> 
-            : null }
-            <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
-            <div className="calendarSection">
-                <Calendar onChange={setCurrentDate} value={currentDate} onClickDay={(value) => {setSelectedTaskDate(value)}} tileContent={({ date }) => allDatesArray.includes(format(date, 'yyyy/MM/dd')) ? <i className="fa-solid fa-circle" aria-hidden="true"></i> : null} calendarType={"US"}/>
-            </div>
-            <div className="overallTaskOverview">
-                <h2>{format(startOfWeek(new Date()), 'yyyy/MM/dd') === format(startOfWeek(selectedTaskDate), 'yyyy/MM/dd') ? "This Week" : `Week of ${format(startOfWeek(selectedTaskDate), 'MMM dd, yyyy')}`}</h2>
-                <div className="displayTasksSection"> 
-                    {selectedWeekTasks.length && !isLoading ?
-                    selectedWeekTasks.map( (specificTask) => {
-                        return (
-                            <div className={format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`} key={uuid()} onClick={() => {directToTaskDetails(specificTask)}}>
-                                <p className="taskName">{specificTask.task.name}</p>
-                                <div className="deadlineSection">
-                                    <i className="fa-regular fa-clock"></i>
-                                    <p>{specificTask.task.reformattedDeadline}</p>
-                                </div>
-                                <div className="labelContainer">
-                                    <p className="labelParagraph">{specificTask.task.priority}</p>
-                                    {specificTask.task.label.map( (singleLabel) => {
-                                        return(<p className="labelParagraph" key={uuid()}>{singleLabel}</p>)
-                                    })}
-                                </div>
-                                <div className="progressContainer">
-                                    <div className="progressBar">
-                                        <div className="progressColor" style={{width: `${specificTask.task.completion}%`}}></div>
+    } else if (isAuth && !isTaskExpanded) {
+        return(
+            <div className="calendarPage">
+                {isNewTaskClicked ? 
+                <>
+                    <NewTask />
+                    <div className="overlayBackground overlayBackgroundTwo" onClick={() => {setIsNewTaskClicked(false)}}></div>
+                </>
+                : null}
+                {isSignOutModalOn ?
+                <>
+                    <SignOutModal/>
+                    <div className="overlayBackground signoutOverlay"></div>
+                </> 
+                : null }
+                <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
+                <div className="calendarSection">
+                    <Calendar onChange={setCurrentDate} value={currentDate} onClickDay={(value) => {setSelectedTaskDate(value)}} tileContent={({ date }) => allDatesArray.includes(format(date, 'yyyy/MM/dd')) ? <i className="fa-solid fa-circle" aria-hidden="true"></i> : null} calendarType={"US"}/>
+                </div>
+                <div className="overallTaskOverview">
+                    <h2>{format(startOfWeek(new Date()), 'yyyy/MM/dd') === format(startOfWeek(selectedTaskDate), 'yyyy/MM/dd') ? "This Week" : `Week of ${format(startOfWeek(selectedTaskDate), 'MMM dd, yyyy')}`}</h2>
+                    <div className="displayTasksSection"> 
+                        {selectedWeekTasks.length && !isLoading ?
+                        selectedWeekTasks.map( (specificTask) => {
+                            return (
+                                <div className={format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`} key={uuid()} onClick={() => {directToTaskDetails(specificTask)}}>
+                                    <p className="taskName">{specificTask.task.name}</p>
+                                    <div className="deadlineSection">
+                                        <i className="fa-regular fa-clock"></i>
+                                        <p>{specificTask.task.reformattedDeadline}</p>
                                     </div>
-                                    <p>{`${specificTask.task.completion}%`}</p>
+                                    <div className="labelContainer">
+                                        <p className="labelParagraph">{specificTask.task.priority}</p>
+                                        {specificTask.task.label.map( (singleLabel) => {
+                                            return(<p className="labelParagraph" key={uuid()}>{singleLabel}</p>)
+                                        })}
+                                    </div>
+                                    <div className="progressContainer">
+                                        <div className="progressBar">
+                                            <div className="progressColor" style={{width: `${specificTask.task.completion}%`}}></div>
+                                        </div>
+                                        <p>{`${specificTask.task.completion}%`}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    }) : null}
-                    {!isLoading && !selectedWeekTasks.length ?<div className="noResultsFound">
-                        <p>There are currently no outstanding tasks.</p>
-                        <p>Take a sip of tea and relax!</p>
-                        <div className="errorImageContainer">
-                            <img src={errorMessageOne} alt="" />
-                        </div>    
-                    </div> : null}
-                    {isLoading ? 
-                    <div className="loadingContainer">
-                        <p>Now loading...</p>
-                        <div className="lds-ring"><div></div></div>
-                    </div> : null
-                    }
+                            )
+                        }) : null}
+                        {!isLoading && !selectedWeekTasks.length ?<div className="noResultsFound">
+                            <p>There are currently no outstanding tasks.</p>
+                            <p>Take a sip of tea and relax!</p>
+                            <div className="errorImageContainer">
+                                <img src={errorMessageOne} alt="" />
+                            </div>    
+                        </div> : null}
+                        {isLoading ? 
+                        <div className="loadingContainer">
+                            <p>Now loading...</p>
+                            <div className="lds-ring"><div></div></div>
+                        </div> : null
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
+
+    return <Navigate to="/login" replace/>
 }
 
 export default CalendarSection;

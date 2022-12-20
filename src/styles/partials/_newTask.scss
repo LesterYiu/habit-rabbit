@@ -4,12 +4,10 @@
     left: 50%;
     overflow-y:scroll;
     overflow-x:hidden;
-    // min-width: 70%;
-    // min-height: 85%;
     height: 90vh;
     width: 80vw;
     transform: translate(-50%, -50%);
-    border-radius: 5px;
+    border-radius: 15px;
     background-color: #F1F5F9;
     z-index: 30;
     box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
@@ -34,17 +32,13 @@
         border: 0;
         margin: 0;
     }
-
-    .formField {
-        margin-top: 10px;
-    }
     
     legend {
         width: 100%;
         display: flex;
         align-items: center;
-        height: 80px;
         margin-top: 25px;
+        margin-bottom: 15px;
 
         h2 {
             font-size: 1.2rem;

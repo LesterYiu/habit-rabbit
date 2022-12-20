@@ -48,7 +48,7 @@ const Home = () => {
     const isMounted = useRef(false);
 
     // useContext variables
-    const {setIsAuth, isAuth, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask, isNavExpanded, isSignOutModalOn, isToDoBtnClicked, isDoneBtnClicked} = useContext(AppContext);
+    const {setIsAuth, isAuth, setUsername, setUserUID, userUID, setUserPic, isNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isLateSelected, isPrioritySelected, filteredAndSearchedTask, setFilteredAndSearchedTask, isNavExpanded, isSignOutModalOn, isToDoBtnClicked, isDoneBtnClicked, setIsNewTaskClicked} = useContext(AppContext);
 
     // Database Collection Reference for user's list of tasks
     const collectionRef = collection(db, `/users/user-list/${userUID}/${userUID}/ongoingTask/`);
@@ -360,7 +360,7 @@ const Home = () => {
                 {isNewTaskClicked ? 
                 <>
                     <NewTask/>
-                    <div className="overlayBackground"></div>
+                    <div className="overlayBackground" onClick={() => {setIsNewTaskClicked(false)}}></div>
                 </>
                 : null}
             </div>
@@ -472,7 +472,7 @@ const Home = () => {
                 {isNewTaskClicked ? 
                 <>
                     <NewTask />
-                    <div className="overlayBackground"></div>
+                    <div className="overlayBackground" onClick={() => {setIsNewTaskClicked(false)}}></div>
                 </>
                 : null}
                 {isSignOutModalOn ?
@@ -585,7 +585,7 @@ const Home = () => {
                 {isNewTaskClicked ? 
                 <>
                     <NewTask />
-                    <div className="overlayBackground"></div>
+                    <div className="overlayBackground" onClick={() => {setIsNewTaskClicked(false)}}></div>
                 </>
                 : null}
             </>

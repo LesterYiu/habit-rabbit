@@ -87,8 +87,27 @@ const NewTask = () => {
         if (taskNameInputEl.current.value && taskDescriptionInputEl.current.value && taskDueDateInputEl.current.value && taskDueTimeInputEl.current.value && labelList.length !== 0) {
             await setIsNewTaskClicked(false);
             await addDoc(collectionRef, 
-                { user: {username: username, id: auth.currentUser.uid}, 
-                task: {name: taskName, description, time, deadline, reformattedDeadline, startDayOfWeek, unformattedDeadline, firstDayOfWeekUnformatted, firstDayOfWeekTimestamp, priority, priorityLevel, label: [...labelList], completion: 0, isLate, updates:[], timeSpent: {}}, uuid: uuid()});
+                { user: 
+                    {username,
+                    id: auth.currentUser.uid}, 
+                task: 
+                    {name: taskName, 
+                    description, 
+                    time, 
+                    deadline, 
+                    reformattedDeadline, 
+                    startDayOfWeek, 
+                    unformattedDeadline, 
+                    firstDayOfWeekUnformatted, 
+                    firstDayOfWeekTimestamp, 
+                    priority, 
+                    priorityLevel, 
+                    label: [...labelList], 
+                    completion: 0, 
+                    isLate, 
+                    updates:[], 
+                    timeSpent: {}}, 
+                    uuid: uuid()});
             const data = await getDocs(collectionRef);
             setTaskList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
             createReusableTaskLabel(e);

@@ -1153,12 +1153,12 @@ fieldset {
     bottom: 20px; }
   .homeNavigation .profileInfoContainer.minimizedInfoContainer {
     display: block;
-    padding-bottom: 10px; }
+    padding-bottom: 10px !important; }
   .homeNavigation .profileInfoContainer {
     display: flex;
     border-bottom: 2px solid #d4d4d4;
     width: 100%;
-    padding-bottom: 15px; }
+    height: 67px; }
   .homeNavigation .profilePicCont {
     display: inline-block;
     height: 50px;
@@ -1822,7 +1822,7 @@ fieldset {
   height: 90vh;
   width: 80vw;
   transform: translate(-50%, -50%);
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: #F1F5F9;
   z-index: 30;
   box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.66667px 3.50231px rgba(0, 0, 0, 0.00962963); }
@@ -1841,14 +1841,12 @@ fieldset {
     padding: 0px;
     border: 0;
     margin: 0; }
-  .createTaskForm .formField {
-    margin-top: 10px; }
   .createTaskForm legend {
     width: 100%;
     display: flex;
     align-items: center;
-    height: 80px;
-    margin-top: 25px; }
+    margin-top: 25px;
+    margin-bottom: 15px; }
     .createTaskForm legend h2 {
       font-size: 1.2rem;
       text-transform: capitalize;
@@ -2345,13 +2343,14 @@ abbr[title] {
     margin-left: 100px;
     padding: 25px 50px 0px 50px; }
     .calendarPage .overallTaskOverview h2 {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       text-decoration: underline;
       background-color: #f4f4f4;
       border-radius: 10px;
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
       border: 1px solid rgba(212, 212, 212, 0.9);
-      padding: 5px 10px; }
+      padding: 10px 10px 10px 15px;
+      background-color: white; }
   .calendarPage .displayTasksSection {
     display: flex;
     justify-content: space-between;
@@ -2472,13 +2471,203 @@ abbr[title] {
   .calendarPage .progressContainer {
     margin-top: 0; } }
 
-.habitPage .homeNavigation {
-  z-index: 19; }
-
-.habitPage .habitTrackingContent {
-  position: relative;
-  padding: 25px 50px 0px 50px;
-  margin-left: 100px; }
+.habitPage {
+  background-color: #F6F7FA;
+  min-height: 100vh; }
+  .habitPage .homeNavigation {
+    z-index: 19; }
+  .habitPage .habitTrackingContent {
+    position: relative;
+    padding: 25px 50px 0px 50px;
+    margin-left: 100px;
+    min-height: 100vh; }
+  .habitPage .habitContentOne {
+    width: 70%;
+    margin-right: 20px; }
+  .habitPage .habitContentTwo {
+    width: 30%; }
+    .habitPage .habitContentTwo h2 {
+      font-size: 1rem; }
+    .habitPage .habitContentTwo .dailyDetails {
+      margin-bottom: 15px; }
+      .habitPage .habitContentTwo .dailyDetails p {
+        font-size: 0.7rem;
+        text-align: end;
+        margin-top: 10px; }
+    .habitPage .habitContentTwo .dailyCompletionBar {
+      width: 100%;
+      height: 8px;
+      background-color: white;
+      border-radius: 15px;
+      margin-top: 10px; }
+  .habitPage .weeklyHabitDetails {
+    width: 100%; }
+    .habitPage .weeklyHabitDetails .weekCompletionBar {
+      width: 100%;
+      height: 8px;
+      background-color: #EDF3FA;
+      border-radius: 5px; }
+    .habitPage .weeklyHabitDetails p {
+      font-size: 0.8rem;
+      margin-bottom: 10px !important;
+      margin-top: 5px;
+      text-align: end; }
+  .habitPage .habitListContainer {
+    background-color: white;
+    border: 1px solid #d4d4d4;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    border-radius: 15px;
+    height: 100%; }
+  .habitPage .habitFlexContainer {
+    display: flex;
+    min-height: 80vh; }
+  .habitPage .addHabitBtn {
+    padding: 5px 20px;
+    font-weight: bold;
+    border-radius: 25px;
+    color: #197DE7;
+    border: 1px solid #d4d4d4;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    background-color: white;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    margin-top: 10px; }
+    .habitPage .addHabitBtn i {
+      font-size: 1rem;
+      margin-right: 10px; }
+  .habitPage .userGreetingText p {
+    margin-top: 5px; }
+  .habitPage .habitCalendar {
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a5d6a79f;
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 1px solid #d4d4d4;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    .habitPage .habitCalendar h2 {
+      margin-bottom: 15px; }
+    .habitPage .habitCalendar ul {
+      display: inline-flex;
+      background-color: white;
+      border-radius: 15px;
+      width: 100%; }
+      .habitPage .habitCalendar ul li {
+        padding: 10px 5px;
+        width: calc(100% / 7);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+      .habitPage .habitCalendar ul p {
+        font-weight: normal;
+        font-size: 0.8rem; }
+    .habitPage .habitCalendar button {
+      padding: 10px 15px; }
+    .habitPage .habitCalendar p:nth-child(odd) {
+      margin-bottom: 5px; }
+    .habitPage .habitCalendar h2 {
+      font-size: 1rem; }
+  .habitPage .today {
+    background-color: #A5D6A7;
+    border-radius: 10px; }
+  .habitPage .createHabitModal {
+    background-color: white;
+    border: 1px solid #d4d4d4;
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    border-radius: 15px;
+    position: fixed;
+    height: 90vh;
+    width: 80vw;
+    z-index: 30;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 30px 80px 30px 80px; }
+    .habitPage .createHabitModal fieldset,
+    .habitPage .createHabitModal legend {
+      width: 100%; }
+    .habitPage .createHabitModal legend {
+      margin-bottom: 15px; }
+    .habitPage .createHabitModal fieldset {
+      display: flex;
+      flex-direction: column; }
+    .habitPage .createHabitModal select {
+      background-color: white;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      border-radius: 5px; }
+    .habitPage .createHabitModal h2 {
+      font-size: 1.2rem;
+      text-transform: capitalize;
+      color: black;
+      border-bottom: 3px solid #d4d4d4;
+      padding-bottom: 10px;
+      width: 100%;
+      font-family: "Inter", sans-serif;
+      margin-top: 25px; }
+    .habitPage .createHabitModal .fa-circle-xmark {
+      font-size: 1.4rem; }
+    .habitPage .createHabitModal .exitHabitModalBtn {
+      position: absolute;
+      top: 15px;
+      right: 20px; }
+    .habitPage .createHabitModal button[type="submit"] {
+      background-color: #36CB82;
+      color: white;
+      padding: 5px 0px;
+      min-width: 125px;
+      border-radius: 10px;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      margin-top: 25px; }
+  .habitPage .inputContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; }
+    .habitPage .inputContainer label {
+      color: #6D767E;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin: 15px 0 10px 0; }
+    .habitPage .inputContainer input,
+    .habitPage .inputContainer select {
+      border-radius: 5px;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      padding: 0px 0px 0px 8px;
+      height: 35px; }
+  .habitPage .habitContainer {
+    border-left: 4px solid #d2baf7;
+    color: black;
+    margin: 15px;
+    padding: 10px; }
+    .habitPage .habitContainer .habitDetails {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+    .habitPage .habitContainer i {
+      font-size: 1rem; }
+    .habitPage .habitContainer button {
+      color: #197DE7;
+      font-size: 0.9rem;
+      background-color: white;
+      width: 100%;
+      border-radius: 5px;
+      padding: 5px 0;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      margin-top: 10px; }
+  .habitPage .buttonContainer {
+    width: 100%;
+    border-bottom: 2px solid rgba(212, 212, 212, 0.9);
+    padding-bottom: 10px; }
 
 .taskDetails {
   width: 100%;

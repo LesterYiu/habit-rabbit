@@ -135,14 +135,14 @@
 
     .profileInfoContainer.minimizedInfoContainer {
         display: block;
-        padding-bottom: 10px;
+        padding-bottom: 10px !important;
     }
 
     .profileInfoContainer {
         display: flex;
         border-bottom: 2px solid rgb(212, 212, 212);
         width: 100%;
-        padding-bottom: 15px;
+        height: 67px;
     }
 
     .profilePicCont {
