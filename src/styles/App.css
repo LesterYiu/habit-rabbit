@@ -2500,6 +2500,11 @@ abbr[title] {
       background-color: white;
       border-radius: 15px;
       margin-top: 10px; }
+  .habitPage .completionFill {
+    height: 8px;
+    border-radius: 15px;
+    background-color: #017AFF;
+    width: 0%; }
   .habitPage .weeklyHabitDetails {
     width: 100%; }
     .habitPage .weeklyHabitDetails .weekCompletionBar {
@@ -2517,7 +2522,8 @@ abbr[title] {
     border: 1px solid #d4d4d4;
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     border-radius: 15px;
-    height: 100%; }
+    height: 100%;
+    position: relative; }
   .habitPage .habitFlexContainer {
     display: flex;
     min-height: 80vh; }
@@ -2537,7 +2543,8 @@ abbr[title] {
       font-size: 1rem;
       margin-right: 10px; }
   .habitPage .userGreetingText p {
-    margin-top: 5px; }
+    margin-top: 5px;
+    font-size: 1rem; }
   .habitPage .habitCalendar {
     width: 100%;
     margin-top: 15px;
@@ -2575,6 +2582,62 @@ abbr[title] {
   .habitPage .today {
     background-color: #A5D6A7;
     border-radius: 10px; }
+  .habitPage .habitCalendarBreakdown {
+    display: flex;
+    flex-direction: column;
+    position: relative; }
+    .habitPage .habitCalendarBreakdown table {
+      width: 80%;
+      display: block; }
+      .habitPage .habitCalendarBreakdown table tr {
+        display: flex;
+        justify-content: space-around; }
+      .habitPage .habitCalendarBreakdown table td {
+        border-radius: 5px;
+        height: 1.5rem;
+        width: 1.5rem;
+        background-color: white; }
+    .habitPage .habitCalendarBreakdown tr {
+      width: 100%;
+      display: block; }
+    .habitPage .habitCalendarBreakdown th,
+    .habitPage .habitCalendarBreakdown td {
+      width: calc(100% / 7);
+      height: 35px;
+      text-align: center;
+      font-size: 0.9rem;
+      align-items: center;
+      display: inline-flex;
+      justify-content: center; }
+    .habitPage .habitCalendarBreakdown td {
+      border: 1px solid #d4d4d4;
+      width: calc(50% / 7); }
+    .habitPage .habitCalendarBreakdown .rowIdentifiers {
+      display: flex;
+      align-items: center;
+      width: 20%; }
+      .habitPage .habitCalendarBreakdown .rowIdentifiers p {
+        font-size: 0.8rem; }
+    .habitPage .habitCalendarBreakdown .loadingContainer {
+      position: absolute;
+      left: 0;
+      right: 0; }
+  .habitPage .tableHeaders {
+    width: 80% !important;
+    align-self: flex-end; }
+    .habitPage .tableHeaders tbody {
+      width: 100%;
+      display: block; }
+  .habitPage .taskCompletionTable {
+    display: flex;
+    margin-bottom: 15px; }
+  .habitPage .fillInTable {
+    width: 80%; }
+    .habitPage .fillInTable tbody {
+      display: block;
+      width: 100%; }
+    .habitPage .fillInTable .filledHabitDay {
+      background-color: #e5d9f7; }
   .habitPage .createHabitModal {
     background-color: white;
     border: 1px solid #d4d4d4;
@@ -2645,29 +2708,77 @@ abbr[title] {
       padding: 0px 0px 0px 8px;
       height: 35px; }
   .habitPage .habitContainer {
-    border-left: 4px solid #d2baf7;
     color: black;
     margin: 15px;
-    padding: 10px; }
+    padding: 10px;
+    position: relative; }
     .habitPage .habitContainer .habitDetails {
       display: flex;
       justify-content: space-between;
       align-items: center; }
     .habitPage .habitContainer i {
       font-size: 1rem; }
-    .habitPage .habitContainer button {
+    .habitPage .habitContainer .markAsCompleteBtn {
       color: #197DE7;
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       background-color: white;
       width: 100%;
       border-radius: 5px;
       padding: 5px 0;
       border: 1px solid rgba(212, 212, 212, 0.9);
       margin-top: 10px; }
+    .habitPage .habitContainer p {
+      font-size: 0.9rem; }
+    .habitPage .habitContainer .dropdownOptions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: white;
+      border: 1px solid rgba(212, 212, 212, 0.9); }
+      .habitPage .habitContainer .dropdownOptions button {
+        font-size: 0.7rem;
+        font-weight: normal;
+        padding: 0 10px; }
+      .habitPage .habitContainer .dropdownOptions li:nth-child(odd) {
+        border-bottom: 1px solid rgba(212, 212, 212, 0.9); }
+    .habitPage .habitContainer .dropdownOptions.hidden {
+      display: none; }
+    .habitPage .habitContainer .completedDiv {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding: 5px 0; }
+      .habitPage .habitContainer .completedDiv p {
+        display: flex;
+        align-items: center; }
+        .habitPage .habitContainer .completedDiv p i {
+          padding-right: 5px; }
+      .habitPage .habitContainer .completedDiv p,
+      .habitPage .habitContainer .completedDiv i,
+      .habitPage .habitContainer .completedDiv button {
+        font-size: 0.6rem; }
+    .habitPage .habitContainer .overlayBackground .lds-ring {
+      left: 50%; }
   .habitPage .buttonContainer {
     width: 100%;
     border-bottom: 2px solid rgba(212, 212, 212, 0.9);
     padding-bottom: 10px; }
+  .habitPage .loadingContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; }
+  .habitPage .overlayLoading {
+    position: absolute;
+    border-radius: 15px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.072);
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
 
 .taskDetails {
   width: 100%;

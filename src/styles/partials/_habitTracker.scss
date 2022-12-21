@@ -16,8 +16,6 @@
     .habitContentOne {
         width: 70%;
         margin-right: 20px;
-
-
     }
 
     .habitContentTwo {
@@ -45,6 +43,13 @@
             margin-top: 10px;
         }
     }
+
+    .completionFill {
+        height: 8px;
+        border-radius: 15px;
+        background-color: #017AFF;
+        width: 0%;
+    }
     
     .weeklyHabitDetails {
         width: 100%;
@@ -70,6 +75,7 @@
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         border-radius: 15px;
         height: 100%;
+        position: relative;
     }
 
     .habitFlexContainer {
@@ -99,6 +105,7 @@
     .userGreetingText {
         p {
             margin-top: 5px;
+            font-size: 1rem;
         }
     }
 
@@ -157,6 +164,94 @@
         border-radius: 10px;
     }
 
+    
+    .habitCalendarBreakdown {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        table {
+            width: 80%;
+            display: block;
+
+            tr {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            td {
+                border-radius: 5px;
+                height: 1.5rem;
+                width: 1.5rem;
+                background-color: white;
+            }
+        }
+
+        tr {
+            width: 100%;
+            display: block;
+        }
+
+        th, 
+        td {
+            width: calc(100% / 7);
+            height: 35px;
+            text-align: center;
+            font-size: 0.9rem;
+            align-items: center;
+            display: inline-flex;
+            justify-content: center;
+        }
+
+        td {
+            border: 1px solid rgb(212, 212, 212);
+            width: calc(50% / 7);
+        }
+
+        .rowIdentifiers {
+            display: flex;
+            align-items: center;
+            width: 20%;
+
+            p {
+                font-size: 0.8rem;
+            }
+        }
+
+        .loadingContainer {
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+    }
+    
+    .tableHeaders {
+        width: 80% !important;
+        align-self: flex-end;
+
+        tbody {
+            width: 100%;
+            display: block;
+        }
+    }
+
+    .taskCompletionTable {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .fillInTable {
+        width: 80%;
+
+        tbody {
+            display: block;
+            width: 100%;
+        }
+
+        .filledHabitDay {
+            background-color: #e5d9f7
+        }
+    }
 
     // Create Habit Modal
 
@@ -254,10 +349,10 @@
     }
 
     .habitContainer {
-        border-left: 4px solid #d2baf7;
         color: black;
         margin: 15px;
         padding: 10px;
+        position: relative;
 
         .habitDetails {
             display: flex;
@@ -269,9 +364,9 @@
             font-size: 1rem;
         }
 
-        button {
+        .markAsCompleteBtn {
             color: #197DE7;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             background-color: white;
             width: 100%;
             border-radius: 5px;
@@ -279,11 +374,83 @@
             border: 1px solid rgba(212, 212, 212, 0.9);
             margin-top: 10px;
         }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        .dropdownOptions {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: white;
+            border: 1px solid rgba(212, 212, 212, 0.9);
+
+            button {
+                font-size: 0.7rem;
+                font-weight: normal;
+                padding: 0 10px;
+            }
+
+            li:nth-child(odd) {
+                border-bottom: 1px solid rgba(212, 212, 212, 0.9);
+            }
+        }
+
+        .dropdownOptions.hidden {
+            display: none;
+        }
+
+        .completedDiv {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 5px 0;
+
+            p {
+                display: flex;
+                align-items: center;
+
+                i {
+                    padding-right: 5px;
+                }
+            }
+
+            p,
+            i,
+            button {
+                font-size: 0.6rem;
+            }
+        }
+
+        .overlayBackground .lds-ring {
+            left: 50%;
+        }
     }
 
     .buttonContainer {
         width: 100%;
         border-bottom: 2px solid rgba(212, 212, 212, 0.9);
         padding-bottom: 10px;
+    }
+
+    .loadingContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .overlayLoading {
+        position: absolute;
+        border-radius: 15px;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.072);
+        z-index: 20;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

@@ -29,7 +29,7 @@ const CalendarSection = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTask, setSelectedTask] = useState({});
 
-    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, setIsTaskExpanded, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isSignOutModalOn, isTaskExpanded, isAuth, setDoneTaskList, doneTaskList, setIsNewTaskClicked} = useContext(AppContext);
+    const {setIsAuth, username, setUsername, setUserUID, userUID, setUserPic, userPic, setIsTaskExpanded, isNewTaskClicked, setTaskList, taskList, isNavExpanded, isSignOutModalOn, isTaskExpanded, isAuth, setDoneTaskList, doneTaskList, setIsNewTaskClicked, setIsSignOutModalOn} = useContext(AppContext);
 
     // Check for authenticataion
     useEffect( () => {
@@ -125,7 +125,7 @@ const CalendarSection = () => {
                 {isSignOutModalOn ?
                 <>
                     <SignOutModal/>
-                    <div className="overlayBackground signoutOverlay"></div>
+                    <div className="overlayBackground signoutOverlay" onClick={() => {setIsSignOutModalOn(false)}}></div>
                 </> 
                 : null }
                 <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
@@ -144,7 +144,7 @@ const CalendarSection = () => {
                 {isSignOutModalOn ?
                 <>
                     <SignOutModal/>
-                    <div className="overlayBackground signoutOverlay"></div>
+                    <div className="overlayBackground signoutOverlay" onClick={() => {setIsSignOutModalOn(false)}}></div>
                 </> 
                 : null }
                 <HomeNavigation userUID={userUID} username={username} userPic={userPic} setUsername={setUsername} setUserUID={setUserUID} setIsAuth={setIsAuth}/>
