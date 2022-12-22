@@ -8,7 +8,7 @@
 
     .habitTrackingContent {
         position: relative;
-        padding: 25px 50px 0px 50px;
+        padding: 25px 50px 25px 50px;
         margin-left: 100px;
         min-height: 100vh;
     }
@@ -74,8 +74,12 @@
         border: 1px solid rgb(212, 212, 212);
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         border-radius: 15px;
-        height: 100%;
+        height: 90%;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px 0;
     }
 
     .habitFlexContainer {
@@ -223,6 +227,12 @@
             left: 0;
             right: 0;
         }
+
+        .habitListError {
+            height: 100%;
+            text-align: center;
+            margin-top: 25px;
+        }
     }
     
     .tableHeaders {
@@ -250,6 +260,20 @@
 
         .filledHabitDay {
             background-color: #e5d9f7
+        }
+
+    }
+
+    .showMoreContainer {
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        
+        i {
+            font-size: 1.2rem;
+            border: 1px solid rgb(212, 212, 212);
+            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+            border-radius: 50%;
         }
     }
 
@@ -353,6 +377,7 @@
         margin: 15px;
         padding: 10px;
         position: relative;
+        height: 80px;
 
         .habitDetails {
             display: flex;
@@ -379,7 +404,8 @@
             font-size: 0.9rem;
         }
 
-        .dropdownOptions {
+        .dropdownOptions,
+        .dropdownOptionsTwo {
             position: absolute;
             bottom: 0;
             right: 0;
@@ -397,8 +423,13 @@
             }
         }
 
-        .dropdownOptions.hidden {
+        .dropdownOptions.hidden,
+        .dropdownOptionsTwo.hidden {
             display: none;
+        }
+
+        .dropdownOptionsTwo {
+            bottom: 20%;
         }
 
         .completedDiv {
@@ -425,6 +456,20 @@
 
         .overlayBackground .lds-ring {
             left: 50%;
+        }
+
+        .completionIndicator ul{
+            display: flex;
+            margin-top: 10px;
+
+            .completionBox {
+                border: 1px solid #d4d4d4;
+                border-radius: 50%;
+                height: 10px;
+                width: 10px;
+                margin-right: 10px;
+                
+            }
         }
     }
 

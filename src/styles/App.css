@@ -2478,7 +2478,7 @@ abbr[title] {
     z-index: 19; }
   .habitPage .habitTrackingContent {
     position: relative;
-    padding: 25px 50px 0px 50px;
+    padding: 25px 50px 25px 50px;
     margin-left: 100px;
     min-height: 100vh; }
   .habitPage .habitContentOne {
@@ -2522,8 +2522,12 @@ abbr[title] {
     border: 1px solid #d4d4d4;
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     border-radius: 15px;
-    height: 100%;
-    position: relative; }
+    height: 90%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0; }
   .habitPage .habitFlexContainer {
     display: flex;
     min-height: 80vh; }
@@ -2622,6 +2626,10 @@ abbr[title] {
       position: absolute;
       left: 0;
       right: 0; }
+    .habitPage .habitCalendarBreakdown .habitListError {
+      height: 100%;
+      text-align: center;
+      margin-top: 25px; }
   .habitPage .tableHeaders {
     width: 80% !important;
     align-self: flex-end; }
@@ -2638,6 +2646,15 @@ abbr[title] {
       width: 100%; }
     .habitPage .fillInTable .filledHabitDay {
       background-color: #e5d9f7; }
+  .habitPage .showMoreContainer {
+    height: 20px;
+    display: flex;
+    justify-content: center; }
+    .habitPage .showMoreContainer i {
+      font-size: 1.2rem;
+      border: 1px solid #d4d4d4;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      border-radius: 50%; }
   .habitPage .createHabitModal {
     background-color: white;
     border: 1px solid #d4d4d4;
@@ -2711,7 +2728,8 @@ abbr[title] {
     color: black;
     margin: 15px;
     padding: 10px;
-    position: relative; }
+    position: relative;
+    height: 80px; }
     .habitPage .habitContainer .habitDetails {
       display: flex;
       justify-content: space-between;
@@ -2729,20 +2747,26 @@ abbr[title] {
       margin-top: 10px; }
     .habitPage .habitContainer p {
       font-size: 0.9rem; }
-    .habitPage .habitContainer .dropdownOptions {
+    .habitPage .habitContainer .dropdownOptions,
+    .habitPage .habitContainer .dropdownOptionsTwo {
       position: absolute;
       bottom: 0;
       right: 0;
       background-color: white;
       border: 1px solid rgba(212, 212, 212, 0.9); }
-      .habitPage .habitContainer .dropdownOptions button {
+      .habitPage .habitContainer .dropdownOptions button,
+      .habitPage .habitContainer .dropdownOptionsTwo button {
         font-size: 0.7rem;
         font-weight: normal;
         padding: 0 10px; }
-      .habitPage .habitContainer .dropdownOptions li:nth-child(odd) {
+      .habitPage .habitContainer .dropdownOptions li:nth-child(odd),
+      .habitPage .habitContainer .dropdownOptionsTwo li:nth-child(odd) {
         border-bottom: 1px solid rgba(212, 212, 212, 0.9); }
-    .habitPage .habitContainer .dropdownOptions.hidden {
+    .habitPage .habitContainer .dropdownOptions.hidden,
+    .habitPage .habitContainer .dropdownOptionsTwo.hidden {
       display: none; }
+    .habitPage .habitContainer .dropdownOptionsTwo {
+      bottom: 20%; }
     .habitPage .habitContainer .completedDiv {
       display: flex;
       justify-content: space-between;
@@ -2759,6 +2783,15 @@ abbr[title] {
         font-size: 0.6rem; }
     .habitPage .habitContainer .overlayBackground .lds-ring {
       left: 50%; }
+    .habitPage .habitContainer .completionIndicator ul {
+      display: flex;
+      margin-top: 10px; }
+      .habitPage .habitContainer .completionIndicator ul .completionBox {
+        border: 1px solid #d4d4d4;
+        border-radius: 50%;
+        height: 10px;
+        width: 10px;
+        margin-right: 10px; }
   .habitPage .buttonContainer {
     width: 100%;
     border-bottom: 2px solid rgba(212, 212, 212, 0.9);
