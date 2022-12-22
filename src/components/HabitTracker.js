@@ -46,6 +46,10 @@ const HabitTracker = () => {
     const [shownHabits, setShownHabits] = useState([]);
     const [shownHabitsCounter, setShownHabitsCounter] = useState(0);
 
+    // Shown Habits on Dashboard
+    const [shownDashboardHabits, setShownDashboardHabits] = useState([]);
+    const [shownDashboardCount, setShownDashboardCount] = useState(0);
+
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, isNewTaskClicked, isSignOutModalOn, isNavExpanded, setUserPic, setIsNewTaskClicked, setIsSignOutModalOn} = useContext(AppContext);
 
     // Collection Reference
@@ -79,6 +83,10 @@ const HabitTracker = () => {
         setShownHabits(habitsList.slice(shownHabitsCounter , 4 + shownHabitsCounter));
     }, [habitsList, shownHabitsCounter])
 
+    useEffect( () => {
+        setShownDashboardHabits(habitsList.slice(shownDashboardCount, 5 + shownDashboardCount));
+    }, [habitsList, shownDashboardCount])
+
     function getNewDate(daysFromToday){
         const firstDayOfWeek = getFirstDayOfWeek();
         firstDayOfWeek.setDate(firstDayOfWeek.getDate() + daysFromToday);
@@ -87,7 +95,7 @@ const HabitTracker = () => {
 
     const getWeekday = (date, weekdayFormat) => {
         if(weekdayFormat === "short") {
-            const weekday = ["SUN","MON","TUE","WED","THUR","FRI","SAT"];
+            const weekday = ["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
             return weekday[date.getDay()];
         } else if (weekdayFormat === "long") {
             const weekday = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
@@ -258,24 +266,15 @@ const HabitTracker = () => {
     }
 
     const trimHabitLength = (string) => {
-        let str = string.slice(0,8);
-        str+= "...";
-        return str;
+
+        if(string.length >= 15) {
+            let str = string.slice(0,15);
+            str+= "...";
+            return str;
+        } else {
+            return string;
+        }
     }
-
-    /*
-    
-    - shownHabits is always equal to 4 habits shown
-
-    - shownHabitsCounter will add by one when down arrow is clicked, and minus by one when up arrow is clicked.
-
-    - if we're at the end of the habitlist arrow, remove down arrow
-
-    - if we're one away from being at the beginning of the habitslist array,make sure only 4 are present
-
-    - if list - shownHabitsCounter === 4, disappear
-    */
-
 
     if(isAuth) {
         return(
@@ -357,6 +356,27 @@ const HabitTracker = () => {
                                 <button className="addHabitBtn" onClick={() => {setIsModalOn(true)}}>
                                     <i className="fa-solid fa-plus" aria-hidden="true"></i>Add Habit
                                 </button>
+                                {shownDashboardCount === 0 ?
+                                <div className="dashboardButtons">
+                                    <button disabled>
+                                        <span className="sr-only">Show previous dashboard habits</span>
+                                        <i className="fa-solid fa-circle-arrow-up arrowIcon disabledArrow" aria-hidden="true"></i>
+                                    </button>
+                                    <button onClick={() => {setShownDashboardCount(shownDashboardCount + 1)}}>
+                                        <span className="sr-only">Show next dashboard habits</span>
+                                        <i className="fa-solid fa-circle-arrow-down arrowIcon" aria-hidden="true"></i>
+                                    </button> 
+                                </div> : 
+                                <div className="dashboardButtons">
+                                    <button onClick={() => {setShownDashboardCount(shownDashboardCount - 1)}}>
+                                        <span className="sr-only">Show previous dashboard habits</span>
+                                        <i className="fa-solid fa-circle-arrow-up arrowIcon" aria-hidden="true"></i>
+                                    </button>
+                                    <button onClick={() => {setShownDashboardCount(shownDashboardCount + 1)}} disabled={shownDashboardHabits.length + shownDashboardCount === habitsList.length ? true : false}>
+                                        <span className="sr-only">Show next dashboard habits</span>
+                                        <i className="fa-solid fa-circle-arrow-down arrowIcon disabledArrow" aria-hidden="true"></i>
+                                    </button>
+                                </div>}
                             </div>
                             {isLoading ?
                             <div className="loadingContainer">
@@ -385,10 +405,11 @@ const HabitTracker = () => {
                                 <div className="habitListError">
                                     <p>Nothing here yet. Click "Add Habit" to start!</p>
                                 </div>}
-                                {habitsList.map( (specificHabit) => {
+                                {shownDashboardHabits.map( (specificHabit) => {
                                     return(
                                         <div className="taskCompletionTable" key={uuid()}>
                                             <div className="rowIdentifiers">
+                                                <i className="fa-solid fa-circle" aria-hidden="true" style={{color: `${specificHabit.habit.habitColor}`}}></i>
                                                 <p>{specificHabit.habit.name.length > 8 ? trimHabitLength(specificHabit.habit.name) : specificHabit.habit.name}</p>
                                             </div>
                                             <table className="fillInTable">
@@ -412,7 +433,17 @@ const HabitTracker = () => {
                         </div>
                         <div className="habitContentTwo">
                             <div className="dailyDetails">
-                                <h2>{format(new Date(), 'E, LLL d')}</h2>
+                                <div className="dailyDateContainer">
+                                    <h2>{format(new Date(), 'E, LLL d')}</h2>
+                                    <div>
+                                        <button>
+                                            <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                        </button>
+                                        <button>
+                                            <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                                 <div className="dailyCompletionBar">
                                     <div className="completionFill" style={{width: `${checkDailyProgress()}%`}}></div>
                                 </div>
