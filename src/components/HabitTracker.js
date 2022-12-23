@@ -1,12 +1,13 @@
 import { AppContext } from "../Contexts/AppContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { disableScrollForModalOn } from "../utils/globalFunctions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { Navigate } from "react-router-dom";
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
 import uuid from "react-uuid";
-import { format } from "date-fns";
+import { format, startOfWeek } from "date-fns";
+import {cloneDeep} from "lodash";
 
 // Component Imports
 import HomeNavigation from "./HomeNavigation";
@@ -23,6 +24,8 @@ const HabitTracker = () => {
     const [dayFive, setDayFive] = useState(getNewDate(4));
     const [daySix, setDaySix] = useState(getNewDate(5));
     const [daySeven, setDaySeven] = useState(getNewDate(6));
+    const [dayCounter, setDayCounter] = useState(format(new Date(), 'i') - 1);
+    const [selectedDay, setSelectedDay] = useState(getNewDate(format(new Date(), 'i') - 1))
 
     // Form fields
     const [habitName, setHabitName] = useState("");
@@ -49,6 +52,9 @@ const HabitTracker = () => {
     // Shown Habits on Dashboard
     const [shownDashboardHabits, setShownDashboardHabits] = useState([]);
     const [shownDashboardCount, setShownDashboardCount] = useState(0);
+
+    // Submit Btn Ref
+    const submitBtn = useRef(null);
 
     const {setIsAuth, isAuth, username, setUsername, setUserUID, userUID, userPic, isNewTaskClicked, isSignOutModalOn, isNavExpanded, setUserPic, setIsNewTaskClicked, setIsSignOutModalOn} = useContext(AppContext);
 
@@ -79,13 +85,71 @@ const HabitTracker = () => {
         getNewData();
     }, [userUID]);
 
+    // Handles UI changes for list of habits on daily habit list
     useEffect( () => {
         setShownHabits(habitsList.slice(shownHabitsCounter , 4 + shownHabitsCounter));
     }, [habitsList, shownHabitsCounter])
 
+    // Handles UI changes for the list of habits on dashboard
     useEffect( () => {
         setShownDashboardHabits(habitsList.slice(shownDashboardCount, 5 + shownDashboardCount));
-    }, [habitsList, shownDashboardCount])
+    }, [habitsList, shownDashboardCount]);
+
+    useEffect( () => {
+        updateCurrWeekCompletion();
+    }, [habitsList])
+
+    const updateCurrWeekCompletion = async () => {
+        if(habitsList.length === 0) return
+
+        const updatedCurrBeginWeek = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'E, LLL d');
+        const savedBeginWeek = habitsList[0].beginCurrWeek;
+
+        if (updatedCurrBeginWeek !== savedBeginWeek) {
+            
+            const habitsListCopy = cloneDeep(habitsList)
+
+            for(let habit of habitsListCopy) {
+                const {dailyCompletion, completion, id} = habit;
+
+                for(let week in dailyCompletion) {
+                    let dayArr = dailyCompletion[week];
+
+                    const newDayArr =  dayArr.map( (fraction) => fraction = false)
+
+                    dailyCompletion[week] = newDayArr;
+                }
+
+                for(let i in completion) {
+                    completion[i] = false;
+                }
+
+                habit.beginCurrWeek = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'E, LLL d');
+
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/habits/${id}`);
+                await updateDoc(documentRef, habit)
+            }
+        }
+
+        // map allows u to set new values, and return. Use this when you need to loop through every value and set a new value.
+
+        // cannot set a new value on variable (which represnets something nested in).
+
+        //map returns a copy
+
+    /*
+    
+    - Check to see if this week has already past, and it is currently a week from last week.
+
+    - On initial mount, send a document to habitDate collection with an object containing the first day of the week 
+
+    - If the first day of the week from when it was last mounted is not equal to the first week of the current week then...
+        - loop through habitslist and set all values within dailycompletion and completion to false
+        - update document on database
+    - else, nothing
+    
+    */
+    }
 
     function getNewDate(daysFromToday){
         const firstDayOfWeek = getFirstDayOfWeek();
@@ -115,10 +179,22 @@ const HabitTracker = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const completionRepeats = [];
+        submitBtn.current.disabled = true;
+        
+        const completionRepeats = {};
+        let count = 0;
 
-        for(let i = 0; i < habitRepeats; i++) {
-            completionRepeats.push(false);
+        while(count < 7) {
+            if(!completionRepeats[getWeekday(getNewDate(count), "long")]) {
+                completionRepeats[getWeekday(getNewDate(count), "long")] = [];
+            }
+            count++;
+        }
+        
+        for(let index in completionRepeats) {
+            for(let i = 0; i < habitRepeats; i++) {
+                completionRepeats[index].push(false);
+            }
         }
 
         const doc =
@@ -139,7 +215,8 @@ const HabitTracker = () => {
                 friday: false,
                 saturday: false,
                 sunday: false},
-            dailyCompletion: completionRepeats}
+            dailyCompletion: completionRepeats,
+            beginCurrWeek: format(startOfWeek(new Date(), {weekStartsOn: 1}), 'E, LLL d')}
 
         const documentRef = await addDoc(collectionRef, doc)
         const documentID = documentRef.id;
@@ -149,6 +226,7 @@ const HabitTracker = () => {
         })
         
         setIsModalOn(false);
+        submitBtn.current.disabled = true;
         getNewData();
     }
 
@@ -167,7 +245,7 @@ const HabitTracker = () => {
     }
 
     const handleMarkComplete = async (habitID, boolean, habitDetails) => {
-        const dailyCompletionArr = habitDetails.dailyCompletion;
+        const dailyCompletionArr = habitDetails.dailyCompletion[getWeekday(selectedDay, "long")];
 
         for(let i = 0; i < dailyCompletionArr.length; i++) {
             if(dailyCompletionArr[i] === false) {
@@ -181,34 +259,35 @@ const HabitTracker = () => {
             setIsEditLoading(true);
             const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/habits/`, habitID);
             await updateDoc(documentRef, {
-                [`dailyCompletion`] : dailyCompletionArr
+                [`dailyCompletion.${getWeekday(selectedDay, "long")}`] : dailyCompletionArr
             })
             getNewData();
         } else if (!dailyCompletionArr.includes(false)) {
             setIsEditLoading(true);
             const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/habits/`, habitID);
-            const weekDay = (format(new Date(), 'iiii')).toLowerCase();
+            const weekDay = (format(selectedDay, 'iiii')).toLowerCase();
             await updateDoc(documentRef, {
                 [`completion.${weekDay}`] : boolean,
-                [`dailyCompletion`] : dailyCompletionArr
+                [`dailyCompletion.${getWeekday(selectedDay, "long")}`] : dailyCompletionArr
             })
             getNewData();
         }
     }
 
     const handleUndoCompletion = async(habitID, habitDetails) => {
-        setIsEditLoading(true);
+        // setIsEditLoading(true);
         const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/habits/`, habitID);
-        const dailyCompletionArr = habitDetails.dailyCompletion;
+        const dailyCompletionArr = habitDetails.dailyCompletion[getWeekday(selectedDay, "long")];
         for(let i in dailyCompletionArr) {
             if(dailyCompletionArr[i]) {
                 dailyCompletionArr[i] = false;
             }
         }
-        const weekDay = (format(new Date(), 'iiii')).toLowerCase();
+
+        const weekDay = (format(selectedDay, 'iiii')).toLowerCase();
         await updateDoc(documentRef, {
             [`completion.${weekDay}`] : false,
-            [`dailyCompletion`] : dailyCompletionArr
+            [`dailyCompletion.${weekDay}`] : dailyCompletionArr
         })
         getNewData();
     }
@@ -242,8 +321,24 @@ const HabitTracker = () => {
     }
 
     const checkDailyProgress = () => {
-        const totalHabits = habitsList.length;
-        return checkProgress(totalHabits, habitsList, true);
+        const denominator = [];
+
+        for(let habit of habitsList) {
+            const selectedDayTaskPercent = habit.dailyCompletion[getWeekday(selectedDay, "long")];
+            
+            for(let fractionCompletion of selectedDayTaskPercent) {
+                denominator.push(fractionCompletion)
+            }
+        }
+        const numerator = denominator.filter( (x) => x==true).length;
+
+        const weekProgress = Math.round((numerator/denominator.length) * 100);
+        
+        if(weekProgress) {
+            return weekProgress;
+        } else {
+            return 0;
+        }
     }
 
     const checkWeeklyProgress = () => {
@@ -274,6 +369,22 @@ const HabitTracker = () => {
         } else {
             return string;
         }
+    }
+    const handlePrevDayBtn = () => {
+        if(dayCounter === 0) return;
+        setDayCounter(dayCounter - 1);
+        setSelectedDay(getNewDate(dayCounter - 1))
+    }
+
+    const handleNextDayBtn = () => {
+        if(dayCounter === 6) return;
+        setDayCounter(dayCounter + 1);
+        setSelectedDay(getNewDate(dayCounter + 1))
+    }
+
+    const changeDashboardTask = (number, setCountState) => {
+        if(habitsList.length === 1 ) return;
+        setCountState(number);
     }
 
     if(isAuth) {
@@ -309,43 +420,43 @@ const HabitTracker = () => {
                                 </div>
                                 <ul>
                                     <li>
-                                        <button className={getWeekday(dayOne, "short") === getWeekday(new Date(), "short") ? "today" : null}>
+                                        <button className={getWeekday(dayOne, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
                                             <p>{getWeekday(dayOne, "short")}</p>
                                             <p>{getDayOfMonth(dayOne, "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayTwo, "short") === getWeekday(new Date(), "short") ? "today" : null}>
+                                        <button className={getWeekday(dayTwo, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
                                             <p>{getWeekday(dayTwo, "short")}</p>
                                             <p>{getDayOfMonth(dayTwo, "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayThree, "short") === getWeekday(new Date(), "short") ? "today" : null}>
+                                        <button className={getWeekday(dayThree, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
                                             <p>{getWeekday(dayThree, "short")}</p>
                                             <p>{getDayOfMonth(dayThree, "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayFour, "short") === getWeekday(new Date(), "short") ? "today" : null}>
+                                        <button className={getWeekday(dayFour, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
                                             <p>{getWeekday(dayFour, "short")}</p>
                                             <p>{getDayOfMonth(dayFour, "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayFive, "short") === getWeekday(new Date(), "short") ? "today" : null}>
+                                        <button className={getWeekday(dayFive, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
                                             <p>{getWeekday(dayFive, "short")}</p>
                                             <p>{getDayOfMonth(dayFive, "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(daySix, "short") === getWeekday(new Date(), "short") ? "today" : null}>
+                                        <button className={getWeekday(daySix, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
                                             <p>{getWeekday(daySix, "short")}</p>
                                             <p>{getDayOfMonth(daySix, "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(daySeven, "short") === getWeekday(new Date(), "short") ? "today" : null}>
+                                        <button className={getWeekday(daySeven, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
                                             <p>{getWeekday(daySeven, "short")}</p>
                                             <p>{getDayOfMonth(daySeven, "short")}</p>
                                         </button>
@@ -362,19 +473,19 @@ const HabitTracker = () => {
                                         <span className="sr-only">Show previous dashboard habits</span>
                                         <i className="fa-solid fa-circle-arrow-up arrowIcon disabledArrow" aria-hidden="true"></i>
                                     </button>
-                                    <button onClick={() => {setShownDashboardCount(shownDashboardCount + 1)}}>
+                                    <button onClick={() => {changeDashboardTask(shownDashboardCount + 1, setShownDashboardCount)}}>
                                         <span className="sr-only">Show next dashboard habits</span>
-                                        <i className="fa-solid fa-circle-arrow-down arrowIcon" aria-hidden="true"></i>
+                                        <i className={habitsList.length <= 5 ? "fa-solid fa-circle-arrow-down arrowIcon disabledArrow" : "fa-solid fa-circle-arrow-down arrowIcon"} aria-hidden="true"></i>
                                     </button> 
                                 </div> : 
                                 <div className="dashboardButtons">
-                                    <button onClick={() => {setShownDashboardCount(shownDashboardCount - 1)}}>
+                                    <button onClick={() => {changeDashboardTask(shownDashboardCount - 1, setShownDashboardCount)}}>
                                         <span className="sr-only">Show previous dashboard habits</span>
                                         <i className="fa-solid fa-circle-arrow-up arrowIcon" aria-hidden="true"></i>
                                     </button>
-                                    <button onClick={() => {setShownDashboardCount(shownDashboardCount + 1)}} disabled={shownDashboardHabits.length + shownDashboardCount === habitsList.length ? true : false}>
+                                    <button onClick={() => {changeDashboardTask(shownDashboardCount + 1, setShownDashboardCount)}} disabled={shownDashboardHabits.length + shownDashboardCount === habitsList.length ? true : false}>
                                         <span className="sr-only">Show next dashboard habits</span>
-                                        <i className="fa-solid fa-circle-arrow-down arrowIcon disabledArrow" aria-hidden="true"></i>
+                                        <i className={shownDashboardHabits.length + shownDashboardCount === habitsList.length ? "fa-solid fa-circle-arrow-down arrowIcon disabledArrow" : "fa-solid fa-circle-arrow-down arrowIcon"} aria-hidden="true"></i>
                                     </button>
                                 </div>}
                             </div>
@@ -434,12 +545,12 @@ const HabitTracker = () => {
                         <div className="habitContentTwo">
                             <div className="dailyDetails">
                                 <div className="dailyDateContainer">
-                                    <h2>{format(new Date(), 'E, LLL d')}</h2>
+                                    <h2>{format(selectedDay, 'E, LLL d')}</h2>
                                     <div>
-                                        <button>
+                                        <button onClick={handlePrevDayBtn}>
                                             <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
                                         </button>
-                                        <button>
+                                        <button onClick={handleNextDayBtn}>
                                             <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
                                         </button>
                                     </div>
@@ -472,11 +583,11 @@ const HabitTracker = () => {
                                                 <i className="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
                                             </button>
                                         </div>
-                                        {!habitDetails.completion[getWeekday(new Date(), "long")] ? 
+                                        {!habitDetails.completion[getWeekday(selectedDay, "long")] ? 
                                         <>
                                             <div className="completionIndicator">
                                                 <ul>
-                                                    {habitDetails.dailyCompletion.map( (completionBoolean) => {
+                                                    {habitDetails.dailyCompletion[getWeekday(selectedDay, "long")].map( (completionBoolean) => {
                                                         return <li className="completionBox" key={uuid()} style={completionBoolean ? {backgroundColor: `${habitDetails.habit.habitColor}`} : null}></li>
                                                     })}
                                                 </ul>
@@ -547,14 +658,6 @@ const HabitTracker = () => {
                                         <option value="sunday">Sunday</option>
                                     </select>
                                 </div>
-                                
-                                {/* <div className="inputContainer">
-                                    <label htmlFor="habitColour">Select label colour</label>
-                                    <select name="habitColour" id="habitColour" onChange={(e) => {setHabitColor(e.target.value)}} required>
-                                        <option value disabled selected>Please choose an option</option>
-                                        <option value="red">Red</option>
-                                    </select>
-                                </div> */}
                             </fieldset>
                             <fieldset>
                                 <legend>Select label colour</legend>
@@ -572,7 +675,7 @@ const HabitTracker = () => {
                                 <input type="radio" id="greenLabel" name="labelColour" value='#D8F2D3' onChange={(e) => {setHabitColor(e.target.value)}}/>
                             </fieldset>
 
-                            <button type="submit">Create</button>
+                            <button type="submit" ref={submitBtn}>Create</button>
                         </form>
                     </div>
                     <div className="overlayBackground" onClick={() => {setIsModalOn(false)}}></div>

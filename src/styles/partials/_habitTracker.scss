@@ -8,7 +8,7 @@
 
     .habitTrackingContent {
         position: relative;
-        padding: 25px 50px 25px 50px;
+        padding: 25px 50px 0px 50px;
         margin-left: 100px;
         min-height: 100vh;
     }
@@ -93,17 +93,17 @@
         border: 1px solid rgb(212, 212, 212);
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         border-radius: 15px;
-        height: 88%;
+        height: 80%;
         position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
         padding: 15px 0;
     }
 
     .habitFlexContainer {
         display: flex;
-        min-height: 80vh;
+        min-height: 100vh;
     }
 
     .addHabitBtn {
