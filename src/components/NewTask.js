@@ -118,7 +118,7 @@ const NewTask = () => {
     const handleDeadline = (e) => {
         e.preventDefault();
         setUnformattedDeadline(new Date(e.target.value));
-
+        
         const dateString = e.target.value.replace(/([-])/g, '');
         const year = +dateString.substring(0, 4);
         const month = +dateString.substring(4, 6);

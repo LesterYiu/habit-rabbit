@@ -17,20 +17,12 @@ import SignOutModal from "./SignOutModal";
 const HabitTracker = () => {
 
     // Track days for the calendar
-    const [dayOne, setDayOne] = useState(getFirstDayOfWeek());
-    const [dayTwo, setDayTwo] = useState(getNewDate(1));
-    const [dayThree, setDayThree] = useState(getNewDate(2));
-    const [dayFour, setDayFour] = useState(getNewDate(3));
-    const [dayFive, setDayFive] = useState(getNewDate(4));
-    const [daySix, setDaySix] = useState(getNewDate(5));
-    const [daySeven, setDaySeven] = useState(getNewDate(6));
     const [dayCounter, setDayCounter] = useState(format(new Date(), 'i') - 1);
     const [selectedDay, setSelectedDay] = useState(getNewDate(format(new Date(), 'i') - 1))
 
     // Form fields
     const [habitName, setHabitName] = useState("");
     const [habitRepeats, setHabitRepeats] = useState("");
-    const [habitDays, setHabitDays] = useState([]);
     const [habitColor, setHabitColor] = useState("");
 
     // Toggles
@@ -53,6 +45,9 @@ const HabitTracker = () => {
     const [shownDashboardHabits, setShownDashboardHabits] = useState([]);
     const [shownDashboardCount, setShownDashboardCount] = useState(0);
 
+    // Media Queries
+    const [isMediumScreen, setIsMediumScreen] = useState(false);
+
     // Submit Btn Ref
     const submitBtn = useRef(null);
 
@@ -74,21 +69,35 @@ const HabitTracker = () => {
     }, [setUsername, setUserUID, setUserPic, setIsAuth])
 
     useEffect( () => {
+        disableScrollForModalOn(isModalOn);
+    }, [isModalOn])
+
+    useEffect( () => {
+        disableScrollForModalOn(isNewTaskClicked);
+        
+    }, [isNewTaskClicked])
+
+    useEffect( () => {
 
         if(isNewTaskClicked && document.body.style.overflow === 'hidden') return;
 
         disableScrollForModalOn(isNavExpanded);
-    },[isNavExpanded]);
+    },[isNavExpanded, isNewTaskClicked]);
 
     useEffect( () => {
         setIsLoading(true);
         getNewData();
+        // eslint-disable-next-line
     }, [userUID]);
 
     // Handles UI changes for list of habits on daily habit list
     useEffect( () => {
-        setShownHabits(habitsList.slice(shownHabitsCounter , 4 + shownHabitsCounter));
-    }, [habitsList, shownHabitsCounter])
+        if(!isMediumScreen) {
+            setShownHabits(habitsList.slice(shownHabitsCounter , 4 + shownHabitsCounter));
+        } else {
+            setShownHabits(habitsList)
+        }
+    }, [habitsList, shownHabitsCounter, isMediumScreen])
 
     // Handles UI changes for the list of habits on dashboard
     useEffect( () => {
@@ -97,7 +106,15 @@ const HabitTracker = () => {
 
     useEffect( () => {
         updateCurrWeekCompletion();
+        // eslint-disable-next-line
     }, [habitsList])
+
+    useEffect( () => {
+
+        if(isNewTaskClicked && document.body.style.overflow === 'hidden') return;
+
+        disableScrollForModalOn(isNavExpanded);
+    },[isNavExpanded])
 
     const updateCurrWeekCompletion = async () => {
         if(habitsList.length === 0) return
@@ -130,26 +147,16 @@ const HabitTracker = () => {
                 await updateDoc(documentRef, habit)
             }
         }
-
-        // map allows u to set new values, and return. Use this when you need to loop through every value and set a new value.
-
-        // cannot set a new value on variable (which represnets something nested in).
-
-        //map returns a copy
-
-    /*
-    
-    - Check to see if this week has already past, and it is currently a week from last week.
-
-    - On initial mount, send a document to habitDate collection with an object containing the first day of the week 
-
-    - If the first day of the week from when it was last mounted is not equal to the first week of the current week then...
-        - loop through habitslist and set all values within dailycompletion and completion to false
-        - update document on database
-    - else, nothing
-    
-    */
     }
+
+    useEffect(() => {
+        const media = window.matchMedia('(max-width: 975px)');
+        const listener = () => setIsMediumScreen(media.matches);
+        listener();
+        window.addEventListener('resize', listener);
+
+        return () => window.removeEventListener('resize', listener);
+    }, [isMediumScreen]);
 
     function getNewDate(daysFromToday){
         const firstDayOfWeek = getFirstDayOfWeek();
@@ -204,7 +211,6 @@ const HabitTracker = () => {
             habit: 
                 {name: habitName,
                 habitRepeats, 
-                habitDays, 
                 habitColor, 
                 uuid: uuid()},
             completion: 
@@ -310,7 +316,7 @@ const HabitTracker = () => {
         
         for(let prop of objectToLoop) {
             const completionArr = Object.values(prop.completion);
-            finishedDays += completionArr.filter(x => x==valueToCount).length;
+            finishedDays += completionArr.filter(x => x===valueToCount).length;
         }
 
         const completion = Math.round((finishedDays/denom) * 100);
@@ -330,7 +336,7 @@ const HabitTracker = () => {
                 denominator.push(fractionCompletion)
             }
         }
-        const numerator = denominator.filter( (x) => x==true).length;
+        const numerator = denominator.filter( (x) => x===true).length;
 
         const weekProgress = Math.round((numerator/denominator.length) * 100);
         
@@ -355,7 +361,11 @@ const HabitTracker = () => {
             if (index.className === classNameOn || index.className === "dropdownOptionsTwo") {
                 index.className = classNameOff
             } else if (index.className === classNameOff){
-                {containerChildNodes.length === 4 ? index.className = "dropdownOptionsTwo" : index.className = classNameOn}
+                if(containerChildNodes.length === 4) {
+                    index.className = "dropdownOptionsTwo"
+                } else {
+                    index.className = classNameOn
+                }
             } 
         }
     }
@@ -412,7 +422,7 @@ const HabitTracker = () => {
                             </div>
                             <div className="habitCalendar">
                                 <div className="weeklyHabitDetails">
-                                    <h2>{`${getDayOfMonth(dayOne)} - ${getDayOfMonth(daySeven)} ${getMonth(daySeven)} ${daySeven.getFullYear()}`}</h2>
+                                    <h2>{`${getDayOfMonth(getFirstDayOfWeek())} - ${getDayOfMonth(getNewDate(6))} ${getMonth(getNewDate(6))} ${getNewDate(6).getFullYear()}`}</h2>
                                     <div className="weekCompletionBar">
                                         <div className="completionFill" style={{width: `${checkWeeklyProgress()}%`}}></div>
                                     </div>
@@ -420,45 +430,45 @@ const HabitTracker = () => {
                                 </div>
                                 <ul>
                                     <li>
-                                        <button className={getWeekday(dayOne, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
-                                            <p>{getWeekday(dayOne, "short")}</p>
-                                            <p>{getDayOfMonth(dayOne, "short")}</p>
+                                        <button className={getWeekday(getFirstDayOfWeek(), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                            <p>{getWeekday(getFirstDayOfWeek(), "short")}</p>
+                                            <p>{getDayOfMonth(getFirstDayOfWeek(), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayTwo, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
-                                            <p>{getWeekday(dayTwo, "short")}</p>
-                                            <p>{getDayOfMonth(dayTwo, "short")}</p>
+                                        <button className={getWeekday(getNewDate(1), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                            <p>{getWeekday(getNewDate(1), "short")}</p>
+                                            <p>{getDayOfMonth(getNewDate(1), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayThree, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
-                                            <p>{getWeekday(dayThree, "short")}</p>
-                                            <p>{getDayOfMonth(dayThree, "short")}</p>
+                                        <button className={getWeekday(getNewDate(2), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                            <p>{getWeekday(getNewDate(2), "short")}</p>
+                                            <p>{getDayOfMonth(getNewDate(2), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayFour, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
-                                            <p>{getWeekday(dayFour, "short")}</p>
-                                            <p>{getDayOfMonth(dayFour, "short")}</p>
+                                        <button className={getWeekday(getNewDate(3), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                            <p>{getWeekday(getNewDate(3), "short")}</p>
+                                            <p>{getDayOfMonth(getNewDate(3), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(dayFive, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
-                                            <p>{getWeekday(dayFive, "short")}</p>
-                                            <p>{getDayOfMonth(dayFive, "short")}</p>
+                                        <button className={getWeekday(getNewDate(4), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                            <p>{getWeekday(getNewDate(4), "short")}</p>
+                                            <p>{getDayOfMonth(getNewDate(4), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(daySix, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
-                                            <p>{getWeekday(daySix, "short")}</p>
-                                            <p>{getDayOfMonth(daySix, "short")}</p>
+                                        <button className={getWeekday(getNewDate(5), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                            <p>{getWeekday(getNewDate(5), "short")}</p>
+                                            <p>{getDayOfMonth(getNewDate(5), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(daySeven, "short") === getWeekday(selectedDay, "short") ? "today" : null}>
-                                            <p>{getWeekday(daySeven, "short")}</p>
-                                            <p>{getDayOfMonth(daySeven, "short")}</p>
+                                        <button className={getWeekday(getNewDate(6), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                            <p>{getWeekday(getNewDate(6), "short")}</p>
+                                            <p>{getDayOfMonth(getNewDate(6), "short")}</p>
                                         </button>
                                     </li>
                                 </ul>
@@ -561,7 +571,7 @@ const HabitTracker = () => {
                                 <p>{checkDailyProgress()}% of daily goal achieved</p>
                             </div>
                             <div className="habitListContainer">
-                                {shownHabitsCounter != 0 ?
+                                {shownHabitsCounter !== 0 ?
                                 <div className="showMoreContainer">
                                     <button onClick={() => {setShownHabitsCounter(shownHabitsCounter - 1)}}>
                                         <span className="sr-only">Show previous habits</span>
@@ -645,37 +655,36 @@ const HabitTracker = () => {
                                     <input type="number" id="habitAmount" onChange={(e) => {setHabitRepeats(e.target.value)}} required min="1" max="8"/>
                                 </div>
 
-                                <div className="inputContainer">
-                                    <label htmlFor="habitDays">Which days does your habit apply to?</label>
-                                    <select name="habitDays" id="habitDays" onChange={(e) => {setHabitDays(e.target.value)}} required>
-                                        <option value disabled selected>Please choose an option</option>
-                                        <option value="monday">Monday</option>
-                                        <option value="tuesday">Tuesday</option>
-                                        <option value="wednesday">Wednesday</option>
-                                        <option value="thursday">Thursday</option>
-                                        <option value="friday">Friday</option>
-                                        <option value="saturday">Saturday</option>
-                                        <option value="sunday">Sunday</option>
-                                    </select>
-                                </div>
                             </fieldset>
-                            <fieldset>
+                            <fieldset className="labelColourContainer">
                                 <legend>Select label colour</legend>
 
-                                <label htmlFor="purpleLabel">Purple</label>
-                                <input type="radio" id="purpleLabel" name="labelColour" value='#E5D9F7' onChange={(e) => {setHabitColor(e.target.value)}}/>
+                                <label htmlFor="purpleLabel" className="sr-only">Purple</label>
+                                <input type="radio" id="purpleLabel" name="labelColour" value='#E5D9F7' className="purpleLabel" onChange={(e) => {setHabitColor(e.target.value)}}/>
 
-                                <label htmlFor="pinkLabel">Pink</label>
-                                <input type="radio" id="pinkLabel" name="labelColour" value='#FBD3DF' onChange={(e) => {setHabitColor(e.target.value)}}/>
+                                <label htmlFor="pinkLabel" className="sr-only">Pink</label>
+                                <input type="radio" id="pinkLabel" name="labelColour" value='#FBD3DF' className="pinkLabel" onChange={(e) => {setHabitColor(e.target.value)}}/>
                                 
-                                <label htmlFor="blueLabel">Blue</label>
-                                <input type="radio" id="blueLabel" name="labelColour" value='#A8ADFF' onChange={(e) => {setHabitColor(e.target.value)}}/>
+                                <label htmlFor="blueLabel" className="sr-only">Blue</label>
+                                <input type="radio" id="blueLabel" name="labelColour" value='#A8ADFF' className="blueLabel" onChange={(e) => {setHabitColor(e.target.value)}}/>
 
-                                <label htmlFor="greenLabel">Green</label>
-                                <input type="radio" id="greenLabel" name="labelColour" value='#D8F2D3' onChange={(e) => {setHabitColor(e.target.value)}}/>
+                                <label htmlFor="greenLabel" className="sr-only">Green</label>
+                                <input type="radio" id="greenLabel" name="labelColour" value='#D8F2D3' className="greenLabel" onChange={(e) => {setHabitColor(e.target.value)}}/>
+
+                                <label htmlFor="orangeLabel" className="sr-only">Orange</label>
+                                <input type="radio" id="orangeLabel" name="labelColour" value='#FBE7CD' className="orangeLabel" onChange={(e) => {setHabitColor(e.target.value)}}/>
+
+                                <label htmlFor="redLabel" className="sr-only">Red</label>
+                                <input type="radio" id="redLabel" name="labelColour" value='#fbc0c0' className="redLabel" onChange={(e) => {setHabitColor(e.target.value)}}/>
+
+                                <label htmlFor="yellowLabel" className="sr-only">Yellow</label>
+                                <input type="radio" id="yellowLabel" name="labelColour" value='#f8f3ad' className="yellowLabel" onChange={(e) => {setHabitColor(e.target.value)}}/>
                             </fieldset>
 
-                            <button type="submit" ref={submitBtn}>Create</button>
+                            <div className="btnContainer">
+                                <div className="cancelBtn" onClick={() => {setIsModalOn(false)}} aria-label="Leave Modal">Cancel</div>
+                                <button type="submit" ref={submitBtn}>Create</button>
+                            </div>
                         </form>
                     </div>
                     <div className="overlayBackground" onClick={() => {setIsModalOn(false)}}></div>

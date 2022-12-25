@@ -39,7 +39,10 @@ const HomeNavigation = () => {
     }
 
     const redirectToPage = (pathname) => {
-        if(location.pathname !== `/${pathname}`) navigate(`/${pathname}`);
+        if(location.pathname !== `/${pathname}`) {
+            navigate(`/${pathname}`);
+            return;
+        }
 
         if(isNavExpanded === true) {
             setIsNavExpanded(false)
@@ -194,7 +197,7 @@ const HomeNavigation = () => {
                     </button> 
                 : null}
             </nav>
-            {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay"></div> : null}
+            {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay" onClick={() => {setIsNavExpanded(false)}}></div> : null}
         </>
         )
     } else {
@@ -267,7 +270,7 @@ const HomeNavigation = () => {
                         </button> 
                     : null}
                 </nav>
-                {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay"></div> : null}
+                {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay" onClick={() => {setIsNavExpanded(false)}}></div> : null}
             </FocusLock>
         )
     }

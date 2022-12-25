@@ -1093,8 +1093,7 @@ fieldset {
     .homeNavigation .homeBtn span:nth-child(1) {
       display: inline-block;
       height: 20px;
-      width: 20px;
-      margin-right: 5px; }
+      width: 20px; }
   .homeNavigation .homeBtnOne {
     background-color: #F6F4F9; }
   .homeNavigation .homeBtnTwo {
@@ -1932,7 +1931,7 @@ fieldset {
     border-radius: 5px;
     margin-top: 35px; }
     .createTaskForm .prioritySection label {
-      margin: 0; }
+      margin-right: 10px; }
     .createTaskForm .prioritySection input {
       margin: 0; }
   .createTaskForm .paragraphLabel {
@@ -2442,8 +2441,8 @@ abbr[title] {
   .calendarPage .createTaskForm {
     z-index: 50; }
   .calendarPage .currentTaskSelected {
-    box-shadow: 2px 4px #f57d3dcd !important;
-    border: 1px solid #f57d3dcd !important; }
+    border: 1px solid rgba(149, 149, 149, 0.8) !important;
+    box-shadow: 2px 4px rgba(181, 181, 181, 0.886) !important; }
 
 @media (max-width: 940px) {
   .calendarPage .displayTasksSection {
@@ -2540,7 +2539,8 @@ abbr[title] {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 15px 0; }
+    padding: 15px 0;
+    min-height: 250px; }
   .habitPage .habitFlexContainer {
     display: flex;
     min-height: 100vh; }
@@ -2735,25 +2735,40 @@ abbr[title] {
       position: absolute;
       top: 15px;
       right: 20px; }
-    .habitPage .createHabitModal button[type="submit"] {
-      background-color: #36CB82;
-      color: white;
+  .habitPage .btnContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; }
+    .habitPage .btnContainer button[type="submit"],
+    .habitPage .btnContainer .cancelBtn {
       padding: 5px 0px;
       min-width: 125px;
       border-radius: 10px;
       border: 1px solid rgba(212, 212, 212, 0.9);
       box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      margin-top: 25px; }
+      margin: 50px 0 0 15px; }
+    .habitPage .btnContainer button[type="submit"] {
+      background-color: #36CB82;
+      color: white; }
+    .habitPage .btnContainer .cancelBtn {
+      color: black;
+      text-align: center;
+      font-weight: bold;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: pointer; }
+  .habitPage label,
+  .habitPage legend {
+    color: #6D767E;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 15px 0 10px 0; }
   .habitPage .inputContainer {
     width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 10px; }
-    .habitPage .inputContainer label {
-      color: #6D767E;
-      font-size: 0.9rem;
-      font-weight: bold;
-      margin: 15px 0 10px 0; }
     .habitPage .inputContainer input,
     .habitPage .inputContainer select {
       border-radius: 5px;
@@ -2829,6 +2844,39 @@ abbr[title] {
         height: 10px;
         width: 10px;
         margin-right: 10px; }
+  .habitPage fieldset.labelColourContainer {
+    flex-direction: row;
+    justify-content: space-around; }
+    .habitPage fieldset.labelColourContainer input[type=radio] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none; }
+    .habitPage fieldset.labelColourContainer input[type=radio]::before {
+      content: " ";
+      display: block;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    .habitPage fieldset.labelColourContainer input[type=radio]:checked {
+      border: 1px solid black;
+      border-radius: 50%; }
+    .habitPage fieldset.labelColourContainer .purpleLabel::before {
+      background-color: #E5D9F7; }
+    .habitPage fieldset.labelColourContainer .pinkLabel::before {
+      background-color: #FBD3DF; }
+    .habitPage fieldset.labelColourContainer .blueLabel::before {
+      background-color: #A8ADFF; }
+    .habitPage fieldset.labelColourContainer .greenLabel::before {
+      background-color: #D8F2D3; }
+    .habitPage fieldset.labelColourContainer .orangeLabel::before {
+      background-color: #FBE7CD; }
+    .habitPage fieldset.labelColourContainer .redLabel::before {
+      background-color: #fbc0c0; }
+    .habitPage fieldset.labelColourContainer .yellowLabel::before {
+      background-color: #f8f3ad; }
   .habitPage .loadingContainer {
     display: flex;
     justify-content: center;
@@ -2840,11 +2888,62 @@ abbr[title] {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.072);
     z-index: 20;
     display: flex;
     justify-content: center;
     align-items: center; }
+
+@media (max-width: 975px) {
+  .habitPage .habitFlexContainer {
+    flex-direction: column; }
+  .habitPage .habitContentOne {
+    width: 100%; }
+  .habitPage .habitContentTwo {
+    width: 100%; }
+  .habitPage .habitListContainer {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px 30px;
+    max-height: 250px;
+    overflow-y: scroll; }
+  .habitPage .habitContainer {
+    width: calc(50% - 30px); }
+  .habitPage .showMoreContainer {
+    display: none; }
+  .habitPage .showMoreHabitsBtn {
+    margin-right: 5px; }
+  .habitPage .showPrevHabitsBtn {
+    margin-left: 5px; }
+  .habitPage .habitTrackingContent {
+    padding: 25px 50px 25px 50px; } }
+
+@media (max-width: 768px) {
+  .habitPage .habitContainer {
+    width: 100%; }
+  .habitPage .habitTrackingContent {
+    padding: 25px; }
+  .habitPage .habitCalendar ul {
+    justify-content: space-between;
+    padding: 10px; }
+    .habitPage .habitCalendar ul p {
+      font-size: 0.7rem; }
+    .habitPage .habitCalendar ul button {
+      padding: 5px; }
+  .habitPage .weeklyHabitDetails p {
+    font-size: 0.7rem; } }
+
+@media (max-width: 575px) {
+  .habitPage .habitTrackingContent {
+    margin-left: 75px; }
+  .habitPage .habitCalendarBreakdown th {
+    font-size: 0.7rem; } }
+
+@media (max-width: 480px) {
+  .habitPage .habitListContainer {
+    padding: 15px; }
+  .habitPage .habitCalendar ul p {
+    font-size: 0.6rem; } }
 
 .taskDetails {
   width: 100%;

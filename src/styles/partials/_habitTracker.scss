@@ -99,6 +99,7 @@
         flex-direction: column;
         justify-content: flex-start;
         padding: 15px 0;
+        min-height: 250px;
     }
 
     .habitFlexContainer {
@@ -395,17 +396,45 @@
             top: 15px;
             right: 20px;
         }
+    }
 
-        button[type="submit"] {
-            background-color: #36CB82;
-            color: white;
+    .btnContainer {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        button[type="submit"],
+        .cancelBtn {
             padding: 5px 0px;
             min-width: 125px;
             border-radius: 10px;
             border: 1px solid rgba(212, 212, 212, 0.9);
             box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            margin-top: 25px;
+            margin: 50px 0 0 15px;
         }
+
+        button[type="submit"] {
+            background-color: #36CB82;
+            color: white;
+        }
+
+        .cancelBtn {
+            color: black;
+            text-align: center;
+            font-weight: bold;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: pointer;
+        }
+    }
+
+    label,
+    legend {
+        color: #6D767E;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin: 15px 0 10px 0;
     }
     
     .inputContainer {
@@ -413,13 +442,6 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 10px;
-        
-        label {
-            color: #6D767E;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin: 15px 0 10px 0;
-        }
 
         input,
         select {
@@ -532,6 +554,61 @@
         }
     }
 
+    fieldset.labelColourContainer {
+        flex-direction: row;
+        justify-content: space-around;
+
+        input[type=radio] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        input[type=radio]::before {
+            content: " ";
+            display: block;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid rgba(212, 212, 212, 0.9);
+            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        }
+
+        input[type=radio]:checked {
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+
+        .purpleLabel::before {
+            background-color: #E5D9F7;
+        }
+
+        .pinkLabel::before {
+            background-color: #FBD3DF;
+        }
+
+        .blueLabel::before {
+            background-color: #A8ADFF;
+        }
+
+        .greenLabel::before {
+            background-color: #D8F2D3;
+        }
+
+        .orangeLabel::before {
+            background-color: #FBE7CD;
+        }
+
+        .redLabel::before {
+            background-color: #fbc0c0;
+        }
+
+        .yellowLabel::before {
+            background-color: #f8f3ad;
+        }
+    }
+
     .loadingContainer {
         display: flex;
         justify-content: center;
@@ -545,10 +622,116 @@
         bottom: 0;
         right: 0;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.072);
         z-index: 20;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+}
+
+@media (max-width: 975px) {
+
+    .habitPage {
+
+        .habitFlexContainer {
+            flex-direction: column;
+        }
+
+        .habitContentOne {
+            width: 100%; 
+        }
+        
+        .habitContentTwo {
+            width: 100%;
+        }
+
+        .habitListContainer {
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 15px 30px;
+            max-height: 250px;
+            overflow-y: scroll;
+        }
+
+        .habitContainer {
+            width: calc(50% - 30px);
+        }
+
+        .showMoreContainer {
+            display: none;
+        }
+
+        .showMoreHabitsBtn {
+            margin-right: 5px;
+        }
+
+        .showPrevHabitsBtn {
+            margin-left: 5px;
+        }
+
+        .habitTrackingContent {
+            padding: 25px 50px 25px 50px
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    .habitPage {
+        .habitContainer {
+            width: 100%;
+        }
+
+        .habitTrackingContent {
+            padding: 25px;
+        }
+
+        .habitCalendar {
+            ul {
+                justify-content: space-between;
+                padding: 10px;
+
+                p {
+                    font-size: 0.7rem;
+                }
+
+                button {
+                    padding: 5px;
+                }
+            }
+            
+        }
+
+        .weeklyHabitDetails p {
+            font-size: 0.7rem;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .habitPage {
+        .habitTrackingContent {
+            margin-left: 75px;
+        }
+
+        .habitCalendarBreakdown {
+            th {
+                font-size: 0.7rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .habitPage {
+        .habitListContainer {
+            padding: 15px;
+        }
+
+        .habitCalendar {
+            ul p {
+                font-size: 0.6rem;
+            }
+        }
     }
 }
