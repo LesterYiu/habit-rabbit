@@ -14,6 +14,7 @@ import Settings from './Settings';
 import NewTask from './NewTask';
 import TaskDetails from './TaskDetails';
 import CalendarSection from './Calendar';
+import NotFound from './NotFound';
 
 function App() {
 
@@ -47,6 +48,8 @@ function App() {
     <AppContext.Provider value={{isAuth, setIsAuth, username, setUsername, userUID, setUserUID, userPic, setUserPic, isNewTaskClicked, setIsNewTaskClicked, setTaskList, taskList, setIsTaskExpanded, isTaskExpanded, doneTaskList, setDoneTaskList, isNavExpanded, setIsNavExpanded, isLateSelected, setIsLateSelected, isPrioritySelected, setIsPrioritySelected, setFilteredAndSearchedTask, filteredAndSearchedTask, isSignOutModalOn, setIsSignOutModalOn, isToDoBtnClicked, setIsToDoBtnClicked, isDoneBtnClicked, setIsDoneBtnClicked}}>
       <Routes>
         <Route path='/' element={<FrontPage />}/>
+
+        <Route path='*' element={<NotFound />}/>
 
         <Route path='/home' element={<Home />}/>
 

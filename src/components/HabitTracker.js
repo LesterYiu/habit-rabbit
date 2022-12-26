@@ -14,6 +14,9 @@ import HomeNavigation from "./HomeNavigation";
 import NewTask from "./NewTask";
 import SignOutModal from "./SignOutModal";
 
+// Image Improts
+import noHabitsImage from "../assets/noHabitsImage.png";
+
 const HabitTracker = () => {
 
     // Track days for the calendar
@@ -397,6 +400,11 @@ const HabitTracker = () => {
         setCountState(number);
     }
 
+    const handleCalendarBtn = (dayNum) => {
+        setSelectedDay(getNewDate(dayNum));
+        setDayCounter(dayNum);
+    }
+
     if(isAuth) {
         return(
             <div className="habitPage">
@@ -430,43 +438,43 @@ const HabitTracker = () => {
                                 </div>
                                 <ul>
                                     <li>
-                                        <button className={getWeekday(getFirstDayOfWeek(), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                        <button className={getWeekday(getFirstDayOfWeek(), "short") === getWeekday(selectedDay, "short") ? "today" : null} onClick={() => {handleCalendarBtn(0)}}>
                                             <p>{getWeekday(getFirstDayOfWeek(), "short")}</p>
                                             <p>{getDayOfMonth(getFirstDayOfWeek(), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(getNewDate(1), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                        <button className={getWeekday(getNewDate(1), "short") === getWeekday(selectedDay, "short") ? "today" : null} onClick={() => {handleCalendarBtn(1)}}>
                                             <p>{getWeekday(getNewDate(1), "short")}</p>
                                             <p>{getDayOfMonth(getNewDate(1), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(getNewDate(2), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                        <button className={getWeekday(getNewDate(2), "short") === getWeekday(selectedDay, "short") ? "today" : null} onClick={() => {handleCalendarBtn(2)}}>
                                             <p>{getWeekday(getNewDate(2), "short")}</p>
                                             <p>{getDayOfMonth(getNewDate(2), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(getNewDate(3), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                        <button className={getWeekday(getNewDate(3), "short") === getWeekday(selectedDay, "short") ? "today" : null} onClick={() => {handleCalendarBtn(3)}}>
                                             <p>{getWeekday(getNewDate(3), "short")}</p>
                                             <p>{getDayOfMonth(getNewDate(3), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(getNewDate(4), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                        <button className={getWeekday(getNewDate(4), "short") === getWeekday(selectedDay, "short") ? "today" : null} onClick={() => {handleCalendarBtn(4)}}>
                                             <p>{getWeekday(getNewDate(4), "short")}</p>
                                             <p>{getDayOfMonth(getNewDate(4), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(getNewDate(5), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                        <button className={getWeekday(getNewDate(5), "short") === getWeekday(selectedDay, "short") ? "today" : null} onClick={() => {handleCalendarBtn(5)}}>
                                             <p>{getWeekday(getNewDate(5), "short")}</p>
                                             <p>{getDayOfMonth(getNewDate(5), "short")}</p>
                                         </button>
                                     </li>
                                     <li>
-                                        <button className={getWeekday(getNewDate(6), "short") === getWeekday(selectedDay, "short") ? "today" : null}>
+                                        <button className={getWeekday(getNewDate(6), "short") === getWeekday(selectedDay, "short") ? "today" : null} onClick={() => {handleCalendarBtn(6)}}>
                                             <p>{getWeekday(getNewDate(6), "short")}</p>
                                             <p>{getDayOfMonth(getNewDate(6), "short")}</p>
                                         </button>
@@ -557,11 +565,13 @@ const HabitTracker = () => {
                                 <div className="dailyDateContainer">
                                     <h2>{format(selectedDay, 'E, LLL d')}</h2>
                                     <div>
-                                        <button onClick={handlePrevDayBtn}>
-                                            <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                        <button onClick={handlePrevDayBtn} className={dayCounter === 0 ? "disabledArrow" : null}>
+                                            <i className="fa-solid fa-arrow-left disableArrow" aria-hidden="true"></i>
+                                            <span className="sr-only">Previous Day</span>
                                         </button>
-                                        <button onClick={handleNextDayBtn}>
+                                        <button onClick={handleNextDayBtn} className={dayCounter === 6 ? "disabledArrow" : null}>
                                             <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                            <span className="sr-only">Next Day</span>
                                         </button>
                                     </div>
                                 </div>
@@ -584,7 +594,8 @@ const HabitTracker = () => {
                                     <div className="lds-ring"><div></div></div>
                                 </div>
                                 : null}
-                                {shownHabits.map( (habitDetails) => {
+                                {habitsList.length > 0 ?
+                                shownHabits.map( (habitDetails) => {
                                 return(
                                     <div className="habitContainer" style={{borderLeft:`4px solid ${habitDetails.habit.habitColor}`}} key={uuid()}>
                                         <div className="habitDetails">
@@ -619,7 +630,11 @@ const HabitTracker = () => {
                                             </ul>
                                         </div>
                                     </div>
-                                )})}
+                                )}) : 
+                                <div className="noHabitsContainer">
+                                    <img src={noHabitsImage} alt="" className="noHabitsImage"/>
+                                    <p>Nothing here yet.</p>    
+                                </div>}
                                 {habitsList.length > 4 && habitsList.length - shownHabitsCounter !== 4 ?
                                 <div className="showMoreContainer">
                                     <button onClick={() => {setShownHabitsCounter(shownHabitsCounter + 1)}}>

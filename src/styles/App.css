@@ -473,46 +473,6 @@ fieldset {
   100% {
     transform: rotate(360deg); } }
 
-.frontPage nav {
-  border-bottom: 1px solid rgba(212, 212, 212, 0.8);
-  padding: 15px 0; }
-  .frontPage nav ul {
-    display: flex;
-    justify-content: space-between; }
-  .frontPage nav li {
-    margin-right: 35px; }
-  .frontPage nav .loginButton {
-    border-right: 1px solid black;
-    padding-right: 20px; }
-  .frontPage nav .rightNavigation li {
-    margin-right: 0; }
-  .frontPage nav .createAccountLi {
-    margin-left: 20px; }
-
-.frontPage .leftNavigation,
-.frontPage .rightNavigation {
-  display: flex;
-  align-items: center; }
-
-.frontPage .logoImageCont {
-  max-width: 50px;
-  max-height: 50px;
-  margin-right: 0; }
-  .frontPage .logoImageCont img {
-    height: 100%;
-    width: 100%;
-    border-radius: 50%; }
-
-.frontPage .logoContainer {
-  display: flex;
-  align-items: center;
-  border-radius: 50%;
-  margin-right: 25px;
-  justify-content: center; }
-
-.frontPage .rightNavigation {
-  display: flex; }
-
 .frontPage .flexHeader {
   display: flex;
   justify-content: space-between;
@@ -536,12 +496,6 @@ fieldset {
   padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid rgba(212, 212, 212, 0.8); }
-
-.frontPage .mobileHambugerBtn {
-  display: none; }
-
-.frontPage .hamburgerIcon {
-  font-size: 1.5rem; }
 
 .frontPage .contentOneContainer {
   display: flex;
@@ -589,83 +543,6 @@ fieldset {
   .frontPage footer .creditFooterLink a {
     display: inline-block; }
 
-.frontPage .slideMenu {
-  position: fixed;
-  z-index: 30;
-  height: 100vh;
-  width: 250px;
-  top: 0;
-  background-color: white;
-  border-right: 1px solid rgba(212, 212, 212, 0.8);
-  padding: 20px 25px 20px 25px; }
-  .frontPage .slideMenu ul {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; }
-    .frontPage .slideMenu ul li {
-      font-family: "Inter", sans-serif;
-      font-weight: 600;
-      margin-bottom: 15px;
-      margin-right: 0;
-      font-size: 0.8rem;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      border-radius: 10px;
-      width: 100%;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      display: flex;
-      justify-content: space-between;
-      align-items: center; }
-      .frontPage .slideMenu ul li a {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        padding: 10px 15px; }
-    .frontPage .slideMenu ul li:nth-child(2) {
-      background-color: #F6F4F9; }
-    .frontPage .slideMenu ul li:nth-child(3) {
-      background-color: #F6F4F9; }
-    .frontPage .slideMenu ul li:nth-child(4) {
-      background-color: #EDF2EC; }
-    .frontPage .slideMenu ul li:nth-child(5) {
-      background-color: #E6F3FB; }
-    .frontPage .slideMenu ul li:nth-child(6) {
-      background-color: #FBF1F4; }
-    .frontPage .slideMenu ul li:nth-child(7) {
-      background-color: #FAF1F4; }
-    .frontPage .slideMenu ul .fa-chevron-right {
-      font-size: 0.7rem; }
-    .frontPage .slideMenu ul .logo {
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      width: 75px;
-      height: 75px;
-      border-radius: 50%;
-      padding: 0;
-      margin: 0 0 25px 0; }
-      .frontPage .slideMenu ul .logo img {
-        height: auto;
-        width: 80%; }
-      .frontPage .slideMenu ul .logo div {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center; }
-  .frontPage .slideMenu .loginButton {
-    border-right: 0; }
-
-.frontPage .bottomNavContainer {
-  margin-top: 20px;
-  width: 100%; }
-
-.frontPage .exitModalBtn {
-  position: absolute;
-  top: 15px;
-  right: 25px; }
-  .frontPage .exitModalBtn i {
-    font-size: 1.2rem; }
-
 @media (max-width: 940px) {
   .frontPage .flexHeader {
     flex-direction: column;
@@ -706,6 +583,134 @@ fieldset {
   .frontPage footer .creditFooterLink {
     justify-content: flex-start;
     margin-top: 15px; } }
+
+nav.navigationBar {
+  border-bottom: 1px solid rgba(212, 212, 212, 0.8);
+  padding: 15px 0; }
+  nav.navigationBar ul {
+    display: flex;
+    justify-content: space-between; }
+  nav.navigationBar li {
+    margin-right: 35px; }
+  nav.navigationBar .loginButton {
+    border-right: 1px solid black;
+    padding-right: 20px; }
+  nav.navigationBar .rightNavigation li {
+    margin-right: 0; }
+  nav.navigationBar .createAccountLi {
+    margin-left: 20px; }
+  nav.navigationBar .mobileHamburgerBtn {
+    display: none; }
+  nav.navigationBar .hamburgerIcon {
+    font-size: 1.5rem; }
+
+.slideMenu {
+  position: fixed;
+  z-index: 30;
+  height: 100vh;
+  width: 250px;
+  top: 0;
+  background-color: white;
+  border-right: 1px solid rgba(212, 212, 212, 0.8);
+  padding: 20px 25px 20px 25px; }
+  .slideMenu ul {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .slideMenu ul li {
+      font-family: "Inter", sans-serif;
+      font-weight: 600;
+      margin-bottom: 15px;
+      margin-right: 0;
+      font-size: 0.8rem;
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      border-radius: 10px;
+      width: 100%;
+      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .slideMenu ul li a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        padding: 10px 15px; }
+    .slideMenu ul li:nth-child(2) {
+      background-color: #F6F4F9; }
+    .slideMenu ul li:nth-child(3) {
+      background-color: #F6F4F9; }
+    .slideMenu ul li:nth-child(4) {
+      background-color: #EDF2EC; }
+    .slideMenu ul li:nth-child(5) {
+      background-color: #E6F3FB; }
+    .slideMenu ul li:nth-child(6) {
+      background-color: #FBF1F4; }
+    .slideMenu ul li:nth-child(7) {
+      background-color: #FAF1F4; }
+    .slideMenu ul .fa-chevron-right {
+      font-size: 0.7rem; }
+    .slideMenu ul .logo {
+      border: 1px solid rgba(212, 212, 212, 0.9);
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0 0 25px 0; }
+      .slideMenu ul .logo img {
+        height: auto;
+        width: 80%; }
+      .slideMenu ul .logo div {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+  .slideMenu .loginButton {
+    border-right: 0; }
+  .slideMenu .bottomNavContainer {
+    margin-top: 20px;
+    width: 100%; }
+  .slideMenu .exitModalBtn {
+    position: absolute;
+    top: 15px;
+    right: 25px; }
+    .slideMenu .exitModalBtn i {
+      font-size: 1.2rem; }
+
+.leftNavigation,
+.rightNavigation {
+  display: flex;
+  align-items: center; }
+
+.logoImageCont {
+  max-width: 50px;
+  max-height: 50px;
+  margin-right: 0; }
+  .logoImageCont img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%; }
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 25px;
+  justify-content: center; }
+
+.rightNavigation {
+  display: flex; }
+
+@media (max-width: 940px) {
+  nav.navigationBar .desktopHiddenAnchor {
+    display: none; }
+  nav.navigationBar .mobileHamburgerBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: block; } }
 
 .loginNav .logoSection {
   position: absolute;
@@ -1079,7 +1084,7 @@ fieldset {
   padding: 20px 25px 20px 25px;
   background-color: white;
   position: fixed;
-  z-index: 20;
+  z-index: 15;
   width: 250px;
   min-height: 100vh;
   max-height: 100%;
@@ -1510,7 +1515,9 @@ fieldset {
     margin: 0 auto;
     text-align: center;
     position: relative;
-    margin-top: 50px; }
+    margin-top: 50px;
+    color: #9e9d9d;
+    font-weight: bold; }
   .homeDashboard .loadingContainer {
     height: 200px; }
     .homeDashboard .loadingContainer p {
@@ -2428,7 +2435,10 @@ abbr[title] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 50px; }
+    margin-top: 50px;
+    text-align: center;
+    color: #9e9d9d;
+    font-weight: bold; }
     .calendarPage .noResultsFound .errorImageContainer {
       width: 150px;
       height: auto; }
@@ -2506,6 +2516,9 @@ abbr[title] {
         margin-left: 5px; }
         .habitPage .habitContentTwo .dailyDateContainer button i {
           font-size: 1rem; }
+      .habitPage .habitContentTwo .dailyDateContainer button.disabledArrow {
+        background-color: #d9dee0;
+        color: #a8b4b9; }
     .habitPage .habitContentTwo .dailyCompletionBar {
       width: 100%;
       height: 8px;
@@ -2544,6 +2557,18 @@ abbr[title] {
   .habitPage .habitFlexContainer {
     display: flex;
     min-height: 100vh; }
+  .habitPage .noHabitsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #9e9d9d;
+    height: 100%;
+    width: 100%; }
+    .habitPage .noHabitsContainer img {
+      display: block;
+      width: 150px;
+      height: auto; }
   .habitPage .addHabitBtn {
     padding: 5px 20px;
     font-weight: bold;
@@ -2645,7 +2670,9 @@ abbr[title] {
     .habitPage .habitCalendarBreakdown .habitListError {
       height: 100%;
       text-align: center;
-      margin-top: 25px; }
+      margin-top: 25px;
+      color: #9e9d9d;
+      font-weight: bold; }
   .habitPage .habitCalendarBreakdown {
     margin-top: 20px; }
   .habitPage .tableHeaders {
@@ -2763,7 +2790,8 @@ abbr[title] {
     color: #6D767E;
     font-size: 0.9rem;
     font-weight: bold;
-    margin: 15px 0 10px 0; }
+    margin: 15px 0 10px 0;
+    word-wrap: break-word; }
   .habitPage .inputContainer {
     width: 100%;
     display: flex;
@@ -2916,7 +2944,11 @@ abbr[title] {
   .habitPage .showPrevHabitsBtn {
     margin-left: 5px; }
   .habitPage .habitTrackingContent {
-    padding: 25px 50px 25px 50px; } }
+    padding: 25px 50px 25px 50px; }
+  .habitPage .habitContentTwo {
+    margin-top: 30px;
+    border-top: 2px solid rgba(212, 212, 212, 0.9);
+    padding-top: 25px; } }
 
 @media (max-width: 768px) {
   .habitPage .habitContainer {
@@ -2931,7 +2963,21 @@ abbr[title] {
     .habitPage .habitCalendar ul button {
       padding: 5px; }
   .habitPage .weeklyHabitDetails p {
-    font-size: 0.7rem; } }
+    font-size: 0.7rem; }
+  .habitPage .createHabitModal {
+    padding: 30px; }
+  .habitPage fieldset.labelColourContainer {
+    flex-wrap: wrap;
+    justify-content: flex-start; }
+  .habitPage input[type=radio] {
+    margin-right: 10px;
+    margin-top: 5px; }
+  .habitPage .btnContainer {
+    flex-direction: column;
+    margin-top: 30px; }
+    .habitPage .btnContainer .cancelBtn,
+    .habitPage .btnContainer button[type=submit] {
+      margin: 10px 0 0 0; } }
 
 @media (max-width: 575px) {
   .habitPage .habitTrackingContent {
@@ -2943,10 +2989,11 @@ abbr[title] {
   .habitPage .habitListContainer {
     padding: 15px; }
   .habitPage .habitCalendar ul p {
-    font-size: 0.6rem; } }
+    font-size: 0.6rem; }
+  .habitPage .createHabitModal {
+    padding: 30px 10px; } }
 
 .taskDetails {
-  width: 100%;
   margin-left: 100px;
   padding: 35px 0px 20px 0;
   display: flex;
@@ -3470,90 +3517,32 @@ abbr[title] {
 .signoutOverlay {
   z-index: 40 !important; }
 
-.toDoListSection {
-  margin-top: 25px;
-  background-color: white;
-  border: 1px solid #d4d4d4;
-  min-height: 310px;
+.notFoundPage .notFoundFlex {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-radius: 5px; }
-  .toDoListSection .toDoListTitleContainer {
-    background-color: #F6F4F9;
-    border-bottom: 1px solid #d4d4d4;
-    padding: 10px 0px;
-    width: 100%;
-    position: relative;
-    border-radius: 5px 5px 0px 0px; }
-    .toDoListSection .toDoListTitleContainer button {
-      border: 0;
-      position: absolute;
-      top: 5px;
-      right: 15px; }
-    .toDoListSection .toDoListTitleContainer i {
-      font-size: 1rem;
-      color: black;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border: 1px solid #d4d4d4;
-      border-radius: 50%;
-      padding: 1px;
-      background-color: #F6F4F9; }
-  .toDoListSection .toDoListTasks {
-    min-height: 100%; }
-    .toDoListSection .toDoListTasks li {
-      font-family: inherit;
-      text-transform: capitalize;
-      color: gray;
-      font-size: 0.7rem;
-      border: 1px solid #d4d4d4;
-      padding: 8px 5px; }
-    .toDoListSection .toDoListTasks .toDoTaskWidget {
-      position: relative;
-      box-shadow: 0;
-      border: 0; }
-      .toDoListSection .toDoListTasks .toDoTaskWidget li {
-        display: flex; }
-      .toDoListSection .toDoListTasks .toDoTaskWidget p {
-        font-size: 0.7rem;
-        margin-left: 5px;
-        color: black; }
-    .toDoListSection .toDoListTasks button {
-      position: absolute;
-      top: 0px;
-      right: 7px; }
-    .toDoListSection .toDoListTasks i {
-      font-size: 0.9rem;
-      color: #e61b1b; }
-  .toDoListSection .toDoInputContainer {
-    display: flex;
-    margin: 0px 10px 10px 10px;
-    position: relative; }
-    .toDoListSection .toDoInputContainer input {
-      height: 0;
-      width: 0%;
-      border: 0;
-      padding: 0;
-      padding-left: 10px;
-      border: 0;
-      border-radius: 5px 15px 15px 5px;
-      transition: all 0.2s linear 0.2s; }
-    .toDoListSection .toDoInputContainer .buttonOff {
-      display: none; }
-    .toDoListSection .toDoInputContainer .inputOn {
-      height: 40px;
-      width: 100%;
-      border: 1px solid #d4d4d4; }
-    .toDoListSection .toDoInputContainer button {
-      border: 0;
-      border-radius: 50%;
-      background-color: #F6F4F9;
-      color: black;
-      padding: 0px 5px;
-      height: 40px;
-      width: 40px;
-      position: absolute;
-      bottom: 0;
-      right: -5px;
-      border: 1px solid #d4d4d4;
-      text-align: center; }
+  align-items: center;
+  padding: 50px 0 50px 0; }
+
+.notFoundPage .imageContainer {
+  width: 200px;
+  height: auto; }
+
+.notFoundPage .notFoundText {
+  text-align: center;
+  width: 75%; }
+  .notFoundPage .notFoundText h1 {
+    font-size: 2rem !important; }
+  .notFoundPage .notFoundText p {
+    font-size: 1rem;
+    margin: 10px 0; }
+
+.notFoundPage .goBackHomeBtn {
+  border: 1px solid #b8b7b7;
+  font-weight: bold;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .notFoundPage .goBackHomeBtn i {
+    font-size: 1.2rem;
+    margin-left: 10px; }

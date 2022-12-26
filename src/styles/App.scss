@@ -12,6 +12,9 @@
 // Front Page Component Partials
 @import './partials/frontPage';
 
+// Navigation Bar (on 404 page & front page)
+@import './partials/navigationBar';
+
 // Login Component Partials
 @import './partials/login';
 
@@ -42,5 +45,5 @@
 // Signout Modal Component Partials
 @import "./partials/signOutModal";
 
-// Customizable Tab Component Partials (minus Calendar)
-@import './partials/customizableTabs';
+// 404 Page
+@import "./partials/NotFound";

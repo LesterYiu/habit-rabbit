@@ -52,6 +52,11 @@
                     font-size: 1rem;
                 }   
             }
+
+            button.disabledArrow {
+                background-color: #d9dee0;
+                color: #a8b4b9;
+            }
         }
 
         .dailyCompletionBar {
@@ -105,6 +110,22 @@
     .habitFlexContainer {
         display: flex;
         min-height: 100vh;
+    }
+
+    .noHabitsContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #9e9d9d;
+        height: 100%;
+        width: 100%;
+
+        img {
+            display: block;
+            width: 150px;
+            height: auto;
+        }
     }
 
     .addHabitBtn {
@@ -257,6 +278,8 @@
             height: 100%;
             text-align: center;
             margin-top: 25px;
+            color: #9e9d9d;
+            font-weight: bold;
         }
     }
     
@@ -306,7 +329,6 @@
             color: white;
         }
     }
-
 
     .buttonContainer {
         width: 100%;
@@ -435,6 +457,7 @@
         font-size: 0.9rem;
         font-weight: bold;
         margin: 15px 0 10px 0;
+        word-wrap: break-word;
     }
     
     .inputContainer {
@@ -629,6 +652,8 @@
     }
 }
 
+// Media Queries
+
 @media (max-width: 975px) {
 
     .habitPage {
@@ -673,6 +698,12 @@
         .habitTrackingContent {
             padding: 25px 50px 25px 50px
         }
+
+        .habitContentTwo {
+            margin-top: 30px;
+            border-top: 2px solid rgba(212, 212, 212, 0.9);
+            padding-top: 25px;
+        }
     }
 }
 
@@ -705,6 +736,30 @@
         .weeklyHabitDetails p {
             font-size: 0.7rem;
         }
+
+        .createHabitModal {
+            padding: 30px;
+        }
+
+        fieldset.labelColourContainer {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        input[type=radio] {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .btnContainer {
+            flex-direction: column;
+            margin-top: 30px;
+
+            .cancelBtn,
+            button[type=submit] {
+                margin: 10px 0 0 0;
+            }
+        }
     }
 }
 
@@ -732,6 +787,10 @@
             ul p {
                 font-size: 0.6rem;
             }
+        }
+
+        .createHabitModal {
+            padding: 30px 10px;
         }
     }
 }

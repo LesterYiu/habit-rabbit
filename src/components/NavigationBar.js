@@ -5,26 +5,29 @@ import logo from "../assets/logo.png";
 
 const NavigationBar = ({isAuth, setIsNavExpanded, isNavExpanded}) => {
     return(
-        <nav>
+        <nav className="navigationBar">
             <div className="wrapper">
                 <ul className="topNavigation">
                     <div className="leftNavigation">
                         <div className="logoContainer">
                             <li className="logoImageCont">
-                                <img src={logo} alt="" />
+                                <Link to="/">
+                                    <img src={logo} alt="" />
+                                    <span className="sr-only">Go back to front page</span>
+                                </Link>
                             </li>
                         </div>
                         <li className="aboutUsButton desktopHiddenAnchor">
-                            <a href="https://github.com/LesterYiu">Product</a>
+                            <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer">Product</a>
                         </li>
                         <li className="desktopHiddenAnchor">
-                            <a href="https://github.com/LesterYiu">About Us</a>
+                            <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer">About Us</a>
                         </li>
                         <li className="desktopHiddenAnchor">
-                            <a href="https://www.linkedin.com/in/lester-y-404010238/">Contact</a>
+                            <a href="https://www.linkedin.com/in/lester-y-404010238/" target="_blank"  rel="noreferrer">Contact</a>
                         </li>
                         <li className="desktopHiddenAnchor">
-                            <a href="https://github.com/LesterYiu/habit-rabbit">Source Code</a>
+                            <a href="https://github.com/LesterYiu/habit-rabbit" target="_blank"  rel="noreferrer">Source Code</a>
                         </li>
                     </div>
                     {isAuth ?
@@ -41,7 +44,7 @@ const NavigationBar = ({isAuth, setIsNavExpanded, isNavExpanded}) => {
                             <Link to="/create-account">Create Account</Link>
                         </li>
                     </div>}
-                    <div className="rightNavigation mobileHambugerBtn">
+                    <div className="rightNavigation mobileHamburgerBtn">
                         <button onClick={() => {setIsNavExpanded(!isNavExpanded)}}>
                             <span className="sr-only">Open Menu</span>
                             <i className="fa-solid fa-bars hamburgerIcon"></i>

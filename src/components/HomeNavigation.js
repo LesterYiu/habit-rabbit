@@ -40,6 +40,8 @@ const HomeNavigation = () => {
 
     const redirectToPage = (pathname) => {
         if(location.pathname !== `/${pathname}`) {
+            setIsTaskExpanded(false);
+            setIsNavExpanded(false);
             navigate(`/${pathname}`);
             return;
         }

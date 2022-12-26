@@ -10,6 +10,8 @@ import displayImageOne from "../assets/displayImageOne.png";
 import displayImageIcon from "../assets/displayImageIcon.png";
 import displayImageTwo from "../assets/displayImageTwo.png";
 import displayImageIconTwo from "../assets/displayImageIconTwo.png";
+import displayImageThree from "../assets/displayImageThree.png";
+import displayImageIconThree from "../assets/displayImageIconThree.png";
 
 // Component Imports
 import NavigationBar from "./NavigationBar";
@@ -33,7 +35,7 @@ const FrontPage = () => {
             {isNavExpanded ?
             <>
                 <FrontPageSlideMenu setIsNavExpanded={setIsNavExpanded}/> 
-                <div className="overlayBackground"></div>
+                <div className="overlayBackground" onClick={() => {setIsNavExpanded(false)}}></div>
             </>
             : null
             }
@@ -75,6 +77,18 @@ const FrontPage = () => {
                             </div>
                             <h2>Control your daily chaotic schedule</h2>
                             <p>Redefine how you stay organized. In Rabit Habbit, you are able to form healthy habbits by keeping track of your daily tasks with precision and accuracy.</p>
+                        </div>
+                    </div>
+                    <div className="contentOneContainer">
+                        <div className="imageContainer">
+                            <img src={displayImageThree} alt="" />
+                        </div>
+                        <div className="contentOneInfo">
+                            <div className="contentOneIconContainer">
+                                <img src={displayImageIconThree} alt="" />
+                            </div>
+                            <h2>Build healthy habits</h2>
+                            <p>Customize your everyday workflow by building healthy habits that will last.</p>
                         </div>
                     </div>
                 </div>
