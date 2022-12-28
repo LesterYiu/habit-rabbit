@@ -30,6 +30,7 @@ nav.navigationBar {
 
     .hamburgerIcon {
         font-size: 1.5rem;
+        text-decoration: none;
     }
 
     
@@ -142,9 +143,11 @@ nav.navigationBar {
         position: absolute;
         top: 15px;
         right: 25px;
+        text-decoration: none;
 
         i {
             font-size: 1.2rem;
+            text-decoration: none;
         }
     }
 }

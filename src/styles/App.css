@@ -602,7 +602,8 @@ nav.navigationBar {
   nav.navigationBar .mobileHamburgerBtn {
     display: none; }
   nav.navigationBar .hamburgerIcon {
-    font-size: 1.5rem; }
+    font-size: 1.5rem;
+    text-decoration: none; }
 
 .slideMenu {
   position: fixed;
@@ -675,9 +676,11 @@ nav.navigationBar {
   .slideMenu .exitModalBtn {
     position: absolute;
     top: 15px;
-    right: 25px; }
+    right: 25px;
+    text-decoration: none; }
     .slideMenu .exitModalBtn i {
-      font-size: 1.2rem; }
+      font-size: 1.2rem;
+      text-decoration: none; }
 
 .leftNavigation,
 .rightNavigation {
@@ -783,9 +786,11 @@ nav.navigationBar {
     width: 50px;
     height: 50px;
     background-color: white;
-    margin: 15px 0; }
+    margin: 15px 0;
+    text-decoration: none; }
     .loginPage .googleBtn i {
-      font-size: 1.3rem; }
+      font-size: 1.3rem;
+      text-decoration: none; }
   .loginPage .labelInputContainer {
     width: 100%;
     position: relative;
@@ -941,9 +946,11 @@ nav.navigationBar {
     width: 50px;
     height: 50px;
     background-color: white;
-    margin: 15px 0; }
+    margin: 15px 0;
+    text-decoration: none; }
     .createAccountPage .googleBtn i {
-      font-size: 1.3rem; }
+      font-size: 1.3rem;
+      text-decoration: none; }
   .createAccountPage .credentialsSection {
     text-align: center;
     color: white; }
@@ -1094,7 +1101,8 @@ nav.navigationBar {
   display: flex;
   flex-direction: column; }
   .homeNavigation .homeBtn {
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+    text-decoration: none; }
     .homeNavigation .homeBtn span:nth-child(1) {
       display: inline-block;
       height: 20px;
@@ -1643,9 +1651,12 @@ nav.navigationBar {
     padding: 5px 20px;
     border-radius: 5px;
     display: flex;
-    align-items: center; }
+    align-items: center;
+    text-decoration: none; }
     .homeDashboard .filterContainer p {
       margin-left: 10px; }
+    .homeDashboard .filterContainer i {
+      text-decoration: none; }
   .homeDashboard .filterModal {
     border-radius: 5px;
     position: absolute;
@@ -1795,7 +1806,20 @@ nav.navigationBar {
       height: 195px;
       align-items: flex-start; }
     .homeDashboard .taskText {
-      margin-top: 25px; } }
+      margin-top: 25px; }
+    .homeDashboard .taskFinderContainer .taskListButtons {
+      display: flex;
+      flex-direction: column; }
+    .homeDashboard .lateFilterIndicator,
+    .homeDashboard .buttonRelativePosition,
+    .homeDashboard .filterContainer {
+      width: 100%; }
+    .homeDashboard .taskFilters {
+      margin: 30px 0 15px 0; }
+    .homeDashboard .appliedFilters {
+      width: 100px;
+      margin-top: 10px;
+      padding: 3px 10px; } }
 
 @media (max-width: 480px) {
   .homeDashboard .taskContainer {
@@ -3516,6 +3540,10 @@ abbr[title] {
 
 .signoutOverlay {
   z-index: 40 !important; }
+
+@media (max-width: 550px) {
+  .signOutModal {
+    width: 80%; } }
 
 .notFoundPage .notFoundFlex {
   display: flex;

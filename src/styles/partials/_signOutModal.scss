@@ -45,3 +45,9 @@
 .signoutOverlay {
     z-index: 40 !important;
 }
+
+@media (max-width: 550px) {
+    .signOutModal {
+        width: 80%;
+    }
+}

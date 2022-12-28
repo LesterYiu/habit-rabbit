@@ -349,9 +349,14 @@
         border-radius: 5px;
         display: flex;
         align-items: center;
+        text-decoration: none;
 
         p {
             margin-left: 10px;
+        }
+
+        i {
+            text-decoration: none;
         }
     }
 
@@ -566,6 +571,27 @@
 
         .taskText {
             margin-top: 25px;
+        }
+
+        .taskFinderContainer .taskListButtons {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lateFilterIndicator,
+        .buttonRelativePosition,
+        .filterContainer {
+            width: 100%;
+        }
+
+        .taskFilters {
+            margin: 30px 0 15px 0;
+        }
+
+        .appliedFilters {
+            width: 100px;
+            margin-top: 10px;
+            padding: 3px 10px;
         }
     }
 }

@@ -119,39 +119,6 @@ const HabitTracker = () => {
         disableScrollForModalOn(isNavExpanded);
     },[isNavExpanded])
 
-    const updateCurrWeekCompletion = async () => {
-        if(habitsList.length === 0) return
-
-        const updatedCurrBeginWeek = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'E, LLL d');
-        const savedBeginWeek = habitsList[0].beginCurrWeek;
-
-        if (updatedCurrBeginWeek !== savedBeginWeek) {
-            
-            const habitsListCopy = cloneDeep(habitsList)
-
-            for(let habit of habitsListCopy) {
-                const {dailyCompletion, completion, id} = habit;
-
-                for(let week in dailyCompletion) {
-                    let dayArr = dailyCompletion[week];
-
-                    const newDayArr =  dayArr.map( (fraction) => fraction = false)
-
-                    dailyCompletion[week] = newDayArr;
-                }
-
-                for(let i in completion) {
-                    completion[i] = false;
-                }
-
-                habit.beginCurrWeek = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'E, LLL d');
-
-                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/habits/${id}`);
-                await updateDoc(documentRef, habit)
-            }
-        }
-    }
-
     useEffect(() => {
         const media = window.matchMedia('(max-width: 975px)');
         const listener = () => setIsMediumScreen(media.matches);
@@ -403,6 +370,41 @@ const HabitTracker = () => {
     const handleCalendarBtn = (dayNum) => {
         setSelectedDay(getNewDate(dayNum));
         setDayCounter(dayNum);
+    }
+
+    const updateCurrWeekCompletion = async () => {
+        if(habitsList.length === 0) return
+
+        const updatedCurrBeginWeek = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'E, LLL d');
+        const savedBeginWeek = habitsList[0].beginCurrWeek;
+
+        if (updatedCurrBeginWeek !== savedBeginWeek) {
+            
+            const habitsListCopy = cloneDeep(habitsList)
+
+            for(let habit of habitsListCopy) {
+                const {dailyCompletion, completion, id} = habit;
+
+                for(let week in dailyCompletion) {
+                    let dayArr = dailyCompletion[week];
+
+                    const newDayArr =  dayArr.map( (fraction) => fraction = false)
+
+                    dailyCompletion[week] = newDayArr;
+                }
+
+                for(let i in completion) {
+                    completion[i] = false;
+                }
+
+                habit.beginCurrWeek = format(startOfWeek(new Date(), {weekStartsOn: 1}), 'E, LLL d');
+
+                const documentRef = doc(db, `/users/user-list/${userUID}/${userUID}/habits/${id}`);
+                await updateDoc(documentRef, habit)
+            }
+
+            await getNewData();
+        }
     }
 
     if(isAuth) {
