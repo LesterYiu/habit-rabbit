@@ -449,6 +449,21 @@ input[type="time"] {
   -moz-appearance: textfield;
   min-height: 1.2em; }
 
+.wrongCredentialContainer {
+  background-color: #FFECE8;
+  border: 1px solid #BF6853;
+  text-align: center;
+  padding: 15px;
+  color: black; }
+  .wrongCredentialContainer p,
+  .wrongCredentialContainer li {
+    font-size: 0.9rem;
+    margin: 0 !important; }
+  .wrongCredentialContainer p:nth-child(1) {
+    font-weight: bold; }
+  .wrongCredentialContainer ul {
+    list-style-type: disc; }
+
 .lds-ring {
   display: inline-block;
   width: 80px;
@@ -874,8 +889,10 @@ nav.navigationBar {
   .createAccountPage .errorInput {
     border: 1px solid red; }
   .createAccountPage .errorEmailMessage {
-    border: 1px solid red;
-    color: red; }
+    background-color: #FFECE8;
+    border: 1px solid #BF6853;
+    background-color: #FFFFFF;
+    color: black; }
   .createAccountPage .createAccountSection {
     width: 60%;
     padding-left: 25px;

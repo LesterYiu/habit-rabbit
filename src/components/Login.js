@@ -17,6 +17,7 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [wrongCredential, setWrongCredential] = useState(false);
 
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider).then( (result) => {
@@ -37,12 +38,19 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
+            setWrongCredential(false);
             navigate('/home');
         })
         .catch((error) => {
             const errorMessage = error.message;
             console.log(errorMessage)
+            setWrongCredential(true);
         });
+    }
+
+    const handleInputChange = (setStateFunc, e) => {
+        setStateFunc(e.target.value);
+        setWrongCredential(false);
     }
 
     if(!isAuth) {
@@ -68,16 +76,21 @@ const Login = () => {
                                     <i className="fa-brands fa-google"></i>
                                 </button>
                                 <p className="optionText">or use your email to login:</p>
+                                {wrongCredential ?
+                                <div className="wrongCredentialContainer">
+                                    <p>Wrong Credentials</p>
+                                    <p>Invalid username or password</p>
+                                </div> : null}
                                 <form aria-label="form" name="signIn">
                                     <div className="labelInputContainer">
                                         <label htmlFor="email" className="sr-only">Email</label>
-                                        <input type="email" id="email" onChange={(e) => {setEmail(e.target.value)}} placeholder="Email"/>
+                                        <input type="email" id="email" onChange={(e) => {handleInputChange(setEmail, e)}} placeholder="Email"/>
                                         <i className="fa-regular fa-envelope"></i>
                                     </div>
 
                                     <div className="labelInputContainer">
                                         <label htmlFor="password" className="sr-only">Password</label>
-                                        <input type="password" id="password" onChange={(e) => {setPassword(e.target.value)}} placeholder="Password"/>
+                                        <input type="password" id="password" onChange={(e) => {handleInputChange(setPassword, e)}} placeholder="Password"/>
                                         <i className="fa-solid fa-lock"></i>
                                     </div>
 

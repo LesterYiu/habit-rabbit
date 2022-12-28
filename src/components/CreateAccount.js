@@ -21,6 +21,7 @@ const CreateAccount = () => {
     const [imageUpload, setImageUpload] = useState(null);
     const [isCreatedAcc, setIsCreatedAcc] = useState(false);
     const [isEmailExist, setIsEmailExist] = useState(false);
+    const [isInvalidSignUp, setIsInvalidSignUp] = useState(false);
 
     const {setIsAuth, setUsername, setUserUID, userUID} = useContext(AppContext)
 
@@ -34,9 +35,11 @@ const CreateAccount = () => {
     const handleContinueBtn = (e) => {
         e.preventDefault();
         const matchResult = emailRegex.test(emailEl.current.value);
-        console.log(emailEl.current.value)
-        if (matchResult === true && registerPassword.length >= 6) {
-            setIsCreatedAcc(!isCreatedAcc);            
+        if(matchResult && registerPassword.length >= 6) {
+            setIsCreatedAcc(!isCreatedAcc); 
+            setIsInvalidSignUp(false);           
+        } else {
+            setIsInvalidSignUp(true);
         }
     }
 
@@ -129,6 +132,17 @@ const CreateAccount = () => {
                             </button>
                         </div>
                         <p className="optionText">or use your email for registration:</p>
+                        {isEmailExist ? 
+                        <p className="errorEmailMessage">A user with this email address already exists. Please login.</p> : null}
+                        {isInvalidSignUp ?
+                        <div className="wrongCredentialContainer">
+                            <p>Invalid Credentials</p>
+                            <p>Invalid username or password</p>
+                            <ul>
+                                <li>Your email must be a valid email address</li>
+                                <li>Your password must be 6 characters long</li>
+                            </ul>
+                        </div> : null}
                         <form aria-label="form" name="createAccount" className="formOne">
 
                             <div className="labelInputContainer">
@@ -148,7 +162,6 @@ const CreateAccount = () => {
                                 <input type="password" required onChange={(e) => {setRegisterPassword(e.target.value)}} placeholder="Password"/>
                                 <i className="fa-solid fa-lock"></i>
                             </div>
-                            {isEmailExist ? <p className="errorEmailMessage">A user with this email address already exists. Please login.</p> : null}
                             <button type="submit" className="continueBtn" onClick={(e) => {handleContinueBtn(e)}}>Continue</button>
                         </form>
                     </div>: null}
