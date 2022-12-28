@@ -50,6 +50,7 @@
 
                 i{
                     font-size: 1rem;
+                    color: black;
                 }   
             }
 
@@ -186,6 +187,7 @@
             p {
                 font-weight: normal;
                 font-size: 0.8rem;
+                color: black;
             }
         }
 
@@ -491,6 +493,7 @@
 
         i {
             font-size: 1rem;
+            color: black;
         }
 
         .markAsCompleteBtn {
@@ -767,11 +770,26 @@
     .habitPage {
         .habitTrackingContent {
             margin-left: 75px;
+            padding: 25px 15px;
         }
 
         .habitCalendarBreakdown {
             th {
                 font-size: 0.7rem;
+            }
+            
+        }
+
+        .taskCompletionTable {
+            flex-direction: column;
+
+            table {
+                width: 100%;
+                margin-top: 10px;
+
+                tr {
+                    justify-content: space-between;
+                }
             }
         }
     }

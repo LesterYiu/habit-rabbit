@@ -117,7 +117,7 @@ const HabitTracker = () => {
         if(isNewTaskClicked && document.body.style.overflow === 'hidden') return;
 
         disableScrollForModalOn(isNavExpanded);
-    },[isNavExpanded])
+    },[isNavExpanded, isNewTaskClicked])
 
     useEffect(() => {
         const media = window.matchMedia('(max-width: 975px)');

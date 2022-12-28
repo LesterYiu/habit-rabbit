@@ -442,6 +442,13 @@ button {
 fieldset {
   border: 0; }
 
+input[type="date"],
+input[type="time"] {
+  display: block;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  min-height: 1.2em; }
+
 .lds-ring {
   display: inline-block;
   width: 80px;
@@ -603,7 +610,7 @@ nav.navigationBar {
     display: none; }
   nav.navigationBar .hamburgerIcon {
     font-size: 1.5rem;
-    text-decoration: none; }
+    color: black; }
 
 .slideMenu {
   position: fixed;
@@ -677,10 +684,10 @@ nav.navigationBar {
     position: absolute;
     top: 15px;
     right: 25px;
-    text-decoration: none; }
+    color: black; }
     .slideMenu .exitModalBtn i {
       font-size: 1.2rem;
-      text-decoration: none; }
+      color: black; }
 
 .leftNavigation,
 .rightNavigation {
@@ -787,10 +794,10 @@ nav.navigationBar {
     height: 50px;
     background-color: white;
     margin: 15px 0;
-    text-decoration: none; }
+    color: black; }
     .loginPage .googleBtn i {
       font-size: 1.3rem;
-      text-decoration: none; }
+      color: black; }
   .loginPage .labelInputContainer {
     width: 100%;
     position: relative;
@@ -947,10 +954,10 @@ nav.navigationBar {
     height: 50px;
     background-color: white;
     margin: 15px 0;
-    text-decoration: none; }
+    color: black; }
     .createAccountPage .googleBtn i {
       font-size: 1.3rem;
-      text-decoration: none; }
+      color: black; }
   .createAccountPage .credentialsSection {
     text-align: center;
     color: white; }
@@ -1102,7 +1109,8 @@ nav.navigationBar {
   flex-direction: column; }
   .homeNavigation .homeBtn {
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    text-decoration: none; }
+    text-decoration: none;
+    color: black; }
     .homeNavigation .homeBtn span:nth-child(1) {
       display: inline-block;
       height: 20px;
@@ -1652,11 +1660,11 @@ nav.navigationBar {
     border-radius: 5px;
     display: flex;
     align-items: center;
-    text-decoration: none; }
+    color: black; }
     .homeDashboard .filterContainer p {
       margin-left: 10px; }
     .homeDashboard .filterContainer i {
-      text-decoration: none; }
+      color: black; }
   .homeDashboard .filterModal {
     border-radius: 5px;
     position: absolute;
@@ -2060,7 +2068,8 @@ nav.navigationBar {
     box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     border-radius: 5px;
     padding: 0px 0px 0px 8px;
-    height: 35px; }
+    height: 35px;
+    color: black; }
   .formSecondarySection .customTaskError {
     border: 1px solid red;
     border-radius: 5px; }
@@ -2539,7 +2548,8 @@ abbr[title] {
         background-color: white;
         margin-left: 5px; }
         .habitPage .habitContentTwo .dailyDateContainer button i {
-          font-size: 1rem; }
+          font-size: 1rem;
+          color: black; }
       .habitPage .habitContentTwo .dailyDateContainer button.disabledArrow {
         background-color: #d9dee0;
         color: #a8b4b9; }
@@ -2637,7 +2647,8 @@ abbr[title] {
         align-items: center; }
       .habitPage .habitCalendar ul p {
         font-weight: normal;
-        font-size: 0.8rem; }
+        font-size: 0.8rem;
+        color: black; }
     .habitPage .habitCalendar button {
       padding: 10px 15px; }
     .habitPage .habitCalendar p:nth-child(odd) {
@@ -2839,7 +2850,8 @@ abbr[title] {
       justify-content: space-between;
       align-items: center; }
     .habitPage .habitContainer i {
-      font-size: 1rem; }
+      font-size: 1rem;
+      color: black; }
     .habitPage .habitContainer .markAsCompleteBtn {
       color: #197DE7;
       font-size: 0.7rem;
@@ -3005,9 +3017,17 @@ abbr[title] {
 
 @media (max-width: 575px) {
   .habitPage .habitTrackingContent {
-    margin-left: 75px; }
+    margin-left: 75px;
+    padding: 25px 15px; }
   .habitPage .habitCalendarBreakdown th {
-    font-size: 0.7rem; } }
+    font-size: 0.7rem; }
+  .habitPage .taskCompletionTable {
+    flex-direction: column; }
+    .habitPage .taskCompletionTable table {
+      width: 100%;
+      margin-top: 10px; }
+      .habitPage .taskCompletionTable table tr {
+        justify-content: space-between; } }
 
 @media (max-width: 480px) {
   .habitPage .habitListContainer {
@@ -3536,7 +3556,8 @@ abbr[title] {
     border: 1px solid rgba(212, 212, 212, 0.9);
     border-radius: 25px;
     margin-top: 15px;
-    padding: 10px 20px; }
+    padding: 10px 20px;
+    color: black; }
 
 .signoutOverlay {
   z-index: 40 !important; }

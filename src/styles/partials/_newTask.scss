@@ -290,6 +290,7 @@
         border-radius: 5px;
         padding: 0px 0px 0px 8px;
         height: 35px;
+        color: black;
     }
 
     .customTaskError {
@@ -444,10 +445,6 @@ input[type="color"] {
         .submitBtn {
             margin: 15px 0 0 0;
         }
-
-        // .formSecondarySection {
-        //     height: 90vh;
-        // }
 
         .formSecondarySection,
         .formPrimarySection {
