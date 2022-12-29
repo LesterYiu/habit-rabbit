@@ -2892,9 +2892,6 @@ abbr[title] {
         font-size: 0.7rem;
         font-weight: normal;
         padding: 0 10px; }
-      .habitPage .habitContainer .dropdownOptions li:nth-child(odd),
-      .habitPage .habitContainer .dropdownOptionsTwo li:nth-child(odd) {
-        border-bottom: 1px solid rgba(212, 212, 212, 0.9); }
     .habitPage .habitContainer .dropdownOptions.hidden,
     .habitPage .habitContainer .dropdownOptionsTwo.hidden {
       display: none; }
@@ -3055,6 +3052,7 @@ abbr[title] {
     padding: 30px 10px; } }
 
 .taskDetails {
+  width: calc(100% - 100px);
   margin-left: 100px;
   padding: 35px 0px 20px 0;
   display: flex;

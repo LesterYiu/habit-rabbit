@@ -624,9 +624,6 @@ const HabitTracker = () => {
                                         <div className="dropdownOptions hidden">
                                             <ul>
                                                 <li>
-                                                    <button>Edit Habit</button>
-                                                </li>
-                                                <li>
                                                     <button onClick={() => {handleDeleteHabit(habitDetails.id, habitDetails)}}>Delete Habit</button>
                                                 </li>
                                             </ul>
