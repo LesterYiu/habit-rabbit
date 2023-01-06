@@ -619,6 +619,7 @@ nav.navigationBar .hamburgerIcon {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s ease;
 }
 .slideMenu ul li a {
   display: flex;
@@ -627,6 +628,11 @@ nav.navigationBar .hamburgerIcon {
   height: 100%;
   width: 100%;
   padding: 10px 15px;
+  transition: all 0.3s ease;
+}
+.slideMenu ul li a:hover > .fa-chevron-right {
+  position: relative;
+  left: 5px;
 }
 .slideMenu ul li:nth-child(2) {
   background-color: #F6F4F9;
@@ -645,6 +651,10 @@ nav.navigationBar .hamburgerIcon {
 }
 .slideMenu ul li:nth-child(7) {
   background-color: #FAF1F4;
+}
+.slideMenu ul li:hover:not(.logo) {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .slideMenu ul .fa-chevron-right {
   font-size: 0.7rem;
@@ -3512,8 +3522,8 @@ abbr[title] {
 .habitPage .habitContainer .dropdownOptions,
 .habitPage .habitContainer .dropdownOptionsTwo {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  right: 10px;
+  top: 20px;
   background-color: white;
   border: 1px solid rgba(212, 212, 212, 0.9);
 }
@@ -3526,9 +3536,6 @@ abbr[title] {
 .habitPage .habitContainer .dropdownOptions.hidden,
 .habitPage .habitContainer .dropdownOptionsTwo.hidden {
   display: none;
-}
-.habitPage .habitContainer .dropdownOptionsTwo {
-  bottom: 20%;
 }
 .habitPage .habitContainer .completedDiv {
   display: flex;
@@ -3774,6 +3781,7 @@ abbr[title] {
   width: 100%;
   border-bottom: 1px solid rgba(212, 212, 212, 0.9);
   padding: 0 30px 20px 30px;
+  margin-bottom: 10px;
 }
 .taskDetails .taskInformation {
   width: 40%;
@@ -3795,19 +3803,18 @@ abbr[title] {
   padding-left: 3px;
 }
 .taskDetails .taskNameContainer h1 {
-  border: 2px solid transparent;
-  padding: 2px;
+  padding: 2px 1px;
+  border: 1px solid transparent;
   width: 75%;
+  font-family: "Inter Semibold", sans-serif;
 }
 .taskDetails .taskNameContainer input[type=text] {
+  font-size: 1rem;
   font-family: "Inter Semibold", sans-serif;
-  font-size: inherit;
-  font-weight: normal;
   width: 75%;
 }
 .taskDetails .plannedCompletionPara {
-  padding: 2px;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 }
 .taskDetails p.label {
   margin-bottom: 10px;
@@ -3815,12 +3822,15 @@ abbr[title] {
   font-size: 0.8rem;
   font-weight: normal;
 }
-.taskDetails .taskDescription,
 .taskDetails .taskData,
 .taskDetails .updateTaskBtns,
 .taskDetails .updateTasksContainer,
 .taskDetails .taskLabelContainer {
   margin-top: 35px;
+  padding: 0 30px;
+}
+.taskDetails .taskDescription {
+  margin-top: 20px;
   padding: 0 30px;
 }
 .taskDetails .taskDescription textarea {
@@ -3838,14 +3848,14 @@ abbr[title] {
 .taskDetails input[type=time],
 .taskDetails .taskDetails select {
   font-size: 0.9rem;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter Regular", sans-serif;
+  padding: 0;
 }
 .taskDetails .label,
 .taskDetails .dueTimeParagraph,
 .taskDetails .taskCompletionPara,
 .taskDetails .priorityParagraph {
-  padding: 2px;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 }
 .taskDetails .dueTimeLabel,
 .taskDetails .completionLabel {
@@ -3878,6 +3888,10 @@ abbr[title] {
   padding: 5px 10px;
   border-radius: 5px;
   margin-right: 15px;
+}
+.taskDetails .updateTaskBtns button:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .taskDetails .updateTaskBtns .updatesBtn {
   background-color: #2873D3;
@@ -3917,6 +3931,10 @@ abbr[title] {
 .taskDetails .updateTaskBtnContainer button {
   font-size: 0.9rem;
   font-family: "Nunito Sans Regular", sans-serif !important;
+}
+.taskDetails .updateTaskBtnContainer button:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .taskDetails .updateHoursContainer {
   box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
@@ -4088,13 +4106,20 @@ abbr[title] {
   font-size: 0.7rem;
   font-weight: normal;
 }
+.taskDetails .taskBtnContainer:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
+}
 .taskDetails .savingMessageContainer {
   display: flex;
+  height: 15px;
   margin-left: 30px;
 }
 .taskDetails .savingMessageContainer .lds-ring {
   height: 20px;
   width: 20px;
+  position: relative;
+  top: -10px;
 }
 .taskDetails .savingMessageContainer .lds-ring div {
   height: 20px;
@@ -4108,15 +4133,20 @@ abbr[title] {
 .taskDetails .savingStatusMessage {
   font-size: 0.7rem;
   top: 5px;
-  padding-top: 10px;
 }
 .taskDetails .percentError {
   color: rgb(224, 0, 0);
-  margin-left: 30px;
+  margin-left: 35px;
+  height: 15px;
+}
+.taskDetails .optionalMessageFiller {
+  height: 15px;
+  width: 100%;
 }
 .taskDetails .savingStatusMessage {
   color: rgb(1, 94, 1);
   margin-left: 20px;
+  height: 15px;
 }
 .taskDetails .deleteModal {
   position: fixed;
@@ -4212,10 +4242,10 @@ abbr[title] {
 .taskDetails .descriptionParagraph {
   overflow-wrap: break-word;
   padding: 2px;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 }
 .taskDetails textarea {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter Regular", sans-serif;
   font-size: 0.9rem;
 }
 .taskDetails select,
@@ -4415,6 +4445,13 @@ abbr[title] {
 .signOutModal .buttonList {
   display: flex;
   flex-direction: column;
+}
+.signOutModal .buttonList button {
+  transition: all 0.3s ease;
+}
+.signOutModal .buttonList button:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .signOutModal button {
   border: 1px solid #d4d4d4;

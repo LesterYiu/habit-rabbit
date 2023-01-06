@@ -1,39 +1,21 @@
 import { useLocation } from "react-router-dom";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 import FocusLock from 'react-focus-lock';
+
+// Component Imports
+import ConditionalWrapper from "./ConditionalWrapper";
 
 const HomeNavigation = () => {
 
     // useContext variables
     const {username, userPic, setIsNewTaskClicked, setIsTaskExpanded, isTaskExpanded, isNavExpanded, setIsNavExpanded, setIsLateSelected, setIsSignOutModalOn} = useContext(AppContext)
 
-    const homeText = useRef(null);
-    const newTaskText = useRef(null);
-    const calendarText = useRef(null);
-    const habitText = useRef(null);
-    // const settingsText = useRef(null);
-    const logOutText = useRef(null);
-
-    const navEl = useRef(null);
-    const ulOneEl = useRef(null);
-    const ulTwoEl = useRef(null);
-    const profileTextEl = useRef(null);
-    const profileInfoContainerEl = useRef(null);
-
-    const arrowIconOne = useRef(null);
-    const arrowIconTwo = useRef(null);
-    const arrowIconThree = useRef(null);
-    const arrowIconFour = useRef(null);
-    // const arrowIconFive = useRef(null);
-    const arrowIconSix = useRef(null);
-
     const location = useLocation();
     const navigate = useNavigate();
 
     const handleNewTask = () => {
-        handleShrinkBtn();
         setIsNavExpanded(false);
         setIsNewTaskClicked(true);
     }
@@ -60,192 +42,81 @@ const HomeNavigation = () => {
             navigate(`/${pathname}`);
         }
     }
-
     const handleNavToggleBtn = () => {
-
-        if (!isNavExpanded) {
-            handleExpandNav();
-            setIsNavExpanded(true);
-        } else {
-            handleShrinkBtn();
+        if(isNavExpanded) {
             setIsNavExpanded(false);
+        } else {
+            setIsNavExpanded(true);
         }
-    }
-    
-    const handleExpandNav = () => {
-        // Only occurs if on home component
-
-        // navPaddingDiv.current.className = "navExpandedPadding";
-        navEl.current.className = "homeNavigation homeSection";
-        profileTextEl.current.className = "profileInfoText"
-        profileInfoContainerEl.current.className = "profileInfoContainer";
-
-        // Button Text
-        homeText.current.className = "expandedButtonText";
-        newTaskText.current.className = "expandedButtonText";
-        calendarText.current.className = "expandedButtonText";
-        habitText.current.className = "expandedButtonText";
-        logOutText.current.className = "expandedButtonText";
-
-        // Button Ul Container
-        ulOneEl.current.className =  "";
-        ulTwoEl.current.className = "accountButtons";
-
-        arrowIconOne.current.className = "fa-solid fa-chevron-right";
-        arrowIconTwo.current.className = "fa-solid fa-chevron-right";
-        arrowIconThree.current.className = "fa-solid fa-chevron-right";
-        arrowIconFour.current.className = "fa-solid fa-chevron-right";
-        arrowIconSix.current.className = "fa-solid fa-chevron-right";
-    }
-
-    const handleShrinkBtn = () => {
-        navEl.current.className = "homeNavigation homeSection minimizedNav";
-        profileTextEl.current.className = "profileInfoText defaultHidden";
-        profileInfoContainerEl.current.className = "profileInfoContainer minimizedInfoContainer";
-
-        homeText.current.className = "expandedButtonText defaultHidden";
-        newTaskText.current.className = "expandedButtonText defaultHidden";
-        calendarText.current.className = "expandedButtonText defaultHidden";
-        habitText.current.className = "expandedButtonText defaultHidden";
-        logOutText.current.className = "expandedButtonText defaultHidden";
-
-        ulOneEl.current.className =  "minimizedUl";
-        ulTwoEl.current.className = "minimizedUl accountButtons";
-
-        arrowIconOne.current.className = "fa-solid fa-chevron-right defaultHidden";
-        arrowIconTwo.current.className = "fa-solid fa-chevron-right defaultHidden";
-        arrowIconThree.current.className = "fa-solid fa-chevron-right defaultHidden";
-        arrowIconFour.current.className = "fa-solid fa-chevron-right defaultHidden";
-        arrowIconSix.current.className = "fa-solid fa-chevron-right defaultHidden";
-    }
+    }  
 
     const handleGoBackToHome = () => {
         setIsTaskExpanded(false);
-        handleShrinkBtn();
         setIsNavExpanded(false);
     }
 
-    if(!isNavExpanded) {
-        return(
-        <>
-            <nav className="homeNavigation homeSection minimizedNav" ref={navEl}>
-                <div className="profileInfoContainer minimizedInfoContainer" ref={profileInfoContainerEl}>
-                    <div className="profilePicCont">
-                        <img src={userPic ? userPic : null} alt="" />
-                    </div>
-                    <div className="profileInfoText defaultHidden" ref={profileTextEl}>
-                        <p className="profileWelcome">Good&nbsp;Day&nbsp;👋</p>
-                        <p className="navDisplayName">{username.split(" ")[0]}</p>
-                    </div>
-                </div>
-                <ul className="minimizedUl" ref={ulOneEl}>
-                    <li>
-                        <button onClick={() => {redirectToPage('home')}} className={location.pathname === "/home" ? "homeBtnOne homeBtn currentPath" : "homeBtnOne homeBtn"}>
-                            <span aria-hidden="true">🏡</span>&nbsp;<span className="defaultHidden" ref={homeText}>Home</span>
-                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconOne}></i>                        
-                        </button>
-                    </li>
-                    <li>
-                        <button onClick={handleNewTask} className="homeBtnFive homeBtn">
-                            <span aria-hidden="true">✨</span>&nbsp;<span className="defaultHidden" ref={newTaskText}>New&nbsp;Task</span>
-                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconTwo}></i>
-                        </button>
-                    </li>
-                    <li>
-                        <button to="/calendar" className={location.pathname === "/calendar" ? "homeBtnTwo homeBtn currentPath" : "homeBtnTwo homeBtn"} onClick={() => {redirectToPage('calendar')}}>
-                            <span aria-hidden="true">🗓️</span> 
-                            <span className="defaultHidden" ref={calendarText}>Calendar</span>
-                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconThree}></i>
-                        </button>
-                    </li>
-                    <li>
-                        <button className={location.pathname === "/habit-tracker" ? "homeBtnThree homeBtn currentPath" : "homeBtnThree homeBtn"} onClick={() => {redirectToPage('habit-tracker')}}>
-                            <span aria-hidden="true">📊</span>
-                            <span className="defaultHidden" ref={habitText}>Habit Tracker</span>
-                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFour}></i>
-                        </button>
-                    </li>
-                </ul>
-                <ul className="minimizedUl accountButtons" ref={ulTwoEl}>
-                    <li>                    
-                        <button onClick={() => {setIsSignOutModalOn(true)}} className="homeBtnSix homeBtn">
-                            <span aria-hidden="true">🚪</span>
-                            <span className="defaultHidden" ref={logOutText}>Logout</span>
-                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconSix}></i>
-                        </button>
-                    </li>
-                </ul>
-                <button className="expandBtn homeBtn" onClick={handleNavToggleBtn}>
-                    <span className="sr-only">Expand navigation</span>
-                    {!isNavExpanded ? 
-                    <i className="fa-solid fa-chevron-right"></i> : 
-                    <i className="fa-solid fa-chevron-left"></i>}
-                </button>
-                {isTaskExpanded ? 
-                    <button onClick={handleGoBackToHome} className="exitTaskDetailsBtn homeBtn">
-                        <i className="fa-solid fa-left-long" aria-hidden="true"></i>
-                        <span className="sr-only">Go Back</span>
-                    </button> 
-                : null}
-            </nav>
-            {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay" onClick={() => {setIsNavExpanded(false)}}></div> : null}
-        </>
-        )
-    } else {
-        return(
-            <FocusLock>
-                <nav className="homeNavigation homeSection" ref={navEl}>
-                    <div className="profileInfoContainer" ref={profileInfoContainerEl}>
+    return(
+        <ConditionalWrapper condition={isNavExpanded} wrapper={children => <FocusLock>{children}</FocusLock>}>
+            <>
+                <nav className={isNavExpanded ? "homeNavigation homeSection" : "homeNavigation homeSection minimizedNav"}>
+                    <div className={isNavExpanded ? "profileInfoContainer" : "profileInfoContainer minimizedInfoContainer"}>
                         <div className="profilePicCont">
                             <img src={userPic ? userPic : null} alt="" />
                         </div>
-                        <div className="profileInfoText" ref={profileTextEl}>
+                        <div className={isNavExpanded ? "profileInfoText" : "profileInfoText defaultHidden"}>
                             <p className="profileWelcome">Good&nbsp;Day&nbsp;👋</p>
                             <p className="navDisplayName">{username.split(" ")[0]}</p>
                         </div>
                     </div>
-                    <ul ref={ulOneEl}>
+                    <ul className={isNavExpanded ? "" : "minimizedUl"}>
                         <li>
                             <button onClick={() => {redirectToPage('home')}} className={location.pathname === "/home" ? "homeBtnOne homeBtn currentPath" : "homeBtnOne homeBtn"}>
-                                <span aria-hidden="true">🏡</span><span ref={homeText}>Home</span>
-                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconOne}></i>                        
+                                <span aria-hidden="true">🏡</span>&nbsp;
+                                <span className={isNavExpanded ? "" : "defaultHidden"}>Home</span>
+                                <i className={isNavExpanded ? "fa-solid fa-chevron-right" : "fa-solid fa-chevron-right defaultHidden"} aria-hidden="true"></i>                        
                             </button>
                         </li>
                         <li>
                             <button onClick={handleNewTask} className="homeBtnFive homeBtn">
-                                <span aria-hidden="true">✨</span><span ref={newTaskText}>New&nbsp;Task</span>
-                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconTwo}></i>
+                                <span aria-hidden="true">✨</span>&nbsp;
+                                <span className={isNavExpanded ? "" : "defaultHidden"}>New&nbsp;Task</span>
+                                <i className={isNavExpanded ? "fa-solid fa-chevron-right" : "fa-solid fa-chevron-right defaultHidden"} aria-hidden="true"></i>
                             </button>
                         </li>
                         <li>
-                            <button className={location.pathname === "/calendar" ? "homeBtnTwo homeBtn currentPath" : "homeBtnTwo homeBtn"} onClick={() => {redirectToPage('calendar')}}>
+                            <button to="/calendar" className={location.pathname === "/calendar" ? "homeBtnTwo homeBtn currentPath" : "homeBtnTwo homeBtn"} onClick={() => {redirectToPage('calendar')}}>
                                 <span aria-hidden="true">🗓️</span> 
-                                <span ref={calendarText}>Calendar</span>
-                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconThree}></i>
+                                <span className={isNavExpanded ? "" : "defaultHidden"}>Calendar</span>
+                                <i className={isNavExpanded ? "fa-solid fa-chevron-right" : "fa-solid fa-chevron-right defaultHidden"} aria-hidden="true"></i>
                             </button>
                         </li>
                         <li>
                             <button className={location.pathname === "/habit-tracker" ? "homeBtnThree homeBtn currentPath" : "homeBtnThree homeBtn"} onClick={() => {redirectToPage('habit-tracker')}}>
                                 <span aria-hidden="true">📊</span>
-                                <span ref={habitText}>Habit Tracker</span>
-                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconFour}></i>
+                                <span className={isNavExpanded ? "" : "defaultHidden"}>Habit Tracker</span>
+                                <i className={isNavExpanded ? "fa-solid fa-chevron-right" : "fa-solid fa-chevron-right defaultHidden"} aria-hidden="true"></i>
                             </button>
                         </li>
                     </ul>
-                    <ul className="accountButtons" ref={ulTwoEl}>
+                    <ul className={isNavExpanded ? "accountButtons" : "minimizedUl accountButtons"}>
                         <li>                    
                             <button onClick={() => {setIsSignOutModalOn(true)}} className="homeBtnSix homeBtn">
                                 <span aria-hidden="true">🚪</span>
-                                <span ref={logOutText}>Logout</span>
-                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconSix}></i>
+                                <span className={isNavExpanded ? "" : "defaultHidden"}>Logout</span>
+                                <i className={isNavExpanded ? "fa-solid fa-chevron-right" : "fa-solid fa-chevron-right defaultHidden"} aria-hidden="true"></i>
                             </button>
                         </li>
                     </ul>
                     <button className="expandBtn homeBtn" onClick={handleNavToggleBtn}>
-                        <span className="sr-only">Expand navigation</span>
                         {!isNavExpanded ? 
-                        <i className="fa-solid fa-chevron-right"></i> : 
-                        <i className="fa-solid fa-chevron-left"></i>}
+                        <>
+                            <i className="fa-solid fa-chevron-right"></i>
+                            <span className="sr-only">Expand navigation</span>
+                        </> : 
+                        <>
+                            <i className="fa-solid fa-chevron-left"></i>
+                            <span className="sr-only">Minimize navigation</span>
+                        </>}
                     </button>
                     {isTaskExpanded ? 
                         <button onClick={handleGoBackToHome} className="exitTaskDetailsBtn homeBtn">
@@ -255,9 +126,9 @@ const HomeNavigation = () => {
                     : null}
                 </nav>
                 {isNavExpanded ? <div className="overlayBackground homeNavigationOverlay" onClick={() => {setIsNavExpanded(false)}}></div> : null}
-            </FocusLock>
-        )
-    }
+            </>
+        </ConditionalWrapper>
+    )
 }
 
 export default HomeNavigation;

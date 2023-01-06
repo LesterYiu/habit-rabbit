@@ -526,8 +526,8 @@
         .dropdownOptions,
         .dropdownOptionsTwo {
             position: absolute;
-            bottom: 0;
-            right: 0;
+            right: 10px;
+            top: 20px;
             background-color: white;
             border: 1px solid rgba(212, 212, 212, 0.9);
 
@@ -541,10 +541,6 @@
         .dropdownOptions.hidden,
         .dropdownOptionsTwo.hidden {
             display: none;
-        }
-
-        .dropdownOptionsTwo {
-            bottom: 20%;
         }
 
         .completedDiv {

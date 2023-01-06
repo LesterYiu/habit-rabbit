@@ -69,6 +69,7 @@ nav.navigationBar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s ease;
 
             a {
                 display: flex;
@@ -77,31 +78,41 @@ nav.navigationBar {
                 height: 100%;
                 width: 100%;
                 padding: 10px 15px;
+                transition: all 0.3s ease;
             }
-        }
 
-        li:nth-child(2) {
-            background-color: #F6F4F9;
-        }
+            a:hover > .fa-chevron-right {
+                position: relative;
+                left: 5px;
+            }
 
-        li:nth-child(3) {
-            background-color: #F6F4F9;
-        }
+            &:nth-child(2) {
+                background-color: #F6F4F9;
+            }
 
-        li:nth-child(4) {
-            background-color: #EDF2EC;
-        }
+            &:nth-child(3) {
+                background-color: #F6F4F9;
+            }
 
-        li:nth-child(5) {
-            background-color: #E6F3FB;
-        }
+            &:nth-child(4) {
+                background-color: #EDF2EC;
+            }
 
-        li:nth-child(6) {
-            background-color: #FBF1F4;
-        }
+            &:nth-child(5) {
+                background-color: #E6F3FB;
+            }
 
-        li:nth-child(7) {
-            background-color: #FAF1F4;
+            &:nth-child(6) {
+                background-color: #FBF1F4;
+            }
+
+            &:nth-child(7) {
+                background-color: #FAF1F4;
+            }
+
+            &:hover:not(.logo) {
+                @include base.underlineHover(false, true);
+            }
         }
 
         .fa-chevron-right {

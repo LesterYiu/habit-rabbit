@@ -24,6 +24,14 @@
     .buttonList {
         display: flex;
         flex-direction: column;
+
+        button {
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            @include base.underlineHover(false, true);
+        }
     }
 
     button {
