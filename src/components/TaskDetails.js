@@ -14,6 +14,10 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
     // useContext variables
     const {userUID, username, userPic, taskList, setTaskList, setIsTaskExpanded, doneTaskList, setDoneTaskList, isToDoBtnClicked, isDoneBtnClicked} = useContext(AppContext);
 
+    // Due date & time
+    const [dueTime, setDueTime] = useState(specificTask.task.time);
+    const [dueDate, setDueDate] = useState(specificTask.task.deadline);
+
     // Toggles
     const [isNewUpdateBtnClicked, setIsNewUpdateBtnClicked] = useState(false);
     const [isLogTimeBtnClicked, setIsLogTimeBtnClicked] = useState(false);
@@ -102,12 +106,20 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLogTimeBtnClicked, day1, day2, day3, day4, day5, day6, day7])
 
+    // Handle UI change for log time modal
     useEffect( () => {
         setDays(setDay4, setDay3, setDay2, setDay1, setDay5, setDay6, setDay7, backBtnCounter, frontBtnCounter);
 
     }, [backBtnCounter, frontBtnCounter])
 
+    // Handle updating timestamp for deadline
+
+    useEffect( () => {
+        handleUnformattedDeadline();
+    }, [dueDate, dueTime])
+
     // Handle loading
+
     useEffect( () => {
         let timeout;
         clearTimeout(timeout);
@@ -351,6 +363,26 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
         setIsTaskExpanded(false);
     }
 
+    const handleUnformattedDeadline = async () => {
+        const updatedTime = new Date(dueDate.replace(/([-])/g, '/'));
+        const dueHours = dueTime.split(':')[0];
+        const dueMinutes = dueTime.split(':')[1];
+        updatedTime.setHours(dueHours, dueMinutes);
+
+        let documentRef = determineWhichRef(specificTask.id);
+
+        try {
+            await updateDoc(documentRef, {
+                "task.unformattedDeadline" : updatedTime
+            })
+        } catch {
+            const newDocumentRef = await getNewUpdatedRef();
+            await updateDoc(newDocumentRef, {
+                "task.unformattedDeadline" : updatedTime
+            })
+        }
+    }
+
     const handleTimeInput = (e, setTimeState) => {
         if(parseInt(e.target.value) > 24 ) {
             setIsMoreThan24(true);
@@ -424,12 +456,12 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
 
         try {
             await updateDoc(documentRef, {
-                "task.timeSpent" : finalArr
+                "task.timeSpent" : finalArr,
             })
         } catch {
             const newDocumentRef = await getNewUpdatedRef();  
             await updateDoc(newDocumentRef, {
-                "task.timeSpent" : finalArr
+                "task.timeSpent" : finalArr,
             })
         }
     }
@@ -529,6 +561,7 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
 
     const updateDate = async (e) => {
         let documentRef = determineWhichRef(specificTask.id);
+        setDueDate(e.target.value);
 
         const dateString = e.target.value.replace(/([-])/g, '');
         const year = +dateString.substring(0, 4);
@@ -551,7 +584,7 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
                 "task.firstDayOfWeekUnformatted" : firstDayOfWeekUnformatted,
                 "task.firstDayOfWeekTimestamp" : firstDayOfWeekTimestamp,
                 "task.reformattedDeadline" : reformattedDeadline,
-                "task.startDayOfWeek": startDayOfWeek
+                "task.startDayOfWeek": startDayOfWeek,
             });
         } catch {
             const newDocumentRef = await getNewUpdatedRef();
@@ -560,7 +593,7 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
                 "task.firstDayOfWeekUnformatted" : firstDayOfWeekUnformatted,
                 "task.firstDayOfWeekTimestamp" : firstDayOfWeekTimestamp,
                 "task.reformattedDeadline" : reformattedDeadline,
-                "task.startDayOfWeek": startDayOfWeek
+                "task.startDayOfWeek": startDayOfWeek,
             });
         }
     }
@@ -582,15 +615,17 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
 
     const updateTimeInput = async (e) => {
         let documentRef = determineWhichRef(specificTask.id);
+        setDueTime(e.target.value);
         specificTask.task.time = e.target.value;
+
         try {
             await updateDoc(documentRef, {
-                "task.time" : e.target.value
+                "task.time" : e.target.value,
             })
         } catch {
             const newDocumentRef = await getNewUpdatedRef();
             await updateDoc(newDocumentRef, {
-                "task.time" : e.target.value
+                "task.time" : e.target.value,
             })
         }
     }

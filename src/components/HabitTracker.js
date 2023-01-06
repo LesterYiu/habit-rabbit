@@ -363,8 +363,7 @@ const HabitTracker = () => {
     }
 
     const changeDashboardTask = (number, setCountState) => {
-        if(habitsList.length === 1 ) return;
-        setCountState(number);
+        if(habitsList.length >= 5 ) setCountState(number);
     }
 
     const handleCalendarBtn = (dayNum) => {
@@ -427,7 +426,7 @@ const HabitTracker = () => {
                     <div className="habitFlexContainer">
                         <div className="habitContentOne">
                             <div className="userGreetingText">
-                                <h1>Hey there, {username}</h1>
+                                <h1>Hey there, {username.split(" ")[0]}</h1>
                                 <p>Let's get productive!</p>
                             </div>
                             <div className="habitCalendar">

@@ -15,7 +15,10 @@ const NewTask = () => {
     const [deadline, setDeadline] = useState("");
     const [reformattedDeadline, setReformattedDeadline] = useState("");
     const [startDayOfWeek, setStartDayOfWeek] = useState("");
+
+    // Used as a timestamp as it includes time + date
     const [unformattedDeadline, setUnformattedDeadline] = useState("");
+
     const [firstDayOfWeekUnformatted, setFirstDayOfWeekUnformatted] = useState("");
     const [firstDayOfWeekTimestamp, setFirstDayOfWeekTimestamp] = useState("")
     const [time, setTime] = useState("");
@@ -62,6 +65,11 @@ const NewTask = () => {
     useEffect( () => {
         checkIfLate()
     }, [time, deadline])
+
+    // Get new timestamp when due time & due date changes
+    useEffect( () => {
+        if(deadline && time) updateUnformattedDeadline();
+    }, [deadline, time])
 
     const handleInputText = (e, setState) => {
         e.preventDefault();
@@ -117,7 +125,6 @@ const NewTask = () => {
 
     const handleDeadline = (e) => {
         e.preventDefault();
-        setUnformattedDeadline(new Date(e.target.value));
         
         const dateString = e.target.value.replace(/([-])/g, '');
         const year = +dateString.substring(0, 4);
@@ -261,6 +268,15 @@ const NewTask = () => {
         } else {
             setIsLate(false);
         }
+    }
+
+    // Used to set new timestamps corresponding to due time & due date
+    const updateUnformattedDeadline = () => {
+        const updatedTime = new Date(deadline.replace(/([-])/g, '/'));
+        const dueHours = time.split(':')[0];
+        const dueMinutes = time.split(':')[1];
+        updatedTime.setHours(dueHours, dueMinutes);
+        setUnformattedDeadline(updatedTime);
     }
 
     return(

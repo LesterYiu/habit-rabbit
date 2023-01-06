@@ -1229,11 +1229,20 @@ nav.navigationBar .hamburgerIcon {
   font-weight: normal;
   text-decoration: none;
   color: black;
+  transition: all 0.3s ease;
 }
 .homeNavigation .homeBtn span:nth-child(1) {
   display: inline-block;
   height: 20px;
   width: 20px;
+}
+.homeNavigation .homeBtn:hover .fa-chevron-right {
+  right: 5px;
+}
+.homeNavigation .homeBtn:hover,
+.homeNavigation .homeBtn.currentPath {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .homeNavigation .expandBtn.homeBtn i {
   font-size: 1rem;
@@ -1625,6 +1634,7 @@ nav.navigationBar .hamburgerIcon {
   right: 20px;
   border: 0;
   display: flex;
+  transition: all 0.3s ease;
 }
 .homeDashboard .taskContainer .buttonContainer i {
   font-size: 1.4rem;
@@ -1640,18 +1650,29 @@ nav.navigationBar .hamburgerIcon {
   border-radius: 2px;
   padding: 2px 15px;
   color: white;
-  background-color: #0D66D0;
   margin-right: 1px;
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
   cursor: pointer;
 }
-.homeDashboard .taskContainer .buttonContainer .fa-angle-down {
-  background-color: #0D66D0;
-  padding: 7px 5px;
+.homeDashboard .taskContainer .buttonContainer .moreOptionsBtn {
+  padding: 0px 3px;
   border-radius: 2px;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+}
+.homeDashboard .taskContainer .buttonContainer .moreOptionsBtn i {
   font-size: 0.7rem;
   color: white;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+}
+.homeDashboard .taskContainer .buttonContainer .finishButton,
+.homeDashboard .taskContainer .buttonContainer .moreOptionsBtn {
+  background-color: #0D66D0;
+  border: 1px solid #0D66D0;
+  transition: all 0.3s ease;
+}
+.homeDashboard .taskContainer .buttonContainer .finishButton:hover,
+.homeDashboard .taskContainer .buttonContainer .moreOptionsBtn:hover {
+  text-decoration: underline;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .homeDashboard .taskContainer .buttonContainer.buttonHidden {
   display: none;
@@ -1789,6 +1810,7 @@ nav.navigationBar .hamburgerIcon {
   width: 50%;
   padding: 5px 0px;
   height: 35px;
+  transition: all 0.3s ease;
 }
 .homeDashboard .toDoTask {
   border-radius: 15px 0px 0px 15px;
@@ -1798,12 +1820,19 @@ nav.navigationBar .hamburgerIcon {
   color: black;
   text-decoration: none;
 }
+.homeDashboard .toDoTask:hover,
+.homeDashboard .doneTask:hover {
+  text-decoration: underline;
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
+}
 .homeDashboard .taskText {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   cursor: pointer;
+  cursor: auto;
 }
 .homeDashboard .taskText .taskName {
   font-family: "Inter Semibold", sans-serif;
@@ -1889,6 +1918,7 @@ nav.navigationBar .hamburgerIcon {
   background-color: rgba(230, 243, 251, 0.7725490196);
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
 }
 .homeDashboard .filterContainer p {
   font-family: "Inter Semibold", sans-serif;
@@ -1898,6 +1928,11 @@ nav.navigationBar .hamburgerIcon {
 }
 .homeDashboard .filterContainer i {
   color: black;
+}
+.homeDashboard .filterContainer:hover {
+  box-shadow: -1px 2px 29px 4px rgba(0, 0, 0, 0.16);
+  -webkit-box-shadow: -1px 2px 29px 4px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: -1px 2px 29px 4px rgba(0, 0, 0, 0.16);
 }
 .homeDashboard .filterModal {
   box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
@@ -2764,6 +2799,13 @@ abbr[title] {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button:hover,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 
 .react-calendar__navigation__next-button::before {
@@ -2833,12 +2875,20 @@ abbr[title] {
   border-radius: 15px;
   height: 150px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+.calendarPage .displayTasksSection .taskContainer:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .calendarPage .displayTasksSection .taskName {
   font-family: "Nunito Sans Bold", sans-serif;
   font-size: 0.8rem;
   font-weight: normal;
   margin-bottom: 10px;
+}
+.calendarPage .displayTasksSection .taskName:hover {
+  text-decoration: underline;
 }
 .calendarPage .deadlineSection {
   display: flex;
@@ -2939,7 +2989,7 @@ abbr[title] {
   z-index: 50;
 }
 .calendarPage .currentTaskSelected {
-  border: 1px solid rgba(149, 149, 149, 0.8) !important;
+  border: 1px solid rgba(71, 71, 71, 0.8) !important;
   box-shadow: 2px 4px rgba(181, 181, 181, 0.886) !important;
 }
 
@@ -3032,6 +3082,9 @@ abbr[title] {
   font-size: 1rem;
   color: black;
 }
+.habitPage .habitContentTwo .dailyDateContainer button:not(.disabledArrow):hover {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+}
 .habitPage .habitContentTwo .dailyDateContainer button.disabledArrow {
   background-color: #d9dee0;
   color: #a8b4b9;
@@ -3117,10 +3170,15 @@ abbr[title] {
   background-color: white;
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
 }
 .habitPage .addHabitBtn i {
   font-size: 1rem;
   margin-right: 10px;
+}
+.habitPage .addHabitBtn:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .habitPage .userGreetingText h1 {
   font-family: "Nunito Sans Bold", sans-serif;
@@ -3169,6 +3227,10 @@ abbr[title] {
 }
 .habitPage .habitCalendar button {
   padding: 10px 15px;
+  border-radius: 15px;
+}
+.habitPage .habitCalendar button:not(.today):hover {
+  background-color: rgba(165, 214, 167, 0.5490196078);
 }
 .habitPage .habitCalendar p:nth-child(odd) {
   margin-bottom: 5px;
@@ -3178,7 +3240,6 @@ abbr[title] {
 }
 .habitPage .today {
   background-color: #A5D6A7;
-  border-radius: 10px;
 }
 .habitPage .habitCalendarBreakdown {
   display: flex;
@@ -3299,9 +3360,14 @@ abbr[title] {
 .habitPage .buttonContainer .arrowIcon.disabledArrow {
   color: #d9dee0;
   background-color: #a8b4b9;
+  cursor: auto;
+}
+.habitPage .buttonContainer button:hover .arrowIcon:not(.disabledArrow) {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
 }
 .habitPage .dashboardButtons .arrowIcon {
   margin-right: 5px;
+  transition: all 0.3s ease;
 }
 .habitPage .createHabitModal {
   border: 1px solid #d4d4d4;
@@ -3435,6 +3501,10 @@ abbr[title] {
   width: 100%;
   border: 1px solid rgba(212, 212, 212, 0.9);
   margin-top: 10px;
+  transition: all 0.3s ease;
+}
+.habitPage .habitContainer .markAsCompleteBtn:hover {
+  text-decoration: underline;
 }
 .habitPage .habitContainer p {
   font-size: 0.9rem;
@@ -3511,8 +3581,11 @@ abbr[title] {
   border-radius: 50%;
   cursor: pointer;
 }
-.habitPage fieldset.labelColourContainer input[type=radio]:checked {
-  border: 1px solid black;
+.habitPage fieldset.labelColourContainer input[type=radio]:checked::before {
+  border: 1px solid rgb(127, 126, 126);
+}
+.habitPage fieldset.labelColourContainer input[type=radio]:not(:checked):hover {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
   border-radius: 50%;
 }
 .habitPage fieldset.labelColourContainer .purpleLabel::before {
@@ -3787,6 +3860,7 @@ abbr[title] {
   margin-right: 15px;
   padding: 5px 10px;
   border-radius: 5px;
+  text-transform: capitalize;
 }
 .taskDetails .priorityLevel {
   text-transform: capitalize;

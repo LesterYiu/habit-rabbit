@@ -187,6 +187,12 @@ abbr[title] {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    transition: all 0.3s ease;
+}
+
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button:hover,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover {
+    @include base.underlineHover(false, true);
 }
 
 .react-calendar__navigation__next-button::before {
@@ -254,11 +260,20 @@ abbr[title] {
             border-radius: 15px;
             height: 150px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .taskContainer:hover {
+            @include base.underlineHover(false, true);
         }
 
         .taskName {
             @include base.secondaryHeading(0.8rem);
             margin-bottom: 10px;
+        }
+
+        .taskName:hover {
+            text-decoration: underline;
         }
     }
 
@@ -376,7 +391,7 @@ abbr[title] {
     }
 
     .currentTaskSelected {
-        border: 1px solid rgba(149, 149, 149, 0.8) !important;
+        border: 1px solid rgba(71, 71, 71, 0.8) !important;
         box-shadow: 2px 4px rgba(181, 181, 181, 0.886) !important;
     }
 }

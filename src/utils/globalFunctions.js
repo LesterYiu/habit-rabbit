@@ -50,17 +50,8 @@ export const reformatTaskByDate = (taskListState, setTaskState) => {
 
     // Sorts every date by deadline date from most recent to latest while also sorting via task due time.
     for(let weeklyTasks of taskListArrangedByWeek) {
-        weeklyTasks.sort( (a , b) => {
-            const taskADeadline = new Date(a.task.deadline.replace(/([-])/g, '/'));
-            const taskBDeadline = new Date(b.task.deadline.replace(/([-])/g, '/'));
-
-            if (a.task.deadline.replace(/([-])/g, '/') === b.task.deadline.replace(/([-])/g, '/')) {
-                return taskADeadline < taskBDeadline? -1 : 1
-            }  else {
-                return taskADeadline < taskBDeadline ? -1 : 1
-            }
-        }
-    )}
+        weeklyTasks.sort((a,b) => a.task.unformattedDeadline.seconds - b.task.unformattedDeadline.seconds); 
+    }
     
     setTaskState(taskListArrangedByWeek);            
 }

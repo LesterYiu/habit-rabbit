@@ -83,22 +83,6 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userUID])
 
-    useEffect( () => {
-        // Sorts the tasks by deadline date
-        for (let i in reformattedTask) {
-            if(reformattedTask[i] !== undefined) {
-                reformattedTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline);
-            }
-        } 
-
-        for (let i in reformattedDoneTask) {
-            if(reformattedDoneTask[i] !== undefined) {
-                reformattedDoneTask[i].sort((a,b) => a.task.unformattedDeadline - b.task.unformattedDeadline)
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
     // On initial mount, this will collect the tasks under the logged in user's userUID and set it into state to populate the page.
     useEffect( () => {
         getPost();

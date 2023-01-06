@@ -157,6 +157,25 @@ $light-blue: #e6f3fbc5;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+// Hover Mixins
+
+@mixin underlineHover($underlineBoolean, $defaultBorderBoolean) {
+    @if $underlineBoolean {
+        text-decoration: underline;
+    }
+
+    @if $defaultBorderBoolean {
+        border: 1px solid #d4d4d4;
+    }
+    box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
+}
+
+@mixin shadowIncreaseHover {
+    box-shadow: -1px 2px 29px 4px rgba(0,0,0,0.16);
+    -webkit-box-shadow: -1px 2px 29px 4px rgba(0,0,0,0.16);
+    -moz-box-shadow: -1px 2px 29px 4px rgba(0,0,0,0.16);
+}
+
 html {
     font-size: 125%;
 }

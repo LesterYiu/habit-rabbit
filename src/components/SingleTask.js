@@ -61,7 +61,7 @@ const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, de
             </div>
             <div className="buttonContainer">
                 <button className="finishButton" onClick={(e) => {changeToFinishedTask(specificTask.id, specificTask, e)}}>Done</button>
-                <button onClick={() => {setIsDropdownOpen(!isDropdownOpen)}}>
+                <button className="moreOptionsBtn" onClick={() => {setIsDropdownOpen(!isDropdownOpen)}}>
                     <i className="fa-solid fa-angle-down"></i>
                 </button>
                 {isDropdownOpen ?

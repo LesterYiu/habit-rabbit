@@ -52,6 +52,10 @@
                 }   
             }
 
+            button:not(.disabledArrow):hover {
+                @include base.containerShadowTwo;
+            }
+
             button.disabledArrow {
                 background-color: #d9dee0;
                 color: #a8b4b9;
@@ -140,11 +144,16 @@
         background-color: white;
         display: flex;
         align-items: center;
+        transition: all 0.3s ease;
 
         i {
             font-size: 1rem;
             margin-right: 10px;
         }
+    }
+
+    .addHabitBtn:hover {
+        @include base.underlineHover(false, true);
     }
 
     .userGreetingText {
@@ -198,6 +207,11 @@
 
         button {
             padding: 10px 15px;
+            border-radius: 15px;
+        }
+
+        button:not(.today):hover {
+            background-color: #a5d6a78c;
         }
 
         p:nth-child(odd) {
@@ -212,7 +226,6 @@
     
     .today {
         background-color: #A5D6A7;
-        border-radius: 10px;
     }
 
     
@@ -356,6 +369,11 @@
         .arrowIcon.disabledArrow {
             color: #d9dee0;
             background-color: #a8b4b9;
+            cursor: auto;
+        }
+
+        button:hover .arrowIcon:not(.disabledArrow) {
+            @include base.containerShadowTwo;
         }
         
     }
@@ -363,6 +381,7 @@
     .dashboardButtons {
         .arrowIcon {
             margin-right: 5px;
+            transition: all 0.3s ease;
         }
     }
 
@@ -493,6 +512,11 @@
             width: 100%;
             border: 1px solid rgba(212, 212, 212, 0.9);
             margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .markAsCompleteBtn:hover {
+            text-decoration: underline;
         }
 
         p {
@@ -584,8 +608,12 @@
             cursor: pointer;
         }
 
-        input[type=radio]:checked {
-            border: 1px solid black;
+        input[type=radio]:checked::before {
+            border: 1px solid rgb(127, 126, 126);
+        }
+
+        input[type=radio]:not(:checked):hover{
+            @include base.containerShadowTwo;
             border-radius: 50%;
         }
 

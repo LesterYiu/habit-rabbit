@@ -10,7 +10,6 @@ import Home from './Home';
 import CreateAccount from './CreateAccount';
 import Login from './Login';
 import FrontPage from './FrontPage';
-import Settings from './Settings';
 import NewTask from './NewTask';
 import TaskDetails from './TaskDetails';
 import CalendarSection from './Calendar';
@@ -60,8 +59,6 @@ function App() {
         <Route path='/calendar' element={<CalendarSection />} />
 
         <Route path='/habit-tracker' element={<HabitTracker/>} />
-
-        <Route path='/settings' element={<Settings/>} />
 
         <Route path='/new-task' element={<NewTask />} />
 

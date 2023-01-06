@@ -29,12 +29,22 @@
         @include base.defaultClickText(0.7rem);
         text-decoration: none;
         color: black;
+        transition: all 0.3s ease;
 
         span:nth-child(1) {
             display: inline-block;
             height: 20px;
             width: 20px;
         }
+    }
+
+    .homeBtn:hover .fa-chevron-right{
+        right: 5px;
+    }
+
+    .homeBtn:hover,
+    .homeBtn.currentPath {
+        @include base.underlineHover(false, true);
     }
 
     .expandBtn.homeBtn i {

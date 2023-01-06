@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useContext, useRef } from "react";
 import { AppContext } from "../Contexts/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -85,7 +85,6 @@ const HomeNavigation = () => {
         newTaskText.current.className = "expandedButtonText";
         calendarText.current.className = "expandedButtonText";
         habitText.current.className = "expandedButtonText";
-        // settingsText.current.className = "expandedButtonText";
         logOutText.current.className = "expandedButtonText";
 
         // Button Ul Container
@@ -96,7 +95,6 @@ const HomeNavigation = () => {
         arrowIconTwo.current.className = "fa-solid fa-chevron-right";
         arrowIconThree.current.className = "fa-solid fa-chevron-right";
         arrowIconFour.current.className = "fa-solid fa-chevron-right";
-        // arrowIconFive.current.className = "fa-solid fa-chevron-right";
         arrowIconSix.current.className = "fa-solid fa-chevron-right";
     }
 
@@ -109,7 +107,6 @@ const HomeNavigation = () => {
         newTaskText.current.className = "expandedButtonText defaultHidden";
         calendarText.current.className = "expandedButtonText defaultHidden";
         habitText.current.className = "expandedButtonText defaultHidden";
-        // settingsText.current.className = "expandedButtonText defaultHidden";
         logOutText.current.className = "expandedButtonText defaultHidden";
 
         ulOneEl.current.className =  "minimizedUl";
@@ -119,7 +116,6 @@ const HomeNavigation = () => {
         arrowIconTwo.current.className = "fa-solid fa-chevron-right defaultHidden";
         arrowIconThree.current.className = "fa-solid fa-chevron-right defaultHidden";
         arrowIconFour.current.className = "fa-solid fa-chevron-right defaultHidden";
-        // arrowIconFive.current.className = "fa-solid fa-chevron-right defaultHidden";
         arrowIconSix.current.className = "fa-solid fa-chevron-right defaultHidden";
     }
 
@@ -144,7 +140,7 @@ const HomeNavigation = () => {
                 </div>
                 <ul className="minimizedUl" ref={ulOneEl}>
                     <li>
-                        <button onClick={() => {redirectToPage('home')}} className="homeBtnOne homeBtn">
+                        <button onClick={() => {redirectToPage('home')}} className={location.pathname === "/home" ? "homeBtnOne homeBtn currentPath" : "homeBtnOne homeBtn"}>
                             <span aria-hidden="true">🏡</span>&nbsp;<span className="defaultHidden" ref={homeText}>Home</span>
                             <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconOne}></i>                        
                         </button>
@@ -152,38 +148,31 @@ const HomeNavigation = () => {
                     <li>
                         <button onClick={handleNewTask} className="homeBtnFive homeBtn">
                             <span aria-hidden="true">✨</span>&nbsp;<span className="defaultHidden" ref={newTaskText}>New&nbsp;Task</span>
+                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconTwo}></i>
                         </button>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconTwo}></i>
                     </li>
                     <li>
-                        <button to="/calendar" className="homeBtnTwo homeBtn" onClick={() => {redirectToPage('calendar')}}>
+                        <button to="/calendar" className={location.pathname === "/calendar" ? "homeBtnTwo homeBtn currentPath" : "homeBtnTwo homeBtn"} onClick={() => {redirectToPage('calendar')}}>
                             <span aria-hidden="true">🗓️</span> 
                             <span className="defaultHidden" ref={calendarText}>Calendar</span>
+                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconThree}></i>
                         </button>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconThree}></i>
                     </li>
                     <li>
-                        <button className="homeBtnThree homeBtn" onClick={() => {redirectToPage('habit-tracker')}}>
+                        <button className={location.pathname === "/habit-tracker" ? "homeBtnThree homeBtn currentPath" : "homeBtnThree homeBtn"} onClick={() => {redirectToPage('habit-tracker')}}>
                             <span aria-hidden="true">📊</span>
                             <span className="defaultHidden" ref={habitText}>Habit Tracker</span>
+                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFour}></i>
                         </button>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFour}></i>
                     </li>
                 </ul>
                 <ul className="minimizedUl accountButtons" ref={ulTwoEl}>
-                    {/* <li>
-                        <Link to="/settings" className="homeBtnFour homeBtn">
-                            <span aria-hidden="true">⚙️</span>
-                            <span className="defaultHidden" ref={settingsText}>Settings</span>
-                        </Link>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFive}></i>
-                    </li> */}
                     <li>                    
                         <button onClick={() => {setIsSignOutModalOn(true)}} className="homeBtnSix homeBtn">
                             <span aria-hidden="true">🚪</span>
                             <span className="defaultHidden" ref={logOutText}>Logout</span>
+                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconSix}></i>
                         </button>
-                        <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconSix}></i>
                     </li>
                 </ul>
                 <button className="expandBtn homeBtn" onClick={handleNavToggleBtn}>
@@ -217,7 +206,7 @@ const HomeNavigation = () => {
                     </div>
                     <ul ref={ulOneEl}>
                         <li>
-                            <button onClick={() => {redirectToPage('home')}} className="homeBtnOne homeBtn">
+                            <button onClick={() => {redirectToPage('home')}} className={location.pathname === "/home" ? "homeBtnOne homeBtn currentPath" : "homeBtnOne homeBtn"}>
                                 <span aria-hidden="true">🏡</span><span ref={homeText}>Home</span>
                                 <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconOne}></i>                        
                             </button>
@@ -225,38 +214,31 @@ const HomeNavigation = () => {
                         <li>
                             <button onClick={handleNewTask} className="homeBtnFive homeBtn">
                                 <span aria-hidden="true">✨</span><span ref={newTaskText}>New&nbsp;Task</span>
+                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconTwo}></i>
                             </button>
-                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconTwo}></i>
                         </li>
                         <li>
-                            <button className="homeBtnTwo homeBtn" onClick={() => {redirectToPage('calendar')}}>
+                            <button className={location.pathname === "/calendar" ? "homeBtnTwo homeBtn currentPath" : "homeBtnTwo homeBtn"} onClick={() => {redirectToPage('calendar')}}>
                                 <span aria-hidden="true">🗓️</span> 
                                 <span ref={calendarText}>Calendar</span>
+                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconThree}></i>
                             </button>
-                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconThree}></i>
                         </li>
                         <li>
-                            <button className="homeBtn homeBtnThree" onClick={() => {redirectToPage('habit-tracker')}}>
+                            <button className={location.pathname === "/habit-tracker" ? "homeBtnThree homeBtn currentPath" : "homeBtnThree homeBtn"} onClick={() => {redirectToPage('habit-tracker')}}>
                                 <span aria-hidden="true">📊</span>
                                 <span ref={habitText}>Habit Tracker</span>
+                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconFour}></i>
                             </button>
-                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconFour}></i>
                         </li>
                     </ul>
                     <ul className="accountButtons" ref={ulTwoEl}>
-                        {/* <li>
-                            <Link to="/settings" className="homeBtnFour homeBtn">
-                                <span aria-hidden="true">⚙️</span>
-                                <span className="defaultHidden" ref={settingsText}>Settings</span>
-                            </Link>
-                            <i className="fa-solid fa-chevron-right defaultHidden" aria-hidden="true" ref={arrowIconFive}></i>
-                        </li> */}
                         <li>                    
                             <button onClick={() => {setIsSignOutModalOn(true)}} className="homeBtnSix homeBtn">
                                 <span aria-hidden="true">🚪</span>
                                 <span ref={logOutText}>Logout</span>
+                                <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconSix}></i>
                             </button>
-                            <i className="fa-solid fa-chevron-right" aria-hidden="true" ref={arrowIconSix}></i>
                         </li>
                     </ul>
                     <button className="expandBtn homeBtn" onClick={handleNavToggleBtn}>
