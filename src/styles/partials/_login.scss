@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .loginNav {
     .logoSection {
         position: absolute;
@@ -7,10 +9,9 @@
         align-items: center;
 
         .imageContainer {
+            @include base.containerShadow;
             width: 50px;
             height: 50px;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -26,7 +27,7 @@
 
         p {
             margin-left: 15px;
-            font-weight: bold;
+            @include base.defaultClickText(1.1rem);
         }
     }
 }
@@ -66,12 +67,10 @@
             align-items: center;
 
             button[type="submit"] {
+                @include base.containerShadow;
+                @include base.defaultClickText(inherit);
+                @include base.button(inherit, 25px, 15px, black);
                 background-color: white;
-                color: black;
-                padding: 15px;
-                border-radius: 25px;
-                border: 1px solid rgba(212, 212, 212, 0.9);
-                box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
                 width: 250px;
                 margin-top: 25px;
             }
@@ -87,14 +86,12 @@
     }
 
     .googleBtn {
+        @include base.button(inherit, 50%, 10px, black);
         border: 1px solid black;
-        padding: 10px;
-        border-radius: 50%;
         width: 50px;
         height: 50px;
         background-color: white;
         margin: 15px 0;
-        color: black;
 
         i {
             font-size: 1.3rem;
@@ -109,11 +106,9 @@
         flex-direction: column;
 
         input {
+            @include base.containerShadow;
+            @include base.button(inherit, 25px, 10px 5px 10px 55px, black);
             width: 100%;
-            border-radius: 25px;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            padding: 10px 5px 10px 55px;
             font-family: inherit;
         }
 
@@ -152,13 +147,11 @@
     }
 
     .redirectToCreateBtn {
-        border: 1px solid rgba(212, 212, 212, 0.9);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        border-radius: 25px;
+        @include base.containerShadow;
+        @include base.defaultClickText(inherit);
+        @include base.button(inherit, 25px, 15px 25px, black);
         width: 250px;
-        padding: 15px 25px;
         background-color: white;
-        font-weight: bold;
     }
 }
 

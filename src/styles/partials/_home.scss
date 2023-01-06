@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .homePage {
     display: flex;
     width: 100%;
@@ -34,8 +36,6 @@
             border: 1px solid rgba(212, 212, 212, 0.9);
             padding: 10px 15px;
             border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.7rem;
             height: 40px;
         }
 
@@ -83,6 +83,10 @@
             position: absolute;
             bottom: 20px;
         }
+
+        i {
+            font-size: 1rem;
+        }
     }
 
     .dashboardContent {
@@ -90,11 +94,6 @@
         width: 100%;
         padding: 35px 0px 25px 0px;
         overflow-y: scroll;
-    }
-
-    .homeDashboard.homeSection.expandedNav {
-        padding-left: 100px;
-        width: 100%;
     }
 
     .userLocationBar {
@@ -129,55 +128,6 @@
         margin-bottom: 15px;
     }
 
-    .profileInfoContainer.minimizedInfoContainer {
-        display: block;
-        padding-bottom: 10px;
-    }
-
-    .profileInfoContainer {
-        display: flex;
-        border-bottom: 2px solid rgb(212, 212, 212);
-        width: 100%;
-        padding-bottom: 15px;
-    }
-
-    .profilePicCont {
-        display: inline-block;
-        height: 50px;
-        width: 50px;
-
-        img {
-            border-radius: 50%;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            border: 1px solid rgba(212, 212, 212, 0.8);
-            border-radius: 50%;
-            padding: 5px;
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-        }
-    }
-
-    .profileInfoText {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-left: 15px;
-
-        .profileWelcome {
-                font-size: 0.7rem;
-                color: #8c959e;
-            }
-        
-        .navDisplayName {
-            text-align: center;
-            display: flex;
-            align-items: center;
-            font-size: 1rem;
-        }
-
-    }
-
     .homeNavSubsection {
         width: 100%;
         font-weight: 700;
@@ -186,60 +136,10 @@
         margin-top: 25px;
     }
 
-    .homeBtn {
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    }
-
-    .homeBtnOne {
-        background-color: #F6F4F9;
-    }
-
-    .homeBtnTwo {
-        background-color: #F6F4F9;
-    }
-
-    .homeBtnThree {
-        background-color: #EDF2EC;
-    }
-
-    .homeBtnFour {
-        background-color: #E6F3FB;
-    }
-
-    .homeBtnFive {
-        background-color: #FBF1F4;
-    }
-
-    .homeBtnSix {
-        background-color: #FAF1F4;
-    }
-
-    button.expandBtn {
-        width: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .defaultHidden {
-        clip: rect(0 0 0 0);
-        clip-path: inset(50%);
-        height: 1px;
-        overflow: hidden;
-        position: absolute;
-        white-space: nowrap;
-        width: 1px;
-    }
 }
 
 .overlayBackground {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: 20;
+    @include base.overlayModal;
 
     .taskCheckboxChecked {
         background-color: rgba(0, 0, 0, 0.778);

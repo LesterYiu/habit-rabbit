@@ -1,49 +1,44 @@
-// Imported Fonts
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito+Sans:wght@400;700;900&display=swap');
-
-// Foundational Partials
-@import './partials/variables';
-@import './partials/typography';
-@import './partials/base';
+// Foundational Partials (Includes Mixins & Font Faces)
+@use './partials/base';
 
 // Animations
-@import './partials/animations';
+@use './partials/animations';
 
 // Front Page Component Partials
-@import './partials/frontPage';
+@use './partials/frontPage';
 
 // Navigation Bar (on 404 page & front page)
-@import './partials/navigationBar';
+@use './partials/navigationBar';
 
 // Login Component Partials
-@import './partials/login';
+@use './partials/login';
 
 // Create Account Component Partials
-@import './partials/createAccount';
+@use './partials/createAccount';
 
 // Home Navigation (aka navigation that isn't the front page one)
-@import './partials/homeNavigation';
+@use './partials/homeNavigation';
 
 // Home & Home Navigation Component Partials
-@import './partials/home';
+@use './partials/home';
 
 // Dashboard Header Partials
-@import './partials/dashboardHeader';
+@use './partials/dashboardHeader';
 
 // New Task Component Partials
-@import './partials/newTask';
+@use './partials/newTask';
 
 // Calendar Component Partials
-@import './partials/calendar';
+@use './partials/calendar';
 
 // Habit Tracker Component Partials
-@import './partials/habitTracker';
+@use './partials/habitTracker';
 
 // Task Details Component Partials
-@import './partials/taskDetails';
+@use './partials/taskDetails';
 
 // Signout Modal Component Partials
-@import "./partials/signOutModal";
+@use "./partials/signOutModal";
 
 // 404 Page
-@import "./partials/NotFound";
+@use "./partials/NotFound";

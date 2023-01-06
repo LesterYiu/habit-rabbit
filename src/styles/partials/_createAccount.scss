@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .createAccountPage {
     position: relative;
 
@@ -30,11 +32,9 @@
         }
 
         input {
+            @include base.containerShadow;
+            @include base.button(inherit, 25px, 10px 5px 10px 55px, black);
             width: 100%;
-            padding: 10px 5px 10px 55px;
-            border-radius: 25px;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             font-family: inherit;
             margin: 10px 0;
         }
@@ -65,13 +65,10 @@
         }
 
         .signInBtn {
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            border-radius: 25px;
+            @include base.containerShadow;
+            @include base.button(inherit, 25px, 15px 25px, black);
             width: 250px;
-            padding: 15px 25px;
             background-color: white;
-            font-weight: bold;
         }
 
         .signInText {
@@ -88,10 +85,9 @@
         align-items: center;
 
         .imageContainer {
+            @include base.containerShadow;
             width: 50px;
             height: 50px;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -107,19 +103,17 @@
 
         p {
             margin-left: 15px;
-            font-weight: bold;
+            @include base.defaultClickText(1.1rem);
         }
     }
 
     .googleBtn {
+        @include base.button(inherit, 50%, 10px, black);
         border: 1px solid black;
-        padding: 10px;
-        border-radius: 50%;
         width: 50px;
         height: 50px;
         background-color: white;
         margin: 15px 0;
-        color: black;
 
         i {
             font-size: 1.3rem;
@@ -151,13 +145,10 @@
     }
 
     .continueBtn {
+        @include base.containerShadow;
+        @include base.button(inherit, 25px, 15px, black);
         background-color: white;
-        color: black;
         text-decoration: none;
-        padding: 15px;
-        border-radius: 25px;
-        border: 1px solid rgba(212, 212, 212, 0.9);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         width: 250px;
         margin-top: 25px;
     }
@@ -192,18 +183,16 @@
             align-items: center;
             background-color: transparent;
             color: black;
-            font-weight: bold;
             padding: 10px 15px;
             margin: 25px 0;
             width: 250px;
             border: 1px solid black;
             box-shadow: 2px 4px rgba(0, 0, 0, 0.7)
-            
         }
 
         button[type="submit"] {
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+            @include base.containerShadow;
+            @include base.defaultClickText(inherit);
             background-color: white;
             border-radius: 25px;
             padding: 15px 30px;
@@ -221,13 +210,12 @@
     }
 
     .profileImageContainer {
+        @include base.containerShadow;
         margin: 25px 0;
         height: 150px;
         width: 150px;
         border-radius: 50%;
         background-color: white;
-        border: 1px solid rgba(212, 212, 212, 0.9);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
 
         img {
             width: 100%;

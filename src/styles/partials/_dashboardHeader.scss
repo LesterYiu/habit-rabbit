@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .homeDashboard {
     width: calc(100% - 100px);
     display: flex;
@@ -6,12 +8,14 @@
     h1 {
         margin-bottom: 15px;
         padding: 0 25px;
+        font-size: 1.3rem;
     }
 
     .dashboardGreeting {
         margin-left: 15px;
         margin-bottom: 5px;
         padding: 0 25px;
+        font-size: 0.9rem;
     }
 
     .allTasksContainer {
@@ -27,8 +31,7 @@
     }
 
     .taskContainer {
-        border: 1px solid rgb(212, 212, 212);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        @include base.containerShadow;
         height: 150px;
         border-radius: 5px;
         padding: 25px 25px;
@@ -54,6 +57,11 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            p {
+                font-size: 0.6rem;
+                text-align: right;
+            }
         }
 
         .buttonContainer {
@@ -73,11 +81,8 @@
             }
 
             .finishButton {
+                @include base.button(0.7rem, 2px, 2px 15px, white);
                 background-color: #0D66D0;
-                color: white;
-                font-size: 0.7rem;
-                padding: 2px 15px;
-                border-radius: 2px;
                 margin-right: 1px;
                 box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
                 cursor: pointer;
@@ -101,7 +106,7 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            border: 1px solid $primary;
+            border: 1px solid base.$primary;
             border-radius: 50%;
             height: 30px;
             width: 30px;
@@ -118,12 +123,11 @@
             background-color: white;
             border: 1px solid rgb(212, 212, 212);
 
-            li {
+            li:nth-child(1){
                 border-bottom: 1px solid rgb(212, 212, 212);
             }
 
             button {
-                font-weight: 300;
                 font-size: 0.7rem;
                 padding-left: 5px;
             }
@@ -144,7 +148,8 @@
         position: relative;
         margin-top: 50px;
         color: #9e9d9d;
-        font-weight: bold;
+        font-family: base.$base-font-inter;
+        @include base.defaultClickText(inherit);
     }
 
     .loadingContainer {
@@ -231,20 +236,21 @@
     }
 
     .searchBarInput {
+        @include base.containerShadow;
         height: 40px;
-        border: 0;
         padding: 5px 15px;
         border-radius: 10px;
-        border: 1px solid rgba(212, 212, 212, 0.8);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        font-size: 0.8rem;
     }
 
     .searchBarInput::placeholder {
-        font-family: $base-font;
+        font-family: base.$base-font-inter;
     }
 
     .toDoTask,
     .doneTask {
+        @include base.defaultClickText(0.8rem);
+        @include base.containerShadow;
         width: 50%;
         padding: 5px 0px;
         height: 35px;
@@ -261,10 +267,20 @@
     }
 
     .taskText {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+        @include base.notSelectable;
+        
+        .taskName {
+            @include base.defaultClickText(0.9rem);
+            margin-bottom: 10px;
+        }
+
+        .taskName:hover {
+            text-decoration: underline;
+        }
+
+        .taskDescription {
+            font-size: 0.8rem;
+        }
     }
 
     .taskButtonActive {
@@ -286,11 +302,13 @@
         display: flex;
 
         p {
-            border: 1px solid rgba(212, 212, 212, 0.8);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+            @include base.containerShadow;
             border-radius: 5px;
             margin-right: 10px;
             padding: 5px;
+            font-family: base.$base-font-nunito;
+            text-transform: capitalize;
+            font-size: 0.8rem;
         }
 
         .personal {
@@ -343,15 +361,14 @@
     }
 
     .filterContainer {
-        background-color: #e6f3fbc5;
-        box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-        padding: 5px 20px;
-        border-radius: 5px;
+        @include base.containerShadowTwo;
+        @include base.button(0.9rem, 5px, 5px 20px, black);
+        background-color: base.$light-blue;
         display: flex;
         align-items: center;
-        color: black;
 
         p {
+            @include base.defaultClickText(0.8rem);
             margin-left: 10px;
         }
 
@@ -361,13 +378,13 @@
     }
 
     .filterModal {
+        @include base.containerShadowTwo;
         border-radius: 5px;
         position: absolute;
         top: 110%;
         left: 0;
         z-index: 9;
         width: 200px;
-        box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
         background-color: white;
 
         fieldset {
@@ -410,7 +427,6 @@
                     width: 100%;
                     display: flex;
                     justify-content: flex-start;
-                    font-weight: 300;
                     font-size: 0.8rem;
                 }
             }
@@ -422,6 +438,7 @@
         position: relative;
 
         p {
+            @include base.defaultClickText(0.9rem);
             border-bottom: 1px solid rgb(224, 225, 227);
             background-color: rgb(244, 244, 244);
             border-radius: 5px 0 0 5px;
@@ -431,6 +448,7 @@
 
         i {
             pointer-events: none;
+            font-size: 1.2rem;
         }
     }
 
@@ -446,10 +464,10 @@
     }
 
     .appliedFilters {
+        @include base.containerShadowTwo;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
         color: #7d7c7c;
         border-radius: 5px;
         padding: 0 10px;
@@ -505,7 +523,7 @@
 
         p {
             color: white;
-            font-weight: bold;
+            @include base.defaultClickText(inherit);
             padding-bottom: 25px;
         }
     }

@@ -24,7 +24,7 @@ Habit Rabbit is a productivity application created for the sole purpose of stick
 - [Cloud Firestore](https://firebase.google.com/docs/firestore)
 - [React Calendar](https://www.npmjs.com/package/react-calendar)
 - [Axios](https://www.npmjs.com/package/axios)
-- [node-sass](https://www.npmjs.com/package/node-sass)
+- [Sass](https://www.npmjs.com/package/sass)
 - [date-fns](https://www.npmjs.com/package/date-fns)
 - [Lodash](https://www.npmjs.com/package/lodash)
 - [React Focus Lock](https://www.npmjs.com/package/react-focus-lock)

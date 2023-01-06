@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .react-calendar {
     width: 100%;
     background-color: transparent;
@@ -16,7 +18,7 @@
     color: black;
     min-width: 44px;
     background: none;
-    font-size: 16px;
+    font-size: 1rem;
     margin-top: 8px;
 }
 
@@ -71,19 +73,12 @@
 
 .react-calendar__navigation button {
     min-width: 44px;
-    /* background: none; */
-}
-
-.react-calendar__navigation button[disabled] {
-    background-color: black
 }
 
 .react-calendar__month-view__weekdays {
+    @include base.defaultClickText(0.75em);
     text-align: center;
     text-transform: uppercase;
-    font-weight: bold;
-    font-size: 0.75em;
-    font-family: Nunito Sans ,sans-serif;
 
     abbr {
         text-transform: capitalize;
@@ -100,8 +95,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75em;
-    font-weight: bold;
+    @include base.defaultClickText(0.75em);
     padding: calc(0.75em / 0.75) calc(0.5em / 0.75);
 }
 
@@ -185,14 +179,11 @@ abbr[title] {
 
 .react-calendar__navigation__arrow.react-calendar__navigation__prev-button,
 .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+    @include base.containerShadow;
+    @include base.button(0.8rem, 15px, 15px, black);
     background-color: white;
-    border: 1px solid #d7d6d6;
     height: 25px;
     width: 100px;
-    border-radius: 15px;
-    box-shadow: 2px 4px hsla(0, 0%, 83%, .5);
-    border: 1px solid hsla(0, 0%, 83%, .9);
-    padding: 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -214,7 +205,7 @@ abbr[title] {
 }
 
 .react-calendar__navigation__label__labelText {
-    font-size: 1.2rem;
+    @include base.secondaryHeading(1.2rem);
 }
 
 .react-calendar__viewContainer {
@@ -239,12 +230,11 @@ abbr[title] {
         padding: 25px 50px 0px 50px;
 
         h2 {
-            font-size: 1.1rem;
+            @include base.secondaryHeading(1.1rem);
+            @include base.containerShadow;
             text-decoration: underline;
             background-color: #f4f4f4;
             border-radius: 10px;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            border: 1px solid rgba(212, 212, 212, 0.9);
             padding: 10px 10px 10px 15px;
             background-color: white;
         }
@@ -256,19 +246,19 @@ abbr[title] {
         flex-wrap: wrap;
 
         .taskContainer {
+            @include base.containerShadow;
             width: 48%;
             background-color: #FFFFFF;
             padding: 20px;
             margin-top: 20px;
             border-radius: 15px;
-            box-shadow: 2px 4px hsla(0, 0%, 83%, .5);
-            border: 1px solid hsla(0, 0%, 83%, .9);
             height: 150px;
             cursor: pointer;
         }
 
         .taskName {
-            font-size: 0.8rem !important;
+            @include base.secondaryHeading(0.8rem);
+            margin-bottom: 10px;
         }
     }
 
@@ -299,8 +289,7 @@ abbr[title] {
     }
 
     .labelParagraph {
-        border: 1px solid rgba(212, 212, 212, 0.8);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        @include base.containerShadow;
         border-radius: 5px;
         margin-right: 10px;
         padding: 5px;
@@ -344,6 +333,7 @@ abbr[title] {
     }
 
     .fa-circle {
+        @include base.containerShadow;
         font-size: 0.3rem;
         position: absolute;
         bottom: 10px;
@@ -351,8 +341,6 @@ abbr[title] {
         transform: translateX(-50%);
         border-radius: 50%;
         color: #f57d3dcd;
-        border: 1px solid rgba(212, 212, 212, 0.8);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
     }
 
     .noResultsFound {
@@ -363,7 +351,7 @@ abbr[title] {
         margin-top: 50px;
         text-align: center;
         color: #9e9d9d;
-        font-weight: bold;
+        @include base.defaultClickText(inherit);
 
         .errorImageContainer {
             width: 150px;
@@ -419,6 +407,15 @@ abbr[title] {
         .calendarSection,
         .overallTaskOverview {
             padding: 25px 15px 0px 15px;
+        }
+    }
+}
+
+@media (max-width: 575px) {
+    .calendarPage {
+        .calendarSection,
+        .overallTaskOverview {
+            margin-left: 75px;
         }
     }
 }

@@ -1,4 +1,4 @@
-html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,html [type=button],[type=reset],[type=submit]{-webkit-appearance:button}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}
+html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,html [type=button],[type=reset],[type=submit]{-webkit-appearance:button}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}
 
 .clearfix:after {visibility: hidden; display: block; font-size: 0; content: ''; clear: both; height: 0; }
 
@@ -8,10 +8,206 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
+// Font Faces
+
+// Inter
+
+// Standard
+@font-face {
+    font-family: 'Inter Regular';
+    src: url('../fonts/Inter/Inter-Regular.ttf') format('truetype');
+}
+
+//Font-weight 700
+@font-face {
+    font-family: 'Inter Semibold';
+    src: url('../fonts/Inter/Inter-SemiBold.ttf') format('truetype');
+}
+
+
+// Nunito Sans
+
+// Standard
+@font-face {
+    font-family: 'Nunito Sans Regular';
+    src: url('../fonts/Nunito_Sans/NunitoSans-Regular.ttf') format('truetype');
+}
+
+// Font-weight 700
+@font-face {
+    font-family: 'Nunito Sans Bold';
+    src: url('../fonts/Nunito_Sans/NunitoSans-Bold.ttf') format('truetype');
+}
+
+// Font-weight 900
+@font-face {
+    font-family: 'Nunito Sans Black';
+    src: url('../fonts/Nunito_Sans/NunitoSans-Black.ttf') format('truetype');
+}
+
+// Fonts Variables
+
+$base-font-inter: 'Inter Regular', sans-serif;
+$semibold-font-inter: 'Inter Semibold', sans-serif;
+
+$base-font-nunito: 'Nunito Sans Regular', sans-serif;
+$bold-font-nunito: 'Nunito Sans Bold', sans-serif;
+$black-font-nunito: 'Nunito Sans Black', sans-serif;
+
+// Colors Variables
+$primary: #111111;
+$secondary: #666665;
+$tertiary: #A5D6A7;
+$quaternary: #FFFFFF;
+$quinary: #A5D6A757;
+$border: #808080;
+
+// Misc button colors
+$light-blue: #e6f3fbc5;
+
+// Mixins
+
+// General Mixins
+@mixin containerShadow {
+    border: 1px solid #d4d4d4;
+    box-shadow: 2px 4px hsla(0, 0%, 83%, .5);
+}
+
+@mixin containerShadowTwo {
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+}
+
+@mixin containerShadowThree {
+    box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
+}
+
+@mixin popUpShadow {
+    box-shadow: 0 4px 9px rgba(0, 0, 0, .047), 0 1.54074px 2.86667px rgba(0, 0, 0, .073), 0 .32593px .73333px rgba(0, 0, 0, .12);
+}
+
+@mixin notSelectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+// Text Related Mixins
+
+@mixin defaultClickText($sizeValue) {
+    font-family: $semibold-font-inter;
+    font-size: $sizeValue;
+    font-weight: normal;
+}
+
+@mixin secondaryHeading($sizeValue) {
+    font-family: $bold-font-nunito;
+    font-size: $sizeValue;
+    font-weight: normal;
+}
+
+@mixin secondaryHeadingDescription($sizeValue) {
+    font-family: $base-font-nunito;
+    font-size: $sizeValue;
+    font-weight: normal;
+}
+
+// Button Mixins
+
+@mixin button($sizeValue, $borderRadiusValue, $paddingValue, $colorValue) {
+    font-family: $bold-font-nunito;
+    font-weight: normal;
+    font-size: $sizeValue;
+    border-radius: $borderRadiusValue;
+    padding: $paddingValue;
+    color: $colorValue;
+}
+
+@mixin buttonInter($sizeValue, $borderRadiusValue, $paddingValue, $colorValue, $backgroundColorValue) {
+    font-family: $semibold-font-inter;
+    font-weight: normal;
+    font-size: $sizeValue;
+    border-radius: $borderRadiusValue;
+    padding: $paddingValue;
+    color: $colorValue;
+    background-color: $backgroundColorValue;
+}
+
+// Modal Mixins
+
+@mixin modal($zValue, $borderRadiusValue, $backgroundColor, $paddingValue) {
+    position: fixed;
+    z-index: $zValue;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $backgroundColor;
+    border-radius: $borderRadiusValue;
+    padding: $paddingValue;
+}
+
+@mixin overlayModal {
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+html {
+    font-size: 125%;
+}
+
+body {
+    font-family: $base-font-inter;
+}
+
+.topNavigation {
+    font-family: $base-font-inter;
+}
+
+button {
+    font-family: $base-font-nunito;
+}
+
+i {
+    font-size: 2rem;
+}
+
+p {
+    font-size: 1.1rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: $semibold-font-inter;
+}
+
+.customTaskErrorMsg {
+    font-size: 0.8rem;
+    color: red;
+    padding: 5px;
+}
+
 .wrapper {
     max-width: 1200px;
     width: 85%;
     margin: 0 auto;
+}
+
+.defaultHidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 }
 
 body {
@@ -80,7 +276,7 @@ input[type="time"] {
     }
 
     p:nth-child(1) {
-        font-weight: bold;
+        @include defaultClickText(inherit);
     }   
 
     ul {

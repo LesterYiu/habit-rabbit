@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .habitPage {
     background-color: #F6F7FA;
     min-height: 100vh;
@@ -21,10 +23,6 @@
     .habitContentTwo {
         width: 30%;
 
-        h2 {
-            font-size: 1rem;
-        }
-
         .dailyDetails {
             margin-bottom: 15px;
 
@@ -41,8 +39,8 @@
             justify-content: space-between;
             
             button {
+                @include base.button(inherit, 50%, 0, inherit);
                 border: 1px solid rgb(212, 212, 212);
-                border-radius: 50%;
                 height: 30px;
                 width: 30px;
                 background-color: white;
@@ -57,6 +55,10 @@
             button.disabledArrow {
                 background-color: #d9dee0;
                 color: #a8b4b9;
+            }
+
+            h2 {
+                @include base.secondaryHeading(1rem);
             }
         }
 
@@ -78,6 +80,10 @@
     
     .weeklyHabitDetails {
         width: 100%;
+
+        h2 {
+            @include base.secondaryHeading(inherit)
+        }
         
         .weekCompletionBar {
             width: 100%;
@@ -95,9 +101,8 @@
     }
 
     .habitListContainer {
+        @include base.containerShadow;
         background-color: white;
-        border: 1px solid rgb(212, 212, 212);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         border-radius: 15px;
         height: 80%;
         position: relative;
@@ -130,14 +135,9 @@
     }
 
     .addHabitBtn {
-        padding: 5px 20px;
-        font-weight: bold;
-        border-radius: 25px;
-        color: #197DE7;
-        border: 1px solid rgb(212, 212, 212);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        @include base.containerShadow;
+        @include base.button(0.8rem, 25px, 5px 20px, #197DE7);
         background-color: white;
-        font-size: 0.8rem;
         display: flex;
         align-items: center;
 
@@ -148,13 +148,19 @@
     }
 
     .userGreetingText {
+
+        h1 {
+            @include base.secondaryHeading(1.5rem);
+        }
+
         p {
             margin-top: 5px;
-            font-size: 1rem;
+            @include base.secondaryHeadingDescription(1rem);
         }
     }
 
     .habitCalendar {
+        @include base.containerShadow;
         width: 100%;
         margin-top: 15px;
         display: flex;
@@ -163,8 +169,6 @@
         background-color: #a5d6a79f;
         padding: 10px 15px;
         border-radius: 15px;
-        border: 1px solid rgb(212, 212, 212);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
 
         h2 {
             margin-bottom: 15px;
@@ -184,6 +188,7 @@
                 justify-content: center;
                 align-items: center;
             }
+
             p {
                 font-weight: normal;
                 font-size: 0.8rem;
@@ -277,11 +282,11 @@
         }
 
         .habitListError {
+            @include base.defaultClickText(inherit);
             height: 100%;
             text-align: center;
             margin-top: 25px;
             color: #9e9d9d;
-            font-weight: bold;
         }
     }
     
@@ -364,20 +369,12 @@
     // Create Habit Modal
 
     .createHabitModal {
-        background-color: white;
-        border: 1px solid rgb(212, 212, 212);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        border-radius: 15px;
-        position: fixed;
+        @include base.containerShadow;
+        @include base.modal(30, 15px, white, 30px 80px);
         height: 90vh;
         width: 80vw;
-        z-index: 30;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         overflow-y: scroll;
         overflow-x: hidden;
-        padding: 30px 80px 30px 80px;
 
         fieldset,
         legend {
@@ -394,9 +391,8 @@
         }
         
         select {
+            @include base.containerShadow;
             background-color: white;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             border-radius: 5px;
         }
 
@@ -429,11 +425,11 @@
 
         button[type="submit"],
         .cancelBtn {
+            @include base.defaultClickText(inherit);
+            @include base.containerShadow;
             padding: 5px 0px;
             min-width: 125px;
             border-radius: 10px;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             margin: 50px 0 0 15px;
         }
 
@@ -443,21 +439,17 @@
         }
 
         .cancelBtn {
+            @include base.notSelectable;
             color: black;
             text-align: center;
-            font-weight: bold;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            cursor: pointer;
         }
     }
 
     label,
     legend {
+        @include base.defaultClickText(inherit);
         color: #6D767E;
         font-size: 0.9rem;
-        font-weight: bold;
         margin: 15px 0 10px 0;
         word-wrap: break-word;
     }
@@ -470,9 +462,8 @@
 
         input,
         select {
+            @include base.containerShadow;
             border-radius: 5px;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             padding: 0px 0px 0px 8px;
             height: 35px;
         }
@@ -497,12 +488,9 @@
         }
 
         .markAsCompleteBtn {
-            color: #197DE7;
-            font-size: 0.7rem;
+            @include base.button(0.7rem, 5px, 5px 0, #197DE7);
             background-color: white;
             width: 100%;
-            border-radius: 5px;
-            padding: 5px 0;
             border: 1px solid rgba(212, 212, 212, 0.9);
             margin-top: 10px;
         }
@@ -587,14 +575,13 @@
         }
 
         input[type=radio]::before {
+            @include base.containerShadow;
             content: " ";
             display: block;
             height: 40px;
             width: 40px;
             border-radius: 50%;
             cursor: pointer;
-            border: 1px solid rgba(212, 212, 212, 0.9);
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         }
 
         input[type=radio]:checked {
@@ -730,10 +717,6 @@
                 }
             }
             
-        }
-
-        .weeklyHabitDetails p {
-            font-size: 0.7rem;
         }
 
         .createHabitModal {

@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .frontPage{
 
     // Header Styles
@@ -14,7 +16,15 @@
         justify-content: center;
         max-width: 42%;
 
+        h1 {
+            font-size: 2.5rem !important;
+            font-family: base.$black-font-nunito;
+            text-transform: capitalize;
+            line-height: 65px;
+        }
+
         p {
+            font-family: base.$base-font-nunito;
             margin: 30px 0;
         }
     }
@@ -24,21 +34,13 @@
     }
 
     .heroBtn {
-        background-color: $tertiary;
+        @include base.containerShadowTwo;
+        @include base.buttonInter(inherit, 8px, 8px 10px, base.$quaternary, base.$tertiary);
+        text-align: center;
         border: 0;
         max-width: 40%;
-        padding: 8px 10px;
-        border-radius: 8px;
         border: 1px solid rgba(212, 212, 212, 0.8);
     }
-
-    // .mobileHamburgerBtn {
-    //     display: none;
-    // }
-
-    // .hamburgerIcon {
-    //     font-size: 1.5rem;
-    // }
 
     // Main Section Styles
 
@@ -48,9 +50,9 @@
     }
 
     .imageContainer {
+        @include base.containerShadowThree;
         min-width: 60%;
         width: 60%;
-        box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
     
         img {
             width: 100%;

@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .homeNavigation.minimizedNav {
     width: 100px;
     position: fixed;
@@ -5,16 +7,6 @@
 
 .overlayBackground.homeNavigationOverlay {
     z-index: 10;
-}
-
-.defaultHidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
 }
 
 // Home Navigation
@@ -33,7 +25,8 @@
     flex-direction: column;
 
     .homeBtn {
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        @include base.containerShadow;
+        @include base.defaultClickText(0.7rem);
         text-decoration: none;
         color: black;
 
@@ -42,6 +35,10 @@
             height: 20px;
             width: 20px;
         }
+    }
+
+    .expandBtn.homeBtn i {
+        font-size: 1rem;
     }
 
     .homeBtnOne {
@@ -82,7 +79,6 @@
         border: 1px solid rgba(212, 212, 212, 0.9);
         padding: 10px 15px;
         border-radius: 10px;
-        font-weight: 600;
         font-size: 0.7rem;
         height: 40px;
     }
@@ -132,6 +128,10 @@
         margin: 0;
         position: absolute;
         bottom: 20px;
+
+        i {
+            font-size: 1rem;
+        }
     }
 
     .profileInfoContainer.minimizedInfoContainer {
@@ -141,9 +141,11 @@
 
     .profileInfoContainer {
         display: flex;
+        align-items: center;
         border-bottom: 2px solid rgb(212, 212, 212);
         width: 100%;
         height: 67px;
+        padding-bottom: 15px;
     }
 
     .profilePicCont {
@@ -152,9 +154,7 @@
         width: 50px;
 
         img {
-            border-radius: 50%;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            border: 1px solid rgba(212, 212, 212, 0.8);
+            @include base.containerShadow;
             border-radius: 50%;
             padding: 5px;
             height: 100%;
@@ -175,6 +175,7 @@
         }
 
         .navDisplayName {
+            @include base.defaultClickText(1rem);
             text-align: center;
             display: flex;
             align-items: center;
@@ -189,8 +190,8 @@
 @media (max-width: 575px) {
     .homeNavigation {
         padding: 20px 15px 50px 15px;
-
-        .profileInfoContainer {
+        
+        .profileInfoContainer.minimizedInfoContainer {
             display: flex;
             justify-content: center;
         }

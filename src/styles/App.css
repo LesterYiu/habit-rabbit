@@ -1,328 +1,141 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito+Sans:wght@400;700;900&display=swap");
-html {
-  font-size: 125%; }
-
-body {
-  font-family: "Nunito Sans", sans-serif; }
-
-.topNavigation {
-  font-family: "Nunito Sans", sans-serif; }
-
-button {
-  font-family: "Nunito Sans", sans-serif !important;
-  font-weight: 700; }
-
-i {
-  font-size: 2rem; }
-
-h1 {
-  font-size: 1.5rem !important; }
-
-p {
-  font-size: 1.1rem; }
-
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 700; }
-
-.topNavigation li {
-  font-size: 0.9rem;
-  font-weight: 700; }
-
-.heroBtn {
-  font-family: "Nunito Sans", sans-serif;
-  color: #FFFFFF;
-  box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.0471111), 0px 1.54074px 2.86667px rgba(0, 0, 0, 0.0728889), 0px 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-  font-weight: 700;
-  text-align: center; }
-
-.heroContainer h1 {
-  font-size: 2.5rem !important;
-  font-weight: 900;
-  text-transform: capitalize;
-  line-height: 65px; }
-
-.arrowDisabled {
-  color: #6d767ec1; }
-
-.homeNavigation {
-  font-size: 1.1rem; }
-
-.homeNavigation i {
-  font-size: 1rem; }
-
-.homeDashboard h1 {
-  font-size: 1.3rem !important; }
-
-.dashboardGreeting {
-  font-size: 0.9rem; }
-
-.dashboardDayGreeting {
-  font-size: 0.9rem; }
-
-.navDisplayName {
-  font-weight: bold;
-  word-break: break-all; }
-
-.homePage {
-  font-family: "Inter", sans-serif; }
-  .homePage .taskDeadlineDateContainer p {
-    font-family: "Nunito Sans", sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem; }
-  .homePage .taskDeadlineDateContainer i {
-    font-size: 1.2rem; }
-
-.userLocationBar p {
-  font-size: 0.9rem;
-  font-family: "Nunito Sans", sans-serif; }
-
-.userLocationBar i {
-  font-size: 1rem; }
-
-.taskName {
-  font-weight: bold;
-  font-size: 0.9rem !important;
-  margin-bottom: 10px; }
-
-.taskName.hoverOverTask {
-  text-decoration: underline; }
-
-.taskDescription {
-  font-size: 0.8rem !important; }
-
-.dueDateContainer p {
-  font-size: 0.6rem;
-  text-align: right; }
-
-.homeSection button {
-  font-family: "Inter", sans-serif !important;
-  font-weight: bold; }
-
-.toDoTask,
-.doneTask {
-  font-size: 0.8rem;
-  border: 1px solid rgba(212, 212, 212, 0.9);
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-
-.filterContainer p {
-  font-size: 0.8rem; }
-
-.labelContainer p {
-  font-family: "Inter", sans-serif;
-  text-transform: capitalize;
-  font-size: 0.8rem;
-  font-weight: 400; }
-
-.filterContainer {
-  font-size: 0.9rem; }
-
-.searchBarInput {
-  font-size: 0.8rem; }
-
-.noTaskFoundContainer {
-  font-family: "Nunito Sans", sans-serif; }
-
-.createTaskForm legend {
-  font-size: 1rem;
-  font-family: "Nunito Sans", sans-serif;
-  font-weight: 700; }
-
-.createTaskForm button {
-  font-family: "Inter", sans-serif !important; }
-
-.createTaskForm i {
-  font-size: 1.4rem; }
-
-.createTaskForm label {
-  font-size: 0.9rem;
-  margin-top: 15px;
-  font-weight: bold; }
-
-.saveLabelsContainer label {
-  font-size: 0.7rem; }
-
-.chosenLabelsSection p {
-  color: #6D767E;
-  font-weight: 600;
-  font-size: 0.9rem; }
-
-.submitBtn {
-  color: white;
-  font-weight: bold;
-  font-size: 0.8rem; }
-
-.customTaskErrorMsg {
-  font-size: 0.8rem;
-  color: red;
-  padding: 5px; }
-
-.appliedTaskLabel {
-  text-transform: capitalize; }
-
-.toDoListSection {
-  font-family: "Inter", sans-serif;
-  font-family: 300; }
-
-.toDoListSection h2 {
-  color: black;
-  font-size: 0.8rem;
-  text-align: center;
-  text-transform: capitalize;
-  font-weight: 600; }
-
-.taskDetails h1 {
-  font-size: 1rem !important; }
-
-.taskDetails p {
-  font-size: 0.9rem; }
-
-.taskDetails .taskInformation i {
-  font-size: 1.5rem; }
-
-.taskDetails button {
-  font-weight: 300; }
-
-.taskDetails .updatesBtn {
-  color: white; }
-
-.taskDetails .logTimeBtn {
-  color: #2374FF; }
-
-.taskDetails p.label {
-  font-size: 0.8rem;
-  font-weight: 600; }
-
-.taskDetails .priorityLevel {
-  text-transform: capitalize; }
-
-.taskDetails .updateTasksContainer {
-  text-align: left; }
-
-.taskDetails .updateTaskBtnContainer button {
-  font-size: 0.9rem;
-  font-family: "Inter", sans-serif !important; }
-
-.taskDetails .updateHoursContainer h2 {
-  font-size: 1.2rem; }
-
-.taskDetails .specificDayContainer p {
-  font-size: 0.7rem; }
-
-.taskDetails .timePublished {
-  font-size: 0.7rem; }
-
 html {
   line-height: 1.15;
   -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%; }
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
-  margin: 0; }
+  margin: 0;
+}
 
 article, aside, footer, header, nav, section {
-  display: block; }
+  display: block;
+}
 
 h1 {
-  font-size: 2em;
-  margin: .67em 0; }
+  margin: 0.67em 0;
+}
 
 figcaption, figure, main {
-  display: block; }
+  display: block;
+}
 
 figure {
-  margin: 1em 40px; }
+  margin: 1em 40px;
+}
 
 hr {
   box-sizing: content-box;
   height: 0;
-  overflow: visible; }
+  overflow: visible;
+}
 
 pre {
-  font-family: monospace,monospace;
-  font-size: 1em; }
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
 
 a {
   background-color: transparent;
-  -webkit-text-decoration-skip: objects; }
+  -webkit-text-decoration-skip: objects;
+}
 
 abbr[title] {
   border-bottom: none;
   text-decoration: underline;
-  text-decoration: underline dotted; }
+  text-decoration: underline dotted;
+}
 
 b, strong {
-  font-weight: inherit; }
+  font-weight: inherit;
+}
 
 b, strong {
-  font-weight: bolder; }
+  font-weight: bolder;
+}
 
 code, kbd, samp {
-  font-family: monospace,monospace;
-  font-size: 1em; }
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
 
 dfn {
-  font-style: italic; }
+  font-style: italic;
+}
 
 mark {
   background-color: #ff0;
-  color: #000; }
+  color: #000;
+}
 
 small {
-  font-size: 80%; }
+  font-size: 80%;
+}
 
 sub, sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
-  vertical-align: baseline; }
+  vertical-align: baseline;
+}
 
 sub {
-  bottom: -.25em; }
+  bottom: -0.25em;
+}
 
 sup {
-  top: -.5em; }
+  top: -0.5em;
+}
 
 audio, video {
-  display: inline-block; }
+  display: inline-block;
+}
 
 audio:not([controls]) {
   display: none;
-  height: 0; }
+  height: 0;
+}
 
 img {
-  border-style: none; }
+  border-style: none;
+}
 
 svg:not(:root) {
-  overflow: hidden; }
+  overflow: hidden;
+}
 
 button, input, optgroup, select, textarea {
   font-family: sans-serif;
   font-size: 100%;
   line-height: 1.15;
-  margin: 0; }
+  margin: 0;
+}
 
 button, input {
-  overflow: visible; }
+  overflow: visible;
+}
 
 button, select {
-  text-transform: none; }
+  text-transform: none;
+}
 
 button, html [type=button], [type=reset], [type=submit] {
-  -webkit-appearance: button; }
+  -webkit-appearance: button;
+}
 
 button::-moz-focus-inner, [type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner {
   border-style: none;
-  padding: 0; }
+  padding: 0;
+}
 
 button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring {
-  outline: 1px dotted ButtonText; }
+  outline: 1px dotted ButtonText;
+}
 
 fieldset {
-  padding: .35em .75em .625em; }
+  padding: 0.35em 0.75em 0.625em;
+}
 
 legend {
   box-sizing: border-box;
@@ -330,63 +143,79 @@ legend {
   display: table;
   max-width: 100%;
   padding: 0;
-  white-space: normal; }
+  white-space: normal;
+}
 
 progress {
   display: inline-block;
-  vertical-align: baseline; }
+  vertical-align: baseline;
+}
 
 textarea {
-  overflow: auto; }
+  overflow: auto;
+}
 
 [type=checkbox], [type=radio] {
   box-sizing: border-box;
-  padding: 0; }
+  padding: 0;
+}
 
 [type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
-  height: auto; }
+  height: auto;
+}
 
 [type=search] {
   -webkit-appearance: textfield;
-  outline-offset: -2px; }
+  outline-offset: -2px;
+}
 
 [type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration {
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+}
 
 ::-webkit-file-upload-button {
   -webkit-appearance: button;
-  font: inherit; }
+  font: inherit;
+}
 
 details, menu {
-  display: block; }
+  display: block;
+}
 
 summary {
-  display: list-item; }
+  display: list-item;
+}
 
 canvas {
-  display: inline-block; }
+  display: inline-block;
+}
 
 template {
-  display: none; }
+  display: none;
+}
 
 [hidden] {
-  display: none; }
+  display: none;
+}
 
 .clearfix:after {
   visibility: hidden;
   display: block;
   font-size: 0;
-  content: '';
+  content: "";
   clear: both;
-  height: 0; }
+  height: 0;
+}
 
 html {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 *, *:before, *:after {
-  box-sizing: inherit; }
+  box-sizing: inherit;
+}
 
 .sr-only {
   position: absolute;
@@ -398,24 +227,96 @@ html {
   white-space: nowrap;
   clip-path: inset(100%);
   clip: rect(0 0 0 0);
-  overflow: hidden; }
+  overflow: hidden;
+}
+
+@font-face {
+  font-family: "Inter Regular";
+  src: url("../fonts/Inter/Inter-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Inter Semibold";
+  src: url("../fonts/Inter/Inter-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Nunito Sans Regular";
+  src: url("../fonts/Nunito_Sans/NunitoSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Nunito Sans Bold";
+  src: url("../fonts/Nunito_Sans/NunitoSans-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Nunito Sans Black";
+  src: url("../fonts/Nunito_Sans/NunitoSans-Black.ttf") format("truetype");
+}
+html {
+  font-size: 125%;
+}
+
+body {
+  font-family: "Inter Regular", sans-serif;
+}
+
+.topNavigation {
+  font-family: "Inter Regular", sans-serif;
+}
+
+button {
+  font-family: "Nunito Sans Regular", sans-serif;
+}
+
+i {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.1rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Inter Semibold", sans-serif;
+}
+
+.customTaskErrorMsg {
+  font-size: 0.8rem;
+  color: red;
+  padding: 5px;
+}
 
 .wrapper {
   max-width: 1200px;
   width: 85%;
-  margin: 0 auto; }
+  margin: 0 auto;
+}
+
+.defaultHidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
 
 body {
-  background-color: #FFFEFC; }
+  background-color: #FFFEFC;
+}
 
 ul {
-  list-style: none; }
+  list-style: none;
+}
 
 a {
   text-decoration: none;
   display: block;
   color: inherit;
-  font-family: inherit; }
+  font-family: inherit;
+}
 
 h1,
 h2,
@@ -427,47 +328,59 @@ ul,
 li,
 p {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 
 img {
   display: block;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 button {
   cursor: pointer;
   background-color: transparent;
   border: 0;
-  padding: 0; }
+  padding: 0;
+}
 
 fieldset {
-  border: 0; }
+  border: 0;
+}
 
-input[type="date"],
-input[type="time"] {
+input[type=date],
+input[type=time] {
   display: block;
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
-  min-height: 1.2em; }
+  min-height: 1.2em;
+}
 
 .wrongCredentialContainer {
   background-color: #FFECE8;
   border: 1px solid #BF6853;
   text-align: center;
   padding: 15px;
-  color: black; }
-  .wrongCredentialContainer p,
-  .wrongCredentialContainer li {
-    font-size: 0.9rem;
-    margin: 0 !important; }
-  .wrongCredentialContainer p:nth-child(1) {
-    font-weight: bold; }
-  .wrongCredentialContainer ul {
-    list-style-type: disc; }
+  color: black;
+}
+.wrongCredentialContainer p,
+.wrongCredentialContainer li {
+  font-size: 0.9rem;
+  margin: 0 !important;
+}
+.wrongCredentialContainer p:nth-child(1) {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+}
+.wrongCredentialContainer ul {
+  list-style-type: disc;
+}
 
 .lds-ring {
   display: inline-block;
   width: 80px;
-  height: 80px; }
+  height: 80px;
+}
 
 .lds-ring div {
   box-sizing: border-box;
@@ -478,154 +391,204 @@ input[type="time"] {
   border: 8px solid #A5D6A7;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #A5D6A7 transparent transparent transparent; }
+  border-color: #A5D6A7 transparent transparent transparent;
+}
 
 .lds-ring div:nth-child(1) {
-  animation-delay: -0.45s; }
+  animation-delay: -0.45s;
+}
 
 .lds-ring div:nth-child(2) {
-  animation-delay: -0.3s; }
+  animation-delay: -0.3s;
+}
 
 .lds-ring div:nth-child(3) {
-  animation-delay: -0.15s; }
+  animation-delay: -0.15s;
+}
 
 @keyframes lds-ring {
   0% {
-    transform: rotate(0deg); }
+    transform: rotate(0deg);
+  }
   100% {
-    transform: rotate(360deg); } }
-
+    transform: rotate(360deg);
+  }
+}
 .frontPage .flexHeader {
   display: flex;
   justify-content: space-between;
-  margin: 100px 0 50px 0; }
-
+  margin: 100px 0 50px 0;
+}
 .frontPage .heroInfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 42%; }
-  .frontPage .heroInfo p {
-    margin: 30px 0; }
-
+  max-width: 42%;
+}
+.frontPage .heroInfo h1 {
+  font-size: 2.5rem !important;
+  font-family: "Nunito Sans Black", sans-serif;
+  text-transform: capitalize;
+  line-height: 65px;
+}
+.frontPage .heroInfo p {
+  font-family: "Nunito Sans Regular", sans-serif;
+  margin: 30px 0;
+}
 .frontPage .heroImageContainer {
-  max-width: 50%; }
-
+  max-width: 50%;
+}
 .frontPage .heroBtn {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+  font-family: "Inter Semibold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #FFFFFF;
   background-color: #A5D6A7;
+  text-align: center;
   border: 0;
   max-width: 40%;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(212, 212, 212, 0.8); }
-
+  border: 1px solid rgba(212, 212, 212, 0.8);
+}
 .frontPage .contentOneContainer {
   display: flex;
-  margin-bottom: 75px; }
-
+  margin-bottom: 75px;
+}
 .frontPage .imageContainer {
+  box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
   min-width: 60%;
   width: 60%;
-  box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.66667px 3.50231px rgba(0, 0, 0, 0.00962963); }
-  .frontPage .imageContainer img {
-    width: 100%;
-    height: auto; }
-
+}
+.frontPage .imageContainer img {
+  width: 100%;
+  height: auto;
+}
 .frontPage .contentOneIconContainer {
-  width: 75px; }
-  .frontPage .contentOneIconContainer img {
-    width: 100%;
-    height: auto; }
-
+  width: 75px;
+}
+.frontPage .contentOneIconContainer img {
+  width: 100%;
+  height: auto;
+}
 .frontPage .contentOneInfo {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 50px; }
-  .frontPage .contentOneInfo h2 {
-    padding: 20px 0 10px 0; }
-  .frontPage .contentOneInfo p {
-    font-size: 1rem;
-    color: #666665; }
-
+  padding-left: 50px;
+}
+.frontPage .contentOneInfo h2 {
+  padding: 20px 0 10px 0;
+}
+.frontPage .contentOneInfo p {
+  font-size: 1rem;
+  color: #666665;
+}
 .frontPage footer ul {
   display: flex;
   justify-content: space-between;
   border-top: 1px solid rgba(212, 212, 212, 0.8);
-  padding: 25px 0; }
-  .frontPage footer ul li {
-    color: #878685;
-    width: 50%; }
-  .frontPage footer ul p {
-    font-size: 0.9rem; }
-
+  padding: 25px 0;
+}
+.frontPage footer ul li {
+  color: #878685;
+  width: 50%;
+}
+.frontPage footer ul p {
+  font-size: 0.9rem;
+}
 .frontPage footer .creditFooterLink {
   display: flex;
-  justify-content: flex-end; }
-  .frontPage footer .creditFooterLink a {
-    display: inline-block; }
+  justify-content: flex-end;
+}
+.frontPage footer .creditFooterLink a {
+  display: inline-block;
+}
 
 @media (max-width: 940px) {
   .frontPage .flexHeader {
     flex-direction: column;
     align-items: center;
-    margin: 50px 0 50px 0; }
+    margin: 50px 0 50px 0;
+  }
   .frontPage .heroInfo {
     width: 100%;
     max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center; }
+    text-align: center;
+  }
   .frontPage .heroBtn {
-    width: 40%; }
+    width: 40%;
+  }
   .frontPage .heroImageContainer {
-    order: -1; }
+    order: -1;
+  }
   .frontPage .desktopHiddenAnchor {
-    display: none; }
+    display: none;
+  }
   .frontPage .mobileHambugerBtn {
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+  }
   .frontPage .contentOneContainer {
-    flex-direction: column; }
+    flex-direction: column;
+  }
   .frontPage .contentOneInfo {
     order: -1;
     padding-left: 0;
-    margin-bottom: 25px; }
+    margin-bottom: 25px;
+  }
   .frontPage .imageContainer {
     width: 100%;
-    min-width: 100%; } }
-
+    min-width: 100%;
+  }
+}
 @media (max-width: 480px) {
   .frontPage footer ul {
-    flex-direction: column; }
-    .frontPage footer ul li {
-      width: 100%; }
+    flex-direction: column;
+  }
+  .frontPage footer ul li {
+    width: 100%;
+  }
   .frontPage footer .creditFooterLink {
     justify-content: flex-start;
-    margin-top: 15px; } }
-
+    margin-top: 15px;
+  }
+}
 nav.navigationBar {
   border-bottom: 1px solid rgba(212, 212, 212, 0.8);
-  padding: 15px 0; }
-  nav.navigationBar ul {
-    display: flex;
-    justify-content: space-between; }
-  nav.navigationBar li {
-    margin-right: 35px; }
-  nav.navigationBar .loginButton {
-    border-right: 1px solid black;
-    padding-right: 20px; }
-  nav.navigationBar .rightNavigation li {
-    margin-right: 0; }
-  nav.navigationBar .createAccountLi {
-    margin-left: 20px; }
-  nav.navigationBar .mobileHamburgerBtn {
-    display: none; }
-  nav.navigationBar .hamburgerIcon {
-    font-size: 1.5rem;
-    color: black; }
+  padding: 15px 0;
+}
+nav.navigationBar ul {
+  display: flex;
+  justify-content: space-between;
+}
+nav.navigationBar li {
+  margin-right: 35px;
+  font-size: 0.9rem;
+  font-family: "Nunito Sans Bold", sans-serif;
+}
+nav.navigationBar .loginButton {
+  border-right: 1px solid black;
+  padding-right: 20px;
+}
+nav.navigationBar .rightNavigation li {
+  margin-right: 0;
+}
+nav.navigationBar .createAccountLi {
+  margin-left: 20px;
+}
+nav.navigationBar .mobileHamburgerBtn {
+  display: none;
+}
+nav.navigationBar .hamburgerIcon {
+  font-size: 1.5rem;
+  color: black;
+}
 
 .slideMenu {
   position: fixed;
@@ -635,481 +598,614 @@ nav.navigationBar {
   top: 0;
   background-color: white;
   border-right: 1px solid rgba(212, 212, 212, 0.8);
-  padding: 20px 25px 20px 25px; }
-  .slideMenu ul {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; }
-    .slideMenu ul li {
-      font-family: "Inter", sans-serif;
-      font-weight: 600;
-      margin-bottom: 15px;
-      margin-right: 0;
-      font-size: 0.8rem;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      border-radius: 10px;
-      width: 100%;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      display: flex;
-      justify-content: space-between;
-      align-items: center; }
-      .slideMenu ul li a {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        padding: 10px 15px; }
-    .slideMenu ul li:nth-child(2) {
-      background-color: #F6F4F9; }
-    .slideMenu ul li:nth-child(3) {
-      background-color: #F6F4F9; }
-    .slideMenu ul li:nth-child(4) {
-      background-color: #EDF2EC; }
-    .slideMenu ul li:nth-child(5) {
-      background-color: #E6F3FB; }
-    .slideMenu ul li:nth-child(6) {
-      background-color: #FBF1F4; }
-    .slideMenu ul li:nth-child(7) {
-      background-color: #FAF1F4; }
-    .slideMenu ul .fa-chevron-right {
-      font-size: 0.7rem; }
-    .slideMenu ul .logo {
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      width: 75px;
-      height: 75px;
-      border-radius: 50%;
-      padding: 0;
-      margin: 0 0 25px 0; }
-      .slideMenu ul .logo img {
-        height: auto;
-        width: 80%; }
-      .slideMenu ul .logo div {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center; }
-  .slideMenu .loginButton {
-    border-right: 0; }
-  .slideMenu .bottomNavContainer {
-    margin-top: 20px;
-    width: 100%; }
-  .slideMenu .exitModalBtn {
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    color: black; }
-    .slideMenu .exitModalBtn i {
-      font-size: 1.2rem;
-      color: black; }
+  padding: 20px 25px 20px 25px;
+}
+.slideMenu ul {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.slideMenu ul li {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.8rem;
+  font-weight: normal;
+  margin-bottom: 15px;
+  margin-right: 0;
+  border-radius: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.slideMenu ul li a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px 15px;
+}
+.slideMenu ul li:nth-child(2) {
+  background-color: #F6F4F9;
+}
+.slideMenu ul li:nth-child(3) {
+  background-color: #F6F4F9;
+}
+.slideMenu ul li:nth-child(4) {
+  background-color: #EDF2EC;
+}
+.slideMenu ul li:nth-child(5) {
+  background-color: #E6F3FB;
+}
+.slideMenu ul li:nth-child(6) {
+  background-color: #FBF1F4;
+}
+.slideMenu ul li:nth-child(7) {
+  background-color: #FAF1F4;
+}
+.slideMenu ul .fa-chevron-right {
+  font-size: 0.7rem;
+}
+.slideMenu ul .logo {
+  border: 1px solid rgba(212, 212, 212, 0.9);
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0 0 25px 0;
+}
+.slideMenu ul .logo img {
+  height: auto;
+  width: 80%;
+}
+.slideMenu ul .logo div {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slideMenu .loginButton {
+  border-right: 0;
+}
+.slideMenu .bottomNavContainer {
+  margin-top: 20px;
+  width: 100%;
+}
+.slideMenu .exitModalBtn {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: black;
+}
+.slideMenu .exitModalBtn i {
+  font-size: 1.2rem;
+  color: black;
+}
 
 .leftNavigation,
 .rightNavigation {
   display: flex;
-  align-items: center; }
+  align-items: center;
+}
 
 .logoImageCont {
   max-width: 50px;
   max-height: 50px;
-  margin-right: 0; }
-  .logoImageCont img {
-    height: 100%;
-    width: 100%;
-    border-radius: 50%; }
+  margin-right: 0;
+}
+.logoImageCont img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
 
 .logoContainer {
   display: flex;
   align-items: center;
   border-radius: 50%;
   margin-right: 25px;
-  justify-content: center; }
+  justify-content: center;
+}
 
 .rightNavigation {
-  display: flex; }
+  display: flex;
+}
 
 @media (max-width: 940px) {
   nav.navigationBar .desktopHiddenAnchor {
-    display: none; }
+    display: none;
+  }
   nav.navigationBar .mobileHamburgerBtn {
     display: flex;
     justify-content: center;
     align-items: center;
-    display: block; } }
-
+    display: block;
+  }
+}
 .loginNav .logoSection {
   position: absolute;
   top: 25px;
   left: 25px;
   display: flex;
-  align-items: center; }
-  .loginNav .logoSection .imageContainer {
-    width: 50px;
-    height: 50px;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white; }
-    .loginNav .logoSection .imageContainer img {
-      height: auto;
-      width: 100%;
-      padding: 10px; }
-  .loginNav .logoSection p {
-    margin-left: 15px;
-    font-weight: bold; }
+  align-items: center;
+}
+.loginNav .logoSection .imageContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+.loginNav .logoSection .imageContainer img {
+  height: auto;
+  width: 100%;
+  padding: 10px;
+}
+.loginNav .logoSection p {
+  margin-left: 15px;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 1.1rem;
+  font-weight: normal;
+}
 
 .loginPage {
-  display: flex; }
-  .loginPage .loginSection {
-    width: 60%;
-    background-color: #A5D6A7;
-    background-image: url("../assets/blobWhite.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-y: 50%;
-    height: calc(100vh - 40px);
-    padding: 200px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; }
-    .loginPage .loginSection h1 {
-      font-size: 2.5rem !important;
-      text-align: center; }
-  .loginPage .loginFlex {
-    display: flex;
-    flex-direction: column;
-    align-items: center; }
-    .loginPage .loginFlex form {
-      width: 85%;
-      display: flex;
-      flex-direction: column;
-      align-items: center; }
-      .loginPage .loginFlex form button[type="submit"] {
-        background-color: white;
-        color: black;
-        padding: 15px;
-        border-radius: 25px;
-        border: 1px solid rgba(212, 212, 212, 0.9);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        width: 250px;
-        margin-top: 25px; }
-      .loginPage .loginFlex form input {
-        margin: 10px 0; }
-    .loginPage .loginFlex p {
-      margin-bottom: 25px; }
-  .loginPage .googleBtn {
-    border: 1px solid black;
-    padding: 10px;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    margin: 15px 0;
-    color: black; }
-    .loginPage .googleBtn i {
-      font-size: 1.3rem;
-      color: black; }
-  .loginPage .labelInputContainer {
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column; }
-    .loginPage .labelInputContainer input {
-      width: 100%;
-      border-radius: 25px;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      padding: 10px 5px 10px 55px;
-      font-family: inherit; }
-    .loginPage .labelInputContainer i {
-      position: absolute;
-      left: 25px;
-      color: rgba(212, 212, 212, 0.9);
-      font-size: 1.1rem;
-      top: 50%;
-      transform: translateY(-50%); }
-  .loginPage .toLoginSection {
-    text-align: center;
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; }
-    .loginPage .toLoginSection h2 {
-      font-size: 2rem; }
-    .loginPage .toLoginSection p {
-      margin: 25px 0; }
-    .loginPage .toLoginSection .wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column; }
-  .loginPage .redirectToCreateBtn {
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border-radius: 25px;
-    width: 250px;
-    padding: 15px 25px;
-    background-color: white;
-    font-weight: bold; }
+  display: flex;
+}
+.loginPage .loginSection {
+  width: 60%;
+  background-color: #A5D6A7;
+  background-image: url("../assets/blobWhite.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: 50%;
+  height: calc(100vh - 40px);
+  padding: 200px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loginPage .loginSection h1 {
+  font-size: 2.5rem !important;
+  text-align: center;
+}
+.loginPage .loginFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.loginPage .loginFlex form {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.loginPage .loginFlex form button[type=submit] {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 25px;
+  padding: 15px;
+  color: black;
+  background-color: white;
+  width: 250px;
+  margin-top: 25px;
+}
+.loginPage .loginFlex form input {
+  margin: 10px 0;
+}
+.loginPage .loginFlex p {
+  margin-bottom: 25px;
+}
+.loginPage .googleBtn {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 50%;
+  padding: 10px;
+  color: black;
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  margin: 15px 0;
+}
+.loginPage .googleBtn i {
+  font-size: 1.3rem;
+  color: black;
+}
+.loginPage .labelInputContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.loginPage .labelInputContainer input {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 25px;
+  padding: 10px 5px 10px 55px;
+  color: black;
+  width: 100%;
+  font-family: inherit;
+}
+.loginPage .labelInputContainer i {
+  position: absolute;
+  left: 25px;
+  color: rgba(212, 212, 212, 0.9);
+  font-size: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.loginPage .toLoginSection {
+  text-align: center;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.loginPage .toLoginSection h2 {
+  font-size: 2rem;
+}
+.loginPage .toLoginSection p {
+  margin: 25px 0;
+}
+.loginPage .toLoginSection .wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.loginPage .redirectToCreateBtn {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 25px;
+  padding: 15px 25px;
+  color: black;
+  width: 250px;
+  background-color: white;
+}
 
 .loginFooter {
   color: #878685;
   padding: 10px 0;
-  border-top: 1px solid rgba(212, 212, 212, 0.9); }
-  .loginFooter ul {
-    display: flex;
-    justify-content: space-between; }
-    .loginFooter ul li {
-      width: 50%; }
-    .loginFooter ul p {
-      font-size: 0.8rem; }
-    .loginFooter ul a {
-      display: inline-block; }
-    .loginFooter ul .creditFooterLink {
-      text-align: end; }
+  border-top: 1px solid rgba(212, 212, 212, 0.9);
+}
+.loginFooter ul {
+  display: flex;
+  justify-content: space-between;
+}
+.loginFooter ul li {
+  width: 50%;
+}
+.loginFooter ul p {
+  font-size: 0.8rem;
+}
+.loginFooter ul a {
+  display: inline-block;
+}
+.loginFooter ul .creditFooterLink {
+  text-align: end;
+}
 
 @media (max-width: 940px) {
   .loginPage {
-    flex-direction: column; }
-    .loginPage .loginSection {
-      width: 100%; }
-    .loginPage .toLoginSection {
-      width: 100%;
-      padding: 80px 0; } }
-
-.createAccountPage {
-  position: relative; }
-  .createAccountPage main {
-    display: flex; }
-  .createAccountPage .errorInput {
-    border: 1px solid red; }
-  .createAccountPage .errorEmailMessage {
-    background-color: #FFECE8;
-    border: 1px solid #BF6853;
-    background-color: #FFFFFF;
-    color: black; }
-  .createAccountPage .createAccountSection {
-    width: 60%;
-    padding-left: 25px;
-    background-color: #A5D6A7;
-    height: calc(100vh - 40px);
-    display: flex;
-    align-items: center; }
-    .createAccountPage .createAccountSection h2 {
-      font-size: 2rem;
-      color: white; }
-    .createAccountPage .createAccountSection input {
-      width: 100%;
-      padding: 10px 5px 10px 55px;
-      border-radius: 25px;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      font-family: inherit;
-      margin: 10px 0; }
-  .createAccountPage .formOne {
-    display: flex;
     flex-direction: column;
-    align-items: center; }
-  .createAccountPage .signInSection {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 200px 0;
-    background-image: url("../assets/signUpPageBlob.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-y: 50%; }
-    .createAccountPage .signInSection h1 {
-      font-size: 2.5rem !important; }
-    .createAccountPage .signInSection .signInBtn {
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border-radius: 25px;
-      width: 250px;
-      padding: 15px 25px;
-      background-color: white;
-      font-weight: bold; }
-    .createAccountPage .signInSection .signInText {
-      margin: 25px 0;
-      padding: 0 50px; }
-  .createAccountPage .logoSection {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    display: flex;
-    align-items: center; }
-    .createAccountPage .logoSection .imageContainer {
-      width: 50px;
-      height: 50px;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: white; }
-      .createAccountPage .logoSection .imageContainer img {
-        height: auto;
-        width: 100%;
-        padding: 10px; }
-    .createAccountPage .logoSection p {
-      margin-left: 15px;
-      font-weight: bold; }
-  .createAccountPage .googleBtn {
-    border: 1px solid black;
-    padding: 10px;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    margin: 15px 0;
-    color: black; }
-    .createAccountPage .googleBtn i {
-      font-size: 1.3rem;
-      color: black; }
-  .createAccountPage .credentialsSection {
-    text-align: center;
-    color: white; }
-  .createAccountPage .optionText {
-    margin-bottom: 25px; }
-  .createAccountPage .labelInputContainer {
+  }
+  .loginPage .loginSection {
     width: 100%;
-    position: relative; }
-    .createAccountPage .labelInputContainer i {
-      position: absolute;
-      left: 25px;
-      color: rgba(212, 212, 212, 0.9);
-      font-size: 1.1rem;
-      top: 50%;
-      transform: translateY(-50%); }
-  .createAccountPage .continueBtn {
-    background-color: white;
-    color: black;
-    text-decoration: none;
-    padding: 15px;
-    border-radius: 25px;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    width: 250px;
-    margin-top: 25px; }
-  .createAccountPage .formTwo {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 50px; }
-    .createAccountPage .formTwo p {
-      font-size: 0.9rem; }
-    .createAccountPage .formTwo input[type="file"] {
-      clip: rect(0 0 0 0);
-      clip-path: inset(50%);
-      height: 1px;
-      overflow: hidden;
-      position: absolute;
-      white-space: nowrap;
-      width: 1px; }
-    .createAccountPage .formTwo label {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: transparent;
-      color: black;
-      font-weight: bold;
-      padding: 10px 15px;
-      margin: 25px 0;
-      width: 250px;
-      border: 1px solid black;
-      box-shadow: 2px 4px rgba(0, 0, 0, 0.7); }
-    .createAccountPage .formTwo button[type="submit"] {
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      background-color: white;
-      border-radius: 25px;
-      padding: 15px 30px; }
-    .createAccountPage .formTwo form {
-      display: flex;
-      flex-direction: column;
-      align-items: center; }
-    .createAccountPage .formTwo .profileImageDirections {
-      width: 85%; }
-  .createAccountPage .profileImageContainer {
-    margin: 25px 0;
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    background-color: white;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-    .createAccountPage .profileImageContainer img {
-      width: 100%;
-      height: 100%; }
-  .createAccountPage footer {
-    padding: 10px 0;
-    border-top: 1px solid rgba(212, 212, 212, 0.9);
-    color: #878685; }
-    .createAccountPage footer ul {
-      display: flex;
-      justify-content: space-between; }
-      .createAccountPage footer ul li {
-        width: 50%; }
-      .createAccountPage footer ul p {
-        font-size: 0.8rem; }
-      .createAccountPage footer ul a {
-        display: inline-block; }
-      .createAccountPage footer ul .creditFooterLink {
-        text-align: end; }
-
-@media (max-width: 940px) {
-  .createAccountPage main {
-    flex-direction: column; }
-  .createAccountPage .signInSection {
+  }
+  .loginPage .toLoginSection {
     width: 100%;
     padding: 80px 0;
-    background-position-x: 50%; }
-    .createAccountPage .signInSection h1 {
-      font-size: 2rem !important; }
-  .createAccountPage .createAccountSection {
-    width: 100%;
-    padding-left: 0;
-    order: -1; } }
-
-@media (max-width: 480px) {
-  footer ul {
-    flex-direction: column; }
-    footer ul li {
-      width: 100% !important; }
-  footer .creditFooterLink {
-    justify-content: flex-start;
-    margin-top: 15px; }
-  footer p {
-    text-align: start; } }
-
-.homeNavigation.minimizedNav {
-  width: 100px;
-  position: fixed; }
-
-.overlayBackground.homeNavigationOverlay {
-  z-index: 10; }
-
-.defaultHidden {
+  }
+}
+.createAccountPage {
+  position: relative;
+}
+.createAccountPage main {
+  display: flex;
+}
+.createAccountPage .errorInput {
+  border: 1px solid red;
+}
+.createAccountPage .errorEmailMessage {
+  background-color: #FFECE8;
+  border: 1px solid #BF6853;
+  background-color: #FFFFFF;
+  color: black;
+}
+.createAccountPage .createAccountSection {
+  width: 60%;
+  padding-left: 25px;
+  background-color: #A5D6A7;
+  height: calc(100vh - 40px);
+  display: flex;
+  align-items: center;
+}
+.createAccountPage .createAccountSection h2 {
+  font-size: 2rem;
+  color: white;
+}
+.createAccountPage .createAccountSection input {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 25px;
+  padding: 10px 5px 10px 55px;
+  color: black;
+  width: 100%;
+  font-family: inherit;
+  margin: 10px 0;
+}
+.createAccountPage .formOne {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.createAccountPage .signInSection {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 200px 0;
+  background-image: url("../assets/signUpPageBlob.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: 50%;
+}
+.createAccountPage .signInSection h1 {
+  font-size: 2.5rem !important;
+}
+.createAccountPage .signInSection .signInBtn {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 25px;
+  padding: 15px 25px;
+  color: black;
+  width: 250px;
+  background-color: white;
+}
+.createAccountPage .signInSection .signInText {
+  margin: 25px 0;
+  padding: 0 50px;
+}
+.createAccountPage .logoSection {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  display: flex;
+  align-items: center;
+}
+.createAccountPage .logoSection .imageContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+.createAccountPage .logoSection .imageContainer img {
+  height: auto;
+  width: 100%;
+  padding: 10px;
+}
+.createAccountPage .logoSection p {
+  margin-left: 15px;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 1.1rem;
+  font-weight: normal;
+}
+.createAccountPage .googleBtn {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 50%;
+  padding: 10px;
+  color: black;
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  margin: 15px 0;
+}
+.createAccountPage .googleBtn i {
+  font-size: 1.3rem;
+  color: black;
+}
+.createAccountPage .credentialsSection {
+  text-align: center;
+  color: white;
+}
+.createAccountPage .optionText {
+  margin-bottom: 25px;
+}
+.createAccountPage .labelInputContainer {
+  width: 100%;
+  position: relative;
+}
+.createAccountPage .labelInputContainer i {
+  position: absolute;
+  left: 25px;
+  color: rgba(212, 212, 212, 0.9);
+  font-size: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.createAccountPage .continueBtn {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 25px;
+  padding: 15px;
+  color: black;
+  background-color: white;
+  text-decoration: none;
+  width: 250px;
+  margin-top: 25px;
+}
+.createAccountPage .formTwo {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 50px;
+}
+.createAccountPage .formTwo p {
+  font-size: 0.9rem;
+}
+.createAccountPage .formTwo input[type=file] {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  width: 1px; }
+  width: 1px;
+}
+.createAccountPage .formTwo label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: black;
+  padding: 10px 15px;
+  margin: 25px 0;
+  width: 250px;
+  border: 1px solid black;
+  box-shadow: 2px 4px rgba(0, 0, 0, 0.7);
+}
+.createAccountPage .formTwo button[type=submit] {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  background-color: white;
+  border-radius: 25px;
+  padding: 15px 30px;
+}
+.createAccountPage .formTwo form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.createAccountPage .formTwo .profileImageDirections {
+  width: 85%;
+}
+.createAccountPage .profileImageContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  margin: 25px 0;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background-color: white;
+}
+.createAccountPage .profileImageContainer img {
+  width: 100%;
+  height: 100%;
+}
+.createAccountPage footer {
+  padding: 10px 0;
+  border-top: 1px solid rgba(212, 212, 212, 0.9);
+  color: #878685;
+}
+.createAccountPage footer ul {
+  display: flex;
+  justify-content: space-between;
+}
+.createAccountPage footer ul li {
+  width: 50%;
+}
+.createAccountPage footer ul p {
+  font-size: 0.8rem;
+}
+.createAccountPage footer ul a {
+  display: inline-block;
+}
+.createAccountPage footer ul .creditFooterLink {
+  text-align: end;
+}
+
+@media (max-width: 940px) {
+  .createAccountPage main {
+    flex-direction: column;
+  }
+  .createAccountPage .signInSection {
+    width: 100%;
+    padding: 80px 0;
+    background-position-x: 50%;
+  }
+  .createAccountPage .signInSection h1 {
+    font-size: 2rem !important;
+  }
+  .createAccountPage .createAccountSection {
+    width: 100%;
+    padding-left: 0;
+    order: -1;
+  }
+}
+@media (max-width: 480px) {
+  footer ul {
+    flex-direction: column;
+  }
+  footer ul li {
+    width: 100% !important;
+  }
+  footer .creditFooterLink {
+    justify-content: flex-start;
+    margin-top: 15px;
+  }
+  footer p {
+    text-align: start;
+  }
+}
+.homeNavigation.minimizedNav {
+  width: 100px;
+  position: fixed;
+}
+
+.overlayBackground.homeNavigationOverlay {
+  z-index: 10;
+}
 
 .homeNavigation {
   padding: 20px 25px 20px 25px;
@@ -1123,651 +1219,791 @@ nav.navigationBar {
   border-left: 1px solid rgba(212, 212, 212, 0.9);
   border-right: 1px solid rgba(212, 212, 212, 0.9);
   display: flex;
-  flex-direction: column; }
-  .homeNavigation .homeBtn {
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    text-decoration: none;
-    color: black; }
-    .homeNavigation .homeBtn span:nth-child(1) {
-      display: inline-block;
-      height: 20px;
-      width: 20px; }
-  .homeNavigation .homeBtnOne {
-    background-color: #F6F4F9; }
-  .homeNavigation .homeBtnTwo {
-    background-color: #F6F4F9; }
-  .homeNavigation .homeBtnThree {
-    background-color: #EDF2EC; }
-  .homeNavigation .homeBtnFour {
-    background-color: #E6F3FB; }
-  .homeNavigation .homeBtnFive {
-    background-color: #FBF1F4; }
-  .homeNavigation .homeBtnSix {
-    background-color: #FAF1F4; }
-  .homeNavigation button.expandBtn {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-  .homeNavigation a,
-  .homeNavigation button {
-    margin: 15px 0;
-    display: flex;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 0.7rem;
-    height: 40px; }
-  .homeNavigation button {
-    align-items: center; }
-  .homeNavigation ul.minimizedUl {
-    width: 50px; }
-  .homeNavigation ul {
-    width: 100%;
-    transition-duration: 0.8s; }
-    .homeNavigation ul button {
-      width: 100%; }
-  .homeNavigation .expandedButtonText {
-    margin-left: 10px;
-    color: black;
-    text-decoration: none; }
-  .homeNavigation li {
-    position: relative; }
-    .homeNavigation li i {
-      position: absolute;
-      z-index: 20;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 10px;
-      font-size: 0.7rem; }
-  .homeNavigation .accountButtons {
-    border-bottom: 2px solid #d4d4d4; }
-  .homeNavigation .exitTaskDetailsBtn {
-    width: 50px;
-    margin: 0;
-    position: absolute;
-    bottom: 20px; }
-  .homeNavigation .profileInfoContainer.minimizedInfoContainer {
-    display: block;
-    padding-bottom: 10px !important; }
-  .homeNavigation .profileInfoContainer {
-    display: flex;
-    border-bottom: 2px solid #d4d4d4;
-    width: 100%;
-    height: 67px; }
-  .homeNavigation .profilePicCont {
-    display: inline-block;
-    height: 50px;
-    width: 50px; }
-    .homeNavigation .profilePicCont img {
-      border-radius: 50%;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border: 1px solid rgba(212, 212, 212, 0.8);
-      border-radius: 50%;
-      padding: 5px;
-      height: 100%;
-      width: 100%;
-      object-fit: cover; }
-  .homeNavigation .profileInfoText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 15px; }
-    .homeNavigation .profileInfoText .profileWelcome {
-      font-size: 0.7rem;
-      color: #8c959e; }
-    .homeNavigation .profileInfoText .navDisplayName {
-      text-align: center;
-      display: flex;
-      align-items: center;
-      font-size: 1rem; }
+  flex-direction: column;
+}
+.homeNavigation .homeBtn {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.7rem;
+  font-weight: normal;
+  text-decoration: none;
+  color: black;
+}
+.homeNavigation .homeBtn span:nth-child(1) {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+.homeNavigation .expandBtn.homeBtn i {
+  font-size: 1rem;
+}
+.homeNavigation .homeBtnOne {
+  background-color: #F6F4F9;
+}
+.homeNavigation .homeBtnTwo {
+  background-color: #F6F4F9;
+}
+.homeNavigation .homeBtnThree {
+  background-color: #EDF2EC;
+}
+.homeNavigation .homeBtnFour {
+  background-color: #E6F3FB;
+}
+.homeNavigation .homeBtnFive {
+  background-color: #FBF1F4;
+}
+.homeNavigation .homeBtnSix {
+  background-color: #FAF1F4;
+}
+.homeNavigation button.expandBtn {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.homeNavigation a,
+.homeNavigation button {
+  margin: 15px 0;
+  display: flex;
+  border: 1px solid rgba(212, 212, 212, 0.9);
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  height: 40px;
+}
+.homeNavigation button {
+  align-items: center;
+}
+.homeNavigation ul.minimizedUl {
+  width: 50px;
+}
+.homeNavigation ul {
+  width: 100%;
+  transition-duration: 0.8s;
+}
+.homeNavigation ul button {
+  width: 100%;
+}
+.homeNavigation .expandedButtonText {
+  margin-left: 10px;
+  color: black;
+  text-decoration: none;
+}
+.homeNavigation li {
+  position: relative;
+}
+.homeNavigation li i {
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  font-size: 0.7rem;
+}
+.homeNavigation .accountButtons {
+  border-bottom: 2px solid #d4d4d4;
+}
+.homeNavigation .exitTaskDetailsBtn {
+  width: 50px;
+  margin: 0;
+  position: absolute;
+  bottom: 20px;
+}
+.homeNavigation .exitTaskDetailsBtn i {
+  font-size: 1rem;
+}
+.homeNavigation .profileInfoContainer.minimizedInfoContainer {
+  display: block;
+  padding-bottom: 10px !important;
+}
+.homeNavigation .profileInfoContainer {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid rgb(212, 212, 212);
+  width: 100%;
+  height: 67px;
+  padding-bottom: 15px;
+}
+.homeNavigation .profilePicCont {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+}
+.homeNavigation .profilePicCont img {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.homeNavigation .profileInfoText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 15px;
+}
+.homeNavigation .profileInfoText .profileWelcome {
+  font-size: 0.7rem;
+  color: #8c959e;
+}
+.homeNavigation .profileInfoText .navDisplayName {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
 
 @media (max-width: 575px) {
   .homeNavigation {
-    padding: 20px 15px 50px 15px; }
-    .homeNavigation .profileInfoContainer {
-      display: flex;
-      justify-content: center; }
-    .homeNavigation .profilePicCont {
-      width: 40px;
-      height: 40px; }
-    .homeNavigation ul.minimizedUl {
-      width: 100%; }
-    .homeNavigation .homeBtn {
-      display: flex;
-      justify-content: center; }
-    .homeNavigation button.expandBtn {
-      width: 100%; }
-      .homeNavigation button.expandBtn i {
-        color: black;
-        text-decoration: none; }
+    padding: 20px 15px 50px 15px;
+  }
+  .homeNavigation .profileInfoContainer.minimizedInfoContainer {
+    display: flex;
+    justify-content: center;
+  }
+  .homeNavigation .profilePicCont {
+    width: 40px;
+    height: 40px;
+  }
+  .homeNavigation ul.minimizedUl {
+    width: 100%;
+  }
+  .homeNavigation .homeBtn {
+    display: flex;
+    justify-content: center;
+  }
+  .homeNavigation button.expandBtn {
+    width: 100%;
+  }
+  .homeNavigation button.expandBtn i {
+    color: black;
+    text-decoration: none;
+  }
   .homeDashboard .taskContainer {
-    align-items: center; }
+    align-items: center;
+  }
   .homeNavigation.minimizedNav {
-    width: 75px; } }
-
+    width: 75px;
+  }
+}
 .homePage {
   display: flex;
-  width: 100%; }
-  .homePage .homeNavigation.minimizedNav {
-    width: 100px;
-    position: fixed; }
-  .homePage .navExpandedPadding {
-    display: block;
-    padding-left: 100px; }
-  .homePage .homeNavigation {
-    padding: 20px 25px 20px 25px;
-    background-color: white;
-    position: fixed;
-    z-index: 20;
-    width: 250px;
-    min-height: 100vh;
-    max-height: 100%;
-    border-top: 1px solid rgba(212, 212, 212, 0.9);
-    border-left: 1px solid rgba(212, 212, 212, 0.9);
-    border-right: 1px solid rgba(212, 212, 212, 0.9);
-    display: flex;
-    flex-direction: column; }
-    .homePage .homeNavigation a,
-    .homePage .homeNavigation button {
-      margin: 15px 0;
-      display: flex;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      padding: 10px 15px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.7rem;
-      height: 40px; }
-    .homePage .homeNavigation button {
-      align-items: center; }
-    .homePage .homeNavigation ul.minimizedUl {
-      width: 50px; }
-    .homePage .homeNavigation ul {
-      width: 100%;
-      transition-duration: 0.8s; }
-      .homePage .homeNavigation ul button {
-        width: 100%; }
-    .homePage .homeNavigation .expandedButtonText {
-      margin-left: 10px; }
-    .homePage .homeNavigation li {
-      position: relative; }
-      .homePage .homeNavigation li i {
-        position: absolute;
-        z-index: 20;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 10px;
-        font-size: 0.7rem; }
-    .homePage .homeNavigation .accountButtons {
-      border-bottom: 2px solid #d4d4d4; }
-    .homePage .homeNavigation .exitTaskDetailsBtn {
-      width: 50px;
-      margin: 0;
-      position: absolute;
-      bottom: 20px; }
-  .homePage .dashboardContent {
-    margin-left: 100px;
-    width: 100%;
-    padding: 35px 0px 25px 0px;
-    overflow-y: scroll; }
-  .homePage .homeDashboard.homeSection.expandedNav {
-    padding-left: 100px;
-    width: 100%; }
-  .homePage .userLocationBar {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 30px;
-    margin-bottom: 20px; }
-    .homePage .userLocationBar p {
-      margin-left: 15px; }
-    .homePage .userLocationBar span {
-      margin: 0 10px; }
-  .homePage .userLocationButtons {
-    display: flex; }
-    .homePage .userLocationButtons .fa-arrow-left {
-      margin-right: 10px; }
-  .homePage .dashboardText {
-    border-bottom: 4px solid #78A27A; }
-  .homePage .dashboardStatus {
-    margin-bottom: 15px; }
-  .homePage .profileInfoContainer.minimizedInfoContainer {
-    display: block;
-    padding-bottom: 10px; }
-  .homePage .profileInfoContainer {
-    display: flex;
-    border-bottom: 2px solid #d4d4d4;
-    width: 100%;
-    padding-bottom: 15px; }
-  .homePage .profilePicCont {
-    display: inline-block;
-    height: 50px;
-    width: 50px; }
-    .homePage .profilePicCont img {
-      border-radius: 50%;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border: 1px solid rgba(212, 212, 212, 0.8);
-      border-radius: 50%;
-      padding: 5px;
-      height: 100%;
-      width: 100%;
-      object-fit: cover; }
-  .homePage .profileInfoText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 15px; }
-    .homePage .profileInfoText .profileWelcome {
-      font-size: 0.7rem;
-      color: #8c959e; }
-    .homePage .profileInfoText .navDisplayName {
-      text-align: center;
-      display: flex;
-      align-items: center;
-      font-size: 1rem; }
-  .homePage .homeNavSubsection {
-    width: 100%;
-    font-weight: 700;
-    font-size: 0.8rem;
-    text-align: start;
-    margin-top: 25px; }
-  .homePage .homeBtn {
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .homePage .homeBtnOne {
-    background-color: #F6F4F9; }
-  .homePage .homeBtnTwo {
-    background-color: #F6F4F9; }
-  .homePage .homeBtnThree {
-    background-color: #EDF2EC; }
-  .homePage .homeBtnFour {
-    background-color: #E6F3FB; }
-  .homePage .homeBtnFive {
-    background-color: #FBF1F4; }
-  .homePage .homeBtnSix {
-    background-color: #FAF1F4; }
-  .homePage button.expandBtn {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-  .homePage .defaultHidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px; }
+  width: 100%;
+}
+.homePage .homeNavigation.minimizedNav {
+  width: 100px;
+  position: fixed;
+}
+.homePage .navExpandedPadding {
+  display: block;
+  padding-left: 100px;
+}
+.homePage .homeNavigation {
+  padding: 20px 25px 20px 25px;
+  background-color: white;
+  position: fixed;
+  z-index: 20;
+  width: 250px;
+  min-height: 100vh;
+  max-height: 100%;
+  border-top: 1px solid rgba(212, 212, 212, 0.9);
+  border-left: 1px solid rgba(212, 212, 212, 0.9);
+  border-right: 1px solid rgba(212, 212, 212, 0.9);
+  display: flex;
+  flex-direction: column;
+}
+.homePage .homeNavigation a,
+.homePage .homeNavigation button {
+  margin: 15px 0;
+  display: flex;
+  border: 1px solid rgba(212, 212, 212, 0.9);
+  padding: 10px 15px;
+  border-radius: 10px;
+  height: 40px;
+}
+.homePage .homeNavigation button {
+  align-items: center;
+}
+.homePage .homeNavigation ul.minimizedUl {
+  width: 50px;
+}
+.homePage .homeNavigation ul {
+  width: 100%;
+  transition-duration: 0.8s;
+}
+.homePage .homeNavigation ul button {
+  width: 100%;
+}
+.homePage .homeNavigation .expandedButtonText {
+  margin-left: 10px;
+}
+.homePage .homeNavigation li {
+  position: relative;
+}
+.homePage .homeNavigation li i {
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  font-size: 0.7rem;
+}
+.homePage .homeNavigation .accountButtons {
+  border-bottom: 2px solid #d4d4d4;
+}
+.homePage .homeNavigation .exitTaskDetailsBtn {
+  width: 50px;
+  margin: 0;
+  position: absolute;
+  bottom: 20px;
+}
+.homePage .homeNavigation i {
+  font-size: 1rem;
+}
+.homePage .dashboardContent {
+  margin-left: 100px;
+  width: 100%;
+  padding: 35px 0px 25px 0px;
+  overflow-y: scroll;
+}
+.homePage .userLocationBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  margin-bottom: 20px;
+}
+.homePage .userLocationBar p {
+  margin-left: 15px;
+}
+.homePage .userLocationBar span {
+  margin: 0 10px;
+}
+.homePage .userLocationButtons {
+  display: flex;
+}
+.homePage .userLocationButtons .fa-arrow-left {
+  margin-right: 10px;
+}
+.homePage .dashboardText {
+  border-bottom: 4px solid #78A27A;
+}
+.homePage .dashboardStatus {
+  margin-bottom: 15px;
+}
+.homePage .homeNavSubsection {
+  width: 100%;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-align: start;
+  margin-top: 25px;
+}
 
 .overlayBackground {
   position: fixed;
+  z-index: 20;
   top: 0;
   bottom: 0;
-  right: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 20; }
-  .overlayBackground .taskCheckboxChecked {
-    background-color: rgba(0, 0, 0, 0.778); }
-  .overlayBackground .fa-check {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: white; }
-  .overlayBackground .checkboxContainer {
-    position: relative; }
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.overlayBackground .taskCheckboxChecked {
+  background-color: rgba(0, 0, 0, 0.778);
+}
+.overlayBackground .fa-check {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: white;
+}
+.overlayBackground .checkboxContainer {
+  position: relative;
+}
 
 .overlayBackground.homeNavigationOverlay {
-  z-index: 10; }
+  z-index: 10;
+}
 
 @media (max-width: 575px) {
   .homePage .homeNavigation.minimizedNav {
-    width: 75px; }
+    width: 75px;
+  }
   .homePage .profileInfoContainer {
     display: flex;
-    justify-content: center; }
+    justify-content: center;
+  }
   .homePage .profilePicCont {
     width: 40px;
-    height: 40px; }
+    height: 40px;
+  }
   .homePage .homeNavigation {
-    padding: 20px 15px 50px 15px; }
-    .homePage .homeNavigation ul.minimizedUl {
-      width: 100%; }
-    .homePage .homeNavigation .homeBtn {
-      display: flex;
-      justify-content: center; }
+    padding: 20px 15px 50px 15px;
+  }
+  .homePage .homeNavigation ul.minimizedUl {
+    width: 100%;
+  }
+  .homePage .homeNavigation .homeBtn {
+    display: flex;
+    justify-content: center;
+  }
   .homePage button.expandBtn {
-    width: 100%; }
+    width: 100%;
+  }
   .homePage .homeDashboard .taskContainer {
-    align-items: center; } }
-
+    align-items: center;
+  }
+}
 .homeDashboard {
   width: calc(100% - 100px);
   display: flex;
-  flex-direction: column; }
-  .homeDashboard h1 {
-    margin-bottom: 15px;
-    padding: 0 25px; }
-  .homeDashboard .dashboardGreeting {
-    margin-left: 15px;
-    margin-bottom: 5px;
-    padding: 0 25px; }
-  .homeDashboard .allTasksContainer {
-    position: relative;
-    margin: 0 25px; }
-    .homeDashboard .allTasksContainer .lds-ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); }
-  .homeDashboard .taskContainer {
-    border: 1px solid #d4d4d4;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    height: 150px;
-    border-radius: 5px;
-    padding: 25px 25px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    transition: all 0.8s ease-out 1s; }
-    .homeDashboard .taskContainer button {
-      border: 0; }
-    .homeDashboard .taskContainer .taskAdditionalInfo {
-      width: 100%;
-      display: flex;
-      justify-content: space-between; }
-    .homeDashboard .taskContainer .dueDateContainer {
-      display: flex;
-      flex-direction: column;
-      justify-content: center; }
-    .homeDashboard .taskContainer .buttonContainer {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      border: 0;
-      display: flex; }
-      .homeDashboard .taskContainer .buttonContainer i {
-        font-size: 1.4rem;
-        pointer-events: none; }
-      .homeDashboard .taskContainer .buttonContainer .exitBtn {
-        margin-left: 15px; }
-      .homeDashboard .taskContainer .buttonContainer .finishButton {
-        background-color: #0D66D0;
-        color: white;
-        font-size: 0.7rem;
-        padding: 2px 15px;
-        border-radius: 2px;
-        margin-right: 1px;
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        cursor: pointer; }
-      .homeDashboard .taskContainer .buttonContainer .fa-angle-down {
-        background-color: #0D66D0;
-        padding: 7px 5px;
-        border-radius: 2px;
-        font-size: 0.7rem;
-        color: white;
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-    .homeDashboard .taskContainer .buttonContainer.buttonHidden {
-      display: none; }
-    .homeDashboard .taskContainer input[type="checkbox"] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      border: 1px solid #111111;
-      border-radius: 50%;
-      height: 30px;
-      width: 30px;
-      display: block;
-      margin: 0 25px 0 0;
-      cursor: pointer; }
-    .homeDashboard .taskContainer .dropdownOptions {
-      width: 100%;
-      position: absolute;
-      top: 100%;
-      background-color: white;
-      border: 1px solid #d4d4d4; }
-      .homeDashboard .taskContainer .dropdownOptions li {
-        border-bottom: 1px solid #d4d4d4; }
-      .homeDashboard .taskContainer .dropdownOptions button {
-        font-weight: 300;
-        font-size: 0.7rem;
-        padding-left: 5px; }
-    .homeDashboard .taskContainer .dropdownOptions.hidden {
-      display: none; }
-  .homeDashboard .noTaskFoundContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    margin-top: 50px;
-    color: #9e9d9d;
-    font-weight: bold; }
-  .homeDashboard .loadingContainer {
-    height: 200px; }
-    .homeDashboard .loadingContainer p {
-      margin-bottom: 150px; }
-  .homeDashboard .errorImageContainer {
-    width: 80px;
-    height: auto; }
-    .homeDashboard .errorImageContainer img {
-      display: block;
-      height: 100%;
-      width: 100%; }
-  .homeDashboard .errorImageContainerTwo {
-    margin-top: 20px; }
-  .homeDashboard .taskMainContainer.closedContainer {
-    height: 0;
-    overflow-y: hidden; }
-  .homeDashboard .taskMainContainer.openContainer {
-    height: initial;
-    overflow-y: auto; }
-  .homeDashboard .fa-sort,
-  .homeDashboard .fa-magnifying-glass,
-  .homeDashboard .fa-arrow-down-wide-short {
-    font-size: 0.8rem; }
-  .homeDashboard .fa-magnifying-glass {
-    margin-right: 10px; }
-  .homeDashboard .taskFinderContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #e0e1e3;
-    padding: 0px 25px 15px 25px; }
-    .homeDashboard .taskFinderContainer .taskListButtons {
-      display: flex; }
-      .homeDashboard .taskFinderContainer .taskListButtons button {
-        margin-right: 10px; }
-  .homeDashboard .searchContainer {
-    position: relative;
-    display: flex;
-    align-items: center; }
-    .homeDashboard .searchContainer .lds-ring {
-      position: absolute;
-      right: 20px;
-      top: 10%;
-      height: 20px;
-      width: 20px; }
-      .homeDashboard .searchContainer .lds-ring div {
-        height: 20px;
-        width: 20px;
-        border: 3px solid #A5D6A7;
-        border-radius: 50%;
-        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: #A5D6A7 transparent transparent transparent; }
-  .homeDashboard .searchBarInput {
-    height: 40px;
-    border: 0;
-    padding: 5px 15px;
-    border-radius: 10px;
-    border: 1px solid rgba(212, 212, 212, 0.8);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .homeDashboard .searchBarInput::placeholder {
-    font-family: "Nunito Sans", sans-serif; }
-  .homeDashboard .toDoTask,
-  .homeDashboard .doneTask {
-    width: 50%;
-    padding: 5px 0px;
-    height: 35px; }
-  .homeDashboard .toDoTask {
-    border-radius: 15px 0px 0px 15px; }
-  .homeDashboard .doneTask {
-    border-radius: 0px 15px 15px 0px;
-    color: black;
-    text-decoration: none; }
-  .homeDashboard .taskText {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; }
-  .homeDashboard .taskButtonActive {
-    color: white;
-    background-color: black; }
-  .homeDashboard .taskFilters {
-    margin: 30px 0 20px 0;
-    padding: 0 25px; }
-    .homeDashboard .taskFilters p {
-      color: black;
-      text-decoration: none; }
-  .homeDashboard .labelContainer {
-    display: flex; }
-    .homeDashboard .labelContainer p {
-      border: 1px solid rgba(212, 212, 212, 0.8);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border-radius: 5px;
-      margin-right: 10px;
-      padding: 5px; }
-    .homeDashboard .labelContainer .personal {
-      background-color: #FBF1F4; }
-    .homeDashboard .labelContainer .school {
-      background-color: #F6F4F9; }
-    .homeDashboard .labelContainer .work {
-      background-color: #EDF2EC; }
-    .homeDashboard .labelContainer .importantDate {
-      background-color: #E6F3FB; }
-    .homeDashboard .labelContainer .appointment {
-      background-color: #F6F4F9; }
-    .homeDashboard .labelContainer .exercise {
-      background-color: #FAF1F4; }
-    .homeDashboard .labelContainer .chores {
-      background-color: #f8f1fb; }
-    .homeDashboard .labelContainer .low {
-      background-color: #A5D6A7; }
-    .homeDashboard .labelContainer .medium {
-      background-color: #FEEFD0; }
-    .homeDashboard .labelContainer .high {
-      background-color: #FFCED6; }
-    .homeDashboard .labelContainer .lateLabel {
-      background-color: #fedde7; }
-  .homeDashboard .buttonRelativePosition {
-    position: relative; }
-  .homeDashboard .filterContainer {
-    background-color: #e6f3fbc5;
-    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-    padding: 5px 20px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    color: black; }
-    .homeDashboard .filterContainer p {
-      margin-left: 10px; }
-    .homeDashboard .filterContainer i {
-      color: black; }
-  .homeDashboard .filterModal {
-    border-radius: 5px;
-    position: absolute;
-    top: 110%;
-    left: 0;
-    z-index: 9;
-    width: 200px;
-    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-    background-color: white; }
-    .homeDashboard .filterModal fieldset {
-      display: flex;
-      flex-direction: column;
-      padding: 0; }
-      .homeDashboard .filterModal fieldset div {
-        display: flex;
-        align-items: center;
-        border-bottom: 0.5px solid rgba(181, 179, 179, 0.8);
-        padding: 5px 0; }
-        .homeDashboard .filterModal fieldset div input[type="radio"] {
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          border: 1px solid black;
-          height: 17px;
-          width: 20px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 2px;
-          margin: 0 10px;
-          cursor: pointer; }
-        .homeDashboard .filterModal fieldset div input[type=radio]:checked::before {
-          content: '✔️';
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 10px;
-          line-height: 12px; }
-        .homeDashboard .filterModal fieldset div label {
-          cursor: pointer;
-          width: 100%;
-          display: flex;
-          justify-content: flex-start;
-          font-weight: 300;
-          font-size: 0.8rem; }
-  .homeDashboard .taskDeadlineDateContainer {
-    display: flex;
-    position: relative; }
-    .homeDashboard .taskDeadlineDateContainer p {
-      border-bottom: 1px solid #e0e1e3;
-      background-color: #f4f4f4;
-      border-radius: 5px 0 0 5px;
-      padding: 5px 5px 5px 15px;
-      width: 100%; }
-    .homeDashboard .taskDeadlineDateContainer i {
-      pointer-events: none; }
-  .homeDashboard .dropdownBtn {
-    border-bottom: 1px solid #e0e1e3;
-    background-color: #f4f4f4;
-    border-radius: 0 5px 5px 0;
-    padding-right: 15px; }
-  .homeDashboard .noWrapText {
-    white-space: nowrap; }
-  .homeDashboard .appliedFilters {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-    color: #7d7c7c;
-    border-radius: 5px;
-    padding: 0 10px;
-    background-color: #eeeded; }
-    .homeDashboard .appliedFilters p {
-      font-size: 0.9rem !important; }
-    .homeDashboard .appliedFilters i {
-      font-size: 0.7rem; }
-  .homeDashboard .lateFilterIndicator {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    .homeDashboard .lateFilterIndicator button {
-      display: flex;
-      align-items: center;
-      margin-right: 0 !important;
-      margin-left: 10px;
-      color: #7d7c7c; }
+  flex-direction: column;
+}
+.homeDashboard h1 {
+  margin-bottom: 15px;
+  padding: 0 25px;
+  font-size: 1.3rem;
+}
+.homeDashboard .dashboardGreeting {
+  margin-left: 15px;
+  margin-bottom: 5px;
+  padding: 0 25px;
+  font-size: 0.9rem;
+}
+.homeDashboard .allTasksContainer {
+  position: relative;
+  margin: 0 25px;
+}
+.homeDashboard .allTasksContainer .lds-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.homeDashboard .taskContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  height: 150px;
+  border-radius: 5px;
+  padding: 25px 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.8s ease-out 1s;
+}
+.homeDashboard .taskContainer button {
+  border: 0;
+}
+.homeDashboard .taskContainer .taskAdditionalInfo {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.homeDashboard .taskContainer .dueDateContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.homeDashboard .taskContainer .dueDateContainer p {
+  font-size: 0.6rem;
+  text-align: right;
+}
+.homeDashboard .taskContainer .buttonContainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 0;
+  display: flex;
+}
+.homeDashboard .taskContainer .buttonContainer i {
+  font-size: 1.4rem;
+  pointer-events: none;
+}
+.homeDashboard .taskContainer .buttonContainer .exitBtn {
+  margin-left: 15px;
+}
+.homeDashboard .taskContainer .buttonContainer .finishButton {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: 0.7rem;
+  border-radius: 2px;
+  padding: 2px 15px;
+  color: white;
+  background-color: #0D66D0;
+  margin-right: 1px;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+  cursor: pointer;
+}
+.homeDashboard .taskContainer .buttonContainer .fa-angle-down {
+  background-color: #0D66D0;
+  padding: 7px 5px;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  color: white;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+}
+.homeDashboard .taskContainer .buttonContainer.buttonHidden {
+  display: none;
+}
+.homeDashboard .taskContainer input[type=checkbox] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #111111;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: block;
+  margin: 0 25px 0 0;
+  cursor: pointer;
+}
+.homeDashboard .taskContainer .dropdownOptions {
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  background-color: white;
+  border: 1px solid rgb(212, 212, 212);
+}
+.homeDashboard .taskContainer .dropdownOptions li:nth-child(1) {
+  border-bottom: 1px solid rgb(212, 212, 212);
+}
+.homeDashboard .taskContainer .dropdownOptions button {
+  font-size: 0.7rem;
+  padding-left: 5px;
+}
+.homeDashboard .taskContainer .dropdownOptions.hidden {
+  display: none;
+}
+.homeDashboard .noTaskFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  margin-top: 50px;
+  color: #9e9d9d;
+  font-family: "Inter Regular", sans-serif;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+}
+.homeDashboard .loadingContainer {
+  height: 200px;
+}
+.homeDashboard .loadingContainer p {
+  margin-bottom: 150px;
+}
+.homeDashboard .errorImageContainer {
+  width: 80px;
+  height: auto;
+}
+.homeDashboard .errorImageContainer img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.homeDashboard .errorImageContainerTwo {
+  margin-top: 20px;
+}
+.homeDashboard .taskMainContainer.closedContainer {
+  height: 0;
+  overflow-y: hidden;
+}
+.homeDashboard .taskMainContainer.openContainer {
+  height: initial;
+  overflow-y: auto;
+}
+.homeDashboard .fa-sort,
+.homeDashboard .fa-magnifying-glass,
+.homeDashboard .fa-arrow-down-wide-short {
+  font-size: 0.8rem;
+}
+.homeDashboard .fa-magnifying-glass {
+  margin-right: 10px;
+}
+.homeDashboard .taskFinderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgb(224, 225, 227);
+  padding: 0px 25px 15px 25px;
+}
+.homeDashboard .taskFinderContainer .taskListButtons {
+  display: flex;
+}
+.homeDashboard .taskFinderContainer .taskListButtons button {
+  margin-right: 10px;
+}
+.homeDashboard .searchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.homeDashboard .searchContainer .lds-ring {
+  position: absolute;
+  right: 20px;
+  top: 10%;
+  height: 20px;
+  width: 20px;
+}
+.homeDashboard .searchContainer .lds-ring div {
+  height: 20px;
+  width: 20px;
+  border: 3px solid #A5D6A7;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #A5D6A7 transparent transparent transparent;
+}
+.homeDashboard .searchBarInput {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  height: 40px;
+  padding: 5px 15px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+.homeDashboard .searchBarInput::placeholder {
+  font-family: "Inter Regular", sans-serif;
+}
+.homeDashboard .toDoTask,
+.homeDashboard .doneTask {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.8rem;
+  font-weight: normal;
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  width: 50%;
+  padding: 5px 0px;
+  height: 35px;
+}
+.homeDashboard .toDoTask {
+  border-radius: 15px 0px 0px 15px;
+}
+.homeDashboard .doneTask {
+  border-radius: 0px 15px 15px 0px;
+  color: black;
+  text-decoration: none;
+}
+.homeDashboard .taskText {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.homeDashboard .taskText .taskName {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+.homeDashboard .taskText .taskName:hover {
+  text-decoration: underline;
+}
+.homeDashboard .taskText .taskDescription {
+  font-size: 0.8rem;
+}
+.homeDashboard .taskButtonActive {
+  color: white;
+  background-color: black;
+}
+.homeDashboard .taskFilters {
+  margin: 30px 0 20px 0;
+  padding: 0 25px;
+}
+.homeDashboard .taskFilters p {
+  color: black;
+  text-decoration: none;
+}
+.homeDashboard .labelContainer {
+  display: flex;
+}
+.homeDashboard .labelContainer p {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  border-radius: 5px;
+  margin-right: 10px;
+  padding: 5px;
+  font-family: "Nunito Sans Regular", sans-serif;
+  text-transform: capitalize;
+  font-size: 0.8rem;
+}
+.homeDashboard .labelContainer .personal {
+  background-color: #FBF1F4;
+}
+.homeDashboard .labelContainer .school {
+  background-color: #F6F4F9;
+}
+.homeDashboard .labelContainer .work {
+  background-color: #EDF2EC;
+}
+.homeDashboard .labelContainer .importantDate {
+  background-color: #E6F3FB;
+}
+.homeDashboard .labelContainer .appointment {
+  background-color: #F6F4F9;
+}
+.homeDashboard .labelContainer .exercise {
+  background-color: #FAF1F4;
+}
+.homeDashboard .labelContainer .chores {
+  background-color: #f8f1fb;
+}
+.homeDashboard .labelContainer .low {
+  background-color: #A5D6A7;
+}
+.homeDashboard .labelContainer .medium {
+  background-color: #FEEFD0;
+}
+.homeDashboard .labelContainer .high {
+  background-color: #FFCED6;
+}
+.homeDashboard .labelContainer .lateLabel {
+  background-color: #fedde7;
+}
+.homeDashboard .buttonRelativePosition {
+  position: relative;
+}
+.homeDashboard .filterContainer {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: black;
+  background-color: rgba(230, 243, 251, 0.7725490196);
+  display: flex;
+  align-items: center;
+}
+.homeDashboard .filterContainer p {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.8rem;
+  font-weight: normal;
+  margin-left: 10px;
+}
+.homeDashboard .filterContainer i {
+  color: black;
+}
+.homeDashboard .filterModal {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  z-index: 9;
+  width: 200px;
+  background-color: white;
+}
+.homeDashboard .filterModal fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.homeDashboard .filterModal fieldset div {
+  display: flex;
+  align-items: center;
+  border-bottom: 0.5px solid rgba(181, 179, 179, 0.8);
+  padding: 5px 0;
+}
+.homeDashboard .filterModal fieldset div input[type=radio] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid black;
+  height: 17px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+.homeDashboard .filterModal fieldset div input[type=radio]:checked::before {
+  content: "✔️";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  line-height: 12px;
+}
+.homeDashboard .filterModal fieldset div label {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 0.8rem;
+}
+.homeDashboard .taskDeadlineDateContainer {
+  display: flex;
+  position: relative;
+}
+.homeDashboard .taskDeadlineDateContainer p {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.9rem;
+  font-weight: normal;
+  border-bottom: 1px solid rgb(224, 225, 227);
+  background-color: rgb(244, 244, 244);
+  border-radius: 5px 0 0 5px;
+  padding: 5px 5px 5px 15px;
+  width: 100%;
+}
+.homeDashboard .taskDeadlineDateContainer i {
+  pointer-events: none;
+  font-size: 1.2rem;
+}
+.homeDashboard .dropdownBtn {
+  border-bottom: 1px solid rgb(224, 225, 227);
+  background-color: rgb(244, 244, 244);
+  border-radius: 0 5px 5px 0;
+  padding-right: 15px;
+}
+.homeDashboard .noWrapText {
+  white-space: nowrap;
+}
+.homeDashboard .appliedFilters {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #7d7c7c;
+  border-radius: 5px;
+  padding: 0 10px;
+  background-color: #eeeded;
+}
+.homeDashboard .appliedFilters p {
+  font-size: 0.9rem !important;
+}
+.homeDashboard .appliedFilters i {
+  font-size: 0.7rem;
+}
+.homeDashboard .lateFilterIndicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.homeDashboard .lateFilterIndicator button {
+  display: flex;
+  align-items: center;
+  margin-right: 0 !important;
+  margin-left: 10px;
+  color: #7d7c7c;
+}
 
 .homePage .loadingOverlayContainer {
   position: fixed;
@@ -1775,465 +2011,600 @@ nav.navigationBar {
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0; }
-  .homePage .loadingOverlayContainer .loadingContainer {
-    z-index: 20;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #A5D6A7;
-    border-radius: 10px;
-    border: 1px solid #d4d4d4;
-    box-shadow: 2px 4px #6d906e;
-    padding: 25px; }
-    .homePage .loadingOverlayContainer .loadingContainer p {
-      color: white;
-      font-weight: bold;
-      padding-bottom: 25px; }
-  .homePage .loadingOverlayContainer .imageContainer {
-    width: 75px;
-    height: auto; }
-    .homePage .loadingOverlayContainer .imageContainer img {
-      height: auto;
-      width: 100%; }
+  right: 0;
+}
+.homePage .loadingOverlayContainer .loadingContainer {
+  z-index: 20;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #A5D6A7;
+  border-radius: 10px;
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px #6d906e;
+  padding: 25px;
+}
+.homePage .loadingOverlayContainer .loadingContainer p {
+  color: white;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  padding-bottom: 25px;
+}
+.homePage .loadingOverlayContainer .imageContainer {
+  width: 75px;
+  height: auto;
+}
+.homePage .loadingOverlayContainer .imageContainer img {
+  height: auto;
+  width: 100%;
+}
 
 @media (max-width: 768px) {
   .taskFinderContainer {
-    flex-direction: column; }
+    flex-direction: column;
+  }
   .homeDashboard .filterModal {
-    width: 100%; }
+    width: 100%;
+  }
   .taskListButtons {
     width: 100%;
     display: flex;
-    justify-content: space-between; }
+    justify-content: space-between;
+  }
   .buttonRelativePosition {
-    width: calc(50% - 10px); }
-    .buttonRelativePosition button {
-      margin-right: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center; }
+    width: calc(50% - 10px);
+  }
+  .buttonRelativePosition button {
+    margin-right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .searchContainer {
     width: 100%;
-    margin-top: 20px; }
-    .searchContainer input {
-      width: 100%; } }
-
+    margin-top: 20px;
+  }
+  .searchContainer input {
+    width: 100%;
+  }
+}
 @media (max-width: 575px) {
   .homeDashboard {
-    width: calc(100% - 75px); }
-    .homeDashboard .taskContainer {
-      height: 195px;
-      align-items: flex-start; }
-    .homeDashboard .taskText {
-      margin-top: 25px; }
-    .homeDashboard .taskFinderContainer .taskListButtons {
-      display: flex;
-      flex-direction: column; }
-    .homeDashboard .lateFilterIndicator,
-    .homeDashboard .buttonRelativePosition,
-    .homeDashboard .filterContainer {
-      width: 100%; }
-    .homeDashboard .taskFilters {
-      margin: 30px 0 15px 0; }
-    .homeDashboard .appliedFilters {
-      width: 100px;
-      margin-top: 10px;
-      padding: 3px 10px; } }
-
+    width: calc(100% - 75px);
+  }
+  .homeDashboard .taskContainer {
+    height: 195px;
+    align-items: flex-start;
+  }
+  .homeDashboard .taskText {
+    margin-top: 25px;
+  }
+  .homeDashboard .taskFinderContainer .taskListButtons {
+    display: flex;
+    flex-direction: column;
+  }
+  .homeDashboard .lateFilterIndicator,
+  .homeDashboard .buttonRelativePosition,
+  .homeDashboard .filterContainer {
+    width: 100%;
+  }
+  .homeDashboard .taskFilters {
+    margin: 30px 0 15px 0;
+  }
+  .homeDashboard .appliedFilters {
+    width: 100px;
+    margin-top: 10px;
+    padding: 3px 10px;
+  }
+}
 @media (max-width: 480px) {
   .homeDashboard .taskContainer {
-    height: 215px; }
-    .homeDashboard .taskContainer .taskAdditionalInfo {
-      flex-direction: column; }
+    height: 215px;
+  }
+  .homeDashboard .taskContainer .taskAdditionalInfo {
+    flex-direction: column;
+  }
   .homeDashboard .taskText {
-    margin-top: 35px; }
+    margin-top: 35px;
+  }
   .homeDashboard .taskDescription {
-    display: none; }
+    display: none;
+  }
   .homeDashboard .labelContainer {
     justify-content: center;
     margin-bottom: 20px;
-    flex-wrap: wrap; }
-    .homeDashboard .labelContainer p {
-      margin-bottom: 5px; }
+    flex-wrap: wrap;
+  }
+  .homeDashboard .labelContainer p {
+    margin-bottom: 5px;
+  }
   .homeDashboard .dueDateContainer p {
-    text-align: center; }
+    text-align: center;
+  }
   .homeDashboard .phoneHidden {
-    display: none; }
+    display: none;
+  }
   .homeDashboard h1.noWrapText {
-    text-align: center; } }
-
+    text-align: center;
+  }
+}
 .createTaskForm {
+  box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
   position: fixed;
+  z-index: 30;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F1F5F9;
+  border-radius: 15px;
+  padding: 0;
   overflow-y: scroll;
   overflow-x: hidden;
   height: 90vh;
   width: 80vw;
-  transform: translate(-50%, -50%);
-  border-radius: 15px;
-  background-color: #F1F5F9;
-  z-index: 30;
-  box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.66667px 3.50231px rgba(0, 0, 0, 0.00962963); }
-  .createTaskForm .formPrimarySection {
-    padding: 30px 80px 30px 80px;
-    width: 100%; }
-  .createTaskForm button {
-    border: 0; }
-  .createTaskForm fieldset {
-    min-width: 0;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 0px;
-    border: 0;
-    margin: 0; }
-  .createTaskForm legend {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-top: 25px;
-    margin-bottom: 15px; }
-    .createTaskForm legend h2 {
-      font-size: 1.2rem;
-      text-transform: capitalize;
-      color: black;
-      border-bottom: 3px solid #d4d4d4;
-      padding-bottom: 10px;
-      width: 100%;
-      font-family: "Inter", sans-serif; }
-  .createTaskForm input {
-    background-color: transparent;
-    border-radius: 5px;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .createTaskForm .formSection {
-    width: 100%;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center; }
-    .createTaskForm .formSection input[type="time"],
-    .createTaskForm .formSection input[type="text"],
-    .createTaskForm .formSection input[type="date"] {
-      width: 100%; }
-    .createTaskForm .formSection label,
-    .createTaskForm .formSection input {
-      display: inline-block; }
-    .createTaskForm .formSection label {
-      width: 30%;
-      margin-bottom: 15px;
-      color: #6D767E; }
-    .createTaskForm .formSection input {
-      padding: 0px 0px 0px 8px;
-      background-color: #FFFFFF;
-      margin-left: 30px;
-      height: 35px; }
-    .createTaskForm .formSection span {
-      margin-right: 5px; }
-  .createTaskForm .exitButton {
-    position: absolute;
-    top: 15px;
-    right: 20px; }
-  .createTaskForm .buttonSection {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end; }
-    .createTaskForm .buttonSection button {
-      padding: 5px 0;
-      border-radius: 10px;
-      min-width: 125px;
-      font-size: 1rem; }
-    .createTaskForm .buttonSection button,
-    .createTaskForm .buttonSection .cancelBtn {
-      height: 35px; }
-  .createTaskForm .submitBtn {
-    margin-left: 15px;
-    background-color: #36CB82;
-    color: white;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .createTaskForm .cancelBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    padding: 5px 0;
-    border-radius: 10px;
-    height: 50px;
-    min-width: 125px;
-    font-size: 1rem;
-    color: black;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; }
-  .createTaskForm .prioritySection {
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    background-color: #FFFFFF;
-    padding: 35px 30px;
-    border-radius: 5px;
-    margin-top: 35px; }
-    .createTaskForm .prioritySection label {
-      margin-right: 10px; }
-    .createTaskForm .prioritySection input {
-      margin: 0; }
-  .createTaskForm .paragraphLabel {
-    margin-right: 125px;
-    width: 30%;
-    color: #6D767E;
-    font-weight: bold;
-    font-size: 1rem;
-    display: flex;
-    align-items: center; }
-  .createTaskForm .priorityContainer {
-    display: flex;
-    margin-right: 25px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    cursor: pointer;
-    position: relative; }
-    .createTaskForm .priorityContainer label {
-      width: 100px !important;
-      cursor: pointer; }
-    .createTaskForm .priorityContainer input {
-      height: 20px;
-      cursor: pointer;
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%); }
+}
+.createTaskForm label {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-top: 15px;
+}
+.createTaskForm .formPrimarySection {
+  padding: 30px 80px 30px 80px;
+  width: 100%;
+}
+.createTaskForm button {
+  border: 0;
+}
+.createTaskForm fieldset {
+  min-width: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  border: 0;
+  margin: 0;
+}
+.createTaskForm i {
+  font-size: 1.4rem;
+}
+.createTaskForm legend {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+.createTaskForm legend h2 {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  text-transform: capitalize;
+  color: black;
+  border-bottom: 3px solid #d4d4d4;
+  padding-bottom: 10px;
+  width: 100%;
+}
+.createTaskForm input {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  background-color: transparent;
+  border-radius: 5px;
+}
+.createTaskForm .formSection {
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.createTaskForm .formSection input[type=time],
+.createTaskForm .formSection input[type=text],
+.createTaskForm .formSection input[type=date] {
+  width: 100%;
+}
+.createTaskForm .formSection label,
+.createTaskForm .formSection input {
+  display: inline-block;
+}
+.createTaskForm .formSection label {
+  width: 30%;
+  margin-bottom: 15px;
+  color: #6D767E;
+}
+.createTaskForm .formSection input {
+  padding: 0px 0px 0px 8px;
+  background-color: #FFFFFF;
+  margin-left: 30px;
+  height: 35px;
+}
+.createTaskForm .formSection span {
+  margin-right: 5px;
+}
+.createTaskForm .exitButton {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+.createTaskForm .buttonSection {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.createTaskForm .buttonSection button {
+  padding: 5px 0;
+  border-radius: 10px;
+  min-width: 125px;
+  font-size: 1rem;
+}
+.createTaskForm .buttonSection button,
+.createTaskForm .buttonSection .cancelBtn {
+  height: 35px;
+}
+.createTaskForm .submitBtn,
+.createTaskForm .cancelBtn {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+.createTaskForm .submitBtn {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  margin-left: 15px;
+  background-color: #36CB82;
+  color: white;
+}
+.createTaskForm .cancelBtn {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
+  border-radius: 10px;
+  height: 50px;
+  min-width: 125px;
+  font-size: 1rem;
+  color: black;
+}
+.createTaskForm .prioritySection {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  background-color: #FFFFFF;
+  padding: 35px 30px;
+  border-radius: 5px;
+  margin-top: 35px;
+}
+.createTaskForm .prioritySection label {
+  margin-right: 10px;
+}
+.createTaskForm .prioritySection input {
+  margin: 0;
+}
+.createTaskForm .paragraphLabel {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  margin-right: 125px;
+  width: 30%;
+  color: #6D767E;
+  display: flex;
+  align-items: center;
+}
+.createTaskForm .priorityContainer {
+  display: flex;
+  margin-right: 25px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+  cursor: pointer;
+  position: relative;
+}
+.createTaskForm .priorityContainer label {
+  width: 100px !important;
+  cursor: pointer;
+}
+.createTaskForm .priorityContainer input {
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .formSecondarySection {
   width: 100%;
+  height: 100%;
   background-color: #FFFFFF;
   padding: 20px 80px 20px 80px;
   display: flex;
   height: 70vh;
   flex-direction: column;
-  justify-content: space-between; }
-  .formSecondarySection .labelSection {
-    display: flex;
-    flex-direction: column; }
-  .formSecondarySection .createLabelTextContainer {
-    position: relative; }
-    .formSecondarySection .createLabelTextContainer .createNewLabelBtn {
-      display: block;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 5px;
-      color: #6F6F6F;
-      font-size: 1.3rem;
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none; }
-  .formSecondarySection .saveLabelsContainer {
-    display: flex;
-    align-items: center;
-    margin-top: 25px; }
-    .formSecondarySection .saveLabelsContainer label {
-      width: calc(100% - 30px);
-      margin: 0 5px 0 0;
-      padding-left: 5px;
-      line-height: 20px; }
-    .formSecondarySection .saveLabelsContainer input {
-      padding: 0;
-      cursor: pointer;
-      height: 20px;
-      width: 20px; }
-  .formSecondarySection .orSection {
-    width: 100%;
-    display: flex;
-    justify-content: space-around; }
-    .formSecondarySection .orSection p {
-      color: #6D767E;
-      transform: translateY(35%); }
-  .formSecondarySection .orSectionBorder {
-    width: 30%;
-    border-bottom: 2px solid #d4d4d4;
-    display: block; }
-  .formSecondarySection input {
-    width: 100%;
-    padding: 0px 0px 0px 8px;
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    height: 35px; }
-  .formSecondarySection label {
-    color: #6D767E;
-    margin-bottom: 10px;
-    margin-top: 20px; }
-  .formSecondarySection select {
-    width: 100%;
-    background-color: transparent;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border-radius: 5px;
-    padding: 0px 0px 0px 8px;
-    height: 35px;
-    color: black; }
-  .formSecondarySection .customTaskError {
-    border: 1px solid red;
-    border-radius: 5px; }
-  .formSecondarySection .customTaskErrorMsg {
-    padding-top: 10px; }
-  .formSecondarySection .selectedTaskError {
-    border: 1px solid red; }
+  justify-content: space-between;
+}
+.formSecondarySection .labelSection {
+  display: flex;
+  flex-direction: column;
+}
+.formSecondarySection .createLabelTextContainer {
+  position: relative;
+}
+.formSecondarySection .createLabelTextContainer .createNewLabelBtn {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5px;
+  color: #6F6F6F;
+  font-size: 1.3rem;
+}
+.formSecondarySection .saveLabelsContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+.formSecondarySection .saveLabelsContainer label {
+  width: calc(100% - 30px);
+  margin: 0 5px 0 0;
+  padding-left: 5px;
+  line-height: 20px;
+}
+.formSecondarySection .saveLabelsContainer input {
+  padding: 0;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+}
+.formSecondarySection .saveLabelsContainer label {
+  font-size: 0.7rem;
+}
+.formSecondarySection .orSection {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.formSecondarySection .orSection p {
+  color: #6D767E;
+  transform: translateY(35%);
+}
+.formSecondarySection .orSectionBorder {
+  width: 30%;
+  border-bottom: 2px solid rgb(212, 212, 212);
+  display: block;
+}
+.formSecondarySection input {
+  width: 100%;
+  padding: 0px 0px 0px 8px;
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  height: 35px;
+}
+.formSecondarySection label {
+  color: #6D767E;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+.formSecondarySection select {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  width: 100%;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 0px 0px 0px 8px;
+  height: 35px;
+  color: black;
+}
+.formSecondarySection .customTaskError {
+  border: 1px solid red;
+  border-radius: 5px;
+}
+.formSecondarySection .customTaskErrorMsg {
+  padding-top: 10px;
+}
+.formSecondarySection .selectedTaskError {
+  border: 1px solid red;
+}
 
 .existingLabelSection {
   border-bottom: 3px solid #d4d4d4;
-  padding-bottom: 15px; }
+  padding-bottom: 15px;
+}
 
 .existingLabelButtons {
   display: flex;
-  justify-content: space-between; }
-  .existingLabelButtons .createNewLabelBtn {
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    color: #6F6F6F;
-    font-size: 1.3rem;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; }
+  justify-content: space-between;
+}
+.existingLabelButtons .createNewLabelBtn {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  color: #6F6F6F;
+  font-size: 1.3rem;
+}
 
 .existingTaskSelect {
-  width: 90%; }
+  width: 90%;
+}
 
 .lowPriorityContainer {
-  background-color: #A5D6A7; }
+  background-color: #A5D6A7;
+}
 
 .mediumPriorityContainer {
-  background-color: #FEEFD0; }
+  background-color: #FEEFD0;
+}
 
 .highPriorityContainer {
-  background-color: #FFCED6; }
+  background-color: #FFCED6;
+}
 
-input[type="color"] {
+input[type=color] {
   width: 50%;
   padding: 5px;
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .colorSection {
   border-bottom: 3px solid #d4d4d4;
-  padding-bottom: 25px; }
+  padding-bottom: 25px;
+}
 
 .colorChoiceHelp {
   margin-top: 10px;
   display: flex;
-  align-items: center; }
-  .colorChoiceHelp p {
-    font-size: 0.8rem;
-    color: #5fadd2;
-    margin-left: 10px; }
+  align-items: center;
+}
+.colorChoiceHelp p {
+  font-size: 0.8rem;
+  color: #5fadd2;
+  margin-left: 10px;
+}
 
-.chosenLabelsSection {
-  margin-top: 20px; }
+.chosenLabelsSection p {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-top: 20px;
+  color: #6D767E;
+}
 
 .appliedTaskLabel {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
   padding: 5px 10px;
-  border: 1px solid rgba(212, 212, 212, 0.9);
   margin-right: 10px;
   margin-top: 5px;
   margin-bottom: 15px;
   border-radius: 5px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
   display: inline-flex;
-  align-items: center; }
-  .appliedTaskLabel i {
-    font-size: 1rem;
-    padding-left: 10px;
-    color: #ff6781;
-    cursor: pointer; }
+  align-items: center;
+}
+.appliedTaskLabel i {
+  font-size: 1rem;
+  padding-left: 10px;
+  color: #ff6781;
+  cursor: pointer;
+}
+.appliedTaskLabel p {
+  margin-top: 0;
+  text-transform: capitalize;
+}
 
 @media (max-width: 1090px) {
   .createTaskForm {
-    width: 60vw; }
-    .createTaskForm .formSection.prioritySection {
-      flex-wrap: wrap; }
-    .createTaskForm .priorityContainer {
-      display: flex;
-      justify-content: space-between;
-      width: 100%; }
-    .createTaskForm .paragraphLabel {
-      width: 100%;
-      margin: 0 0 10px 0; }
-    .createTaskForm .lowPriorityContainer.priorityContainer,
-    .createTaskForm .mediumPriorityContainer.priorityContainer,
-    .createTaskForm .highPriorityContainer.priorityContainer {
-      margin-right: 0;
-      margin-bottom: 15px; }
-    .createTaskForm .formSection {
-      flex-direction: column; }
-      .createTaskForm .formSection label {
-        width: 100%; }
-      .createTaskForm .formSection input {
-        margin: 0; } }
-
+    width: 60vw;
+  }
+  .createTaskForm .formSection.prioritySection {
+    flex-wrap: wrap;
+  }
+  .createTaskForm .priorityContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .createTaskForm .paragraphLabel {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+  .createTaskForm .lowPriorityContainer.priorityContainer,
+  .createTaskForm .mediumPriorityContainer.priorityContainer,
+  .createTaskForm .highPriorityContainer.priorityContainer {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  .createTaskForm .formSection {
+    flex-direction: column;
+  }
+  .createTaskForm .formSection label {
+    width: 100%;
+  }
+  .createTaskForm .formSection input {
+    margin: 0;
+  }
+}
 @media (max-width: 785px) {
   .createTaskForm {
-    width: 80vw; }
-    .createTaskForm .buttonSection {
-      flex-direction: column;
-      justify-content: center; }
-    .createTaskForm .submitBtn {
-      margin: 15px 0 0 0; }
-    .createTaskForm .formSecondarySection,
-    .createTaskForm .formPrimarySection {
-      padding: 20px 40px; } }
-
+    width: 80vw;
+  }
+  .createTaskForm .buttonSection {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .createTaskForm .submitBtn {
+    margin: 15px 0 0 0;
+  }
+  .createTaskForm .formSecondarySection,
+  .createTaskForm .formPrimarySection {
+    padding: 20px 40px;
+  }
+}
 @media (max-width: 400px) {
   .createTaskForm {
-    width: 90vw; }
+    width: 90vw;
+  }
   .formSecondarySection {
-    height: 80vh; } }
-
+    height: 80vh;
+  }
+}
 .react-calendar {
   width: 100%;
   background-color: transparent;
   color: black;
   border-radius: 8px;
   font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.125em; }
+  line-height: 1.125em;
+}
 
 .react-calendar__navigation {
   display: flex;
-  align-items: center; }
+  align-items: center;
+}
 
 .react-calendar__navigation button {
   color: black;
   min-width: 44px;
   background: none;
-  font-size: 16px;
-  margin-top: 8px; }
+  font-size: 1rem;
+  margin-top: 8px;
+}
 
 .react-calendar--doubleView {
-  width: 700px; }
+  width: 700px;
+}
 
 .react-calendar--doubleView .react-calendar__viewContainer {
   display: flex;
-  margin: -0.5em; }
+  margin: -0.5em;
+}
 
 .react-calendar--doubleView .react-calendar__viewContainer > * {
   width: 50%;
-  margin: 0.5em; }
+  margin: 0.5em;
+}
 
 .react-calendar,
 .react-calendar *,
@@ -2241,1372 +2612,1789 @@ input[type="color"] {
 .react-calendar *:after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 .react-calendar button {
   margin: 0;
   border: 1px solid #F2F3F6;
   outline: none;
   position: relative;
-  height: 58px; }
-  .react-calendar button abbr {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: normal;
-    font-size: 0.8rem; }
+  height: 58px;
+}
+.react-calendar button abbr {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: normal;
+  font-size: 0.8rem;
+}
 
 .react-calendar button:enabled:hover {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .react-calendar__navigation {
   display: flex;
-  height: 44px; }
+  height: 44px;
+}
 
 .react-calendar__navigation button {
   min-width: 44px;
-  /* background: none; */ }
-
-.react-calendar__navigation button[disabled] {
-  background-color: black; }
+}
 
 .react-calendar__month-view__weekdays {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.75em;
+  font-weight: normal;
   text-align: center;
   text-transform: uppercase;
-  font-weight: bold;
-  font-size: 0.75em;
-  font-family: Nunito Sans ,sans-serif; }
-  .react-calendar__month-view__weekdays abbr {
-    text-transform: capitalize; }
+}
+.react-calendar__month-view__weekdays abbr {
+  text-transform: capitalize;
+}
 
 .react-calendar__month-view__weekdays__weekday {
   padding: 0;
   border: 1px solid #d7d6d6;
-  border-radius: 2px 2px 0 0; }
+  border-radius: 2px 2px 0 0;
+}
 
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Inter Semibold", sans-serif;
   font-size: 0.75em;
-  font-weight: bold;
-  padding: calc(0.75em / 0.75) calc(0.5em / 0.75); }
+  font-weight: normal;
+  padding: 1em 0.6666666667em;
+}
 
 .react-calendar__month-view__days__day--weekend {
   /* color: #d10000; */
-  color: black; }
+  color: black;
+}
 
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: #7a7878; }
+  color: rgb(122, 120, 120);
+}
 
 .react-calendar__year-view .react-calendar__tile,
 .react-calendar__decade-view .react-calendar__tile,
 .react-calendar__century-view .react-calendar__tile {
-  padding: 2em 0.5em; }
+  padding: 2em 0.5em;
+}
 
 .react-calendar__tile {
   max-width: 100%;
   text-align: center;
   padding: 0.75em 0.5em;
-  background: white; }
+  background: white;
+}
 
 .react-calendar__tile:disabled {
-  background-color: #f0f0f0; }
+  background-color: #f0f0f0;
+}
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: #e6e6e6; }
+  background-color: #e6e6e6;
+}
 
 .react-calendar__tile--now {
   /* background: #ffff76; */
-  background-color: #a5d6a7 !important; }
+  background-color: #a5d6a7 !important;
+}
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: #93be94; }
+  background: #93be94;
+}
 
 .react-calendar__tile--hasActive {
-  background: #76baff; }
+  background: #76baff;
+}
 
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: #a9d4ff; }
+  background: #a9d4ff;
+}
 
 .react-calendar__tile--active {
-  background: #ecebeb;
-  color: #7f7f7f; }
+  background: rgb(236, 235, 235);
+  color: rgb(127, 127, 127);
+}
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: #edecec; }
+  background: rgb(237, 236, 236);
+}
 
 .react-calendar--selectRange .react-calendar__tile--hover {
-  background-color: #e6e6e6; }
+  background-color: #e6e6e6;
+}
 
 abbr[title] {
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 .react-calendar__navigation button {
-  border: 0; }
+  border: 0;
+}
 
 .react-calendar__navigation__prev2-button,
 .react-calendar__navigation__next2-button {
-  display: none; }
+  display: none;
+}
 
 .react-calendar__navigation__arrow.react-calendar__navigation__prev-button,
 .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: 0.8rem;
+  border-radius: 15px;
+  padding: 15px;
+  color: black;
   background-color: white;
-  border: 1px solid #d7d6d6;
   height: 25px;
   width: 100px;
-  border-radius: 15px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-  border: 1px solid rgba(212, 212, 212, 0.9);
-  padding: 15px;
   display: flex;
   justify-content: space-around;
-  align-items: center; }
+  align-items: center;
+}
 
 .react-calendar__navigation__next-button::before {
   content: "Next ";
-  color: black; }
+  color: black;
+}
 
 .react-calendar__navigation__prev-button::after {
   content: " Back";
-  color: black; }
+  color: black;
+}
 
 .react-calendar__month-view {
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+}
 
 .react-calendar__navigation__label__labelText {
-  font-size: 1.2rem; }
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
 
 .react-calendar__viewContainer {
-  margin-top: 20px; }
+  margin-top: 20px;
+}
 
 .calendarPage {
   min-height: 100vh;
   background-color: #F6F7FA;
-  padding-bottom: 75px; }
-  .calendarPage .calendarSection {
-    position: relative;
-    padding: 25px 50px 0px 50px;
-    margin-left: 100px;
-    display: flex;
-    justify-content: center; }
-  .calendarPage .overallTaskOverview {
-    margin-left: 100px;
-    padding: 25px 50px 0px 50px; }
-    .calendarPage .overallTaskOverview h2 {
-      font-size: 1.1rem;
-      text-decoration: underline;
-      background-color: #f4f4f4;
-      border-radius: 10px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      padding: 10px 10px 10px 15px;
-      background-color: white; }
-  .calendarPage .displayTasksSection {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap; }
-    .calendarPage .displayTasksSection .taskContainer {
-      width: 48%;
-      background-color: #FFFFFF;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 15px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      height: 150px;
-      cursor: pointer; }
-    .calendarPage .displayTasksSection .taskName {
-      font-size: 0.8rem !important; }
-  .calendarPage .deadlineSection {
-    display: flex;
-    align-items: center; }
-    .calendarPage .deadlineSection p {
-      font-size: 0.7rem !important; }
-    .calendarPage .deadlineSection i {
-      font-size: 0.8rem;
-      margin-right: 10px; }
-  .calendarPage .low {
-    background-color: #a5d6a78a !important; }
-  .calendarPage .medium {
-    background-color: #feefd093 !important; }
-  .calendarPage .high {
-    background-color: #ffced670 !important; }
-  .calendarPage .labelParagraph {
-    border: 1px solid rgba(212, 212, 212, 0.8);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border-radius: 5px;
-    margin-right: 10px;
-    padding: 5px;
-    background-color: white;
-    display: inline-block;
-    font-size: 0.8rem;
-    text-transform: capitalize;
-    margin-top: 5px; }
-  .calendarPage .loadingContainer {
-    width: 100%;
-    padding-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; }
-  .calendarPage .progressContainer {
-    display: flex;
-    align-items: center;
-    margin-top: 15px; }
-    .calendarPage .progressContainer p {
-      padding-left: 10px;
-      font-size: 0.8rem; }
-  .calendarPage .progressBar {
-    width: 100%;
-    height: 10px;
-    background-color: white;
-    border-radius: 5px; }
-  .calendarPage .progressColor {
-    background-color: #A5D6A7;
-    height: 10px;
-    border-radius: 5px; }
-  .calendarPage .fa-circle {
-    font-size: 0.3rem;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    color: #f57d3dcd;
-    border: 1px solid rgba(212, 212, 212, 0.8);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .calendarPage .noResultsFound {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    text-align: center;
-    color: #9e9d9d;
-    font-weight: bold; }
-    .calendarPage .noResultsFound .errorImageContainer {
-      width: 150px;
-      height: auto; }
-  .calendarPage .overlayBackground {
-    z-index: 20; }
-  .calendarPage .overlayBackgroundTwo {
-    z-index: 40; }
-  .calendarPage .homeNavigation {
-    z-index: 30; }
-  .calendarPage .createTaskForm {
-    z-index: 50; }
-  .calendarPage .currentTaskSelected {
-    border: 1px solid rgba(149, 149, 149, 0.8) !important;
-    box-shadow: 2px 4px rgba(181, 181, 181, 0.886) !important; }
+  padding-bottom: 75px;
+}
+.calendarPage .calendarSection {
+  position: relative;
+  padding: 25px 50px 0px 50px;
+  margin-left: 100px;
+  display: flex;
+  justify-content: center;
+}
+.calendarPage .overallTaskOverview {
+  margin-left: 100px;
+  padding: 25px 50px 0px 50px;
+}
+.calendarPage .overallTaskOverview h2 {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-size: 1.1rem;
+  font-weight: normal;
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  text-decoration: underline;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  padding: 10px 10px 10px 15px;
+  background-color: white;
+}
+.calendarPage .displayTasksSection {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.calendarPage .displayTasksSection .taskContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  width: 48%;
+  background-color: #FFFFFF;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 15px;
+  height: 150px;
+  cursor: pointer;
+}
+.calendarPage .displayTasksSection .taskName {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-size: 0.8rem;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+.calendarPage .deadlineSection {
+  display: flex;
+  align-items: center;
+}
+.calendarPage .deadlineSection p {
+  font-size: 0.7rem !important;
+}
+.calendarPage .deadlineSection i {
+  font-size: 0.8rem;
+  margin-right: 10px;
+}
+.calendarPage .low {
+  background-color: rgba(165, 214, 167, 0.5411764706) !important;
+}
+.calendarPage .medium {
+  background-color: rgba(254, 239, 208, 0.5764705882) !important;
+}
+.calendarPage .high {
+  background-color: rgba(255, 206, 214, 0.4392156863) !important;
+}
+.calendarPage .labelParagraph {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  border-radius: 5px;
+  margin-right: 10px;
+  padding: 5px;
+  background-color: white;
+  display: inline-block;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  margin-top: 5px;
+}
+.calendarPage .loadingContainer {
+  width: 100%;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.calendarPage .progressContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+.calendarPage .progressContainer p {
+  padding-left: 10px;
+  font-size: 0.8rem;
+}
+.calendarPage .progressBar {
+  width: 100%;
+  height: 10px;
+  background-color: white;
+  border-radius: 5px;
+}
+.calendarPage .progressColor {
+  background-color: #A5D6A7;
+  height: 10px;
+  border-radius: 5px;
+}
+.calendarPage .fa-circle {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-size: 0.3rem;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  color: rgba(245, 125, 61, 0.8039215686);
+}
+.calendarPage .noResultsFound {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  text-align: center;
+  color: #9e9d9d;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+}
+.calendarPage .noResultsFound .errorImageContainer {
+  width: 150px;
+  height: auto;
+}
+.calendarPage .overlayBackground {
+  z-index: 20;
+}
+.calendarPage .overlayBackgroundTwo {
+  z-index: 40;
+}
+.calendarPage .homeNavigation {
+  z-index: 30;
+}
+.calendarPage .createTaskForm {
+  z-index: 50;
+}
+.calendarPage .currentTaskSelected {
+  border: 1px solid rgba(149, 149, 149, 0.8) !important;
+  box-shadow: 2px 4px rgba(181, 181, 181, 0.886) !important;
+}
 
 @media (max-width: 940px) {
   .calendarPage .displayTasksSection {
     display: flex;
-    flex-direction: column; }
-    .calendarPage .displayTasksSection .taskContainer {
-      width: 100%; } }
-
+    flex-direction: column;
+  }
+  .calendarPage .displayTasksSection .taskContainer {
+    width: 100%;
+  }
+}
 @media (max-width: 768px) {
   .calendarPage .displayTasksSection .taskContainer {
     height: 185px;
     display: flex;
     flex-direction: column;
-    justify-content: center; }
+    justify-content: center;
+  }
   .calendarPage .calendarSection,
   .calendarPage .overallTaskOverview {
-    padding: 25px 15px 0px 15px; } }
-
+    padding: 25px 15px 0px 15px;
+  }
+}
+@media (max-width: 575px) {
+  .calendarPage .calendarSection,
+  .calendarPage .overallTaskOverview {
+    margin-left: 75px;
+  }
+}
 @media (max-width: 480px) {
   .calendarPage .taskName {
-    margin-bottom: 0; }
+    margin-bottom: 0;
+  }
   .calendarPage .displayTasksSection .taskContainer {
     height: 250px;
-    justify-content: space-around; }
+    justify-content: space-around;
+  }
   .calendarPage .progressContainer {
-    margin-top: 0; } }
-
+    margin-top: 0;
+  }
+}
 .habitPage {
   background-color: #F6F7FA;
-  min-height: 100vh; }
-  .habitPage .homeNavigation {
-    z-index: 19; }
-  .habitPage .habitTrackingContent {
-    position: relative;
-    padding: 25px 50px 0px 50px;
-    margin-left: 100px;
-    min-height: 100vh; }
-  .habitPage .habitContentOne {
-    width: 70%;
-    margin-right: 20px; }
-  .habitPage .habitContentTwo {
-    width: 30%; }
-    .habitPage .habitContentTwo h2 {
-      font-size: 1rem; }
-    .habitPage .habitContentTwo .dailyDetails {
-      margin-bottom: 15px; }
-      .habitPage .habitContentTwo .dailyDetails p {
-        font-size: 0.7rem;
-        text-align: end;
-        margin-top: 10px; }
-    .habitPage .habitContentTwo .dailyDateContainer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between; }
-      .habitPage .habitContentTwo .dailyDateContainer button {
-        border: 1px solid #d4d4d4;
-        border-radius: 50%;
-        height: 30px;
-        width: 30px;
-        background-color: white;
-        margin-left: 5px; }
-        .habitPage .habitContentTwo .dailyDateContainer button i {
-          font-size: 1rem;
-          color: black; }
-      .habitPage .habitContentTwo .dailyDateContainer button.disabledArrow {
-        background-color: #d9dee0;
-        color: #a8b4b9; }
-    .habitPage .habitContentTwo .dailyCompletionBar {
-      width: 100%;
-      height: 8px;
-      background-color: white;
-      border-radius: 15px;
-      margin-top: 10px; }
-  .habitPage .completionFill {
-    height: 8px;
-    border-radius: 15px;
-    background-color: #017AFF;
-    width: 0%; }
-  .habitPage .weeklyHabitDetails {
-    width: 100%; }
-    .habitPage .weeklyHabitDetails .weekCompletionBar {
-      width: 100%;
-      height: 8px;
-      background-color: #EDF3FA;
-      border-radius: 5px; }
-    .habitPage .weeklyHabitDetails p {
-      font-size: 0.8rem;
-      margin-bottom: 10px !important;
-      margin-top: 5px;
-      text-align: end; }
-  .habitPage .habitListContainer {
-    background-color: white;
-    border: 1px solid #d4d4d4;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border-radius: 15px;
-    height: 80%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 15px 0;
-    min-height: 250px; }
-  .habitPage .habitFlexContainer {
-    display: flex;
-    min-height: 100vh; }
-  .habitPage .noHabitsContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #9e9d9d;
-    height: 100%;
-    width: 100%; }
-    .habitPage .noHabitsContainer img {
-      display: block;
-      width: 150px;
-      height: auto; }
-  .habitPage .addHabitBtn {
-    padding: 5px 20px;
-    font-weight: bold;
-    border-radius: 25px;
-    color: #197DE7;
-    border: 1px solid #d4d4d4;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    background-color: white;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center; }
-    .habitPage .addHabitBtn i {
-      font-size: 1rem;
-      margin-right: 10px; }
-  .habitPage .userGreetingText p {
-    margin-top: 5px;
-    font-size: 1rem; }
-  .habitPage .habitCalendar {
-    width: 100%;
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #a5d6a79f;
-    padding: 10px 15px;
-    border-radius: 15px;
-    border: 1px solid #d4d4d4;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-    .habitPage .habitCalendar h2 {
-      margin-bottom: 15px; }
-    .habitPage .habitCalendar ul {
-      display: inline-flex;
-      background-color: white;
-      border-radius: 15px;
-      width: 100%; }
-      .habitPage .habitCalendar ul li {
-        padding: 10px 5px;
-        width: calc(100% / 7);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center; }
-      .habitPage .habitCalendar ul p {
-        font-weight: normal;
-        font-size: 0.8rem;
-        color: black; }
-    .habitPage .habitCalendar button {
-      padding: 10px 15px; }
-    .habitPage .habitCalendar p:nth-child(odd) {
-      margin-bottom: 5px; }
-    .habitPage .habitCalendar h2 {
-      font-size: 1rem; }
-  .habitPage .today {
-    background-color: #A5D6A7;
-    border-radius: 10px; }
-  .habitPage .habitCalendarBreakdown {
-    display: flex;
-    flex-direction: column;
-    position: relative; }
-    .habitPage .habitCalendarBreakdown table {
-      width: 80%;
-      display: block; }
-      .habitPage .habitCalendarBreakdown table tr {
-        display: flex;
-        justify-content: space-around; }
-      .habitPage .habitCalendarBreakdown table td {
-        border-radius: 5px;
-        height: 1.5rem;
-        width: 1.5rem;
-        background-color: white; }
-    .habitPage .habitCalendarBreakdown tr {
-      width: 100%;
-      display: block; }
-    .habitPage .habitCalendarBreakdown th,
-    .habitPage .habitCalendarBreakdown td {
-      width: calc(100% / 7);
-      height: 35px;
-      text-align: center;
-      font-size: 0.9rem;
-      align-items: center;
-      display: inline-flex;
-      justify-content: center;
-      font-weight: lighter; }
-    .habitPage .habitCalendarBreakdown td {
-      border: 1px solid #d4d4d4;
-      width: calc(50% / 7); }
-    .habitPage .habitCalendarBreakdown .rowIdentifiers {
-      display: flex;
-      align-items: center;
-      width: 20%; }
-      .habitPage .habitCalendarBreakdown .rowIdentifiers p {
-        font-size: 0.8rem; }
-      .habitPage .habitCalendarBreakdown .rowIdentifiers i {
-        font-size: 0.6rem;
-        margin-right: 10px; }
-    .habitPage .habitCalendarBreakdown .loadingContainer {
-      position: absolute;
-      left: 0;
-      right: 0; }
-    .habitPage .habitCalendarBreakdown .habitListError {
-      height: 100%;
-      text-align: center;
-      margin-top: 25px;
-      color: #9e9d9d;
-      font-weight: bold; }
-  .habitPage .habitCalendarBreakdown {
-    margin-top: 20px; }
-  .habitPage .tableHeaders {
-    width: 80% !important;
-    align-self: flex-end; }
-    .habitPage .tableHeaders tbody {
-      width: 100%;
-      display: block; }
-  .habitPage .taskCompletionTable {
-    display: flex;
-    margin-bottom: 15px; }
-  .habitPage .fillInTable {
-    width: 80%; }
-    .habitPage .fillInTable tbody {
-      display: block;
-      width: 100%; }
-    .habitPage .fillInTable .filledHabitDay {
-      background-color: #e5d9f7; }
-  .habitPage .showMoreContainer {
-    height: 30px;
-    display: flex;
-    justify-content: center; }
-    .habitPage .showMoreContainer i {
-      font-size: 1.2rem;
-      border: 1px solid #d4d4d4;
-      border-radius: 50%;
-      background-color: black;
-      color: white; }
-  .habitPage .buttonContainer {
-    width: 100%;
-    border-bottom: 2px solid rgba(212, 212, 212, 0.9);
-    padding: 15px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; }
-    .habitPage .buttonContainer .arrowIcon {
-      font-size: 1.5rem;
-      border: 1px solid #d4d4d4;
-      border-radius: 50%;
-      background-color: black;
-      color: white; }
-    .habitPage .buttonContainer .arrowIcon.disabledArrow {
-      color: #d9dee0;
-      background-color: #a8b4b9; }
-  .habitPage .dashboardButtons .arrowIcon {
-    margin-right: 5px; }
-  .habitPage .createHabitModal {
-    background-color: white;
-    border: 1px solid #d4d4d4;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border-radius: 15px;
-    position: fixed;
-    height: 90vh;
-    width: 80vw;
-    z-index: 30;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 30px 80px 30px 80px; }
-    .habitPage .createHabitModal fieldset,
-    .habitPage .createHabitModal legend {
-      width: 100%; }
-    .habitPage .createHabitModal legend {
-      margin-bottom: 15px; }
-    .habitPage .createHabitModal fieldset {
-      display: flex;
-      flex-direction: column; }
-    .habitPage .createHabitModal select {
-      background-color: white;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border-radius: 5px; }
-    .habitPage .createHabitModal h2 {
-      font-size: 1.2rem;
-      text-transform: capitalize;
-      color: black;
-      border-bottom: 3px solid #d4d4d4;
-      padding-bottom: 10px;
-      width: 100%;
-      font-family: "Inter", sans-serif;
-      margin-top: 25px; }
-    .habitPage .createHabitModal .fa-circle-xmark {
-      font-size: 1.4rem; }
-    .habitPage .createHabitModal .exitHabitModalBtn {
-      position: absolute;
-      top: 15px;
-      right: 20px; }
-  .habitPage .btnContainer {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end; }
-    .habitPage .btnContainer button[type="submit"],
-    .habitPage .btnContainer .cancelBtn {
-      padding: 5px 0px;
-      min-width: 125px;
-      border-radius: 10px;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      margin: 50px 0 0 15px; }
-    .habitPage .btnContainer button[type="submit"] {
-      background-color: #36CB82;
-      color: white; }
-    .habitPage .btnContainer .cancelBtn {
-      color: black;
-      text-align: center;
-      font-weight: bold;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      cursor: pointer; }
-  .habitPage label,
-  .habitPage legend {
-    color: #6D767E;
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin: 15px 0 10px 0;
-    word-wrap: break-word; }
-  .habitPage .inputContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px; }
-    .habitPage .inputContainer input,
-    .habitPage .inputContainer select {
-      border-radius: 5px;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      padding: 0px 0px 0px 8px;
-      height: 35px; }
-  .habitPage .habitContainer {
-    color: black;
-    margin: 15px;
-    padding: 0px 10px;
-    position: relative;
-    height: 80px; }
-    .habitPage .habitContainer .habitDetails {
-      display: flex;
-      justify-content: space-between;
-      align-items: center; }
-    .habitPage .habitContainer i {
-      font-size: 1rem;
-      color: black; }
-    .habitPage .habitContainer .markAsCompleteBtn {
-      color: #197DE7;
-      font-size: 0.7rem;
-      background-color: white;
-      width: 100%;
-      border-radius: 5px;
-      padding: 5px 0;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      margin-top: 10px; }
-    .habitPage .habitContainer p {
-      font-size: 0.9rem; }
-    .habitPage .habitContainer .dropdownOptions,
-    .habitPage .habitContainer .dropdownOptionsTwo {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      background-color: white;
-      border: 1px solid rgba(212, 212, 212, 0.9); }
-      .habitPage .habitContainer .dropdownOptions button,
-      .habitPage .habitContainer .dropdownOptionsTwo button {
-        font-size: 0.7rem;
-        font-weight: normal;
-        padding: 0 10px; }
-    .habitPage .habitContainer .dropdownOptions.hidden,
-    .habitPage .habitContainer .dropdownOptionsTwo.hidden {
-      display: none; }
-    .habitPage .habitContainer .dropdownOptionsTwo {
-      bottom: 20%; }
-    .habitPage .habitContainer .completedDiv {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      padding: 5px 0; }
-      .habitPage .habitContainer .completedDiv p {
-        display: flex;
-        align-items: center; }
-        .habitPage .habitContainer .completedDiv p i {
-          padding-right: 5px; }
-      .habitPage .habitContainer .completedDiv p,
-      .habitPage .habitContainer .completedDiv i,
-      .habitPage .habitContainer .completedDiv button {
-        font-size: 0.6rem; }
-    .habitPage .habitContainer .overlayBackground .lds-ring {
-      left: 50%; }
-    .habitPage .habitContainer .completionIndicator ul {
-      display: flex;
-      margin-top: 10px; }
-      .habitPage .habitContainer .completionIndicator ul .completionBox {
-        border: 1px solid #d4d4d4;
-        border-radius: 50%;
-        height: 10px;
-        width: 10px;
-        margin-right: 10px; }
-  .habitPage fieldset.labelColourContainer {
-    flex-direction: row;
-    justify-content: space-around; }
-    .habitPage fieldset.labelColourContainer input[type=radio] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none; }
-    .habitPage fieldset.labelColourContainer input[type=radio]::before {
-      content: " ";
-      display: block;
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-    .habitPage fieldset.labelColourContainer input[type=radio]:checked {
-      border: 1px solid black;
-      border-radius: 50%; }
-    .habitPage fieldset.labelColourContainer .purpleLabel::before {
-      background-color: #E5D9F7; }
-    .habitPage fieldset.labelColourContainer .pinkLabel::before {
-      background-color: #FBD3DF; }
-    .habitPage fieldset.labelColourContainer .blueLabel::before {
-      background-color: #A8ADFF; }
-    .habitPage fieldset.labelColourContainer .greenLabel::before {
-      background-color: #D8F2D3; }
-    .habitPage fieldset.labelColourContainer .orangeLabel::before {
-      background-color: #FBE7CD; }
-    .habitPage fieldset.labelColourContainer .redLabel::before {
-      background-color: #fbc0c0; }
-    .habitPage fieldset.labelColourContainer .yellowLabel::before {
-      background-color: #f8f3ad; }
-  .habitPage .loadingContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px; }
-  .habitPage .overlayLoading {
-    position: absolute;
-    border-radius: 15px;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 20;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
+  min-height: 100vh;
+}
+.habitPage .homeNavigation {
+  z-index: 19;
+}
+.habitPage .habitTrackingContent {
+  position: relative;
+  padding: 25px 50px 0px 50px;
+  margin-left: 100px;
+  min-height: 100vh;
+}
+.habitPage .habitContentOne {
+  width: 70%;
+  margin-right: 20px;
+}
+.habitPage .habitContentTwo {
+  width: 30%;
+}
+.habitPage .habitContentTwo .dailyDetails {
+  margin-bottom: 15px;
+}
+.habitPage .habitContentTwo .dailyDetails p {
+  font-size: 0.7rem;
+  text-align: end;
+  margin-top: 10px;
+}
+.habitPage .habitContentTwo .dailyDateContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.habitPage .habitContentTwo .dailyDateContainer button {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 50%;
+  padding: 0;
+  color: inherit;
+  border: 1px solid rgb(212, 212, 212);
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  margin-left: 5px;
+}
+.habitPage .habitContentTwo .dailyDateContainer button i {
+  font-size: 1rem;
+  color: black;
+}
+.habitPage .habitContentTwo .dailyDateContainer button.disabledArrow {
+  background-color: #d9dee0;
+  color: #a8b4b9;
+}
+.habitPage .habitContentTwo .dailyDateContainer h2 {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+.habitPage .habitContentTwo .dailyCompletionBar {
+  width: 100%;
+  height: 8px;
+  background-color: white;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+.habitPage .completionFill {
+  height: 8px;
+  border-radius: 15px;
+  background-color: #017AFF;
+  width: 0%;
+}
+.habitPage .weeklyHabitDetails {
+  width: 100%;
+}
+.habitPage .weeklyHabitDetails h2 {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+}
+.habitPage .weeklyHabitDetails .weekCompletionBar {
+  width: 100%;
+  height: 8px;
+  background-color: #EDF3FA;
+  border-radius: 5px;
+}
+.habitPage .weeklyHabitDetails p {
+  font-size: 0.8rem;
+  margin-bottom: 10px !important;
+  margin-top: 5px;
+  text-align: end;
+}
+.habitPage .habitListContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  background-color: white;
+  border-radius: 15px;
+  height: 80%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 15px 0;
+  min-height: 250px;
+}
+.habitPage .habitFlexContainer {
+  display: flex;
+  min-height: 100vh;
+}
+.habitPage .noHabitsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #9e9d9d;
+  height: 100%;
+  width: 100%;
+}
+.habitPage .noHabitsContainer img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+.habitPage .addHabitBtn {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: 0.8rem;
+  border-radius: 25px;
+  padding: 5px 20px;
+  color: #197DE7;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+.habitPage .addHabitBtn i {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+.habitPage .userGreetingText h1 {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+.habitPage .userGreetingText p {
+  margin-top: 5px;
+  font-family: "Nunito Sans Regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+.habitPage .habitCalendar {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(165, 214, 167, 0.6235294118);
+  padding: 10px 15px;
+  border-radius: 15px;
+}
+.habitPage .habitCalendar h2 {
+  margin-bottom: 15px;
+}
+.habitPage .habitCalendar ul {
+  display: inline-flex;
+  background-color: white;
+  border-radius: 15px;
+  width: 100%;
+}
+.habitPage .habitCalendar ul li {
+  padding: 10px 5px;
+  width: 14.2857142857%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.habitPage .habitCalendar ul p {
+  font-weight: normal;
+  font-size: 0.8rem;
+  color: black;
+}
+.habitPage .habitCalendar button {
+  padding: 10px 15px;
+}
+.habitPage .habitCalendar p:nth-child(odd) {
+  margin-bottom: 5px;
+}
+.habitPage .habitCalendar h2 {
+  font-size: 1rem;
+}
+.habitPage .today {
+  background-color: #A5D6A7;
+  border-radius: 10px;
+}
+.habitPage .habitCalendarBreakdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.habitPage .habitCalendarBreakdown table {
+  width: 80%;
+  display: block;
+}
+.habitPage .habitCalendarBreakdown table tr {
+  display: flex;
+  justify-content: space-around;
+}
+.habitPage .habitCalendarBreakdown table td {
+  border-radius: 5px;
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: white;
+}
+.habitPage .habitCalendarBreakdown tr {
+  width: 100%;
+  display: block;
+}
+.habitPage .habitCalendarBreakdown th,
+.habitPage .habitCalendarBreakdown td {
+  width: 14.2857142857%;
+  height: 35px;
+  text-align: center;
+  font-size: 0.9rem;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  font-weight: lighter;
+}
+.habitPage .habitCalendarBreakdown td {
+  border: 1px solid rgb(212, 212, 212);
+  width: 7.1428571429%;
+}
+.habitPage .habitCalendarBreakdown .rowIdentifiers {
+  display: flex;
+  align-items: center;
+  width: 20%;
+}
+.habitPage .habitCalendarBreakdown .rowIdentifiers p {
+  font-size: 0.8rem;
+}
+.habitPage .habitCalendarBreakdown .rowIdentifiers i {
+  font-size: 0.6rem;
+  margin-right: 10px;
+}
+.habitPage .habitCalendarBreakdown .loadingContainer {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.habitPage .habitCalendarBreakdown .habitListError {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  height: 100%;
+  text-align: center;
+  margin-top: 25px;
+  color: #9e9d9d;
+}
+.habitPage .habitCalendarBreakdown {
+  margin-top: 20px;
+}
+.habitPage .tableHeaders {
+  width: 80% !important;
+  align-self: flex-end;
+}
+.habitPage .tableHeaders tbody {
+  width: 100%;
+  display: block;
+}
+.habitPage .taskCompletionTable {
+  display: flex;
+  margin-bottom: 15px;
+}
+.habitPage .fillInTable {
+  width: 80%;
+}
+.habitPage .fillInTable tbody {
+  display: block;
+  width: 100%;
+}
+.habitPage .fillInTable .filledHabitDay {
+  background-color: #e5d9f7;
+}
+.habitPage .showMoreContainer {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+}
+.habitPage .showMoreContainer i {
+  font-size: 1.2rem;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+}
+.habitPage .buttonContainer {
+  width: 100%;
+  border-bottom: 2px solid rgba(212, 212, 212, 0.9);
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.habitPage .buttonContainer .arrowIcon {
+  font-size: 1.5rem;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+}
+.habitPage .buttonContainer .arrowIcon.disabledArrow {
+  color: #d9dee0;
+  background-color: #a8b4b9;
+}
+.habitPage .dashboardButtons .arrowIcon {
+  margin-right: 5px;
+}
+.habitPage .createHabitModal {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  position: fixed;
+  z-index: 30;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px 80px;
+  height: 90vh;
+  width: 80vw;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.habitPage .createHabitModal fieldset,
+.habitPage .createHabitModal legend {
+  width: 100%;
+}
+.habitPage .createHabitModal legend {
+  margin-bottom: 15px;
+}
+.habitPage .createHabitModal fieldset {
+  display: flex;
+  flex-direction: column;
+}
+.habitPage .createHabitModal select {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  background-color: white;
+  border-radius: 5px;
+}
+.habitPage .createHabitModal h2 {
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  color: black;
+  border-bottom: 3px solid #d4d4d4;
+  padding-bottom: 10px;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  margin-top: 25px;
+}
+.habitPage .createHabitModal .fa-circle-xmark {
+  font-size: 1.4rem;
+}
+.habitPage .createHabitModal .exitHabitModalBtn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+.habitPage .btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.habitPage .btnContainer button[type=submit],
+.habitPage .btnContainer .cancelBtn {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  padding: 5px 0px;
+  min-width: 125px;
+  border-radius: 10px;
+  margin: 50px 0 0 15px;
+}
+.habitPage .btnContainer button[type=submit] {
+  background-color: #36CB82;
+  color: white;
+}
+.habitPage .btnContainer .cancelBtn {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  color: black;
+  text-align: center;
+}
+.habitPage label,
+.habitPage legend {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  color: #6D767E;
+  font-size: 0.9rem;
+  margin: 15px 0 10px 0;
+  word-wrap: break-word;
+}
+.habitPage .inputContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.habitPage .inputContainer input,
+.habitPage .inputContainer select {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  border-radius: 5px;
+  padding: 0px 0px 0px 8px;
+  height: 35px;
+}
+.habitPage .habitContainer {
+  color: black;
+  margin: 15px;
+  padding: 0px 10px;
+  position: relative;
+  height: 80px;
+}
+.habitPage .habitContainer .habitDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.habitPage .habitContainer i {
+  font-size: 1rem;
+  color: black;
+}
+.habitPage .habitContainer .markAsCompleteBtn {
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: 0.7rem;
+  border-radius: 5px;
+  padding: 5px 0;
+  color: #197DE7;
+  background-color: white;
+  width: 100%;
+  border: 1px solid rgba(212, 212, 212, 0.9);
+  margin-top: 10px;
+}
+.habitPage .habitContainer p {
+  font-size: 0.9rem;
+}
+.habitPage .habitContainer .dropdownOptions,
+.habitPage .habitContainer .dropdownOptionsTwo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid rgba(212, 212, 212, 0.9);
+}
+.habitPage .habitContainer .dropdownOptions button,
+.habitPage .habitContainer .dropdownOptionsTwo button {
+  font-size: 0.7rem;
+  font-weight: normal;
+  padding: 0 10px;
+}
+.habitPage .habitContainer .dropdownOptions.hidden,
+.habitPage .habitContainer .dropdownOptionsTwo.hidden {
+  display: none;
+}
+.habitPage .habitContainer .dropdownOptionsTwo {
+  bottom: 20%;
+}
+.habitPage .habitContainer .completedDiv {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 5px 0;
+}
+.habitPage .habitContainer .completedDiv p {
+  display: flex;
+  align-items: center;
+}
+.habitPage .habitContainer .completedDiv p i {
+  padding-right: 5px;
+}
+.habitPage .habitContainer .completedDiv p,
+.habitPage .habitContainer .completedDiv i,
+.habitPage .habitContainer .completedDiv button {
+  font-size: 0.6rem;
+}
+.habitPage .habitContainer .overlayBackground .lds-ring {
+  left: 50%;
+}
+.habitPage .habitContainer .completionIndicator ul {
+  display: flex;
+  margin-top: 10px;
+}
+.habitPage .habitContainer .completionIndicator ul .completionBox {
+  border: 1px solid #d4d4d4;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  margin-right: 10px;
+}
+.habitPage fieldset.labelColourContainer {
+  flex-direction: row;
+  justify-content: space-around;
+}
+.habitPage fieldset.labelColourContainer input[type=radio] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.habitPage fieldset.labelColourContainer input[type=radio]::before {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  content: " ";
+  display: block;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.habitPage fieldset.labelColourContainer input[type=radio]:checked {
+  border: 1px solid black;
+  border-radius: 50%;
+}
+.habitPage fieldset.labelColourContainer .purpleLabel::before {
+  background-color: #E5D9F7;
+}
+.habitPage fieldset.labelColourContainer .pinkLabel::before {
+  background-color: #FBD3DF;
+}
+.habitPage fieldset.labelColourContainer .blueLabel::before {
+  background-color: #A8ADFF;
+}
+.habitPage fieldset.labelColourContainer .greenLabel::before {
+  background-color: #D8F2D3;
+}
+.habitPage fieldset.labelColourContainer .orangeLabel::before {
+  background-color: #FBE7CD;
+}
+.habitPage fieldset.labelColourContainer .redLabel::before {
+  background-color: #fbc0c0;
+}
+.habitPage fieldset.labelColourContainer .yellowLabel::before {
+  background-color: #f8f3ad;
+}
+.habitPage .loadingContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.habitPage .overlayLoading {
+  position: absolute;
+  border-radius: 15px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media (max-width: 975px) {
   .habitPage .habitFlexContainer {
-    flex-direction: column; }
+    flex-direction: column;
+  }
   .habitPage .habitContentOne {
-    width: 100%; }
+    width: 100%;
+  }
   .habitPage .habitContentTwo {
-    width: 100%; }
+    width: 100%;
+  }
   .habitPage .habitListContainer {
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
     padding: 15px 30px;
     max-height: 250px;
-    overflow-y: scroll; }
+    overflow-y: scroll;
+  }
   .habitPage .habitContainer {
-    width: calc(50% - 30px); }
+    width: calc(50% - 30px);
+  }
   .habitPage .showMoreContainer {
-    display: none; }
+    display: none;
+  }
   .habitPage .showMoreHabitsBtn {
-    margin-right: 5px; }
+    margin-right: 5px;
+  }
   .habitPage .showPrevHabitsBtn {
-    margin-left: 5px; }
+    margin-left: 5px;
+  }
   .habitPage .habitTrackingContent {
-    padding: 25px 50px 25px 50px; }
+    padding: 25px 50px 25px 50px;
+  }
   .habitPage .habitContentTwo {
     margin-top: 30px;
     border-top: 2px solid rgba(212, 212, 212, 0.9);
-    padding-top: 25px; } }
-
+    padding-top: 25px;
+  }
+}
 @media (max-width: 768px) {
   .habitPage .habitContainer {
-    width: 100%; }
+    width: 100%;
+  }
   .habitPage .habitTrackingContent {
-    padding: 25px; }
+    padding: 25px;
+  }
   .habitPage .habitCalendar ul {
     justify-content: space-between;
-    padding: 10px; }
-    .habitPage .habitCalendar ul p {
-      font-size: 0.7rem; }
-    .habitPage .habitCalendar ul button {
-      padding: 5px; }
-  .habitPage .weeklyHabitDetails p {
-    font-size: 0.7rem; }
+    padding: 10px;
+  }
+  .habitPage .habitCalendar ul p {
+    font-size: 0.7rem;
+  }
+  .habitPage .habitCalendar ul button {
+    padding: 5px;
+  }
   .habitPage .createHabitModal {
-    padding: 30px; }
+    padding: 30px;
+  }
   .habitPage fieldset.labelColourContainer {
     flex-wrap: wrap;
-    justify-content: flex-start; }
+    justify-content: flex-start;
+  }
   .habitPage input[type=radio] {
     margin-right: 10px;
-    margin-top: 5px; }
+    margin-top: 5px;
+  }
   .habitPage .btnContainer {
     flex-direction: column;
-    margin-top: 30px; }
-    .habitPage .btnContainer .cancelBtn,
-    .habitPage .btnContainer button[type=submit] {
-      margin: 10px 0 0 0; } }
-
+    margin-top: 30px;
+  }
+  .habitPage .btnContainer .cancelBtn,
+  .habitPage .btnContainer button[type=submit] {
+    margin: 10px 0 0 0;
+  }
+}
 @media (max-width: 575px) {
   .habitPage .habitTrackingContent {
     margin-left: 75px;
-    padding: 25px 15px; }
+    padding: 25px 15px;
+  }
   .habitPage .habitCalendarBreakdown th {
-    font-size: 0.7rem; }
+    font-size: 0.7rem;
+  }
   .habitPage .taskCompletionTable {
-    flex-direction: column; }
-    .habitPage .taskCompletionTable table {
-      width: 100%;
-      margin-top: 10px; }
-      .habitPage .taskCompletionTable table tr {
-        justify-content: space-between; } }
-
+    flex-direction: column;
+  }
+  .habitPage .taskCompletionTable table {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .habitPage .taskCompletionTable table tr {
+    justify-content: space-between;
+  }
+}
 @media (max-width: 480px) {
   .habitPage .habitListContainer {
-    padding: 15px; }
+    padding: 15px;
+  }
   .habitPage .habitCalendar ul p {
-    font-size: 0.6rem; }
+    font-size: 0.6rem;
+  }
   .habitPage .createHabitModal {
-    padding: 30px 10px; } }
-
+    padding: 30px 10px;
+  }
+}
 .taskDetails {
   width: calc(100% - 100px);
   margin-left: 100px;
   padding: 35px 0px 20px 0;
   display: flex;
-  flex-direction: column; }
-  .taskDetails .userLocationBar {
-    margin-top: 5px; }
-    .taskDetails .userLocationBar span {
-      margin: 0 10px; }
-  .taskDetails .taskBtnContainer p {
-    font-size: 0.7rem !important; }
-  .taskDetails .taskToolBar {
-    height: 100%;
-    margin-left: 20px;
-    display: flex;
-    order: 1; }
-    .taskDetails .taskToolBar button {
-      margin-left: 15px; }
-    .taskDetails .taskToolBar .toolBarBtn {
-      background-color: transparent;
-      padding: 0;
-      font-size: 1rem;
-      color: black; }
-  .taskDetails .taskHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1px solid rgba(212, 212, 212, 0.9);
-    padding: 0 30px 20px 30px; }
-  .taskDetails .taskInformation {
-    width: 40%;
-    display: flex;
-    align-items: center; }
-    .taskDetails .taskInformation i {
-      margin-right: 15px;
-      background-color: #EDF2EC;
-      padding: 10px 15px;
-      border-radius: 10px; }
-  .taskDetails .taskNameContainer {
-    width: 100%; }
-    .taskDetails .taskNameContainer .label {
-      padding-bottom: 3px;
-      padding-left: 3px; }
-    .taskDetails .taskNameContainer h1 {
-      border: 2px solid transparent;
-      padding: 2px;
-      width: 75%; }
-    .taskDetails .taskNameContainer input[type="text"] {
-      font-weight: 700;
-      font-family: "Inter", sans-serif;
-      width: 75%; }
-  .taskDetails .plannedCompletionPara {
-    padding: 2px;
-    border: 2px solid transparent; }
-  .taskDetails p.label {
-    margin-bottom: 10px; }
-  .taskDetails .taskDescription,
-  .taskDetails .taskData,
-  .taskDetails .updateTaskBtns,
-  .taskDetails .updateTasksContainer,
-  .taskDetails .taskLabelContainer {
-    margin-top: 35px;
-    padding: 0 30px; }
-  .taskDetails .taskDescription textarea {
-    width: 100%; }
-  .taskDetails .taskData {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap; }
-  .taskDetails input[type="date"] {
-    padding: 2px; }
-  .taskDetails input[type="date"],
-  .taskDetails input[type="time"],
-  .taskDetails .taskDetails select {
-    font-size: 0.9rem;
-    font-family: "Inter", sans-serif; }
-  .taskDetails .label,
-  .taskDetails .dueTimeParagraph,
-  .taskDetails .taskCompletionPara,
-  .taskDetails .priorityParagraph {
-    padding: 2px;
-    border: 2px solid transparent; }
-  .taskDetails .dueTimeLabel,
-  .taskDetails .completionLabel {
-    margin: 0px 85px; }
-  .taskDetails .labelContainer {
-    display: flex; }
-    .taskDetails .labelContainer p {
-      margin-right: 15px;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      padding: 5px 10px;
-      border-radius: 5px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .taskDetails .updateTaskBtns {
-    position: relative; }
-    .taskDetails .updateTaskBtns i {
-      font-size: 0.9rem;
-      margin-right: 10px; }
-    .taskDetails .updateTaskBtns button {
-      border: 1px solid rgba(212, 212, 212, 0.5);
-      padding: 5px 10px;
-      border-radius: 5px;
-      margin-right: 15px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-    .taskDetails .updateTaskBtns .updatesBtn {
-      background-color: #2873D3; }
-  .taskDetails .updateTasksContainer {
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    padding: 15px;
-    margin: 25px 30px 10px 30px;
-    border-radius: 5px;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .taskDetails .taskDetailsForm {
-    margin: 10px 30px 0 30px; }
-    .taskDetails .taskDetailsForm textarea {
-      width: 100%;
-      border: 1px solid rgba(212, 212, 212, 0.9);
-      border-radius: 5px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      resize: none;
-      padding: 15px; }
-  .taskDetails .updateTaskBtnContainer {
-    margin-top: 25px;
-    display: flex; }
-    .taskDetails .updateTaskBtnContainer .btn,
-    .taskDetails .updateTaskBtnContainer button {
-      border: 1px solid rgba(212, 212, 212, 0.5);
-      padding: 5px 10px;
-      border-radius: 5px;
-      margin-right: 15px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5); }
-  .taskDetails .updateHoursContainer {
-    width: 80%;
-    position: absolute;
-    z-index: 10;
-    top: 100%;
-    background-color: white;
-    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(212, 212, 212, 0.5);
-    padding: 20px;
-    border-radius: 5px; }
-  .taskDetails .logTimeForm {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px; }
-  .taskDetails input[type=number] {
-    width: 50px;
-    -moz-appearance: textfield;
-    margin-top: 5px; }
-  .taskDetails input::-webkit-outer-spin-button,
-  .taskDetails input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0; }
-  .taskDetails .specificDayContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 10px;
-    text-align: center; }
-  .taskDetails .todayContainerTitle {
-    background-color: #E9E8E7;
-    border-radius: 5px; }
-  .taskDetails .logTimeOptionBtns {
-    display: flex;
-    font-size: 1rem; }
-    .taskDetails .logTimeOptionBtns button {
-      border-radius: 5px;
-      box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-      border: 1px solid rgba(212, 212, 212, 0.5);
-      padding: 4px 10px;
-      margin-right: 20px; }
-    .taskDetails .logTimeOptionBtns button[type=submit] {
-      background-color: #2873D3;
-      color: white; }
-  .taskDetails .taskCommentContainer {
-    margin: 10px 30px;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
-    display: flex;
-    align-items: center;
-    position: relative; }
-    .taskDetails .taskCommentContainer .buttonsContainer {
-      position: absolute;
-      top: 5px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end; }
-      .taskDetails .taskCommentContainer .buttonsContainer i {
-        font-size: 1.2rem; }
-      .taskDetails .taskCommentContainer .buttonsContainer ul {
-        border: 1px solid rgba(212, 212, 212, 0.9); }
-        .taskDetails .taskCommentContainer .buttonsContainer ul li {
-          border-bottom: 1px solid rgba(212, 212, 212, 0.9);
-          padding: 0 5px; }
-  .taskDetails .profilePicContainer {
-    width: 50px;
-    height: 50px; }
-    .taskDetails .profilePicContainer img {
-      height: 100%;
-      width: 100%;
-      border-radius: 50%; }
-  .taskDetails .commentText {
-    margin-left: 25px; }
-    .taskDetails .commentText .username {
-      margin-bottom: 10px;
-      font-weight: bold; }
-  .taskDetails .timePublished {
-    margin-top: 15px; }
-  .taskDetails .alterUpdateOption {
-    display: none; }
-    .taskDetails .alterUpdateOption button {
-      font-size: 0.8rem; }
-  .taskDetails .pageOverlay {
-    position: fixed;
-    z-index: 20;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.5); }
-    .taskDetails .pageOverlay .lds-ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); }
-  .taskDetails .editContainer {
-    width: 60%;
-    display: flex;
-    align-items: center; }
-  .taskDetails p.enableIndicator {
-    font-size: 0.7rem;
-    margin-left: 25px;
-    color: #2873D3;
-    border: 1px solid #2873D3;
-    padding: 2px;
-    border-radius: 5px; }
-  .taskDetails .toolBarCombo {
-    position: relative; }
-  .taskDetails .toolBarExtension {
-    position: absolute;
-    font-size: 0.6rem;
-    background-color: black;
-    border-radius: 50%;
-    bottom: 0px;
-    right: -5px;
-    color: white;
-    width: 12px;
-    height: 12px; }
-  .taskDetails .taskBtnContainer {
-    display: flex;
-    align-items: center;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    padding: 5px 8px;
-    border-radius: 5px;
-    height: 45px; }
-    .taskDetails .taskBtnContainer p {
-      font-weight: bold;
-      margin-left: 10px; }
-  .taskDetails .savingMessageContainer {
-    display: flex;
-    margin-left: 30px; }
-    .taskDetails .savingMessageContainer .lds-ring {
-      height: 20px;
-      width: 20px; }
-      .taskDetails .savingMessageContainer .lds-ring div {
-        height: 20px;
-        width: 20px;
-        border: 3px solid #A5D6A7;
-        border-radius: 50%;
-        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: #A5D6A7 transparent transparent transparent; }
-  .taskDetails .percentError,
-  .taskDetails .savingStatusMessage {
-    font-size: 0.7rem;
-    top: 5px;
-    padding-top: 10px; }
-  .taskDetails .percentError {
-    color: #e00000;
-    margin-left: 30px; }
-  .taskDetails .savingStatusMessage {
-    color: #015e01;
-    margin-left: 20px; }
-  .taskDetails .deleteModal {
-    position: fixed;
-    z-index: 30;
-    background-color: white;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px;
-    border-radius: 10px; }
-    .taskDetails .deleteModal h2 {
-      text-transform: capitalize;
-      margin: 30px 0 20px 0; }
-    .taskDetails .deleteModal p {
-      text-align: center;
-      margin-bottom: 35px; }
-    .taskDetails .deleteModal .errorIcon {
-      position: relative; }
-    .taskDetails .deleteModal .fa-circle-exclamation {
-      color: #FE3E56;
-      position: relative;
-      z-index: 40;
-      background-color: white;
-      border-radius: 50px; }
-    .taskDetails .deleteModal .errorBackground {
-      background-color: #FEA7B0;
-      height: 56px;
-      width: 56px;
-      position: absolute;
-      top: -8px;
-      left: -8px;
-      border-radius: 10px; }
-    .taskDetails .deleteModal .noBtn {
-      background-color: #d8d6d6; }
-    .taskDetails .deleteModal .yesBtn {
-      background-color: #FF3F56;
-      color: white;
-      margin-left: 20px; }
-    .taskDetails .deleteModal button {
-      font-weight: bold;
-      padding: 10px 15px;
-      border-radius: 30px; }
-  .taskDetails .overlayModal {
-    position: fixed;
-    z-index: 20;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3); }
-  .taskDetails .logTimeBtnTwo {
-    background-color: #2873D3;
-    color: white; }
-  .taskDetails .totalHours {
-    font-size: 0.7rem;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    padding-top: 5px;
-    border-top: 1px solid rgba(212, 212, 212, 0.9); }
-  .taskDetails .logTimeFlexContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-  .taskDetails .moreDaysBtn {
-    height: 50%;
-    margin-top: 10px; }
-    .taskDetails .moreDaysBtn i {
-      margin: 0; }
-  .taskDetails .descriptionParagraph {
-    overflow-wrap: break-word;
-    padding: 2px;
-    border: 2px solid transparent; }
-  .taskDetails textarea {
-    font-family: "Inter", sans-serif;
-    font-size: 0.9rem; }
-  .taskDetails select,
-  .taskDetails textarea,
-  .taskDetails input[type="text"],
-  .taskDetails input[type="time"],
-  .taskDetails input[type="date"] {
-    background-color: white;
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    border-radius: 5px; }
-  .taskDetails .hiddenUpdate {
-    display: none; }
-  .taskDetails .rangeDiv {
-    width: 52%; }
-  .taskDetails input[type="range"] {
-    width: 100%; }
-  .taskDetails .taskDetails button.taskBtnContainer p {
-    font-size: 0.8rem; }
-
-@media (max-width: 1090px) {
-  .taskDetails .dueTimeLabel {
-    margin: 0 0 0 50px; }
-  .taskDetails .taskToolBar {
-    flex-direction: column; }
-  .taskDetails button.taskBtnContainer {
-    margin-left: 0px; }
-    .taskDetails button.taskBtnContainer p {
-      font-size: 0.7rem; }
-  .taskDetails .taskBtnContainerOne {
-    margin-bottom: 10px; }
-  .taskDetails .rangeDiv {
-    width: 70%; }
-    .taskDetails .rangeDiv input[type="range"] {
-      width: 100%; }
-  .taskDetails .taskInfoContainer {
-    width: calc(50% - 25px);
-    margin-bottom: 25px; } }
-
-@media (max-width: 1115px) {
-  .taskDetails .logTimeForm {
-    flex-wrap: wrap; }
-  .taskDetails .specificDayContainer {
-    width: 30%;
-    margin-bottom: 15px; } }
-
-@media (max-width: 768px) {
-  .taskDetails .totalHours {
-    margin-bottom: 10px; }
-  .taskDetails .taskHeader {
-    flex-direction: column; }
-  .taskDetails .taskInformation,
-  .taskDetails .editContainer {
-    width: 100%; }
-  .taskDetails .taskInformation {
-    margin-bottom: 15px; }
-  .taskDetails button.taskBtnContainer {
-    margin-bottom: 0; }
-  .taskDetails .rangeDiv {
-    width: 50%; }
-  .taskDetails .taskToolBar {
-    flex-direction: row;
-    align-items: center; }
-  .taskDetails .taskBtnContainer {
-    margin-right: 10px; }
-  .taskDetails .updateTaskBtns {
-    width: 100%; }
-    .taskDetails .updateTaskBtns button {
-      width: calc(50% - (15px / 2)); }
-    .taskDetails .updateTaskBtns .logTimeBtn {
-      margin-right: 0; }
-  .taskDetails .logTimeOptionBtns {
-    flex-wrap: wrap; }
-    .taskDetails .logTimeOptionBtns .logTimeBtnTwo {
-      margin-right: 10px; }
-    .taskDetails .logTimeOptionBtns .resetBtn {
-      margin-right: 0;
-      margin-bottom: 10px; }
-    .taskDetails .logTimeOptionBtns button {
-      font-size: 0.8rem;
-      width: calc(50% - 5px); }
-    .taskDetails .logTimeOptionBtns .logTimeBtnTwo {
-      margin-bottom: 10px; } }
-
-@media (max-width: 575px) {
-  .homePage .dashboardContent,
-  .taskDetails {
-    margin-left: 75px; }
-  .taskDetails .profilePicContainer {
-    width: 14%;
-    height: auto; } }
-
-@media (max-width: 500px) {
-  .taskDetails .updateTaskBtns {
-    display: flex;
-    flex-direction: column; }
-    .taskDetails .updateTaskBtns .updatesBtn,
-    .taskDetails .updateTaskBtns .logTimeBtn {
-      width: 100%; }
-    .taskDetails .updateTaskBtns .updatesBtn {
-      margin-bottom: 10px; }
-  .taskDetails .editContainer {
-    flex-direction: column; }
-  .taskDetails .taskToolBar {
-    width: 100%;
-    margin-left: 0; }
-  .taskDetails .taskBtnContainer {
-    width: 50%;
-    margin-right: 0; }
-  .taskDetails .taskBtnContainerOne {
-    margin-right: 10px; }
-  .taskDetails .rangeDiv {
-    width: 100%; } }
-
-@media (max-width: 450px) {
-  .taskDetails .profilePicContainer {
-    width: 20%; } }
-
-@media (max-width: 385px) {
-  .taskDetails .logTimeForm {
-    justify-content: center; }
-  .taskDetails button.cancelBtn {
-    width: 100%;
-    margin-right: 0; } }
-
-.signOutModal {
-  position: fixed;
-  z-index: 50;
+  flex-direction: column;
+}
+.taskDetails h1 {
+  font-size: 1rem;
+}
+.taskDetails p {
+  font-size: 0.9rem;
+}
+.taskDetails .userLocationBar {
+  margin-top: 5px;
+}
+.taskDetails .userLocationBar span {
+  margin: 0 10px;
+}
+.taskDetails .taskToolBar {
+  height: 100%;
+  margin-left: 20px;
+  display: flex;
+  order: 1;
+}
+.taskDetails .taskToolBar button {
+  margin-left: 15px;
+}
+.taskDetails .taskToolBar .toolBarBtn {
+  background-color: transparent;
+  padding: 0;
+  font-size: 1rem;
+  color: black;
+}
+.taskDetails .taskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(212, 212, 212, 0.9);
+  padding: 0 30px 20px 30px;
+}
+.taskDetails .taskInformation {
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+.taskDetails .taskInformation i {
+  font-size: 1.5rem;
+  margin-right: 15px;
+  background-color: #EDF2EC;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+.taskDetails .taskNameContainer {
+  width: 100%;
+}
+.taskDetails .taskNameContainer .label {
+  padding-bottom: 3px;
+  padding-left: 3px;
+}
+.taskDetails .taskNameContainer h1 {
+  border: 2px solid transparent;
+  padding: 2px;
+  width: 75%;
+}
+.taskDetails .taskNameContainer input[type=text] {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  width: 75%;
+}
+.taskDetails .plannedCompletionPara {
+  padding: 2px;
+  border: 2px solid transparent;
+}
+.taskDetails p.label {
+  margin-bottom: 10px;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+.taskDetails .taskDescription,
+.taskDetails .taskData,
+.taskDetails .updateTaskBtns,
+.taskDetails .updateTasksContainer,
+.taskDetails .taskLabelContainer {
+  margin-top: 35px;
+  padding: 0 30px;
+}
+.taskDetails .taskDescription textarea {
+  width: 100%;
+}
+.taskDetails .taskData {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.taskDetails input[type=date] {
+  padding: 2px;
+}
+.taskDetails input[type=date],
+.taskDetails input[type=time],
+.taskDetails .taskDetails select {
+  font-size: 0.9rem;
+  font-family: "Inter", sans-serif;
+}
+.taskDetails .label,
+.taskDetails .dueTimeParagraph,
+.taskDetails .taskCompletionPara,
+.taskDetails .priorityParagraph {
+  padding: 2px;
+  border: 2px solid transparent;
+}
+.taskDetails .dueTimeLabel,
+.taskDetails .completionLabel {
+  margin: 0px 85px;
+}
+.taskDetails .labelContainer {
+  display: flex;
+}
+.taskDetails .labelContainer p {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  margin-right: 15px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.taskDetails .priorityLevel {
+  text-transform: capitalize;
+}
+.taskDetails .updateTaskBtns {
+  position: relative;
+}
+.taskDetails .updateTaskBtns i {
+  font-size: 0.9rem;
+  margin-right: 10px;
+}
+.taskDetails .updateTaskBtns button {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.taskDetails .updateTaskBtns .updatesBtn {
+  background-color: #2873D3;
+  color: white;
+}
+.taskDetails .updateTasksContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  padding: 15px;
+  margin: 25px 30px 10px 30px;
+  border-radius: 5px;
+  text-align: left;
+}
+.taskDetails .taskDetailsForm {
+  margin: 10px 30px 0 30px;
+}
+.taskDetails .taskDetailsForm textarea {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  width: 100%;
+  border-radius: 5px;
+  resize: none;
+  padding: 15px;
+}
+.taskDetails .updateTaskBtnContainer {
+  margin: 15px 0;
+  display: flex;
+}
+.taskDetails .updateTaskBtnContainer .btn,
+.taskDetails .updateTaskBtnContainer button {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.taskDetails .updateTaskBtnContainer button {
+  font-size: 0.9rem;
+  font-family: "Nunito Sans Regular", sans-serif !important;
+}
+.taskDetails .updateHoursContainer {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+  width: 80%;
+  position: absolute;
+  z-index: 10;
+  top: 100%;
   background-color: white;
+  border: 1px solid rgba(212, 212, 212, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+}
+.taskDetails .updateHoursContainer h2 {
+  font-size: 1.2rem;
+}
+.taskDetails .logTimeForm {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.taskDetails input[type=number] {
+  width: 50px;
+  -moz-appearance: textfield;
+  margin-top: 5px;
+}
+.taskDetails input::-webkit-outer-spin-button,
+.taskDetails input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.taskDetails .specificDayContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+  text-align: center;
+}
+.taskDetails .specificDayContainer p {
+  font-size: 0.7rem;
+}
+.taskDetails .todayContainerTitle {
+  background-color: #E9E8E7;
+  border-radius: 5px;
+}
+.taskDetails .logTimeOptionBtns {
+  display: flex;
+  font-size: 1rem;
+}
+.taskDetails .logTimeOptionBtns button {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  border-radius: 5px;
+  padding: 4px 10px;
+  margin-right: 20px;
+}
+.taskDetails .logTimeOptionBtns button[type=submit] {
+  background-color: #2873D3;
+  color: white;
+}
+.taskDetails .taskCommentContainer {
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
+  margin: 10px 30px;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.taskDetails .taskCommentContainer .buttonsContainer {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.taskDetails .taskCommentContainer .buttonsContainer i {
+  font-size: 1.2rem;
+}
+.taskDetails .taskCommentContainer .buttonsContainer ul {
+  border: 1px solid rgba(212, 212, 212, 0.9);
+}
+.taskDetails .taskCommentContainer .buttonsContainer ul li {
+  border-bottom: 1px solid rgba(212, 212, 212, 0.9);
+  padding: 0 5px;
+}
+.taskDetails .profilePicContainer {
+  width: 50px;
+  height: 50px;
+}
+.taskDetails .profilePicContainer img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+.taskDetails .commentText {
+  margin-left: 25px;
+}
+.taskDetails .commentText .username {
+  margin-bottom: 10px;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+.taskDetails .timePublished {
+  margin-top: 15px;
+  font-size: 0.7rem;
+}
+.taskDetails .alterUpdateOption {
+  display: none;
+}
+.taskDetails .alterUpdateOption button {
+  font-size: 0.8rem;
+}
+.taskDetails .pageOverlay {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.taskDetails .pageOverlay .lds-ring {
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
+}
+.taskDetails .editContainer {
+  width: 60%;
+  display: flex;
+  align-items: center;
+}
+.taskDetails p.enableIndicator {
+  font-size: 0.7rem;
+  margin-left: 25px;
+  color: #2873D3;
+  border: 1px solid #2873D3;
+  padding: 2px;
   border-radius: 5px;
-  box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-  border: 1px solid rgba(212, 212, 212, 0.9);
-  padding: 45px 35px;
+}
+.taskDetails .toolBarCombo {
+  position: relative;
+}
+.taskDetails .toolBarExtension {
+  position: absolute;
+  font-size: 0.6rem;
+  background-color: black;
+  border-radius: 50%;
+  bottom: 0px;
+  right: -5px;
+  color: white;
+  width: 12px;
+  height: 12px;
+}
+.taskDetails .taskBtnContainer {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 5px;
+  height: 45px;
+}
+.taskDetails .taskBtnContainer p {
+  margin-left: 10px;
+  font-family: "Inter Semibold", sans-serif;
+  font-size: 0.7rem;
+  font-weight: normal;
+}
+.taskDetails .savingMessageContainer {
+  display: flex;
+  margin-left: 30px;
+}
+.taskDetails .savingMessageContainer .lds-ring {
+  height: 20px;
+  width: 20px;
+}
+.taskDetails .savingMessageContainer .lds-ring div {
+  height: 20px;
+  width: 20px;
+  border: 3px solid #A5D6A7;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #A5D6A7 transparent transparent transparent;
+}
+.taskDetails .percentError,
+.taskDetails .savingStatusMessage {
+  font-size: 0.7rem;
+  top: 5px;
+  padding-top: 10px;
+}
+.taskDetails .percentError {
+  color: rgb(224, 0, 0);
+  margin-left: 30px;
+}
+.taskDetails .savingStatusMessage {
+  color: rgb(1, 94, 1);
+  margin-left: 20px;
+}
+.taskDetails .deleteModal {
+  position: fixed;
+  z-index: 30;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; }
-  .signOutModal p {
-    font-size: 1.1rem; }
-  .signOutModal .fa-door-open {
-    font-size: 3rem;
+  align-items: center;
+}
+.taskDetails .deleteModal h2 {
+  text-transform: capitalize;
+  margin: 30px 0 20px 0;
+}
+.taskDetails .deleteModal p {
+  text-align: center;
+  margin-bottom: 35px;
+}
+.taskDetails .deleteModal .errorIcon {
+  position: relative;
+}
+.taskDetails .deleteModal .fa-circle-exclamation {
+  color: #FE3E56;
+  position: relative;
+  z-index: 40;
+  background-color: white;
+  border-radius: 50px;
+}
+.taskDetails .deleteModal .errorBackground {
+  background-color: #FEA7B0;
+  height: 56px;
+  width: 56px;
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  border-radius: 10px;
+}
+.taskDetails .deleteModal .noBtn {
+  background-color: #d8d6d6;
+}
+.taskDetails .deleteModal .yesBtn {
+  background-color: #FF3F56;
+  color: white;
+  margin-left: 20px;
+}
+.taskDetails .deleteModal button {
+  font-family: "Inter Semibold", sans-serif;
+  font-size: inherit;
+  font-weight: normal;
+  padding: 10px 15px;
+  border-radius: 30px;
+}
+.taskDetails .overlayModal {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.taskDetails .logTimeBtn {
+  color: #2374FF;
+}
+.taskDetails .logTimeBtnTwo {
+  background-color: #2873D3;
+  color: white;
+}
+.taskDetails .totalHours {
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(212, 212, 212, 0.9);
+}
+.taskDetails .logTimeFlexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.taskDetails .moreDaysBtn {
+  height: 50%;
+  margin-top: 10px;
+}
+.taskDetails .moreDaysBtn i {
+  margin: 0;
+}
+.taskDetails .descriptionParagraph {
+  overflow-wrap: break-word;
+  padding: 2px;
+  border: 2px solid transparent;
+}
+.taskDetails textarea {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+}
+.taskDetails select,
+.taskDetails textarea,
+.taskDetails input[type=text],
+.taskDetails input[type=time],
+.taskDetails input[type=date] {
+  background-color: white;
+  border: 1px solid rgba(212, 212, 212, 0.9);
+  border-radius: 5px;
+}
+.taskDetails .hiddenUpdate {
+  display: none;
+}
+.taskDetails .rangeDiv {
+  width: 52%;
+}
+.taskDetails input[type=range] {
+  width: 100%;
+}
+.taskDetails .taskDetails button.taskBtnContainer p {
+  font-size: 0.8rem;
+}
+
+@media (max-width: 1090px) {
+  .taskDetails .dueTimeLabel {
+    margin: 0 0 0 50px;
+  }
+  .taskDetails .taskToolBar {
+    flex-direction: column;
+  }
+  .taskDetails button.taskBtnContainer {
+    margin-left: 0px;
+  }
+  .taskDetails button.taskBtnContainer p {
+    font-size: 0.7rem;
+  }
+  .taskDetails .taskBtnContainerOne {
+    margin-bottom: 10px;
+  }
+  .taskDetails .rangeDiv {
+    width: 70%;
+  }
+  .taskDetails .rangeDiv input[type=range] {
+    width: 100%;
+  }
+  .taskDetails .taskInfoContainer {
+    width: calc(50% - 25px);
     margin-bottom: 25px;
-    background-color: #A5D6A7;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    padding: 20px;
-    border-radius: 50%; }
-  .signOutModal .buttonList {
+  }
+}
+@media (max-width: 1115px) {
+  .taskDetails .logTimeForm {
+    flex-wrap: wrap;
+  }
+  .taskDetails .specificDayContainer {
+    width: 30%;
+    margin-bottom: 15px;
+  }
+}
+@media (max-width: 768px) {
+  .taskDetails .totalHours {
+    margin-bottom: 10px;
+  }
+  .taskDetails .taskHeader {
+    flex-direction: column;
+  }
+  .taskDetails .taskInformation,
+  .taskDetails .editContainer {
+    width: 100%;
+  }
+  .taskDetails .taskInformation {
+    margin-bottom: 15px;
+  }
+  .taskDetails button.taskBtnContainer {
+    margin-bottom: 0;
+  }
+  .taskDetails .rangeDiv {
+    width: 50%;
+  }
+  .taskDetails .taskToolBar {
+    flex-direction: row;
+    align-items: center;
+  }
+  .taskDetails .taskBtnContainer {
+    margin-right: 10px;
+  }
+  .taskDetails .updateTaskBtns {
+    width: 100%;
+  }
+  .taskDetails .updateTaskBtns button {
+    width: calc(50% - 7.5px);
+  }
+  .taskDetails .updateTaskBtns .logTimeBtn {
+    margin-right: 0;
+  }
+  .taskDetails .logTimeOptionBtns {
+    flex-wrap: wrap;
+  }
+  .taskDetails .logTimeOptionBtns .logTimeBtnTwo {
+    margin-right: 10px;
+  }
+  .taskDetails .logTimeOptionBtns .resetBtn {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .taskDetails .logTimeOptionBtns button {
+    font-size: 0.8rem;
+    width: calc(50% - 5px);
+  }
+  .taskDetails .logTimeOptionBtns .logTimeBtnTwo {
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 575px) {
+  .homePage .dashboardContent,
+  .taskDetails {
+    margin-left: 75px;
+  }
+  .taskDetails .profilePicContainer {
+    width: 14%;
+    height: auto;
+  }
+}
+@media (max-width: 500px) {
+  .taskDetails .updateTaskBtns {
     display: flex;
-    flex-direction: column; }
-  .signOutModal button {
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    border-radius: 25px;
-    margin-top: 15px;
-    padding: 10px 20px;
-    color: black; }
+    flex-direction: column;
+  }
+  .taskDetails .updateTaskBtns .updatesBtn,
+  .taskDetails .updateTaskBtns .logTimeBtn {
+    width: 100%;
+  }
+  .taskDetails .updateTaskBtns .updatesBtn {
+    margin-bottom: 10px;
+  }
+  .taskDetails .editContainer {
+    flex-direction: column;
+  }
+  .taskDetails .taskToolBar {
+    width: 100%;
+    margin-left: 0;
+  }
+  .taskDetails .taskBtnContainer {
+    width: 50%;
+    margin-right: 0;
+  }
+  .taskDetails .taskBtnContainerOne {
+    margin-right: 10px;
+  }
+  .taskDetails .rangeDiv {
+    width: 100%;
+  }
+}
+@media (max-width: 450px) {
+  .taskDetails .profilePicContainer {
+    width: 20%;
+  }
+}
+@media (max-width: 385px) {
+  .taskDetails .logTimeForm {
+    justify-content: center;
+  }
+  .taskDetails button.cancelBtn {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+.signOutModal {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  position: fixed;
+  z-index: 50;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 5px;
+  padding: 45px 35px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.signOutModal p {
+  font-size: 1.1rem;
+}
+.signOutModal .fa-door-open {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-size: 3rem;
+  margin-bottom: 25px;
+  background-color: #A5D6A7;
+  padding: 20px;
+  border-radius: 50%;
+}
+.signOutModal .buttonList {
+  display: flex;
+  flex-direction: column;
+}
+.signOutModal button {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px hsla(0deg, 0%, 83%, 0.5);
+  font-family: "Nunito Sans Bold", sans-serif;
+  font-weight: normal;
+  font-size: inherit;
+  border-radius: 25px;
+  padding: 10px 20px;
+  color: black;
+  margin-top: 15px;
+}
 
 .signoutOverlay {
-  z-index: 40 !important; }
+  z-index: 40 !important;
+}
 
 @media (max-width: 550px) {
   .signOutModal {
-    width: 80%; } }
-
+    width: 80%;
+  }
+}
 .notFoundPage .notFoundFlex {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px 0 50px 0; }
-
+  padding: 50px 0 50px 0;
+}
 .notFoundPage .imageContainer {
   width: 200px;
-  height: auto; }
-
+  height: auto;
+}
 .notFoundPage .notFoundText {
   text-align: center;
-  width: 75%; }
-  .notFoundPage .notFoundText h1 {
-    font-size: 2rem !important; }
-  .notFoundPage .notFoundText p {
-    font-size: 1rem;
-    margin: 10px 0; }
-
+  width: 75%;
+}
+.notFoundPage .notFoundText h1 {
+  font-size: 2rem !important;
+}
+.notFoundPage .notFoundText p {
+  font-size: 1rem;
+  margin: 10px 0;
+}
 .notFoundPage .goBackHomeBtn {
   border: 1px solid #b8b7b7;
   font-weight: bold;
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: center; }
-  .notFoundPage .goBackHomeBtn i {
-    font-size: 1.2rem;
-    margin-left: 10px; }
+  justify-content: center;
+}
+.notFoundPage .goBackHomeBtn i {
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
+
+/*# sourceMappingURL=App.css.map */

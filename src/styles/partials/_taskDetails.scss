@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 .taskDetails {
     width: calc(100% - 100px);
     margin-left: 100px;
@@ -5,16 +7,20 @@
     display: flex;
     flex-direction: column;
 
+    h1 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
     .userLocationBar {
         margin-top: 5px;
 
         span {
             margin: 0 10px;
         }
-    }
-
-    .taskBtnContainer p {
-        font-size: 0.7rem !important;
     }
 
     .taskToolBar {
@@ -51,6 +57,7 @@
         align-items: center;
 
         i {
+            font-size: 1.5rem;
             margin-right: 15px;
             background-color: #EDF2EC;
             padding: 10px 15px;
@@ -73,8 +80,7 @@
         }
 
         input[type="text"] {
-            font-weight: 700;
-            font-family: "Inter", sans-serif;
+            @include base.defaultClickText(inherit);
             width: 75%;
         }
     }
@@ -86,6 +92,7 @@
 
     p.label {
         margin-bottom: 10px;
+        @include base.defaultClickText(0.8rem);
     }
 
     .taskDescription,
@@ -135,12 +142,15 @@
         display: flex;
 
         p {
+            @include base.containerShadow;
             margin-right: 15px;
-            border: 1px solid rgba(212, 212, 212, 0.9);
             padding: 5px 10px;
             border-radius: 5px;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         }
+    }
+
+    .priorityLevel {
+        text-transform: capitalize;
     }
 
     .updateTaskBtns {
@@ -152,64 +162,71 @@
         }
 
         button {
-            border: 1px solid rgba(212, 212, 212, 0.5);
+            @include base.containerShadow;
             padding: 5px 10px;
             border-radius: 5px;
             margin-right: 15px;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         }
 
         .updatesBtn {
             background-color: #2873D3;
+            color: white;
         }
         
     }
 
     .updateTasksContainer {
-        border: 1px solid rgba(212, 212, 212, 0.9);
+        @include base.containerShadow;
         padding: 15px;
         margin: 25px 30px 10px 30px;
         border-radius: 5px;
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        text-align: left;
     }
 
     .taskDetailsForm {
         margin: 10px 30px 0 30px;
 
         textarea {
+            @include base.containerShadow;
             width: 100%;
-            border: 1px solid rgba(212, 212, 212, 0.9);
             border-radius: 5px;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             resize: none;
             padding: 15px;
         }
     }
 
     .updateTaskBtnContainer {
-        margin-top: 25px;
+        margin: 15px 0;
         display: flex;
 
         .btn,
         button {
-            border: 1px solid rgba(212, 212, 212, 0.5);
+            @include base.containerShadow;
             padding: 5px 10px;
             border-radius: 5px;
             margin-right: 15px;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
+        }
+
+        button {
+            font-size: 0.9rem;
+            font-family: base.$base-font-nunito !important;
         }
     }
 
     .updateHoursContainer {
+        @include base.containerShadowTwo;
         width: 80%;
         position: absolute;
         z-index: 10;
         top: 100%;
         background-color: white;
-        box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
         border: 1px solid rgba(212, 212, 212, 0.5);
         padding: 20px;
         border-radius: 5px;
+
+        h2 {
+            font-size: 1.2rem;
+        }
     }
     
     .logTimeForm {
@@ -236,6 +253,10 @@
         align-items: center;
         margin: 0 10px;
         text-align: center;
+
+        p {
+            font-size: 0.7rem;
+        }
     }
     
     .todayContainerTitle {
@@ -248,9 +269,8 @@
         font-size: 1rem;
 
         button {
+            @include base.containerShadow;
             border-radius: 5px;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-            border: 1px solid rgba(212, 212, 212, 0.5);
             padding: 4px 10px;
             margin-right: 20px;
         }
@@ -262,10 +282,10 @@
     }
     
     .taskCommentContainer {
+        @include base.popUpShadow;
         margin: 10px 30px;
         padding: 15px;
         border-radius: 5px;
-        box-shadow: 0 4px 9px rgba(0, 0, 0, .047), 0 1.54074px 2.86667px rgba(0, 0, 0, .073), 0 .32593px .73333px rgba(0, 0, 0, .12);
         display: flex;
         align-items: center;
         position: relative;
@@ -309,12 +329,13 @@
 
         .username {
             margin-bottom: 10px;
-            font-weight: bold;
+            @include base.defaultClickText(0.9rem);
         }
     }
 
     .timePublished {
         margin-top: 15px;
+        font-size: 0.7rem;
     }
 
     .alterUpdateOption {
@@ -374,17 +395,16 @@
     }
 
     .taskBtnContainer {
+        @include base.containerShadow;
         display: flex;
         align-items: center;
-        border: 1px solid rgba(212, 212, 212, 0.9);
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         padding: 5px 8px;
         border-radius: 5px;
         height: 45px;
 
         p {
-            font-weight: bold;
             margin-left: 10px;
+            @include base.defaultClickText(0.7rem);
         }
     }
 
@@ -425,17 +445,10 @@
     }
 
     .deleteModal {
-        position: fixed;
-        z-index: 30;
-        background-color: white;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        @include base.modal(30, 10px, white, 50px);
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 50px;
-        border-radius: 10px;
 
         h2 {
             text-transform: capitalize;
@@ -480,20 +493,18 @@
         }
 
         button {
-            font-weight: bold;
+            @include base.defaultClickText(inherit);
             padding: 10px 15px;
             border-radius: 30px;
         }
     }
 
     .overlayModal {
-        position: fixed;
-        z-index: 20;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.3);
+        @include base.overlayModal;
+    }
+
+    .logTimeBtn {
+        color: #2374FF;
     }
 
     .logTimeBtnTwo {

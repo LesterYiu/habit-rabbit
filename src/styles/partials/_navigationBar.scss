@@ -1,3 +1,5 @@
+@use '../partials/base';
+
 nav.navigationBar {
     border-bottom: 1px solid rgba(212, 212, 212, 0.8);
     padding: 15px 0;
@@ -9,6 +11,8 @@ nav.navigationBar {
 
     li {
         margin-right: 35px;
+        font-size: 0.9rem;
+        font-family: base.$bold-font-nunito;
     }
 
     .loginButton{
@@ -56,15 +60,12 @@ nav.navigationBar {
         align-items: center;
 
         li {
-            font-family: "Inter", sans-serif;
-            font-weight: 600;
+            @include base.containerShadow;
+            @include base.defaultClickText(0.8rem);
             margin-bottom: 15px;
             margin-right: 0;
-            font-size: 0.8rem;
-            border: 1px solid rgba(212, 212, 212, 0.9);
             border-radius: 10px;
             width: 100%;
-            box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
             display: flex;
             justify-content: space-between;
             align-items: center;

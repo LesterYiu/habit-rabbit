@@ -1,15 +1,9 @@
+@use '../partials/base';
+
 .signOutModal {
-    position:fixed;
-    z-index: 50;
-    background-color: white;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    @include base.containerShadow;
+    @include base.modal(50, 5px, white, 45px 35px);
     text-align: center;
-    border-radius: 5px;
-    box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-    border: 1px solid rgba(212, 212, 212, 0.9);
-    padding: 45px 35px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -19,11 +13,10 @@
     }
 
     .fa-door-open {
+        @include base.containerShadow;
         font-size: 3rem;
         margin-bottom: 25px;
         background-color: #A5D6A7;
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        border: 1px solid rgba(212, 212, 212, 0.9);
         padding: 20px;
         border-radius: 50%;
     }
@@ -34,12 +27,9 @@
     }
 
     button {
-        box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
-        border: 1px solid rgba(212, 212, 212, 0.9);
-        border-radius: 25px;
+        @include base.containerShadow;
+        @include base.button(inherit, 25px, 10px 20px, black);
         margin-top: 15px;
-        padding: 10px 20px;
-        color: black;
     }
 }
 
