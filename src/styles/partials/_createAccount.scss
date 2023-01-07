@@ -16,6 +16,7 @@
         border: 1px solid #BF6853;
         background-color: #FFFFFF;
         color: black;
+        font-size: 1rem;
     }
 
     .createAccountSection {
@@ -37,6 +38,11 @@
             width: 100%;
             font-family: inherit;
             margin: 10px 0;
+            transition: all 0.3s linear;
+            
+            &:focus {
+                @include base.underlineHover(false, true);
+            }
         }
     }
 
@@ -69,6 +75,11 @@
             @include base.button(inherit, 25px, 15px 25px, black);
             width: 250px;
             background-color: white;
+            transition: all 0.3s linear;
+            
+            &:hover {
+                @include base.underlineHover(false, true);
+            }
         }
 
         .signInText {
@@ -115,9 +126,13 @@
         background-color: white;
         margin: 15px 0;
 
+        &:hover i{
+            @include base.googleBtnHover;
+        }
+
         i {
             font-size: 1.3rem;
-            color: black;
+            @include base.googleBtnDefault;
         }
     }
 
@@ -151,6 +166,12 @@
         text-decoration: none;
         width: 250px;
         margin-top: 25px;
+
+        transition: all 0.3s linear;
+        
+        &:hover {
+            @include base.underlineHover(false, true);
+        }
     }
 
     .formTwo {
@@ -196,6 +217,11 @@
             background-color: white;
             border-radius: 25px;
             padding: 15px 30px;
+            transition: all 0.3s linear;
+            
+            &:hover {
+                @include base.underlineHover(false, true);
+            }
         }
 
         form {

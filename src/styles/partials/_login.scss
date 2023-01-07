@@ -73,6 +73,11 @@
                 background-color: white;
                 width: 250px;
                 margin-top: 25px;
+                transition: all 0.3s linear;
+
+                &:hover {
+                    @include base.underlineHover(false, true);
+                }
             }
 
             input {
@@ -93,11 +98,16 @@
         background-color: white;
         margin: 15px 0;
 
+        &:hover i{
+            @include base.googleBtnHover;
+        }
+
         i {
+            @include base.googleBtnDefault;
             font-size: 1.3rem;
-            color: black;
         }
     }  
+    
 
     .labelInputContainer {
         width: 100%;
@@ -110,6 +120,11 @@
             @include base.button(inherit, 25px, 10px 5px 10px 55px, black);
             width: 100%;
             font-family: inherit;
+            transition: all 0.3s linear;
+            
+            &:focus {
+                @include base.underlineHover(false, true);
+            }
         }
 
         i {
@@ -152,6 +167,11 @@
         @include base.button(inherit, 25px, 15px 25px, black);
         width: 250px;
         background-color: white;
+        transition: all 0.3s linear;
+        
+        &:hover {
+            @include base.underlineHover(false, true);
+        }
     }
 }
 

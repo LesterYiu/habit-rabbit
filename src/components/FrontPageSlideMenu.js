@@ -20,22 +20,22 @@ const FrontPageSlideMenu = ({setIsNavExpanded}) => {
                         </div>
                     </li>
                     <li className="aboutUsButton">
-                        <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer">Product
+                        <a href="#product" onClick={() => {setIsNavExpanded(false)}}>Product
                             <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer">About Us
+                        <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer" onClick={() => {setIsNavExpanded(false)}}>About Us
                             <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.linkedin.com/in/lester-y-404010238/" target="_blank"  rel="noreferrer">Contact
+                        <a href="https://www.linkedin.com/in/lester-y-404010238/" target="_blank" rel="noreferrer" onClick={() => {setIsNavExpanded(false)}}>Contact
                             <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/LesterYiu/habit-rabbit" target="_blank"  rel="noreferrer">Source Code
+                        <a href="https://github.com/LesterYiu/habit-rabbit" target="_blank" rel="noreferrer" onClick={() => {setIsNavExpanded(false)}}>Source Code
                             <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                         </a>
                     </li>
@@ -48,12 +48,12 @@ const FrontPageSlideMenu = ({setIsNavExpanded}) => {
                         </li>: 
                         <>
                             <li>
-                                <Link to="/login" className="loginButton">Login
+                                <Link to="/login" className="loginButton" onClick={() => {setIsNavExpanded(false)}}>Login
                                     <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/create-account">Create Account
+                                <Link to="/create-account" onClick={() => {setIsNavExpanded(false)}}>Create Account
                                     <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
                                 </Link>
                             </li>

@@ -71,6 +71,12 @@
         input[type="text"],
         input[type="date"] {
             width: 100%;
+
+            transition: all 0.3s linear;
+            
+            &:hover {
+                @include base.underlineHover(false, false);
+            }
         }
 
         label,
@@ -124,6 +130,11 @@
     .submitBtn,
     .cancelBtn {
         @include base.defaultClickText(0.8rem);
+        transition: all 0.3s linear;
+        
+        &:hover {
+            @include base.underlineHover(false, false);
+        }
     }
 
     .submitBtn {
@@ -180,6 +191,11 @@
         box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
         cursor: pointer;
         position: relative;
+        transition: all 0.3s linear;
+        
+        &:hover {
+            @include base.underlineHover(false, false);
+        }
 
         label {
             width: 100px !important;
@@ -193,7 +209,7 @@
             right: 15px;
             top: 50%;
             transform: translateY(-50%)
-        }
+        } 
     }
 }
 
@@ -274,6 +290,11 @@
         background-color: #FFFFFF;
         border-radius: 5px;
         height: 35px;
+        transition: all 0.3s linear;
+    
+        &:hover {
+            @include base.underlineHover(false, false);
+        }
     }
 
     label {
@@ -327,6 +348,12 @@
 
 .existingTaskSelect {
     width: 90%;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    
+    &:hover {
+        @include base.underlineHover(false, false);
+    }
 }
 
 

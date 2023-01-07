@@ -252,6 +252,7 @@ html {
 }
 html {
   font-size: 125%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -451,6 +452,10 @@ input[type=time] {
   border: 0;
   max-width: 40%;
   border: 1px solid rgba(212, 212, 212, 0.8);
+  transition: all 0.3s ease;
+}
+.frontPage .heroBtn:hover {
+  box-shadow: 0px 36px 89px rgba(0, 0, 0, 0.04), 0px 23.3333px 52.1227px rgba(0, 0, 0, 0.0303704), 0px 13.8667px 28.3481px rgba(0, 0, 0, 0.0242963), 0px 7.2px 14.4625px rgba(0, 0, 0, 0.02), 0px 2.93333px 7.25185px rgba(0, 0, 0, 0.0157037), 0px 0.666667px 3.50231px rgba(0, 0, 0, 0.00962963);
 }
 .frontPage .contentOneContainer {
   display: flex;
@@ -571,6 +576,12 @@ nav.navigationBar li {
   margin-right: 35px;
   font-size: 0.9rem;
   font-family: "Nunito Sans Bold", sans-serif;
+}
+nav.navigationBar li a {
+  transition: all 0.3s ease;
+}
+nav.navigationBar li a:hover {
+  text-decoration: underline;
 }
 nav.navigationBar .loginButton {
   border-right: 1px solid black;
@@ -812,6 +823,11 @@ nav.navigationBar .hamburgerIcon {
   background-color: white;
   width: 250px;
   margin-top: 25px;
+  transition: all 0.3s linear;
+}
+.loginPage .loginFlex form button[type=submit]:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .loginPage .loginFlex form input {
   margin: 10px 0;
@@ -832,9 +848,20 @@ nav.navigationBar .hamburgerIcon {
   background-color: white;
   margin: 15px 0;
 }
-.loginPage .googleBtn i {
-  font-size: 1.3rem;
+.loginPage .googleBtn:hover i {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
   color: black;
+  -webkit-text-fill-color: transparent;
+}
+.loginPage .googleBtn i {
+  background: conic-gradient(from -45deg, #5c403e 110deg, #132034 90deg 180deg, #6f9a7b 180deg 270deg, #9a8f6f 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: black;
+  transition: all 0.3s linear;
+  font-size: 1.3rem;
 }
 .loginPage .labelInputContainer {
   width: 100%;
@@ -853,6 +880,11 @@ nav.navigationBar .hamburgerIcon {
   color: black;
   width: 100%;
   font-family: inherit;
+  transition: all 0.3s linear;
+}
+.loginPage .labelInputContainer input:focus {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .loginPage .labelInputContainer i {
   position: absolute;
@@ -896,6 +928,11 @@ nav.navigationBar .hamburgerIcon {
   color: black;
   width: 250px;
   background-color: white;
+  transition: all 0.3s linear;
+}
+.loginPage .redirectToCreateBtn:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 
 .loginFooter {
@@ -946,6 +983,7 @@ nav.navigationBar .hamburgerIcon {
   border: 1px solid #BF6853;
   background-color: #FFFFFF;
   color: black;
+  font-size: 1rem;
 }
 .createAccountPage .createAccountSection {
   width: 60%;
@@ -971,6 +1009,11 @@ nav.navigationBar .hamburgerIcon {
   width: 100%;
   font-family: inherit;
   margin: 10px 0;
+  transition: all 0.3s linear;
+}
+.createAccountPage .createAccountSection input:focus {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createAccountPage .formOne {
   display: flex;
@@ -1004,6 +1047,11 @@ nav.navigationBar .hamburgerIcon {
   color: black;
   width: 250px;
   background-color: white;
+  transition: all 0.3s linear;
+}
+.createAccountPage .signInSection .signInBtn:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createAccountPage .signInSection .signInText {
   margin: 25px 0;
@@ -1051,9 +1099,20 @@ nav.navigationBar .hamburgerIcon {
   background-color: white;
   margin: 15px 0;
 }
+.createAccountPage .googleBtn:hover i {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: black;
+  -webkit-text-fill-color: transparent;
+}
 .createAccountPage .googleBtn i {
   font-size: 1.3rem;
+  background: conic-gradient(from -45deg, #5c403e 110deg, #132034 90deg 180deg, #6f9a7b 180deg 270deg, #9a8f6f 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
   color: black;
+  transition: all 0.3s linear;
 }
 .createAccountPage .credentialsSection {
   text-align: center;
@@ -1087,6 +1146,11 @@ nav.navigationBar .hamburgerIcon {
   text-decoration: none;
   width: 250px;
   margin-top: 25px;
+  transition: all 0.3s linear;
+}
+.createAccountPage .continueBtn:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createAccountPage .formTwo {
   color: white;
@@ -1131,6 +1195,11 @@ nav.navigationBar .hamburgerIcon {
   background-color: white;
   border-radius: 25px;
   padding: 15px 30px;
+  transition: all 0.3s linear;
+}
+.createAccountPage .formTwo button[type=submit]:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createAccountPage .formTwo form {
   display: flex;
@@ -1208,11 +1277,6 @@ nav.navigationBar .hamburgerIcon {
     text-align: start;
   }
 }
-.homeNavigation.minimizedNav {
-  width: 100px;
-  position: fixed;
-}
-
 .overlayBackground.homeNavigationOverlay {
   z-index: 10;
 }
@@ -1230,6 +1294,10 @@ nav.navigationBar .hamburgerIcon {
   border-right: 1px solid rgba(212, 212, 212, 0.9);
   display: flex;
   flex-direction: column;
+}
+.homeNavigation.minimizedNav {
+  width: 100px;
+  position: fixed;
 }
 .homeNavigation .homeBtn {
   border: 1px solid #d4d4d4;
@@ -1806,6 +1874,11 @@ nav.navigationBar .hamburgerIcon {
   padding: 5px 15px;
   border-radius: 10px;
   font-size: 0.8rem;
+  transition: all 0.3s linear;
+}
+.homeDashboard .searchBarInput:focus, .homeDashboard .searchBarInput:hover {
+  border: 1px solid #d4d4d4;
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .homeDashboard .searchBarInput::placeholder {
   font-family: "Inter Regular", sans-serif;
@@ -2254,6 +2327,12 @@ nav.navigationBar .hamburgerIcon {
 .createTaskForm .formSection input[type=text],
 .createTaskForm .formSection input[type=date] {
   width: 100%;
+  transition: all 0.3s linear;
+}
+.createTaskForm .formSection input[type=time]:hover,
+.createTaskForm .formSection input[type=text]:hover,
+.createTaskForm .formSection input[type=date]:hover {
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createTaskForm .formSection label,
 .createTaskForm .formSection input {
@@ -2299,6 +2378,11 @@ nav.navigationBar .hamburgerIcon {
   font-family: "Inter Semibold", sans-serif;
   font-size: 0.8rem;
   font-weight: normal;
+  transition: all 0.3s linear;
+}
+.createTaskForm .submitBtn:hover,
+.createTaskForm .cancelBtn:hover {
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createTaskForm .submitBtn {
   border: 1px solid #d4d4d4;
@@ -2357,6 +2441,10 @@ nav.navigationBar .hamburgerIcon {
   box-shadow: 2px 4px rgba(212, 212, 212, 0.5);
   cursor: pointer;
   position: relative;
+  transition: all 0.3s linear;
+}
+.createTaskForm .priorityContainer:hover {
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createTaskForm .priorityContainer label {
   width: 100px !important;
@@ -2442,6 +2530,10 @@ nav.navigationBar .hamburgerIcon {
   background-color: #FFFFFF;
   border-radius: 5px;
   height: 35px;
+  transition: all 0.3s linear;
+}
+.formSecondarySection input:hover {
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .formSecondarySection label {
   color: #6D767E;
@@ -2493,6 +2585,11 @@ nav.navigationBar .hamburgerIcon {
 
 .existingTaskSelect {
   width: 90%;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+.existingTaskSelect:hover {
+  box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 
 .lowPriorityContainer {

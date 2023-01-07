@@ -134,6 +134,22 @@ $light-blue: #e6f3fbc5;
     background-color: $backgroundColorValue;
 }
 
+@mixin googleBtnDefault {
+    background: conic-gradient(from -45deg, #5c403e 110deg, #132034 90deg 180deg, #6f9a7b 180deg 270deg, #9a8f6f 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: black;
+    transition: all 0.3s linear;
+}
+
+@mixin googleBtnHover {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: black;
+    -webkit-text-fill-color: transparent;
+}
+
 // Modal Mixins
 
 @mixin modal($zValue, $borderRadiusValue, $backgroundColor, $paddingValue) {
@@ -178,6 +194,7 @@ $light-blue: #e6f3fbc5;
 
 html {
     font-size: 125%;
+    scroll-behavior: smooth;
 }
 
 body {

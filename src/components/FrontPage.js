@@ -53,7 +53,7 @@ const FrontPage = () => {
                     </div>
                 </div>
             </header>
-            <main>
+            <main id="product">
                 <div className="wrapper">
                     <div className="contentOneContainer">
                         <div className="imageContainer">

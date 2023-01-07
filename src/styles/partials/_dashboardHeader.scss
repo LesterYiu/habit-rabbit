@@ -255,6 +255,12 @@
         padding: 5px 15px;
         border-radius: 10px;
         font-size: 0.8rem;
+        transition: all 0.3s linear;
+        
+        &:focus,
+        &:hover{
+            @include base.underlineHover(false, true);
+        }
     }
 
     .searchBarInput::placeholder {

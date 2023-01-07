@@ -18,7 +18,7 @@ const NavigationBar = ({isAuth, setIsNavExpanded, isNavExpanded}) => {
                             </li>
                         </div>
                         <li className="aboutUsButton desktopHiddenAnchor">
-                            <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer">Product</a>
+                            <a href="#product">Product</a>
                         </li>
                         <li className="desktopHiddenAnchor">
                             <a href="https://github.com/LesterYiu" target="_blank"  rel="noreferrer">About Us</a>

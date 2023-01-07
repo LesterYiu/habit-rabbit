@@ -13,6 +13,14 @@ nav.navigationBar {
         margin-right: 35px;
         font-size: 0.9rem;
         font-family: base.$bold-font-nunito;
+
+        a {
+            transition: all 0.3s ease;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .loginButton{
