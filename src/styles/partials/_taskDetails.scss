@@ -106,7 +106,6 @@
     }
 
     .taskDescription {
-        margin-top: 20px;
         padding: 0 30px;
 
         textarea {
@@ -457,13 +456,15 @@
 
     .percentError {
         color: rgb(224, 0, 0);
-        margin-left: 35px;
+        margin-left: 30px;
         height: 15px;
+        position: absolute;
     }
 
     .optionalMessageFiller {
-        height: 15px;
+        height: 25px;
         width: 100%;
+        position: relative;
     }
 
     .savingStatusMessage {

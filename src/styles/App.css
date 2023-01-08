@@ -1751,7 +1751,9 @@ nav.navigationBar .hamburgerIcon {
   transition: all 0.3s ease;
 }
 .homeDashboard .taskContainer .buttonContainer .finishButton:hover,
-.homeDashboard .taskContainer .buttonContainer .moreOptionsBtn:hover {
+.homeDashboard .taskContainer .buttonContainer .finishButton:focus,
+.homeDashboard .taskContainer .buttonContainer .moreOptionsBtn:hover,
+.homeDashboard .taskContainer .buttonContainer .moreOptionsBtn:focus {
   text-decoration: underline;
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
@@ -1907,7 +1909,9 @@ nav.navigationBar .hamburgerIcon {
   text-decoration: none;
 }
 .homeDashboard .toDoTask:hover,
-.homeDashboard .doneTask:hover {
+.homeDashboard .toDoTask:focus,
+.homeDashboard .doneTask:hover,
+.homeDashboard .doneTask:focus {
   text-decoration: underline;
   border: 1px solid #d4d4d4;
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
@@ -2015,7 +2019,8 @@ nav.navigationBar .hamburgerIcon {
 .homeDashboard .filterContainer i {
   color: black;
 }
-.homeDashboard .filterContainer:hover {
+.homeDashboard .filterContainer:hover,
+.homeDashboard .filterContainer:focus {
   box-shadow: -1px 2px 29px 4px rgba(0, 0, 0, 0.16);
   -webkit-box-shadow: -1px 2px 29px 4px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: -1px 2px 29px 4px rgba(0, 0, 0, 0.16);
@@ -2332,9 +2337,11 @@ nav.navigationBar .hamburgerIcon {
   width: 100%;
   transition: all 0.3s linear;
 }
-.createTaskForm .formSection input[type=time]:hover,
+.createTaskForm .formSection input[type=time]:hover, .createTaskForm .formSection input[type=time]:focus,
 .createTaskForm .formSection input[type=text]:hover,
-.createTaskForm .formSection input[type=date]:hover {
+.createTaskForm .formSection input[type=text]:focus,
+.createTaskForm .formSection input[type=date]:hover,
+.createTaskForm .formSection input[type=date]:focus {
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createTaskForm .formSection label,
@@ -2383,8 +2390,9 @@ nav.navigationBar .hamburgerIcon {
   font-weight: normal;
   transition: all 0.3s linear;
 }
-.createTaskForm .submitBtn:hover,
-.createTaskForm .cancelBtn:hover {
+.createTaskForm .submitBtn:hover, .createTaskForm .submitBtn:focus,
+.createTaskForm .cancelBtn:hover,
+.createTaskForm .cancelBtn:focus {
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createTaskForm .submitBtn {
@@ -2446,7 +2454,7 @@ nav.navigationBar .hamburgerIcon {
   position: relative;
   transition: all 0.3s linear;
 }
-.createTaskForm .priorityContainer:hover {
+.createTaskForm .priorityContainer:hover, .createTaskForm .priorityContainer:focus {
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .createTaskForm .priorityContainer label {
@@ -2535,7 +2543,7 @@ nav.navigationBar .hamburgerIcon {
   height: 35px;
   transition: all 0.3s linear;
 }
-.formSecondarySection input:hover {
+.formSecondarySection input:hover, .formSecondarySection input:focus {
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 .formSecondarySection label {
@@ -2591,7 +2599,7 @@ nav.navigationBar .hamburgerIcon {
   cursor: pointer;
   transition: all 0.3s linear;
 }
-.existingTaskSelect:hover {
+.existingTaskSelect:hover, .existingTaskSelect:focus {
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
 
@@ -2913,7 +2921,9 @@ abbr[title] {
 }
 
 .react-calendar__navigation__arrow.react-calendar__navigation__prev-button:hover,
-.react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover {
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button:focus,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button:focus {
   border: 1px solid #d4d4d4;
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
@@ -2987,7 +2997,8 @@ abbr[title] {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.calendarPage .displayTasksSection .taskContainer:hover {
+.calendarPage .displayTasksSection .taskContainer:hover,
+.calendarPage .displayTasksSection .taskContainer:focus {
   border: 1px solid #d4d4d4;
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
@@ -2997,7 +3008,8 @@ abbr[title] {
   font-weight: normal;
   margin-bottom: 10px;
 }
-.calendarPage .displayTasksSection .taskName:hover {
+.calendarPage .displayTasksSection .taskName:hover,
+.calendarPage .displayTasksSection .taskName:focus {
   text-decoration: underline;
 }
 .calendarPage .deadlineSection {
@@ -3192,7 +3204,8 @@ abbr[title] {
   font-size: 1rem;
   color: black;
 }
-.habitPage .habitContentTwo .dailyDateContainer button:not(.disabledArrow):hover {
+.habitPage .habitContentTwo .dailyDateContainer button:not(.disabledArrow):hover,
+.habitPage .habitContentTwo .dailyDateContainer button:not(.disabledArrow):focus {
   box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
 }
 .habitPage .habitContentTwo .dailyDateContainer button.disabledArrow {
@@ -3286,7 +3299,8 @@ abbr[title] {
   font-size: 1rem;
   margin-right: 10px;
 }
-.habitPage .addHabitBtn:hover {
+.habitPage .addHabitBtn:hover,
+.habitPage .addHabitBtn:focus {
   border: 1px solid #d4d4d4;
   box-shadow: 2px 4px rgba(112, 112, 112, 0.5);
 }
@@ -3339,7 +3353,8 @@ abbr[title] {
   padding: 10px 15px;
   border-radius: 15px;
 }
-.habitPage .habitCalendar button:not(.today):hover {
+.habitPage .habitCalendar button:not(.today):hover,
+.habitPage .habitCalendar button:not(.today):focus {
   background-color: rgba(165, 214, 167, 0.5490196078);
 }
 .habitPage .habitCalendar p:nth-child(odd) {
@@ -3472,7 +3487,8 @@ abbr[title] {
   background-color: #a8b4b9;
   cursor: auto;
 }
-.habitPage .buttonContainer button:hover .arrowIcon:not(.disabledArrow) {
+.habitPage .buttonContainer button:hover .arrowIcon:not(.disabledArrow),
+.habitPage .buttonContainer button:focus .arrowIcon:not(.disabledArrow) {
   box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
 }
 .habitPage .dashboardButtons .arrowIcon {
@@ -3613,7 +3629,8 @@ abbr[title] {
   margin-top: 10px;
   transition: all 0.3s ease;
 }
-.habitPage .habitContainer .markAsCompleteBtn:hover {
+.habitPage .habitContainer .markAsCompleteBtn:hover,
+.habitPage .habitContainer .markAsCompleteBtn:focus {
   text-decoration: underline;
 }
 .habitPage .habitContainer p {
@@ -3691,7 +3708,8 @@ abbr[title] {
 .habitPage fieldset.labelColourContainer input[type=radio]:checked::before {
   border: 1px solid rgb(127, 126, 126);
 }
-.habitPage fieldset.labelColourContainer input[type=radio]:not(:checked):hover {
+.habitPage fieldset.labelColourContainer input[type=radio]:not(:checked):hover,
+.habitPage fieldset.labelColourContainer input[type=radio]:not(:checked):focus {
   box-shadow: 0 4px 9px rgba(0, 0, 0, 0.047), 0 1.54074px 2.86667px rgba(0, 0, 0, 0.073), 0 0.32593px 0.73333px rgba(0, 0, 0, 0.12);
   border-radius: 50%;
 }
@@ -3930,7 +3948,6 @@ abbr[title] {
   padding: 0 30px;
 }
 .taskDetails .taskDescription {
-  margin-top: 20px;
   padding: 0 30px;
 }
 .taskDetails .taskDescription textarea {
@@ -4236,12 +4253,14 @@ abbr[title] {
 }
 .taskDetails .percentError {
   color: rgb(224, 0, 0);
-  margin-left: 35px;
+  margin-left: 30px;
   height: 15px;
+  position: absolute;
 }
 .taskDetails .optionalMessageFiller {
-  height: 15px;
+  height: 25px;
   width: 100%;
+  position: relative;
 }
 .taskDetails .savingStatusMessage {
   color: rgb(1, 94, 1);

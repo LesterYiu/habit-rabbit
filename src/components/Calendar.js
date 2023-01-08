@@ -114,6 +114,10 @@ const CalendarSection = () => {
         setIsTaskExpanded(true);
     }
 
+    const keydownDirectToTaskDetails = (taskData, e) => {
+        if(e.key === "Enter") directToTaskDetails(taskData)
+    }
+
     if(isAuth && isTaskExpanded) {
         return(
             <>
@@ -158,7 +162,7 @@ const CalendarSection = () => {
                         {selectedWeekTasks.length && !isLoading ?
                         selectedWeekTasks.map( (specificTask) => {
                             return (
-                                <div className={format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`} key={uuid()} onClick={() => {directToTaskDetails(specificTask)}}>
+                                <div className={format(currentDate, 'MMM dd, yyyy') === specificTask.task.reformattedDeadline ? `${specificTask.task.priority} taskContainer currentTaskSelected` : `${specificTask.task.priority} taskContainer`} key={uuid()} onClick={() => {directToTaskDetails(specificTask)}} onKeyDown={ (e) => {keydownDirectToTaskDetails(specificTask, e)}} tabIndex="0">
                                     <p className="taskName">{specificTask.task.name}</p>
                                     <div className="deadlineSection">
                                         <i className="fa-regular fa-clock"></i>

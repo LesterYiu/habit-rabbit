@@ -107,7 +107,9 @@
             }
             
             .finishButton:hover,
-            .moreOptionsBtn:hover {
+            .finishButton:focus,
+            .moreOptionsBtn:hover,
+            .moreOptionsBtn:focus {
                 @include base.underlineHover(true, false);
             }
         }
@@ -288,7 +290,9 @@
     }
 
     .toDoTask:hover,
-    .doneTask:hover {
+    .toDoTask:focus,
+    .doneTask:hover,
+    .doneTask:focus {
         @include base.underlineHover(true, true);
     }
 
@@ -405,7 +409,8 @@
         }
     }
 
-    .filterContainer:hover {
+    .filterContainer:hover,
+    .filterContainer:focus {
         @include base.shadowIncreaseHover;
     }
 

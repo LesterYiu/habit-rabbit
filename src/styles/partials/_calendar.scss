@@ -191,7 +191,9 @@ abbr[title] {
 }
 
 .react-calendar__navigation__arrow.react-calendar__navigation__prev-button:hover,
-.react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover {
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button:focus,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button:focus {
     @include base.underlineHover(false, true);
 }
 
@@ -263,7 +265,8 @@ abbr[title] {
             transition: all 0.3s ease;
         }
 
-        .taskContainer:hover {
+        .taskContainer:hover,
+        .taskContainer:focus {
             @include base.underlineHover(false, true);
         }
 
@@ -272,7 +275,8 @@ abbr[title] {
             margin-bottom: 10px;
         }
 
-        .taskName:hover {
+        .taskName:hover,
+        .taskName:focus {
             text-decoration: underline;
         }
     }

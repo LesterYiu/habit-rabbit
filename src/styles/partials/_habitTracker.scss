@@ -52,7 +52,8 @@
                 }   
             }
 
-            button:not(.disabledArrow):hover {
+            button:not(.disabledArrow):hover,
+            button:not(.disabledArrow):focus{
                 @include base.containerShadowTwo;
             }
 
@@ -152,7 +153,8 @@
         }
     }
 
-    .addHabitBtn:hover {
+    .addHabitBtn:hover,
+    .addHabitBtn:focus {
         @include base.underlineHover(false, true);
     }
 
@@ -210,7 +212,8 @@
             border-radius: 15px;
         }
 
-        button:not(.today):hover {
+        button:not(.today):hover,
+        button:not(.today):focus {
             background-color: #a5d6a78c;
         }
 
@@ -372,7 +375,8 @@
             cursor: auto;
         }
 
-        button:hover .arrowIcon:not(.disabledArrow) {
+        button:hover .arrowIcon:not(.disabledArrow),
+        button:focus .arrowIcon:not(.disabledArrow) {
             @include base.containerShadowTwo;
         }
         
@@ -515,7 +519,8 @@
             transition: all 0.3s ease;
         }
 
-        .markAsCompleteBtn:hover {
+        .markAsCompleteBtn:hover,
+        .markAsCompleteBtn:focus {
             text-decoration: underline;
         }
 
@@ -608,7 +613,8 @@
             border: 1px solid rgb(127, 126, 126);
         }
 
-        input[type=radio]:not(:checked):hover{
+        input[type=radio]:not(:checked):hover,
+        input[type=radio]:not(:checked):focus {
             @include base.containerShadowTwo;
             border-radius: 50%;
         }

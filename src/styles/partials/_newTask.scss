@@ -74,7 +74,8 @@
 
             transition: all 0.3s linear;
             
-            &:hover {
+            &:hover,
+            &:focus {
                 @include base.underlineHover(false, false);
             }
         }
@@ -132,7 +133,8 @@
         @include base.defaultClickText(0.8rem);
         transition: all 0.3s linear;
         
-        &:hover {
+        &:hover,
+        &:focus {
             @include base.underlineHover(false, false);
         }
     }
@@ -193,7 +195,8 @@
         position: relative;
         transition: all 0.3s linear;
         
-        &:hover {
+        &:hover,
+        &:focus {
             @include base.underlineHover(false, false);
         }
 
@@ -292,7 +295,8 @@
         height: 35px;
         transition: all 0.3s linear;
     
-        &:hover {
+        &:hover,
+        &:focus {
             @include base.underlineHover(false, false);
         }
     }
@@ -351,7 +355,8 @@
     cursor: pointer;
     transition: all 0.3s linear;
     
-    &:hover {
+    &:hover,
+    &:focus {
         @include base.underlineHover(false, false);
     }
 }

@@ -363,7 +363,7 @@ const HabitTracker = () => {
     }
 
     const changeDashboardTask = (number, setCountState) => {
-        if(habitsList.length >= 5 ) setCountState(number);
+        if(habitsList.length > 5 ) setCountState(number);
     }
 
     const handleCalendarBtn = (dayNum) => {

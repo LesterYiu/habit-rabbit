@@ -862,15 +862,15 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
                     </div>
                 </div>
             </div>
-            {isRangeClicked && !isEnableOn? 
-            <p className="percentError">Please click the edit button in order to make changes.</p> :
-            <div className="optionalMessageFiller"></div>}
-            {isProgressSaved ? 
-            <div className="optionalMessageFiller"></div> : 
-            <div className="savingMessageContainer">
-                <div className="lds-ring"><div></div></div>
-                <p className="savingStatusMessage">Currently saving...</p>
-            </div>}
+            <div className="optionalMessageFiller">
+                {isRangeClicked && !isEnableOn? 
+                <p className="percentError">Please click the edit button in order to make changes.</p> : null}
+                {isProgressSaved ? null : 
+                <div className="savingMessageContainer">
+                    <div className="lds-ring"><div></div></div>
+                    <p className="savingStatusMessage">Currently saving...</p>
+                </div>}
+            </div>
             <div className="taskDescription">
                 <p className="label">Description</p>
                 {isEnableOn ? <textarea defaultValue={specificTask.task.description} onChange={debounce((e) => {updateTaskDescription(e)}, 300)} rows="1"></textarea> : <p className="descriptionParagraph">{specificTask.task.description}</p>}

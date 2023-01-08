@@ -7,7 +7,7 @@ import { signOut } from "firebase/auth";
 
 const SignOutModal = () => {
 
-    const {setIsSignOutModalOn, setIsAuth, setUsername, setUserUID} = useContext(AppContext);
+    const {setIsSignOutModalOn, setIsAuth, setUsername, setUserUID, setIsNavExpanded} = useContext(AppContext);
 
     const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ const SignOutModal = () => {
             localStorage.clear();
         })
         setIsSignOutModalOn(false);
+        setIsNavExpanded(false);
         navigate('/login')
     }
 
