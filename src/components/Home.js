@@ -122,7 +122,8 @@ const Home = () => {
         if(isNewTaskClicked && document.body.style.overflow === 'hidden') return;
 
         disableScrollForModalOn(isNavExpanded);
-    },[isNavExpanded])
+
+    },[isNavExpanded, isNewTaskClicked])
 
     const getPost = async () => {
         // data - ongoing tasks, doneData - finished tasks

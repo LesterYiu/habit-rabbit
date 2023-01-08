@@ -64,11 +64,13 @@ const NewTask = () => {
 
     useEffect( () => {
         checkIfLate()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [time, deadline])
 
     // Get new timestamp when due time & due date changes
     useEffect( () => {
         if(deadline && time) updateUnformattedDeadline();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deadline, time])
 
     const handleInputText = (e, setState) => {

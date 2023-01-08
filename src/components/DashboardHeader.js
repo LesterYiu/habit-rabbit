@@ -18,6 +18,7 @@ const DashboardHeader = ({currentUserTime, setIsSearchBarPopulated, reformattedT
             const regex = new RegExp(`${textInput}`, "gi");
             matchFilteredTasksWithSearch(textInput, regex)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLateSelected])
 
     const handleButtonSwitch = (switchToFalse, switchToTrue) => {

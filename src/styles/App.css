@@ -450,7 +450,7 @@ input[type=time] {
   background-color: #A5D6A7;
   text-align: center;
   border: 0;
-  max-width: 40%;
+  width: 65%;
   border: 1px solid rgba(212, 212, 212, 0.8);
   transition: all 0.3s ease;
 }
@@ -526,7 +526,7 @@ input[type=time] {
     text-align: center;
   }
   .frontPage .heroBtn {
-    width: 40%;
+    width: 50%;
   }
   .frontPage .heroImageContainer {
     order: -1;
@@ -553,6 +553,9 @@ input[type=time] {
   }
 }
 @media (max-width: 480px) {
+  .frontPage .heroBtn {
+    width: 90%;
+  }
   .frontPage footer ul {
     flex-direction: column;
   }

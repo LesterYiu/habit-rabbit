@@ -53,7 +53,8 @@ const CalendarSection = () => {
         reformatTaskByDate(taskList, setReformattedTaskList);
         reformatTaskByDate(doneTaskList, setReformattedDoneTaskList);
         handleDates()
-    }, [taskList])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [taskList, doneTaskList])
 
     useEffect( () => {
         handleSelectedWeek()
@@ -70,7 +71,7 @@ const CalendarSection = () => {
         if(isNewTaskClicked && document.body.style.overflow === 'hidden') return;
 
         disableScrollForModalOn(isNavExpanded);
-    },[isNavExpanded])
+    },[isNavExpanded, isNewTaskClicked])
 
 
     const getPost = async () => {

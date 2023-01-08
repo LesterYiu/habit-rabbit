@@ -15,6 +15,7 @@ const SingleTask = ({specificTask, directToTaskDetails, changeToFinishedTask, de
 
     useEffect( () => {
         checkIfLate();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const checkIfLate = async () => {

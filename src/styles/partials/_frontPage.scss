@@ -38,7 +38,7 @@
         @include base.buttonInter(inherit, 8px, 8px 10px, base.$quaternary, base.$tertiary);
         text-align: center;
         border: 0;
-        max-width: 40%;
+        width: 65%;
         border: 1px solid rgba(212, 212, 212, 0.8);
         transition: all 0.3s ease;
 
@@ -142,7 +142,7 @@
         }
 
         .heroBtn {
-            width: 40%;
+            width: 50%;
         }
 
         .heroImageContainer {
@@ -182,6 +182,10 @@
 
 @media(max-width: 480px) {
     .frontPage {
+
+        .heroBtn {
+            width: 90%;
+        }
 
         footer {
             ul {

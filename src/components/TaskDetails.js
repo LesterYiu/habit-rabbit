@@ -116,6 +116,7 @@ const TaskDetails = ({specificTask, reformattedTask, reformattedDoneTask}) => {
 
     useEffect( () => {
         handleUnformattedDeadline();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dueDate, dueTime])
 
     // Handle loading
