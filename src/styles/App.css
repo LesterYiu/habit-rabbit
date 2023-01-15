@@ -3434,7 +3434,7 @@ abbr[title] {
   margin-top: 20px;
 }
 .habitPage .tableHeaders {
-  width: 80% !important;
+  width: 80%;
   align-self: flex-end;
 }
 .habitPage .tableHeaders tbody {
@@ -3833,8 +3833,15 @@ abbr[title] {
     margin-left: 75px;
     padding: 25px 15px;
   }
+  .habitPage .habitCalendarBreakdown table {
+    width: 100%;
+  }
+  .habitPage .habitCalendarBreakdown table tr {
+    justify-content: space-between;
+  }
   .habitPage .habitCalendarBreakdown th {
     font-size: 0.7rem;
+    width: 1.5rem;
   }
   .habitPage .taskCompletionTable {
     flex-direction: column;

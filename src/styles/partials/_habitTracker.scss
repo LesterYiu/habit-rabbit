@@ -311,7 +311,7 @@
     }
     
     .tableHeaders {
-        width: 80% !important;
+        width: 80%;
         align-self: flex-end;
 
         tbody {
@@ -783,8 +783,19 @@
         }
 
         .habitCalendarBreakdown {
+
+            table {
+                width: 100%;
+
+                tr {
+                    justify-content: space-between;
+                }
+
+            }
+
             th {
                 font-size: 0.7rem;
+                width: 1.5rem;
             }
             
         }
