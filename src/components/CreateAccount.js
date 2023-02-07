@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { auth, provider } from "./firebase";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { storage } from "./firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
@@ -23,7 +23,7 @@ const CreateAccount = () => {
     const [isEmailExist, setIsEmailExist] = useState(false);
     const [isInvalidSignUp, setIsInvalidSignUp] = useState(false);
 
-    const {setIsAuth, setUsername, setUserUID, userUID} = useContext(AppContext)
+    const {setIsAuth, setUsername, setUserUID, userUID, isAuth} = useContext(AppContext)
 
     const navigate = useNavigate();
     const currentAuth = getAuth();
@@ -103,106 +103,110 @@ const CreateAccount = () => {
         })
     }
 
-    return(
-        <div className="createAccountPage">
-            <nav>
-                <Link to="/"> 
-                    <div className="logoSection">
-                        <div className="imageContainer">
-                            <img src={logo} alt="" />
+    if(!isAuth){
+        return(
+            <div className="createAccountPage">
+                <nav>
+                    <Link to="/"> 
+                        <div className="logoSection">
+                            <div className="imageContainer">
+                                <img src={logo} alt="" />
+                            </div>
+                            <p>Habit Rabbit</p>
                         </div>
-                        <p>Habit Rabbit</p>
+                    </Link>
+                </nav>
+                <main>
+                    <div className="signInSection">
+                        <h1>Hello Friend!</h1>
+                        <p className="signInText">If you already have an account, please login with your personal information!</p>
+                        <Link to="/login" className="signInBtn">Sign In</Link>
                     </div>
-                </Link>
-            </nav>
-            <main>
-                <div className="signInSection">
-                    <h1>Hello Friend!</h1>
-                    <p className="signInText">If you already have an account, please login with your personal information!</p>
-                    <Link to="/login" className="signInBtn">Sign In</Link>
-                </div>
-                <div className="createAccountSection">
-                    {isCreatedAcc === false ?
-                    <div className="wrapper credentialsSection">
-                        <h2>Create Account</h2>
-                        <div>
-                            <button className="googleBtn" onClick={signInWithGoogle}> 
-                                <span className="sr-only">Sign in with Google</span> 
-                                <i className="fa-brands fa-google"></i>
-                            </button>
+                    <div className="createAccountSection">
+                        {isCreatedAcc === false ?
+                        <div className="wrapper credentialsSection">
+                            <h2>Create Account</h2>
+                            <div>
+                                <button className="googleBtn" onClick={signInWithGoogle}> 
+                                    <span className="sr-only">Sign in with Google</span> 
+                                    <i className="fa-brands fa-google"></i>
+                                </button>
+                            </div>
+                            <p className="optionText">or use your email for registration:</p>
+                            {isEmailExist ? 
+                            <p className="errorEmailMessage">A user with this email address already exists. Please login.</p> : null}
+                            {isInvalidSignUp ?
+                            <div className="wrongCredentialContainer">
+                                <p>Invalid Credentials</p>
+                                <p>Invalid username or password</p>
+                                <ul>
+                                    <li>Your email must be a valid email address</li>
+                                    <li>Your password must be 6 characters long</li>
+                                </ul>
+                            </div> : null}
+                            <form aria-label="form" name="createAccount" className="formOne">
+
+                                <div className="labelInputContainer">
+                                    <label htmlFor="name" className="sr-only">Display Name</label>
+                                    <input type="text" id="name" required onChange={(e) => {setDisplayName(e.target.value)}} placeholder="Name"/>
+                                    <i className="fa-regular fa-user"></i>
+                                </div>
+
+                                <div className="labelInputContainer">
+                                    <label htmlFor="email" className="sr-only">Email</label>
+                                    <input ref={emailEl} type="text" required onChange={(e) => {setRegisterEmail(e.target.value)}} className={isEmailExist ? "errorInput" : null} placeholder="Email"/>
+                                    <i className="fa-regular fa-envelope"></i>
+                                </div>
+
+                                <div className="labelInputContainer">
+                                    <label htmlFor="password" className="sr-only">Password</label>
+                                    <input type="password" required onChange={(e) => {setRegisterPassword(e.target.value)}} placeholder="Password"/>
+                                    <i className="fa-solid fa-lock"></i>
+                                </div>
+                                <button type="submit" className="continueBtn" onClick={(e) => {handleContinueBtn(e)}}>Continue</button>
+                            </form>
+                        </div>: null}
+                        {isCreatedAcc ? 
+                        <div className="formTwo">
+                            <h2>Welcome {displayName}!</h2>
+                            <div className="profileImageContainer">
+                                <img src={profileImage} alt="" />
+                            </div>
+                            <p className="profileImageDirections">Take a minute to personalize your account by setting a profile picture! Don't worry, this step is optional. Once you're ready, click "Create Account".</p>
+                            <form aria-label="form" name="customizeAccount">
+                                
+                                <label htmlFor="profilePicture">
+                                    <p>{imageUpload ? "Picture Selected" : "Select Picture"}</p>
+                                    {imageUpload ? 
+                                    <i className="fa-solid fa-square-check"></i> :
+                                    <i className="fa-solid fa-camera"></i>}
+                                </label>
+                                <input id="profilePicture" type="file" accept="image/png, image/jpg, image/gif, image/jpeg" onChange={(e) => {setImageUpload(e.target.files[0])}}/>
+                                
+                                <button type="submit" onClick={(e) => {registerUser(e)}}>Create Account</button>
+                            </form> 
                         </div>
-                        <p className="optionText">or use your email for registration:</p>
-                        {isEmailExist ? 
-                        <p className="errorEmailMessage">A user with this email address already exists. Please login.</p> : null}
-                        {isInvalidSignUp ?
-                        <div className="wrongCredentialContainer">
-                            <p>Invalid Credentials</p>
-                            <p>Invalid username or password</p>
-                            <ul>
-                                <li>Your email must be a valid email address</li>
-                                <li>Your password must be 6 characters long</li>
-                            </ul>
-                        </div> : null}
-                        <form aria-label="form" name="createAccount" className="formOne">
-
-                            <div className="labelInputContainer">
-                                <label htmlFor="name" className="sr-only">Display Name</label>
-                                <input type="text" id="name" required onChange={(e) => {setDisplayName(e.target.value)}} placeholder="Name"/>
-                                <i className="fa-regular fa-user"></i>
-                            </div>
-
-                            <div className="labelInputContainer">
-                                <label htmlFor="email" className="sr-only">Email</label>
-                                <input ref={emailEl} type="text" required onChange={(e) => {setRegisterEmail(e.target.value)}} className={isEmailExist ? "errorInput" : null} placeholder="Email"/>
-                                <i className="fa-regular fa-envelope"></i>
-                            </div>
-
-                            <div className="labelInputContainer">
-                                <label htmlFor="password" className="sr-only">Password</label>
-                                <input type="password" required onChange={(e) => {setRegisterPassword(e.target.value)}} placeholder="Password"/>
-                                <i className="fa-solid fa-lock"></i>
-                            </div>
-                            <button type="submit" className="continueBtn" onClick={(e) => {handleContinueBtn(e)}}>Continue</button>
-                        </form>
-                    </div>: null}
-                    {isCreatedAcc ? 
-                    <div className="formTwo">
-                        <h2>Welcome {displayName}!</h2>
-                        <div className="profileImageContainer">
-                            <img src={profileImage} alt="" />
-                        </div>
-                        <p className="profileImageDirections">Take a minute to personalize your account by setting a profile picture! Don't worry, this step is optional. Once you're ready, click "Create Account".</p>
-                        <form aria-label="form" name="customizeAccount">
-                            
-                            <label htmlFor="profilePicture">
-                                <p>{imageUpload ? "Picture Selected" : "Select Picture"}</p>
-                                {imageUpload ? 
-                                <i className="fa-solid fa-square-check"></i> :
-                                <i className="fa-solid fa-camera"></i>}
-                            </label>
-                            <input id="profilePicture" type="file" accept="image/png, image/jpg, image/gif, image/jpeg" onChange={(e) => {setImageUpload(e.target.files[0])}}/>
-                            
-                            <button type="submit" onClick={(e) => {registerUser(e)}}>Create Account</button>
-                        </form> 
+                        : null}
                     </div>
-                    : null}
-                </div>
-            </main>
-            <footer>
-                <div className="wrapper">
-                    <ul>
-                        <li>
-                            <p>©2022 Habit Rabbit Labs, Inc.</p>
-                        </li>
-                        <li className="creditFooterLink">
-                            <p>Made by <a href="https://github.com/LesterYiu" target="_blank" rel="noreferrer">Lester Yiu</a></p>
-                        </li>
-                    </ul>
-                </div>
-            </footer>
+                </main>
+                <footer>
+                    <div className="wrapper">
+                        <ul>
+                            <li>
+                                <p>©2022 Habit Rabbit Labs, Inc.</p>
+                            </li>
+                            <li className="creditFooterLink">
+                                <p>Made by <a href="https://github.com/LesterYiu" target="_blank" rel="noreferrer">Lester Yiu</a></p>
+                            </li>
+                        </ul>
+                    </div>
+                </footer>
 
-        </div>
-    )
+            </div>
+        )
+    }
+
+    return <Navigate to="/home" replace />
 }
 
 export default CreateAccount;
